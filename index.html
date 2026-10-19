@@ -121,6 +121,35 @@
 
   footer { padding-block: 1.5rem; border-top: 1px solid var(--line); font-size: .875rem; color: var(--muted); }
 
+  /* Footer links */
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; flex-wrap: wrap; }
+  .foot-links { display: flex; gap: 1.25rem; }
+  .foot-links a, .linkish {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0;
+    background: none; border: 0; color: var(--muted); font: inherit; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .foot-links a:hover, .linkish:hover { color: var(--text); }
+  .linkish:focus-visible { outline: 3px solid var(--text); outline-offset: 4px; }
+  .linkish[hidden] { display: none; }
+
+  /* Cookie banner */
+  .consent {
+    position: fixed; z-index: 10; left: 50%; bottom: clamp(.75rem, 3vw, 1.5rem); transform: translateX(-50%);
+    width: min(40rem, 100% - 1.5rem); display: grid; gap: 1rem;
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    background: var(--raised); border: 1px solid var(--line); border-left: 6px solid var(--primary);
+  }
+  .consent[hidden] { display: none; }
+  .consent p { font-size: .95rem; }
+  .consent-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .btn {
+    min-height: 44px; min-width: 7.5rem; padding: .6rem 1.4rem; cursor: pointer;
+    font: inherit; font-weight: 700; color: var(--text); background: transparent; border: 2px solid var(--text);
+  }
+  .btn-primary { color: #FFFFFF; background: var(--primary); border-color: var(--primary); }
+  .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
   @media (max-width: 760px) {
     .intro { grid-template-columns: 1fr; }
     .portrait { max-width: 20rem; }
@@ -194,8 +223,152 @@
 </main>
 
 <footer>
-  <div class="wrap">© 2026 George Kanaroglou</div>
+  <div class="wrap foot">
+    <span>© 2026 George Kanaroglou</span>
+    <span class="foot-links">
+      <a href="/privacy.html">Privacy</a>
+      <button type="button" class="linkish" id="cookie-settings" hidden>Cookie settings</button>
+    </span>
+  </div>
 </footer>
+
+<div class="consent" id="consent" role="region" aria-label="Cookie choice" hidden>
+  <p>I use cookies to count visits and see what’s working on this site. No ads, and no tracking on other sites. <a href="/privacy.html">How I use them</a></p>
+  <div class="consent-actions">
+    <button type="button" class="btn btn-primary" data-consent="yes">Accept</button>
+    <button type="button" class="btn" data-consent="no">Decline</button>
+  </div>
+</div>
+
+<script>
+/* Site analytics with consent. Data goes to George's own Google Sheet. */
+(function () {
+  var ENDPOINT = "PASTE_YOUR_WEB_APP_URL_HERE";
+  if (ENDPOINT.indexOf("https://script.google.com/") !== 0) return;
+
+  var SITE = "georgekanaroglou.com";
+  var banner = document.getElementById("consent");
+  var settings = document.getElementById("cookie-settings");
+  var q = new URLSearchParams(location.search);
+
+  // Visit georgekanaroglou.com/?notrack=1 once on each of your devices to stop counting your own visits (?notrack=0 to undo).
+  var notrack = false;
+  try {
+    if (q.get("notrack") === "1") localStorage.setItem("gk-notrack", "1");
+    if (q.get("notrack") === "0") localStorage.removeItem("gk-notrack");
+    notrack = localStorage.getItem("gk-notrack") === "1";
+  } catch (e) {}
+  var isBot = navigator.webdriver || /bot|crawl|spider|slurp|headless|preview|lighthouse/i.test(navigator.userAgent);
+
+  function getCookie(name) {
+    var m = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function setCookie(name, value, seconds) {
+    document.cookie = name + "=" + encodeURIComponent(value) + "; path=/; max-age=" + seconds + "; SameSite=Lax; Secure";
+  }
+  function deleteCookie(name) {
+    document.cookie = name + "=; path=/; max-age=0; SameSite=Lax; Secure";
+  }
+  function newId() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return Math.random().toString(36).slice(2) + Date.now().toString(36);
+  }
+
+  var ref = "";
+  try { ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch (e) {}
+
+  function source() {
+    if (q.get("utm_source")) return q.get("utm_source");
+    if (!ref) return "Direct";
+    if (ref === location.hostname.replace(/^www\./, "")) return "Internal";
+    if (ref === "t.co" || ref === "x.com") return "X";
+    var map = [["linkedin", "LinkedIn"], ["lnkd.in", "LinkedIn"], ["outlook", "Email"], ["mail.", "Email"],
+               ["google", "Google"], ["bing", "Bing"], ["duckduckgo", "DuckDuckGo"], ["github", "GitHub"],
+               ["twitter", "X"], ["facebook", "Facebook"], ["instagram", "Instagram"]];
+    for (var i = 0; i < map.length; i++) { if (ref.indexOf(map[i][0]) > -1) return map[i][1]; }
+    return ref;
+  }
+
+  var w = window.innerWidth;
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+
+  var base = {
+    site: SITE,
+    page: location.pathname,
+    source: source(),
+    referrer: ref,
+    utm_source: q.get("utm_source") || "",
+    utm_medium: q.get("utm_medium") || "",
+    utm_campaign: q.get("utm_campaign") || "",
+    device: w < 768 ? "Mobile" : w < 1024 ? "Tablet" : "Desktop",
+    screen: w,
+    language: navigator.language || "",
+    timezone: tz
+  };
+
+  var visitorType = null;
+
+  function send(event, extra) {
+    if (notrack || isBot || getCookie("gk_consent") !== "yes") return;
+    var vid = getCookie("gk_vid");
+    if (visitorType === null) visitorType = vid ? "returning" : "new";
+    if (!vid) vid = newId();
+    var sid = getCookie("gk_sid") || newId();
+    setCookie("gk_vid", vid, 60 * 60 * 24 * 365);
+    setCookie("gk_sid", sid, 60 * 30);
+    var d = Object.assign({}, base, { event: event, vid: vid, sid: sid, visitor: visitorType }, extra || {});
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, body: JSON.stringify(d) }); } catch (e) {}
+  }
+
+  var start = Date.now(), viewSent = false, left = false;
+  function sendView() {
+    if (viewSent) return;
+    viewSent = true;
+    start = Date.now();
+    send("view");
+  }
+
+  function decide(choice) {
+    setCookie("gk_consent", choice, 60 * 60 * 24 * 182);
+    banner.hidden = true;
+    if (choice === "yes") {
+      sendView();
+    } else {
+      deleteCookie("gk_vid");
+      deleteCookie("gk_sid");
+    }
+  }
+
+  banner.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-consent]");
+    if (b) decide(b.getAttribute("data-consent"));
+  });
+  settings.hidden = false;
+  settings.addEventListener("click", function () {
+    banner.hidden = false;
+    banner.querySelector("button").focus();
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden" && viewSent && !left) {
+      left = true;
+      send("leave", { seconds: Math.round((Date.now() - start) / 1000) });
+    }
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest) return;
+    if (e.target.closest('a[href^="mailto:"]')) send("email_click");
+    else if (e.target.closest('a[href="#contact"]')) send("cta_click", { label: "Get in touch" });
+  });
+
+  var choice = getCookie("gk_consent");
+  if (!choice) banner.hidden = false;
+  else if (choice === "yes") sendView();
+})();
+</script>
 
 </body>
 </html>
