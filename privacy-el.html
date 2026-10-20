@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Απόρρητο και cookies | Γιώργος Κανάρογλου</title>
+<meta name="description" content="Πώς ο ιστότοπος georgekanaroglou.com χρησιμοποιεί cookies και δεδομένα επισκεπτών.">
+<meta name="theme-color" content="#F5F5F2">
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Γιώργος Κανάρογλου">
+<meta property="og:title" content="Απόρρητο και cookies | Γιώργος Κανάρογλου">
+<meta property="og:description" content="Πώς ο ιστότοπος georgekanaroglou.com χρησιμοποιεί cookies και δεδομένα επισκεπτών.">
+<meta property="og:url" content="https://georgekanaroglou.com/privacy-el.html">
+<meta property="og:image" content="https://georgekanaroglou.com/og-image-el.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γιώργος Κανάρογλου. Ολοκληρωμένο marketing.">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://georgekanaroglou.com/privacy-el.html">
+<link rel="alternate" hreflang="en" href="https://georgekanaroglou.com/privacy.html">
+<link rel="alternate" hreflang="el" href="https://georgekanaroglou.com/privacy-el.html">
+<link rel="alternate" hreflang="x-default" href="https://georgekanaroglou.com/privacy.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface: #111111; --raised: #1A1A1A; --text: #F5F5F5; --muted: #A3A3A3;
+    --line: #2A2A2A; --primary: #0077BC; --secondary: #009866;
+    --display: "Commissioner", "Arial Black", system-ui, sans-serif;
+    --body: "Commissioner", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--surface); color: var(--text); font-family: var(--body); font-size: 1.0625rem; line-height: 1.6; }
+  a { color: inherit; text-underline-offset: 3px; }
+  a:focus-visible { outline: 3px solid var(--text); outline-offset: 4px; }
+  .wrap { width: min(44rem, 100% - 2 * max(clamp(1.25rem, 4vw, 3rem), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px))); margin-inline: auto; }
+  .top { padding-block: 1.5rem; }
+  .top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  /* Language switch */
+  .top-nav { display: flex; align-items: center; gap: 1.25rem; }
+  .lang { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-weight: 600; text-decoration: none; }
+  @media (hover: hover) and (pointer: fine) { .lang:hover { color: var(--text); } }
+  .mark { font-weight: 900; display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; font-family: var(--display); font-size: 1.5rem; text-decoration: none; }
+  .livery { display: inline-flex; gap: .2rem; }
+  .livery i { display: block; width: .5rem; height: 1.35rem; transform: skewX(-18deg); }
+  .livery i:first-child { background: var(--primary); }
+  .livery i:last-child { background: var(--secondary); }
+  h1 { font-family: var(--display); font-weight: 900; font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1; letter-spacing: -.02em; padding-block: clamp(2rem, 6vw, 3.5rem) 1rem; }
+  h2 { font-family: var(--display); font-weight: 800; font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: .6rem; }
+  p, ul { margin-bottom: 1rem; max-width: 65ch; }
+  ul { padding-left: 1.25rem; }
+  li { margin-bottom: .4rem; }
+  .muted { color: var(--muted); }
+  .table-wrap { overflow-x: auto; margin-bottom: 1rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; min-width: 30rem; }
+  th, td { text-align: left; padding: .7rem .75rem .7rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  code { font-size: .9em; }
+  footer { margin-top: 3rem; padding-block: 1.5rem; border-top: 1px solid var(--line); font-size: .875rem; color: var(--muted); }
+
+  /* Even line breaks: no lonely last words */
+  h1, h2, h3 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+
+  /* Main navigation */
+  .top .wrap { flex-wrap: wrap; row-gap: .25rem; }
+  .top-nav { flex-wrap: wrap; column-gap: 1.25rem; }
+  .nav-link {
+    display: inline-flex; align-items: center; min-height: 44px;
+    font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent;
+  }
+  @media (hover: hover) and (pointer: fine) { .nav-link:hover { border-color: var(--muted); } }
+  .nav-link[aria-current="page"] { border-color: var(--secondary); }
+  @media (max-width: 420px) { .top-nav { column-gap: 1rem; } }
+
+  .top-link {
+    display: inline-flex; align-items: center; min-height: 44px;
+    font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--primary);
+  }
+  @media (hover: hover) and (pointer: fine) { .top-link:hover { border-color: var(--text); } }
+
+  /* ---------- Motion ---------- */
+  :root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);      /* entering, exiting, press */
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* movement on screen */
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* surfaces rising from an edge */
+  }
+  /* Links: colour changes ease rather than snap */
+  .top-link, .nav-link, .lang, .contact a, .foot-links a, .linkish { transition: border-color 150ms ease, color 150ms ease; }
+
+  /* Moving between pages: the header stays put while the page underneath crossfades (Chrome, Edge, Safari 18+) */
+  @view-transition { navigation: auto; }
+  .top { view-transition-name: site-header; }
+  ::view-transition-group(*) { animation-duration: 200ms; animation-timing-function: var(--ease-out); }
+
+  /* ---------- Phones ---------- */
+  /* No grey flash on tap (every control has its own :active), no font inflation in landscape */
+  html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  /* Taps fire straight away, with no double-tap-zoom wait */
+  button, a { touch-action: manipulation; }
+  /* Long-pressing a control doesn't select its label. Content, including the email address, stays selectable */
+  button, .mark, .top-link, .nav-link, .lang { -webkit-user-select: none; user-select: none; }
+  /* Press feedback for text links */
+  .mark:active, .top-link:active, .nav-link:active, .lang:active, .foot-links a:active, .linkish:active, .contact a:active, .links a:active { opacity: .7; }
+  /* Landscape on a notched phone: colour runs edge to edge, content stays clear of the notch */
+  footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); }
+  ::view-transition-old(*), ::view-transition-new(*) { animation-timing-function: var(--ease-out); }
+
+  /* ================= Brand layer: Gkanaroglou, Nu-Brutalism =================
+     Paper ground, Black type and rules, one Signal Orange block per screen, Cobalt sparingly.
+     Inter Tight does everything. Structure is the decoration: rules, never boxes, shadows or rounded cards. */
+  :root {
+    --surface: #F5F5F2;   /* Paper */
+    --raised: #D9D9D4;    /* Concrete: quiet fills */
+    --text: #000000;      /* Black */
+    --muted: #4D4D49;     /* Black at about 70% on Paper, for secondary text (8:1) */
+    --line: #D9D9D4;      /* Concrete: quiet dividers */
+    --rule: #000000;      /* the 3px rule that opens each block */
+    --primary: #FF4F12;   /* Signal Orange: black text on it, never Paper */
+    --secondary: #1E36FF; /* Cobalt */
+    --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+    --body: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light;
+  }
+  body { font-weight: 500; line-height: 1.45; }
+  ::selection { background: var(--primary); color: #000; }
+
+  /* Type: one family, heavy and tight for display */
+  h1 { font-weight: 900; letter-spacing: -.045em; line-height: .9; }
+  h2, .quiz-q, .result h2, .browse h2 { font-weight: 800; letter-spacing: -.03em; }
+  h3, .pick h3 { font-weight: 700; letter-spacing: -.01em; }
+
+  /* Header: the wordmark top left, a black rule beneath */
+  .top { padding-block: 1rem; border-bottom: 3px solid var(--rule); }
+  .mark img { display: block; height: 22px; width: auto; }
+  @media (max-width: 420px) { .mark img { height: 18px; } }
+  .lang { color: var(--muted); }
+  .nav-link { font-weight: 700; border-bottom: 3px solid transparent; }
+  .nav-link[aria-current="page"] { border-color: var(--primary); }
+  .top-link { padding: .5rem 1rem; font-weight: 700; color: var(--surface); background: var(--text); border: 0; transition: background-color 150ms ease, color 150ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover { border-color: var(--rule); }
+    .top-link:hover { color: #000; background: var(--primary); }
+  }
+
+  @media (max-width: 420px) {
+    .top-nav { column-gap: .8rem; }
+    .top-link { padding-inline: .7rem; }
+  }
+
+  /* Buttons: square, black-ruled, no shadows */
+  .btn { border: 2px solid var(--rule); color: var(--text); background: transparent; transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease; }
+  .btn-primary { color: #000; background: var(--primary); border-color: var(--rule); }
+  @media (hover: hover) and (pointer: fine) { .btn:hover { color: var(--surface); background: var(--text); } }
+
+  /* Footer */
+  footer { border-top: 3px solid var(--rule); color: var(--muted); }
+  .foot-links a, .linkish { color: var(--text); }
+
+  /* Cookie banner: a solid black block */
+  .consent { color: var(--surface); background: var(--text); border: 0; padding: 1.25rem 1.5rem; }
+  .consent a { color: var(--surface); }
+  .consent .btn { color: var(--surface); border-color: var(--surface); }
+  .consent .btn-primary { color: #000; background: var(--primary); border-color: var(--primary); }
+  .consent .btn:focus-visible, .consent a:focus-visible { outline-color: var(--surface); }
+  @media (hover: hover) and (pointer: fine) {
+    .consent .btn:hover { color: #000; background: var(--surface); border-color: var(--surface); }
+  }
+
+  th { color: var(--muted); }
+  thead th { border-bottom: 3px solid var(--rule); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/el" aria-label="Γιώργος Κανάρογλου, αρχική σελίδα"><img src="/assets/gkanaroglou-wordmark-black.svg" alt="" width="200" height="22"></a>
+    <nav class="top-nav" aria-label="Γλώσσα και επικοινωνία">
+      <a class="lang" href="/privacy.html" lang="en" hreflang="en">English</a>
+      <a class="nav-link" href="/work-with-me-el">Συνεργασία</a>
+      <a class="top-link" href="/el#contact">Επικοινωνία</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Απόρρητο και cookies</h1>
+  <p class="muted">Τελευταία ενημέρωση: 20 Οκτωβρίου 2026</p>
+
+  <h2>Ποιος διαχειρίζεται τον ιστότοπο</h2>
+  <p>Τον ιστότοπο διαχειρίζεται ο Γιώργος Κανάρογλου. Για οποιαδήποτε ερώτηση, στείλτε email στο <a data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello στο georgekanaroglou.com</a>.</p>
+
+  <h2>Τι συλλέγω</h2>
+  <p>Μόνο αν αποδεχτείτε τα cookies, καταγράφω:</p>
+  <ul>
+    <li>ποιες σελίδες επισκέπτεστε, πότε και για πόση ώρα</li>
+    <li>τον ιστότοπο από τον οποίο ήρθατε, όπως το LinkedIn ή το Google</li>
+    <li>τον τύπο της συσκευής σας, το πλάτος της οθόνης, τη γλώσσα του προγράμματος περιήγησης και τη ζώνη ώρας</li>
+    <li>τις απαντήσεις σας στις ερωτήσεις της σελίδας «Συνεργασία»</li>
+    <li>τα κλικ στη διεύθυνση email μου και στον σύνδεσμο «Επικοινωνία»</li>
+  </ul>
+  <p>Δεν συλλέγω το όνομά σας, τη διεύθυνση email σας ή τη διεύθυνση IP σας. Αν απορρίψετε, δεν καταγράφεται τίποτα.</p>
+
+  <h2>Cookies που χρησιμοποιώ</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Όνομα</th><th>Τι κάνει</th><th>Διάρκεια</th></tr></thead>
+      <tbody>
+        <tr><td><code>gk_consent</code></td><td>Θυμάται αν αποδεχτήκατε ή απορρίψατε τα cookies.</td><td>6 μήνες</td></tr>
+        <tr><td><code>gk_vid</code></td><td>Ένα τυχαίο αναγνωριστικό που μου επιτρέπει να μετράω μοναδικούς και επαναλαμβανόμενους επισκέπτες.</td><td>12 μήνες από την τελευταία σας επίσκεψη</td></tr>
+        <tr><td><code>gk_sid</code></td><td>Ένα τυχαίο αναγνωριστικό που ομαδοποιεί τις σελίδες που βλέπετε σε μία επίσκεψη.</td><td>30 λεπτά από την τελευταία σας δραστηριότητα</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Γιατί τα χρησιμοποιώ</h2>
+  <p>Για να καταλαβαίνω πώς βρίσκουν και χρησιμοποιούν οι επισκέπτες τον ιστότοπο, ώστε να τον βελτιώνω. Δεν τα χρησιμοποιώ για διαφημίσεις. Δεν τα πουλάω, δεν τα μοιράζομαι και δεν τα συνδυάζω με άλλα δεδομένα.</p>
+
+  <h2>Πού αποθηκεύονται</h2>
+  <p>Τα δεδομένα φυλάσσονται σε ένα ιδιωτικό Google Sheet στον λογαριασμό μου Google, οπότε η Google τα αποθηκεύει για λογαριασμό μου. Λαμβάνω επίσης ειδοποίηση μέσω email όταν κάποιος επισκέπτεται τον ιστότοπο, με τα ίδια στοιχεία αλλά χωρίς τα τυχαία αναγνωριστικά. Ο ιστότοπος φιλοξενείται στο GitHub Pages. Το GitHub μπορεί να κρατά βασικά τεχνικά αρχεία καταγραφής, όπως διευθύνσεις IP, για την ασφάλεια της υπηρεσίας του. Για λεπτομέρειες, δείτε τη δήλωση απορρήτου του GitHub.</p>
+
+  <h2>Πόσο καιρό τα κρατάω</h2>
+  <p>Κρατάω τα δεδομένα επισκέψεων έως 12 μήνες. Ό,τι είναι παλαιότερο διαγράφεται αυτόματα κάθε μέρα. Διαγράφω τις ειδοποιήσεις email μέσα στους ίδιους 12 μήνες.</p>
+
+  <h2>Οι επιλογές σας</h2>
+  <p>Μπορείτε να αλλάξετε την επιλογή σας οποιαδήποτε στιγμή από τις «Ρυθμίσεις cookies» στο κάτω μέρος της <a href="/el">αρχικής σελίδας</a>. Αν απορρίψετε ή αν λήξει η προηγούμενη επιλογή σας, τα cookies ανάλυσης διαγράφονται από το πρόγραμμα περιήγησής σας. Μπορείτε επίσης να διαγράψετε τα cookies από τις ρυθμίσεις του προγράμματος περιήγησης.</p>
+  <p>Τα δεδομένα χρησιμοποιούν τυχαία αναγνωριστικά αντί για προσωπικά στοιχεία, οπότε συνήθως δεν μπορώ να τα συνδέσω με εσάς. Για οποιαδήποτε ερώτηση ή αίτημα, στείλτε μου email.</p>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Γιώργος Κανάρογλου</div>
+</footer>
+
+<script>
+/* Builds email links in the browser, so the address isn't in the page code for spam bots to collect. */
+document.querySelectorAll("[data-mail-user]").forEach(function (a) {
+  var address = a.getAttribute("data-mail-user") + "@" + a.getAttribute("data-mail-domain");
+  a.href = "mailto:" + address;
+  a.textContent = address;
+});
+</script>
+
+</body>
+</html>
