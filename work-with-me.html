@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Work with me | George Kanaroglou</title>
+<meta name="description" content="Find the right marketing project in three questions: pricing, brand, digital, analytics, consumer psychology and partnerships. George Kanaroglou, London and Athens.">
+<meta name="theme-color" content="#111111">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="George Kanaroglou">
+<meta property="og:title" content="Work with me | George Kanaroglou">
+<meta property="og:description" content="Find the right marketing project in three questions: pricing, brand, digital, analytics, consumer psychology and partnerships. George Kanaroglou, London and Athens.">
+<meta property="og:url" content="https://georgekanaroglou.com/work-with-me">
+<meta property="og:image" content="https://georgekanaroglou.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="George Kanaroglou. Full-stack marketing.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="el_GR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://georgekanaroglou.com/work-with-me">
+<link rel="alternate" hreflang="en" href="https://georgekanaroglou.com/work-with-me">
+<link rel="alternate" hreflang="el" href="https://georgekanaroglou.com/work-with-me-el">
+<link rel="alternate" hreflang="x-default" href="https://georgekanaroglou.com/work-with-me">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111111'/%3E%3Ctext x='16' y='22' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='14' text-anchor='middle' fill='%230077BC'%3EGK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface: #111111;
+    --raised: #1A1A1A;
+    --text: #F5F5F5;
+    --muted: #A3A3A3;
+    --line: #2A2A2A;
+    --primary: #0077BC;
+    --secondary: #009866;
+    --display: "Archivo Black", "Arial Black", Impact, sans-serif;
+    --body: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh;
+    background: var(--surface); color: var(--text);
+    font-family: var(--body); font-size: 1.0625rem; line-height: 1.55;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--text); outline-offset: 4px; }
+  .wrap { width: min(1200px, 100% - 2 * max(clamp(1.25rem, 4vw, 3rem), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px))); margin-inline: auto; }
+
+  /* Header */
+  .top { padding-block: 1.5rem; }
+  .top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .mark {
+    display: inline-flex; align-items: center; gap: .6rem; min-height: 44px;
+    font-family: var(--display); font-size: 1.5rem; letter-spacing: -.01em; text-decoration: none;
+  }
+  .livery { display: inline-flex; gap: .2rem; }
+  .livery i { display: block; width: .5rem; height: 1.35rem; transform: skewX(-18deg); }
+  .livery i:first-child { background: var(--primary); }
+  .livery i:last-child { background: var(--secondary); }
+  .top-link {
+    display: inline-flex; align-items: center; min-height: 44px;
+    font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--primary);
+  }
+  @media (hover: hover) and (pointer: fine) { .top-link:hover { border-color: var(--text); } }
+  /* Language switch */
+  .top-nav { display: flex; align-items: center; gap: 1.25rem; }
+  .lang { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-weight: 600; text-decoration: none; }
+  @media (hover: hover) and (pointer: fine) { .lang:hover { color: var(--text); } }
+
+  /* Headline */
+  main { flex: 1; }
+  h1 {
+    padding-block: clamp(2rem, 6vw, 4.5rem) clamp(1.75rem, 4vw, 3rem);
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(2.25rem, 10vw, 9rem); line-height: .9; letter-spacing: -.03em;
+  }
+  h1 span { display: block; }
+  h1 .livery { gap: .08em; margin-left: .2em; vertical-align: baseline; }
+  h1 .livery i { width: .3em; height: .66em; }
+
+  /* Intro and portrait */
+  .intro {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+    gap: clamp(2rem, 5vw, 5rem); align-items: end;
+    padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .lede { max-width: 32ch; font-size: clamp(1.15rem, 1.7vw, 1.45rem); line-height: 1.45; font-weight: 500; }
+  .facts {
+    list-style: none; display: grid; gap: .75rem; max-width: 34rem;
+    margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+  }
+  .facts li { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; font-size: .95rem; }
+  .facts span { color: var(--muted); }
+
+  .portrait {
+    position: relative; aspect-ratio: 4 / 5; width: 100%;
+    clip-path: polygon(12% 0, 100% 0, 88% 100%, 0 100%);
+    background: var(--raised); overflow: hidden;
+  }
+  .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .placeholder {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: var(--display); font-size: clamp(4rem, 9vw, 6.5rem); letter-spacing: -.03em; color: var(--text);
+    background:
+      linear-gradient(115deg, transparent 0 58%, var(--secondary) 58% 63%, transparent 63%),
+      linear-gradient(115deg, transparent 0 50%, var(--primary) 50% 57%, transparent 57%),
+      var(--raised);
+  }
+
+  /* Scrolling strip */
+  .ticker { overflow: hidden; padding-block: 1.1rem; background: var(--primary); color: #FFFFFF; }
+  .ticker-track { display: flex; width: max-content; animation: run 40s linear infinite; }
+  .ticker ul { display: flex; flex-shrink: 0; list-style: none; }
+  .ticker li {
+    display: flex; align-items: center; white-space: nowrap; padding-right: 2.25rem;
+    font-family: var(--display); font-size: clamp(1.1rem, 2.2vw, 1.6rem); letter-spacing: -.005em;
+  }
+  .ticker li::after {
+    content: ""; width: .5em; height: .85em; margin-left: 2.25rem;
+    background: #FFFFFF; opacity: .45; transform: skewX(-18deg);
+  }
+  @keyframes run { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; width: auto; }
+    .ticker ul { flex-wrap: wrap; padding-inline: 1.25rem; row-gap: .5rem; }
+    .ticker ul + ul { display: none; }
+  }
+
+  /* Contact */
+  .contact { padding-block: clamp(3rem, 7vw, 5.5rem); }
+  .contact p { margin-bottom: .75rem; color: var(--muted); }
+  .contact a {
+    font-family: var(--display); font-size: clamp(1.15rem, 4vw, 2.75rem); letter-spacing: -.02em;
+    text-decoration: none; border-bottom: 4px solid var(--primary); overflow-wrap: anywhere;
+  }
+  @media (hover: hover) and (pointer: fine) { .contact a:hover { border-color: var(--secondary); } }
+
+  footer { padding-block: 1.5rem; border-top: 1px solid var(--line); font-size: .875rem; color: var(--muted); }
+
+  /* Footer links */
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; flex-wrap: wrap; }
+  .foot-links { display: flex; gap: 1.25rem; }
+  .foot-links a, .linkish {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0;
+    background: none; border: 0; color: var(--muted); font: inherit; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  @media (hover: hover) and (pointer: fine) { .foot-links a:hover, .linkish:hover { color: var(--text); } }
+  .linkish:focus-visible { outline: 3px solid var(--text); outline-offset: 4px; }
+  .linkish[hidden] { display: none; }
+
+  /* Cookie banner */
+  .consent {
+    position: fixed; z-index: 10; left: 50%; bottom: clamp(.75rem, 3vw, 1.5rem); transform: translateX(-50%);
+    width: min(40rem, 100% - 1.5rem); display: grid; gap: 1rem;
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    background: var(--raised); border: 1px solid var(--line); border-left: 6px solid var(--primary);
+  }
+  .consent[hidden] { display: none; }
+  .consent p { font-size: .95rem; }
+  .consent-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .btn {
+    min-height: 44px; min-width: 7.5rem; padding: .6rem 1.4rem; cursor: pointer;
+    font: inherit; font-weight: 700; color: var(--text); background: transparent; border: 2px solid var(--text);
+  }
+  .btn-primary { color: #FFFFFF; background: var(--primary); border-color: var(--primary); }
+  .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+  .contact .more { margin: 2rem 0 0; }
+  .contact .more a { color: var(--text); font-family: var(--body); font-size: 1.05rem; font-weight: 600; letter-spacing: 0; border-bottom-width: 2px; }
+
+  /* Work with me: quiz */
+  main > .wrap > h1 { font-size: clamp(2.25rem, 7vw, 6rem); padding-block: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2rem); }
+  .wwm-lede { max-width: 36ch; margin-bottom: clamp(2rem, 5vw, 3.5rem); font-size: clamp(1.15rem, 1.7vw, 1.45rem); line-height: 1.45; font-weight: 500; }
+  .quiz, .result { max-width: 46rem; padding-bottom: clamp(3rem, 7vw, 5rem); }
+  .quiz[hidden], .result[hidden] { display: none; }
+  .quiz-progress { display: flex; gap: .45rem; margin-bottom: 1.1rem; }
+  .quiz-progress i { display: block; width: 2.4rem; height: .6rem; background: var(--line); transform: skewX(-18deg); transition: background-color .25s; }
+  .quiz-progress i.done { background: var(--primary); }
+  .quiz-progress i.now { background: var(--secondary); }
+  .quiz-step { color: var(--muted); font-size: .95rem; margin-bottom: .4rem; }
+  .quiz-q, .result h2, .browse h2 {
+    font-family: var(--display); font-weight: 400; letter-spacing: -.02em;
+    font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.05; margin-bottom: 1.5rem;
+  }
+  .quiz-q:focus, .result h2:focus { outline: none; }
+  .quiz-options { display: grid; gap: .75rem; }
+  .option {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    width: 100%; min-height: 3.5rem; padding: 1rem 1.25rem; text-align: left; cursor: pointer;
+    font: inherit; font-weight: 600; font-size: 1.05rem; color: var(--text);
+    background: var(--raised); border: 2px solid var(--line); transition: border-color .15s;
+  }
+  .option::after {
+    content: ""; flex-shrink: 0; width: .5rem; height: 1.1rem;
+    background: var(--primary); transform: skewX(-18deg); opacity: 0; transition: opacity .15s;
+  }
+  .option[aria-pressed="true"] { border-color: var(--primary); }
+  .option[aria-pressed="true"]::after { opacity: 1; }
+  .option:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  .quiz-back { margin-top: 1rem; }
+
+  /* Work with me: result */
+  .result-intro { color: var(--muted); margin-top: -.75rem; }
+  .result-list { display: grid; gap: 1rem; margin-block: 1.5rem; }
+  .pick {
+    display: grid; gap: .6rem; padding: 1.25rem 1.5rem;
+    background: var(--raised); border: 1px solid var(--line); border-left: 6px solid var(--primary);
+  }
+  .pick h3 { font-family: var(--display); font-weight: 400; font-size: 1.35rem; line-height: 1.15; }
+  .pick .meta { color: var(--muted); font-size: .92rem; }
+  .result-note { color: var(--muted); max-width: 46ch; margin-bottom: 1.25rem; }
+  .result-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  a.btn { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+
+  /* Work with me: browse everything */
+  .browse { border-top: 1px solid var(--line); padding-block: clamp(3rem, 7vw, 5rem); }
+  .filters { display: grid; gap: .9rem; margin-bottom: 1.25rem; }
+  .filter-group { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+  .filter-label { min-width: 5rem; color: var(--muted); font-size: .9rem; }
+  .chip {
+    min-height: 40px; padding: .4rem .9rem; cursor: pointer;
+    font: inherit; font-size: .92rem; font-weight: 600; color: var(--text);
+    background: transparent; border: 1px solid var(--line);
+  }
+  .chip[aria-pressed="true"] { color: #FFFFFF; background: var(--primary); border-color: var(--primary); }
+  .chip:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+  .linkish[hidden] { display: none; }
+  .offer-count { color: var(--muted); font-size: .9rem; margin-bottom: 1rem; }
+  .offer-list { list-style: none; }
+  .offer {
+    display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) auto;
+    gap: .5rem 2rem; align-items: baseline; padding-block: 1.25rem; border-top: 1px solid var(--line);
+  }
+  .offer h3 { font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
+  .offer .area { display: block; margin-top: .2rem; color: var(--muted); font-size: .88rem; }
+  .offer p { max-width: 60ch; }
+  .offer .method { margin-top: .3rem; color: var(--muted); font-size: .9rem; }
+  .stages { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .stage { padding: .15rem .5rem; border: 1px solid var(--line); color: var(--muted); font-size: .8rem; font-weight: 600; white-space: nowrap; }
+  .offer-empty { color: var(--muted); padding-block: 1rem; }
+  .offer-empty[hidden] { display: none; }
+  @media (max-width: 760px) { .offer { grid-template-columns: 1fr; } }
+
+
+  @media (max-width: 760px) {
+    .intro { grid-template-columns: 1fr; }
+    .portrait { max-width: 20rem; }
+    .facts li { grid-template-columns: 5rem 1fr; }
+  }
+
+  /* Even line breaks: no lonely last words */
+  h1, h2, h3 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+
+  /* Main navigation */
+  .top .wrap { flex-wrap: wrap; row-gap: .25rem; }
+  .top-nav { flex-wrap: wrap; column-gap: 1.25rem; }
+  .nav-link {
+    display: inline-flex; align-items: center; min-height: 44px;
+    font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent;
+  }
+  @media (hover: hover) and (pointer: fine) { .nav-link:hover { border-color: var(--muted); } }
+  .nav-link[aria-current="page"] { border-color: var(--secondary); }
+  @media (max-width: 420px) { .top-nav { column-gap: 1rem; } }
+
+  /* ---------- Motion ---------- */
+  :root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);      /* entering, exiting, press */
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* movement on screen */
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* surfaces rising from an edge */
+  }
+  /* Links: colour changes ease rather than snap */
+  .top-link, .nav-link, .lang, .contact a, .foot-links a, .linkish { transition: border-color 150ms ease, color 150ms ease; }
+
+  /* Press feedback: buttons give a little under your finger */
+  .btn { transition: transform 160ms var(--ease-out); }
+  .btn:active { transform: scale(0.97); transition-duration: 100ms; }
+
+  /* Cookie banner rises from the bottom edge and leaves the same way */
+  .consent {
+    left: 0; right: 0; margin-inline: auto;
+    opacity: 0; transform: translateY(100%);
+    transition: opacity 250ms var(--ease-out), transform 400ms var(--ease-drawer);
+  }
+  .consent.is-open { opacity: 1; transform: translateY(0); }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn:active { transform: none; }
+    .consent, .consent.is-open { transform: none; transition: opacity 200ms ease; }
+  }
+
+  /* Quiz options and filter chips: press feedback, and hover only with a mouse */
+  .option { transition: border-color 150ms ease, transform 160ms var(--ease-out); }
+  .option:active { transform: scale(0.98); transition-duration: 100ms; }
+  .option::after { transition: opacity 150ms ease; }
+  .chip { transition: transform 160ms var(--ease-out), border-color 150ms ease, background-color 150ms ease, color 150ms ease; }
+  .chip:active { transform: scale(0.97); transition-duration: 100ms; }
+  .quiz-progress i { transition: background-color 200ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .option:hover { border-color: var(--primary); }
+    .option:hover::after { opacity: 1; }
+    .chip:hover { border-color: var(--muted); }
+  }
+
+  /* Each new question slides in from the direction you moved: forward from the right, back from the left */
+  .quiz.step-fwd .quiz-q, .quiz.step-fwd .option { animation: step-fwd 250ms var(--ease-out) both; }
+  .quiz.step-back .quiz-q, .quiz.step-back .option { animation: step-back 250ms var(--ease-out) both; }
+  .quiz-options .option:nth-child(2) { animation-delay: 30ms; }
+  .quiz-options .option:nth-child(3) { animation-delay: 60ms; }
+  .quiz-options .option:nth-child(4) { animation-delay: 90ms; }
+  .quiz-options .option:nth-child(5) { animation-delay: 120ms; }
+  .quiz-options .option:nth-child(6) { animation-delay: 150ms; }
+  @keyframes step-fwd { from { opacity: 0; transform: translateX(16px); } }
+  @keyframes step-back { from { opacity: 0; transform: translateX(-16px); } }
+
+  /* The recommendation builds up in reading order */
+  .result.is-in > *, .result.is-in .pick { animation: rise 300ms var(--ease-out) both; }
+  .result.is-in > .result-intro { animation-delay: 40ms; }
+  .result.is-in > .result-list { animation: none; }
+  .result.is-in .pick:nth-child(1) { animation-delay: 80ms; }
+  .result.is-in .pick:nth-child(2) { animation-delay: 130ms; }
+  .result.is-in .pick:nth-child(3) { animation-delay: 180ms; }
+  .result.is-in > .result-note { animation-delay: 230ms; }
+  .result.is-in > .result-actions { animation-delay: 260ms; }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+  @keyframes fade { from { opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .option:active, .chip:active { transform: none; }
+    .quiz.step-fwd .quiz-q, .quiz.step-fwd .option,
+    .quiz.step-back .quiz-q, .quiz.step-back .option,
+    .result.is-in > *, .result.is-in .pick { animation-name: fade; }
+    .result.is-in > .result-list { animation: none; }
+  }
+
+  /* Moving between pages: the header stays put while the page underneath crossfades (Chrome, Edge, Safari 18+) */
+  @view-transition { navigation: auto; }
+  .top { view-transition-name: site-header; }
+  ::view-transition-group(*) { animation-duration: 200ms; animation-timing-function: var(--ease-out); }
+
+  /* ---------- Phones ---------- */
+  /* No grey flash on tap (every control has its own :active), no font inflation in landscape */
+  html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  /* Taps fire straight away, with no double-tap-zoom wait */
+  button, a { touch-action: manipulation; }
+  /* Long-pressing a control doesn't select its label. Content, including the email address, stays selectable */
+  button, .mark, .top-link, .nav-link, .lang { -webkit-user-select: none; user-select: none; }
+  /* Press feedback for text links */
+  .mark:active, .top-link:active, .nav-link:active, .lang:active, .foot-links a:active, .linkish:active, .contact a:active, .links a:active { opacity: .7; }
+  /* Landscape on a notched phone: colour runs edge to edge, content stays clear of the notch */
+  footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); }
+  .consent { bottom: calc(clamp(.75rem, 3vw, 1.5rem) + env(safe-area-inset-bottom, 0px)); }
+  ::view-transition-old(*), ::view-transition-new(*) { animation-timing-function: var(--ease-out); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="George Kanaroglou, home">
+      <span class="livery" aria-hidden="true"><i></i><i></i></span>GK
+    </a>
+    <nav class="top-nav" aria-label="Language and contact">
+      <a class="lang" href="/work-with-me-el" lang="el" hreflang="el">Ελληνικά</a>
+      <a class="nav-link" href="/work-with-me" aria-current="page">Work with me</a>
+      <a class="top-link" href="/#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>
+      <span>Work</span>
+      <span>with me.<span class="livery" aria-hidden="true"><i></i><i></i></span></span>
+    </h1>
+    <p class="wwm-lede">Answer three quick questions and I’ll suggest where to start. Or browse everything I offer below.</p>
+    <noscript><p class="wwm-lede">This page needs JavaScript. You can email me at hello at georgekanaroglou.com.</p></noscript>
+
+    <section class="quiz" id="quiz" aria-labelledby="quiz-q">
+      <div class="quiz-progress" id="quiz-progress" aria-hidden="true"><i></i><i></i><i></i></div>
+      <p class="quiz-step" id="quiz-step"></p>
+      <h2 class="quiz-q" id="quiz-q" tabindex="-1"></h2>
+      <div class="quiz-options" id="quiz-options"></div>
+      <button type="button" class="linkish quiz-back" id="quiz-back" hidden>Back</button>
+    </section>
+
+    <section class="result" id="result" aria-labelledby="result-title" hidden>
+      <h2 id="result-title" tabindex="-1">Here’s where I’d start</h2>
+      <p class="result-intro">Based on your answers, these would help most.</p>
+      <div class="result-list" id="result-list"></div>
+      <p class="result-note">Every project starts with a free 20-minute call, so we can check it’s the right fit.</p>
+      <div class="result-actions" id="result-actions"></div>
+    </section>
+  </div>
+
+  <section class="browse" id="browse" aria-labelledby="browse-title">
+    <div class="wrap">
+      <h2 id="browse-title">Everything I offer</h2>
+      <div class="filters">
+        <div class="filter-group" id="filter-area" role="group" aria-labelledby="filter-area-label"><span class="filter-label" id="filter-area-label">Area</span></div>
+        <div class="filter-group" id="filter-stage" role="group" aria-labelledby="filter-stage-label"><span class="filter-label" id="filter-stage-label">Stage</span></div>
+      </div>
+      <p class="offer-count" id="offer-count" aria-live="polite"></p>
+      <ul class="offer-list" id="offer-list"></ul>
+      <p class="offer-empty" id="offer-empty" hidden>Nothing matches those filters. Clear them to see everything.</p>
+      <button type="button" class="linkish" id="clear-filters" hidden>Clear filters</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 George Kanaroglou</span>
+    <span class="foot-links">
+      <a href="/privacy.html">Privacy</a>
+      <button type="button" class="linkish" id="cookie-settings" hidden>Cookie settings</button>
+    </span>
+  </div>
+</footer>
+
+<script>
+/* Builds email links in the browser, so the address isn't in the page code for spam bots to collect. */
+document.querySelectorAll("[data-mail-user]").forEach(function (a) {
+  var address = a.getAttribute("data-mail-user") + "@" + a.getAttribute("data-mail-domain");
+  a.href = "mailto:" + address;
+  a.textContent = address;
+});
+</script>
+
+<div class="consent" id="consent" role="region" aria-label="Cookie choice" hidden>
+  <p>I use cookies to count visits and see what’s working on this site. No ads, and no tracking on other sites. <a href="/privacy.html">How I use them</a></p>
+  <div class="consent-actions">
+    <button type="button" class="btn btn-primary" data-consent="yes">Accept</button>
+    <button type="button" class="btn" data-consent="no">Decline</button>
+  </div>
+</div>
+
+<script>
+/* Site analytics with consent. Data goes to George's own Google Sheet. */
+(function () {
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbz5sD8rScVK1-w9RdmOq4RDYou_SAV5GeR1eWoshG4t2qJh_NkrpBA9lp_AXw14qMOM/exec";
+  if (ENDPOINT.indexOf("https://script.google.com/") !== 0) return;
+
+  var SITE = "georgekanaroglou.com";
+  var banner = document.getElementById("consent");
+  var settings = document.getElementById("cookie-settings");
+  var q = new URLSearchParams(location.search);
+
+  // Visit georgekanaroglou.com/?notrack=1 once on each of your devices to stop counting your own visits (?notrack=0 to undo).
+  var notrack = false;
+  try {
+    if (q.get("notrack") === "1") localStorage.setItem("gk-notrack", "1");
+    if (q.get("notrack") === "0") localStorage.removeItem("gk-notrack");
+    notrack = localStorage.getItem("gk-notrack") === "1";
+  } catch (e) {}
+  var isBot = navigator.webdriver || /bot|crawl|spider|slurp|headless|preview|lighthouse/i.test(navigator.userAgent);
+
+  function getCookie(name) {
+    var m = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function setCookie(name, value, seconds) {
+    document.cookie = name + "=" + encodeURIComponent(value) + "; path=/; max-age=" + seconds + "; SameSite=Lax; Secure";
+  }
+  function deleteCookie(name) {
+    document.cookie = name + "=; path=/; max-age=0; SameSite=Lax; Secure";
+  }
+  function newId() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return Math.random().toString(36).slice(2) + Date.now().toString(36);
+  }
+
+  var ref = "";
+  try { ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch (e) {}
+
+  // Short links: georgekanaroglou.com/cv, /in and /mail forward here with ?ref=...
+  var REF_NAMES = { cv: "CV", "in": "LinkedIn", mail: "Email" };
+
+  function source() {
+    if (q.get("utm_source")) return q.get("utm_source");
+    var r = (q.get("ref") || "").toLowerCase();
+    if (r) return REF_NAMES[r] || r;
+    if (!ref) return "Direct";
+    if (ref === location.hostname.replace(/^www\./, "")) return "Internal";
+    if (ref === "t.co" || ref === "x.com") return "X";
+    var map = [["linkedin", "LinkedIn"], ["lnkd.in", "LinkedIn"], ["outlook", "Email"], ["mail.", "Email"],
+               ["google", "Google"], ["bing", "Bing"], ["duckduckgo", "DuckDuckGo"], ["github", "GitHub"],
+               ["twitter", "X"], ["facebook", "Facebook"], ["instagram", "Instagram"]];
+    for (var i = 0; i < map.length; i++) { if (ref.indexOf(map[i][0]) > -1) return map[i][1]; }
+    return ref;
+  }
+
+  var w = window.innerWidth;
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+
+  var base = {
+    site: SITE,
+    page: location.pathname,
+    source: source(),
+    referrer: ref,
+    utm_source: q.get("utm_source") || "",
+    utm_medium: q.get("utm_medium") || "",
+    utm_campaign: q.get("utm_campaign") || "",
+    device: w < 768 ? "Mobile" : w < 1024 ? "Tablet" : "Desktop",
+    screen: w,
+    language: navigator.language || "",
+    timezone: tz
+  };
+
+  // Tidy the address bar once the source is recorded, so visitors just see georgekanaroglou.com.
+  try {
+    var tidy = false;
+    ["ref", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "notrack"].forEach(function (k) {
+      if (q.has(k)) tidy = true;
+    });
+    if (tidy && history.replaceState) history.replaceState(null, "", location.pathname + location.hash);
+  } catch (e) {}
+
+  var visitorType = null;
+
+  function send(event, extra) {
+    if (notrack || isBot || getCookie("gk_consent") !== "yes") return;
+    var vid = getCookie("gk_vid");
+    if (visitorType === null) visitorType = vid ? "returning" : "new";
+    if (!vid) vid = newId();
+    var sid = getCookie("gk_sid") || newId();
+    setCookie("gk_vid", vid, 60 * 60 * 24 * 365);
+    setCookie("gk_sid", sid, 60 * 30);
+    var d = Object.assign({}, base, { event: event, vid: vid, sid: sid, visitor: visitorType }, extra || {});
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, body: JSON.stringify(d) }); } catch (e) {}
+  }
+
+  window.gkTrack = send;
+
+  var start = Date.now(), viewSent = false, left = false;
+  function sendView() {
+    if (viewSent) return;
+    viewSent = true;
+    start = Date.now();
+    send("view");
+  }
+
+  var bannerTimer;
+  function openBanner() {
+    clearTimeout(bannerTimer);
+    banner.hidden = false;
+    void banner.offsetWidth; // set the start position before it animates in
+    banner.classList.add("is-open");
+  }
+  function closeBanner() {
+    var hadFocus = banner.contains(document.activeElement);
+    banner.classList.remove("is-open");
+    bannerTimer = setTimeout(function () { banner.hidden = true; }, 400);
+    // Keyboard users keep their place instead of being dropped at the top of the page
+    if (hadFocus && !settings.hidden) settings.focus({ preventScroll: true });
+  }
+
+  function decide(choice) {
+    setCookie("gk_consent", choice, 60 * 60 * 24 * 182);
+    closeBanner();
+    if (choice === "yes") {
+      sendView();
+    } else {
+      deleteCookie("gk_vid");
+      deleteCookie("gk_sid");
+    }
+  }
+
+  banner.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-consent]");
+    if (b) decide(b.getAttribute("data-consent"));
+  });
+  settings.hidden = false;
+  settings.addEventListener("click", function () {
+    openBanner();
+    banner.querySelector("button").focus({ preventScroll: true });
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden" && viewSent && !left) {
+      left = true;
+      send("leave", { seconds: Math.round((Date.now() - start) / 1000) });
+    }
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest) return;
+    if (e.target.closest('a[href^="mailto:"]')) send("email_click");
+    else if (e.target.closest('a[href$="#contact"]')) send("cta_click", { label: "Get in touch" });
+  });
+
+  var choice = getCookie("gk_consent");
+  // Without a current "yes", no analytics cookies are kept (for example after consent expires).
+  if (choice !== "yes") {
+    deleteCookie("gk_vid");
+    deleteCookie("gk_sid");
+  }
+  if (!choice) openBanner();
+  else if (choice === "yes") sendView();
+})();
+</script>
+
+<script>
+/* "Work with me": three questions, a recommendation, and a filterable list. */
+(function () {
+  var L = {"offers": [{"id": "wtp", "area": "pricing", "stages": ["plan", "measure"], "who": ["athlete", "brand", "startup", "larger"], "title": "Willingness-to-pay study", "get": "The price range your customers will accept, and the point where demand starts to drop.", "method": "Van Westendorp price sensitivity survey"}, {"id": "conjoint", "area": "pricing", "stages": ["plan"], "who": ["brand", "startup", "larger"], "title": "Conjoint pricing study", "get": "Which features people value most, what each one is worth, and the best package to launch.", "method": "Choice-based conjoint analysis"}, {"id": "bundles", "area": "pricing", "stages": ["build"], "who": ["brand", "startup", "larger"], "title": "Price and package structure", "get": "A clear set of tiers or bundles, with prices and the logic behind them.", "method": "Economic value analysis, tiering and bundling"}, {"id": "ratecard", "area": "pricing", "stages": ["build"], "who": ["athlete"], "title": "Sponsorship rate card", "get": "Prices for your sponsorship assets, from logo space to social posts, based on reach and value.", "method": "Audience and inventory valuation"}, {"id": "brand_audit", "area": "brand", "stages": ["plan", "measure"], "who": ["athlete", "brand", "startup", "larger"], "title": "Brand audit", "get": "An honest review of how your brand looks, sounds and performs, with what to keep, change, stop and start.", "method": "Keep, modify, stop, start framework"}, {"id": "positioning", "area": "brand", "stages": ["plan"], "who": ["athlete", "brand", "startup", "larger"], "title": "Positioning and messaging", "get": "A clear statement of who you’re for and why you’re different, plus the key messages to say it.", "method": "Positioning and value proposition work"}, {"id": "perceptual", "area": "brand", "stages": ["plan", "measure"], "who": ["brand", "startup", "larger"], "title": "Competitor positioning map", "get": "A map of how customers see you next to your competitors, and the gaps you could own.", "method": "Perceptual mapping from survey data"}, {"id": "gps", "area": "digital", "stages": ["plan"], "who": ["athlete", "brand", "startup", "larger"], "title": "GPS digital strategy", "get": "A digital strategy in three parts: Ground (where you stand today), Playbook (the channels, content and actions to win) and Systems (the tools and measures that keep it running).", "method": "GPS framework: Ground, Playbook, Systems"}, {"id": "social_audit", "area": "digital", "stages": ["measure"], "who": ["athlete", "brand", "startup", "larger"], "title": "Social media audit", "get": "A channel-by-channel review of what’s working, with clear next steps.", "method": "Engagement benchmarking and content review"}, {"id": "dashboard", "area": "analytics", "stages": ["build", "measure"], "who": ["athlete", "brand", "startup", "larger"], "title": "Content performance dashboard", "get": "A simple dashboard showing which posts and platforms drive real engagement.", "method": "Cross-platform engagement analysis"}, {"id": "abtest", "area": "analytics", "stages": ["build", "measure"], "who": ["brand", "startup", "larger"], "title": "A/B test design", "get": "A test plan with the right sample size, so you know a result is real before you act on it.", "method": "Experiment design and power analysis"}, {"id": "survey", "area": "analytics", "stages": ["plan", "measure"], "who": ["athlete", "brand", "startup", "larger"], "title": "Survey design and analysis", "get": "A well-built survey and a clear readout of what your audience thinks and wants.", "method": "Qualtrics survey design, regression and segmentation"}, {"id": "journey", "area": "psychology", "stages": ["measure"], "who": ["brand", "startup", "larger"], "title": "Customer journey friction review", "get": "The points where people drop off on the way to buying, and how to fix them.", "method": "Customer decision journey mapping"}, {"id": "nudge", "area": "psychology", "stages": ["build"], "who": ["brand", "startup", "larger"], "title": "Behavioural nudge plan", "get": "Small, testable changes to wording, defaults and choices that make the action you want easier.", "method": "Choice architecture and behavioural science"}, {"id": "prospects", "area": "partners", "stages": ["build"], "who": ["athlete"], "title": "Sponsor prospect list", "get": "A researched list of brands likely to sponsor you, with why each one fits.", "method": "Audience and brand fit analysis"}, {"id": "proposal", "area": "partners", "stages": ["build"], "who": ["athlete", "brand", "startup", "larger"], "title": "Partnership proposal deck", "get": "A pitch deck with tiered packages, built to make the decision easy.", "method": "Value-based packaging and price anchoring"}], "areas": [{"id": "pricing", "label": "Pricing"}, {"id": "brand", "label": "Brand"}, {"id": "digital", "label": "Digital marketing"}, {"id": "analytics", "label": "Analytics"}, {"id": "psychology", "label": "Consumer psychology"}, {"id": "partners", "label": "Sales and partnerships"}], "stages": [{"id": "plan", "label": "Plan"}, {"id": "build", "label": "Build"}, {"id": "measure", "label": "Measure"}], "questions": [{"key": "goal", "q": "What are you working on?", "options": [{"id": "pricing", "label": "Pricing a product or package"}, {"id": "brand", "label": "Building or refreshing a brand"}, {"id": "digital", "label": "Growing online"}, {"id": "analytics", "label": "Proving what’s working"}, {"id": "psychology", "label": "Understanding my customers"}, {"id": "partners", "label": "Finding sponsors or partners"}]}, {"key": "stage", "q": "Where are you now?", "options": [{"id": "plan", "label": "Just starting. I need a plan."}, {"id": "build", "label": "I have a plan. I need it built."}, {"id": "measure", "label": "It’s running. I need it measured."}]}, {"key": "who", "q": "Who are you?", "options": [{"id": "athlete", "label": "An athlete or team"}, {"id": "brand", "label": "A sports or lifestyle brand"}, {"id": "startup", "label": "A start-up or small business"}, {"id": "larger", "label": "A larger company"}]}], "ui": {"step": "Question {n} of {total}", "back": "Back", "result_title": "Here’s where I’d start", "result_intro": "Based on your answers, these would help most.", "method": "Method:", "book": "Book a 20-minute call", "email": "Email me about this", "restart": "Start again", "subject": "Project enquiry: ", "note": "Every project starts with a free 20-minute call, so we can check it’s the right fit.", "browse": "Everything I offer", "area": "Area", "stage": "Stage", "clear": "Clear filters", "count": "Showing {a} of {b}", "empty": "Nothing matches those filters. Clear them to see everything.", "result_intro_one": "Based on your answers, this would help most."}};
+  // Paste your Google booking page link between the quotes to show a "Book a call" button.
+  var BOOKING_URL = "";
+  var MAIL = ["hello", "georgekanaroglou.com"];
+
+  var answers = {}, step = 0;
+  function $(id) { return document.getElementById(id); }
+  function make(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function track(event, extra) { if (typeof window.gkTrack === "function") window.gkTrack(event, extra); }
+
+  var areaName = {}, stageName = {}, stageOrder = {};
+  L.areas.forEach(function (a) { areaName[a.id] = a.label; });
+  L.stages.forEach(function (s, i) { stageName[s.id] = s.label; stageOrder[s.id] = i; });
+
+  /* ---------- Questions ---------- */
+  function showStep(focus, dir) {
+    var quiz = $("quiz");
+    quiz.classList.remove("step-fwd", "step-back");
+    if (dir) { void quiz.offsetWidth; quiz.classList.add(dir < 0 ? "step-back" : "step-fwd"); }
+    var q = L.questions[step];
+    $("quiz-step").textContent = L.ui.step.replace("{n}", step + 1).replace("{total}", L.questions.length);
+    $("quiz-q").textContent = q.q;
+    var box = $("quiz-options");
+    box.innerHTML = "";
+    q.options.forEach(function (o) {
+      var b = make("button", "option", o.label);
+      b.type = "button";
+      b.setAttribute("aria-pressed", answers[q.key] === o.id ? "true" : "false");
+      b.addEventListener("click", function () { choose(q.key, o.id); });
+      box.appendChild(b);
+    });
+    var bars = $("quiz-progress").children;
+    for (var i = 0; i < bars.length; i++) bars[i].className = i < step ? "done" : (i === step ? "now" : "");
+    $("quiz-back").hidden = step === 0;
+    if (focus) $("quiz-q").focus();
+  }
+
+  function choose(key, value) {
+    answers[key] = value;
+    if (step < L.questions.length - 1) { step++; showStep(true, 1); }
+    else showResult();
+  }
+
+  $("quiz-back").addEventListener("click", function () {
+    if (step > 0) { step--; showStep(true, -1); }
+  });
+
+  /* ---------- Matching ---------- */
+  // A goal's own area scores highest; related areas can fill remaining spots.
+  var RELATED = {
+    pricing: ["partners"], brand: ["psychology"], digital: ["analytics", "psychology"],
+    analytics: ["digital"], psychology: ["analytics", "brand"], partners: ["pricing"]
+  };
+
+  function recommend(a) {
+    var scored = [];
+    L.offers.forEach(function (o, i) {
+      if (o.who.indexOf(a.who) === -1) return;
+      var s;
+      if (o.area === a.goal) s = 6;
+      else if ((RELATED[a.goal] || []).indexOf(o.area) > -1) s = 2;
+      else return;
+      if (o.stages.indexOf(a.stage) > -1) s += 3;
+      scored.push({ o: o, s: s, i: i });
+    });
+    scored.sort(function (x, y) { return y.s - x.s || x.i - y.i; });
+    var picks = scored.filter(function (x) { return x.s >= 5; }).slice(0, 3);
+    if (!picks.length) picks = scored.slice(0, 2);
+    return picks.map(function (x) { return x.o; });
+  }
+
+  function showResult() {
+    var picks = recommend(answers);
+    document.querySelector(".result-intro").textContent = picks.length === 1 ? L.ui.result_intro_one : L.ui.result_intro;
+    var list = $("result-list");
+    list.innerHTML = "";
+    picks.forEach(function (o) {
+      var card = make("article", "pick");
+      card.appendChild(make("h3", null, o.title));
+      card.appendChild(make("p", null, o.get));
+      card.appendChild(make("p", "meta", L.ui.method + " " + o.method));
+      list.appendChild(card);
+    });
+
+    var actions = $("result-actions");
+    actions.innerHTML = "";
+    if (BOOKING_URL) {
+      var book = make("a", "btn btn-primary", L.ui.book);
+      book.href = BOOKING_URL;
+      book.target = "_blank";
+      book.rel = "noopener";
+      book.addEventListener("click", function () { track("booking_click", { label: answers.goal }); });
+      actions.appendChild(book);
+    }
+    var subject = L.ui.subject + picks.map(function (o) { return o.title; }).join(", ");
+    var mail = make("a", BOOKING_URL ? "btn" : "btn btn-primary", L.ui.email);
+    mail.href = "mailto:" + MAIL.join("@") + "?subject=" + encodeURIComponent(subject);
+    actions.appendChild(mail);
+    var again = make("button", "btn", L.ui.restart);
+    again.type = "button";
+    again.addEventListener("click", restart);
+    actions.appendChild(again);
+
+    $("quiz").hidden = true;
+    $("result").classList.remove("is-in");
+    $("result").hidden = false;
+    void $("result").offsetWidth;
+    $("result").classList.add("is-in");
+    $("result-title").focus();
+    track("quiz_complete", { label: [answers.goal, answers.stage, answers.who].join("|") });
+  }
+
+  function restart() {
+    answers = {};
+    step = 0;
+    $("result").hidden = true;
+    $("quiz").hidden = false;
+    showStep(true, 1);
+  }
+
+  /* ---------- Browse everything ---------- */
+  var filters = { area: [], stage: [] };
+
+  function addChips(groupId, items, key) {
+    var group = $(groupId);
+    items.forEach(function (item) {
+      var b = make("button", "chip", item.label);
+      b.type = "button";
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function () {
+        var list = filters[key], i = list.indexOf(item.id);
+        if (i > -1) list.splice(i, 1); else list.push(item.id);
+        b.setAttribute("aria-pressed", i > -1 ? "false" : "true");
+        renderList();
+      });
+      group.appendChild(b);
+    });
+  }
+
+  function renderList() {
+    var shown = L.offers.filter(function (o) {
+      var areaOk = !filters.area.length || filters.area.indexOf(o.area) > -1;
+      var stageOk = !filters.stage.length || o.stages.some(function (s) { return filters.stage.indexOf(s) > -1; });
+      return areaOk && stageOk;
+    });
+    var ul = $("offer-list");
+    ul.innerHTML = "";
+    shown.forEach(function (o) {
+      var li = make("li", "offer");
+      var head = make("div");
+      head.appendChild(make("h3", null, o.title));
+      head.appendChild(make("span", "area", areaName[o.area]));
+      var body = make("div");
+      body.appendChild(make("p", null, o.get));
+      body.appendChild(make("p", "method", L.ui.method + " " + o.method));
+      var tags = make("div", "stages");
+      o.stages.slice().sort(function (x, y) { return stageOrder[x] - stageOrder[y]; })
+        .forEach(function (s) { tags.appendChild(make("span", "stage", stageName[s])); });
+      li.appendChild(head);
+      li.appendChild(body);
+      li.appendChild(tags);
+      ul.appendChild(li);
+    });
+    $("offer-count").textContent = L.ui.count.replace("{a}", shown.length).replace("{b}", L.offers.length);
+    $("offer-empty").hidden = shown.length > 0;
+    $("clear-filters").hidden = !(filters.area.length || filters.stage.length);
+  }
+
+  $("clear-filters").addEventListener("click", function () {
+    filters.area = [];
+    filters.stage = [];
+    document.querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", "false"); });
+    renderList();
+  });
+
+  addChips("filter-area", L.areas, "area");
+  addChips("filter-stage", L.stages, "stage");
+  showStep(false);
+  renderList();
+})();
+</script>
+
+</body>
+</html>

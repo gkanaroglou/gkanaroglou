@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Γιώργος Κανάρογλου | Ολοκληρωμένο marketing</title>
+<meta name="description" content="Γιώργος Κανάρογλου. Ολοκληρωμένο marketing: τιμολόγηση, στρατηγική brand, ψηφιακό marketing, ανάλυση δεδομένων και ψυχολογία καταναλωτή. Λονδίνο και Αθήνα.">
+<meta name="theme-color" content="#111111">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Γιώργος Κανάρογλου">
+<meta property="og:title" content="Γιώργος Κανάρογλου | Ολοκληρωμένο marketing">
+<meta property="og:description" content="Γιώργος Κανάρογλου. Ολοκληρωμένο marketing: τιμολόγηση, στρατηγική brand, ψηφιακό marketing, ανάλυση δεδομένων και ψυχολογία καταναλωτή. Λονδίνο και Αθήνα.">
+<meta property="og:url" content="https://georgekanaroglou.com/el">
+<meta property="og:image" content="https://georgekanaroglou.com/og-image-el.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γιώργος Κανάρογλου. Ολοκληρωμένο marketing.">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://georgekanaroglou.com/el">
+<link rel="alternate" hreflang="en" href="https://georgekanaroglou.com/">
+<link rel="alternate" hreflang="el" href="https://georgekanaroglou.com/el">
+<link rel="alternate" hreflang="x-default" href="https://georgekanaroglou.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111111'/%3E%3Ctext x='16' y='22' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='14' text-anchor='middle' fill='%230077BC'%3EGK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface: #111111;
+    --raised: #1A1A1A;
+    --text: #F5F5F5;
+    --muted: #A3A3A3;
+    --line: #2A2A2A;
+    --primary: #0077BC;
+    --secondary: #009866;
+    --display: "Commissioner", "Arial Black", system-ui, sans-serif;
+    --body: "Commissioner", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh;
+    background: var(--surface); color: var(--text);
+    font-family: var(--body); font-size: 1.0625rem; line-height: 1.55;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--text); outline-offset: 4px; }
+  .wrap { width: min(1200px, 100% - 2 * max(clamp(1.25rem, 4vw, 3rem), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px))); margin-inline: auto; }
+
+  /* Header */
+  .top { padding-block: 1.5rem; }
+  .top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .mark {
+    display: inline-flex; align-items: center; gap: .6rem; min-height: 44px;
+    font-family: var(--display); font-size: 1.5rem; letter-spacing: -.01em; text-decoration: none;
+  }
+  .livery { display: inline-flex; gap: .2rem; }
+  .livery i { display: block; width: .5rem; height: 1.35rem; transform: skewX(-18deg); }
+  .livery i:first-child { background: var(--primary); }
+  .livery i:last-child { background: var(--secondary); }
+  .top-link {
+    display: inline-flex; align-items: center; min-height: 44px;
+    font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--primary);
+  }
+  @media (hover: hover) and (pointer: fine) { .top-link:hover { border-color: var(--text); } }
+  /* Language switch */
+  .top-nav { display: flex; align-items: center; gap: 1.25rem; }
+  .lang { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-weight: 600; text-decoration: none; }
+  @media (hover: hover) and (pointer: fine) { .lang:hover { color: var(--text); } }
+
+  /* Headline */
+  main { flex: 1; }
+  h1 {
+    padding-block: clamp(2rem, 6vw, 4.5rem) clamp(1.75rem, 4vw, 3rem);
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(2.25rem, 10vw, 9rem); line-height: .9; letter-spacing: -.03em;
+  }
+  h1 span { display: block; }
+  h1 .livery { gap: .08em; margin-left: .2em; vertical-align: baseline; }
+  h1 .livery i { width: .3em; height: .66em; }
+
+  /* Intro and portrait */
+  /* Hero: headline and facts on the left, portrait on the right */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 21rem);
+    gap: clamp(2rem, 5vw, 4.5rem); align-items: end;
+    padding-block: clamp(2rem, 6vw, 4.5rem) clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .hero-copy { container-type: inline-size; }
+  /* The headline grows to fill its column, on any screen */
+  .hero h1 { padding-block: 0 clamp(1.75rem, 4vw, 3rem); font-size: clamp(2.25rem, 6.5vw, 7rem); font-size: clamp(2.25rem, 15cqi, 9rem); }
+  .hero h1 { font-size: clamp(2.1rem, 6vw, 6.5rem); font-size: clamp(2.1rem, 14cqi, 8rem); }
+  .lede { max-width: 32ch; font-size: clamp(1.15rem, 1.7vw, 1.45rem); line-height: 1.45; font-weight: 500; }
+  .facts {
+    list-style: none; display: grid; gap: .75rem; max-width: 34rem;
+    margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+  }
+  .facts li { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; font-size: .95rem; }
+  .facts span { color: var(--muted); }
+
+  .portrait {
+    position: relative; aspect-ratio: 4 / 5; width: 100%;
+    clip-path: polygon(12% 0, 100% 0, 88% 100%, 0 100%);
+    background: var(--raised); overflow: hidden;
+  }
+  .portrait img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+  .placeholder {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: var(--display); font-size: clamp(4rem, 9vw, 6.5rem); letter-spacing: -.03em; color: var(--text);
+    background:
+      linear-gradient(115deg, transparent 0 58%, var(--secondary) 58% 63%, transparent 63%),
+      linear-gradient(115deg, transparent 0 50%, var(--primary) 50% 57%, transparent 57%),
+      var(--raised);
+  }
+
+  /* Scrolling strip */
+  .ticker { overflow: hidden; padding-block: 1.1rem; background: var(--primary); color: #FFFFFF; }
+  .ticker-track { display: flex; width: max-content; animation: run 40s linear infinite; }
+  .ticker ul { display: flex; flex-shrink: 0; list-style: none; }
+  .ticker li {
+    display: flex; align-items: center; white-space: nowrap; padding-right: 2.25rem;
+    font-family: var(--display); font-size: clamp(1.1rem, 2.2vw, 1.6rem); letter-spacing: -.005em;
+  }
+  .ticker li::after {
+    content: ""; width: .5em; height: .85em; margin-left: 2.25rem;
+    background: #FFFFFF; opacity: .45; transform: skewX(-18deg);
+  }
+  @keyframes run { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; width: auto; }
+    .ticker ul { flex-wrap: wrap; padding-inline: 1.25rem; row-gap: .5rem; }
+    .ticker ul + ul { display: none; }
+  }
+
+  /* Contact */
+  .contact { padding-block: clamp(3rem, 7vw, 5.5rem); }
+  .contact p { margin-bottom: .75rem; color: var(--muted); }
+  .contact a {
+    font-family: var(--display); font-size: clamp(1.15rem, 4vw, 2.75rem); letter-spacing: -.02em;
+    text-decoration: none; border-bottom: 4px solid var(--primary); overflow-wrap: anywhere;
+  }
+  @media (hover: hover) and (pointer: fine) { .contact a:hover { border-color: var(--secondary); } }
+
+  footer { padding-block: 1.5rem; border-top: 1px solid var(--line); font-size: .875rem; color: var(--muted); }
+
+  /* Footer links */
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; flex-wrap: wrap; }
+  .foot-links { display: flex; gap: 1.25rem; }
+  .foot-links a, .linkish {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0;
+    background: none; border: 0; color: var(--muted); font: inherit; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  @media (hover: hover) and (pointer: fine) { .foot-links a:hover, .linkish:hover { color: var(--text); } }
+  .linkish:focus-visible { outline: 3px solid var(--text); outline-offset: 4px; }
+  .linkish[hidden] { display: none; }
+
+  /* Cookie banner */
+  .consent {
+    position: fixed; z-index: 10; left: 50%; bottom: clamp(.75rem, 3vw, 1.5rem); transform: translateX(-50%);
+    width: min(40rem, 100% - 1.5rem); display: grid; gap: 1rem;
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    background: var(--raised); border: 1px solid var(--line); border-left: 6px solid var(--primary);
+  }
+  .consent[hidden] { display: none; }
+  .consent p { font-size: .95rem; }
+  .consent-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .btn {
+    min-height: 44px; min-width: 7.5rem; padding: .6rem 1.4rem; cursor: pointer;
+    font: inherit; font-weight: 700; color: var(--text); background: transparent; border: 2px solid var(--text);
+  }
+  .btn-primary { color: #FFFFFF; background: var(--primary); border-color: var(--primary); }
+  .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+  /* Greek: heavy weight for display text */
+  .mark, .placeholder, .ticker li, .contact a { font-weight: 900; }
+  h1 { font-weight: 900; font-size: clamp(2.1rem, 9.5vw, 8rem); letter-spacing: -.03em; }
+
+  .contact .more { margin: 2rem 0 0; }
+  .contact .more a { color: var(--text); font-family: var(--body); font-size: 1.05rem; font-weight: 600; letter-spacing: 0; border-bottom-width: 2px; }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; }
+    .portrait { max-width: 20rem; }
+    .facts li { grid-template-columns: 5rem 1fr; }
+  }
+
+  /* Even line breaks: no lonely last words */
+  h1, h2, h3 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+
+  /* Main navigation */
+  .top .wrap { flex-wrap: wrap; row-gap: .25rem; }
+  .top-nav { flex-wrap: wrap; column-gap: 1.25rem; }
+  .nav-link {
+    display: inline-flex; align-items: center; min-height: 44px;
+    font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent;
+  }
+  @media (hover: hover) and (pointer: fine) { .nav-link:hover { border-color: var(--muted); } }
+  .nav-link[aria-current="page"] { border-color: var(--secondary); }
+  @media (max-width: 420px) { .top-nav { column-gap: 1rem; } }
+
+  /* Pause button for the strip */
+  .ticker { position: relative; }
+  .ticker.is-paused .ticker-track { animation-play-state: paused; }
+  .ticker-toggle {
+    position: absolute; top: 0; right: 0; bottom: 0; width: 3.5rem;
+    display: grid; place-items: center; cursor: pointer;
+    color: #FFFFFF; background: var(--primary); border: 0;
+    box-shadow: -1.25rem 0 1.25rem var(--primary);
+  }
+  .ticker-toggle:focus-visible { outline: 3px solid #FFFFFF; outline-offset: -6px; }
+  .ticker-icon { display: inline-flex; gap: .22rem; }
+  .ticker-icon i { display: block; width: .32rem; height: 1.1rem; background: #FFFFFF; transform: skewX(-18deg); }
+  .ticker-toggle[aria-pressed="true"] .ticker-icon { width: .95rem; height: 1.1rem; background: #FFFFFF; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+  .ticker-toggle[aria-pressed="true"] .ticker-icon i { display: none; }
+  @media (prefers-reduced-motion: reduce) { .ticker-toggle { display: none; } }
+
+  /* ---------- Motion ---------- */
+  :root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);      /* entering, exiting, press */
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* movement on screen */
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* surfaces rising from an edge */
+  }
+  /* Links: colour changes ease rather than snap */
+  .top-link, .nav-link, .lang, .contact a, .foot-links a, .linkish { transition: border-color 150ms ease, color 150ms ease; }
+
+  /* Press feedback: buttons give a little under your finger */
+  .btn { transition: transform 160ms var(--ease-out); }
+  .btn:active { transform: scale(0.97); transition-duration: 100ms; }
+
+  /* Cookie banner rises from the bottom edge and leaves the same way */
+  .consent {
+    left: 0; right: 0; margin-inline: auto;
+    opacity: 0; transform: translateY(100%);
+    transition: opacity 250ms var(--ease-out), transform 400ms var(--ease-drawer);
+  }
+  .consent.is-open { opacity: 1; transform: translateY(0); }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn:active { transform: none; }
+    .consent, .consent.is-open { transform: none; transition: opacity 200ms ease; }
+  }
+
+  /* Strip: hover pauses it only with a mouse, so a tap on a phone doesn't freeze it */
+  @media (hover: hover) and (pointer: fine) { .ticker:hover .ticker-track { animation-play-state: paused; } }
+  .ticker-icon { transition: transform 160ms var(--ease-out); }
+  .ticker-toggle:active .ticker-icon { transform: scale(0.88); }
+
+  /* Arriving from another site: the livery stripes sweep in once, like a car passing */
+  .hero h1 .livery.is-arriving i { animation: livery-in 600ms var(--ease-in-out) 150ms both; }
+  .hero h1 .livery.is-arriving i:last-child { animation-delay: 230ms; }
+  @keyframes livery-in { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+  /* Copy the email address, for visitors without a mail app set up */
+  .copy-row { margin-top: 1rem; }
+  .copy-btn {
+    display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 8.5rem;
+    padding: .5rem 1rem; cursor: pointer;
+    font: inherit; font-size: .95rem; font-weight: 700; color: var(--text);
+    background: transparent; border: 2px solid var(--line);
+    transition: transform 160ms var(--ease-out), border-color 150ms ease;
+  }
+  .copy-btn[hidden] { display: none; }
+  @media (hover: hover) and (pointer: fine) { .copy-btn:hover { border-color: var(--muted); } }
+  .copy-btn:active { transform: scale(0.97); transition-duration: 100ms; }
+  .copy-btn[data-copied] { border-color: var(--secondary); }
+  .copy-btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1 .livery i { animation: none !important; }
+    .copy-btn:active, .ticker-toggle:active .ticker-icon { transform: none; }
+  }
+
+  /* Moving between pages: the header stays put while the page underneath crossfades (Chrome, Edge, Safari 18+) */
+  @view-transition { navigation: auto; }
+  .top { view-transition-name: site-header; }
+  ::view-transition-group(*) { animation-duration: 200ms; animation-timing-function: var(--ease-out); }
+
+  /* ---------- Phones ---------- */
+  /* No grey flash on tap (every control has its own :active), no font inflation in landscape */
+  html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  /* Taps fire straight away, with no double-tap-zoom wait */
+  button, a { touch-action: manipulation; }
+  /* Long-pressing a control doesn't select its label. Content, including the email address, stays selectable */
+  button, .mark, .top-link, .nav-link, .lang { -webkit-user-select: none; user-select: none; }
+  /* Press feedback for text links */
+  .mark:active, .top-link:active, .nav-link:active, .lang:active, .foot-links a:active, .linkish:active, .contact a:active, .links a:active { opacity: .7; }
+  /* Landscape on a notched phone: colour runs edge to edge, content stays clear of the notch */
+  footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); }
+  .consent { bottom: calc(clamp(.75rem, 3vw, 1.5rem) + env(safe-area-inset-bottom, 0px)); }
+  .ticker-toggle { width: calc(3.5rem + env(safe-area-inset-right, 0px)); padding-right: env(safe-area-inset-right, 0px); }
+  ::view-transition-old(*), ::view-transition-new(*) { animation-timing-function: var(--ease-out); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "George Kanaroglou",
+  "alternateName": "Γιώργος Κανάρογλου",
+  "url": "https://georgekanaroglou.com/",
+  "jobTitle": "Insights Lead",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Barracudaworks"
+  },
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "London School of Economics and Political Science"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Kent"
+    }
+  ],
+  "knowsAbout": [
+    "Pricing strategy",
+    "Brand strategy",
+    "Digital marketing",
+    "Marketing analytics",
+    "Consumer psychology"
+  ],
+  "knowsLanguage": [
+    "en",
+    "el"
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/el" aria-label="Γιώργος Κανάρογλου, αρχική σελίδα">
+      <span class="livery" aria-hidden="true"><i></i><i></i></span>GK
+    </a>
+    <nav class="top-nav" aria-label="Γλώσσα και επικοινωνία">
+      <a class="lang" href="/" lang="en" hreflang="en">English</a>
+      <a class="nav-link" href="/work-with-me-el">Συνεργασία</a>
+      <a class="top-link" href="#contact">Επικοινωνία</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div class="hero-copy">
+      <h1>
+        <span>Ολοκληρωμένο</span>
+        <span>marketing.<span class="livery" aria-hidden="true"><i></i><i></i></span></span>
+      </h1>
+      <script>
+      /* Plays the stripe sweep only for visitors arriving from outside the site. Nothing is stored. */
+      (function () {
+        var el = document.querySelector(".hero h1 .livery");
+        var internal = false;
+        try { internal = document.referrer && new URL(document.referrer).hostname === location.hostname; } catch (e) {}
+        var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (el && !internal && !reduce) el.classList.add("is-arriving");
+      })();
+      </script>
+      <p class="lede">Από την τιμολόγηση ως το brand και την απόδοση. Marketing που βασίζεται στα δεδομένα και στον τρόπο που οι άνθρωποι πραγματικά αποφασίζουν.</p>
+      <ul class="facts">
+        <li><span>Τώρα</span>Insights Lead για την οδηγό αγώνων Sophia Flörsch στην Barracudaworks</li>
+        <li><span>Πριν</span>Castrol Hellas και Medtronic Hellas</li>
+        <li><span>Σπουδές</span>MSc Marketing, London School of Economics</li>
+        <li><span>Βάση</span>Λονδίνο και Αθήνα</li>
+      </ul>
+    </div>
+
+    <div class="portrait">
+        <!-- To add your photo: upload it to GitHub as photo.jpg, then remove the comment marks around the img line.
+             Keep the placeholder line. It shows if the photo ever fails to load. -->
+        <div class="placeholder" aria-hidden="true">GK</div>
+        <!-- <img src="photo.jpg" alt="Πορτρέτο του Γιώργου Κανάρογλου" onerror="this.remove()"> -->
+      </div>
+  </div>
+
+  <section class="ticker" aria-label="Τι κάνω">
+    <div class="ticker-track">
+      <ul>
+        <li>Στρατηγική τιμολόγησης</li>
+        <li>Στρατηγική brand</li>
+        <li>Ψηφιακό marketing</li>
+        <li>Ανάλυση δεδομένων marketing</li>
+        <li>Ψυχολογία καταναλωτή</li>
+      </ul>
+      <ul aria-hidden="true">
+        <li>Στρατηγική τιμολόγησης</li>
+        <li>Στρατηγική brand</li>
+        <li>Ψηφιακό marketing</li>
+        <li>Ανάλυση δεδομένων marketing</li>
+        <li>Ψυχολογία καταναλωτή</li>
+      </ul>
+    </div>
+    <button type="button" class="ticker-toggle" aria-pressed="false" aria-label="Παύση της κυλιόμενης λωρίδας"><span class="ticker-icon" aria-hidden="true"><i></i><i></i></span></button>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <p>Θέλετε να συνεργαστούμε ή να μιλήσουμε για marketing;</p>
+      <a data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello στο georgekanaroglou.com</a>
+      <div class="copy-row"><button type="button" class="copy-btn" id="copy-email" hidden><span class="copy-label">Αντιγραφή email</span></button><span class="sr-only" id="copy-status" aria-live="polite"></span></div>
+      <p class="more"><a href="/work-with-me-el">Έχετε κάποιο project στο μυαλό σας; Βρείτε το κατάλληλο σε τρεις ερωτήσεις.</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Γιώργος Κανάρογλου</span>
+    <span class="foot-links">
+      <a href="/privacy-el.html">Απόρρητο</a>
+      <button type="button" class="linkish" id="cookie-settings" hidden>Ρυθμίσεις cookies</button>
+    </span>
+  </div>
+</footer>
+
+<script>
+/* Builds email links in the browser, so the address isn't in the page code for spam bots to collect. */
+document.querySelectorAll("[data-mail-user]").forEach(function (a) {
+  var address = a.getAttribute("data-mail-user") + "@" + a.getAttribute("data-mail-domain");
+  a.href = "mailto:" + address;
+  a.textContent = address;
+});
+</script>
+
+<div class="consent" id="consent" role="region" aria-label="Επιλογή cookies" hidden>
+  <p>Χρησιμοποιώ cookies για να μετράω τις επισκέψεις και να βλέπω τι λειτουργεί στον ιστότοπο. Χωρίς διαφημίσεις και χωρίς παρακολούθηση σε άλλους ιστότοπους. <a href="/privacy-el.html">Πώς τα χρησιμοποιώ</a></p>
+  <div class="consent-actions">
+    <button type="button" class="btn btn-primary" data-consent="yes">Αποδοχή</button>
+    <button type="button" class="btn" data-consent="no">Απόρριψη</button>
+  </div>
+</div>
+
+<script>
+/* Site analytics with consent. Data goes to George's own Google Sheet. */
+(function () {
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbz5sD8rScVK1-w9RdmOq4RDYou_SAV5GeR1eWoshG4t2qJh_NkrpBA9lp_AXw14qMOM/exec";
+  if (ENDPOINT.indexOf("https://script.google.com/") !== 0) return;
+
+  var SITE = "georgekanaroglou.com";
+  var banner = document.getElementById("consent");
+  var settings = document.getElementById("cookie-settings");
+  var q = new URLSearchParams(location.search);
+
+  // Visit georgekanaroglou.com/?notrack=1 once on each of your devices to stop counting your own visits (?notrack=0 to undo).
+  var notrack = false;
+  try {
+    if (q.get("notrack") === "1") localStorage.setItem("gk-notrack", "1");
+    if (q.get("notrack") === "0") localStorage.removeItem("gk-notrack");
+    notrack = localStorage.getItem("gk-notrack") === "1";
+  } catch (e) {}
+  var isBot = navigator.webdriver || /bot|crawl|spider|slurp|headless|preview|lighthouse/i.test(navigator.userAgent);
+
+  function getCookie(name) {
+    var m = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function setCookie(name, value, seconds) {
+    document.cookie = name + "=" + encodeURIComponent(value) + "; path=/; max-age=" + seconds + "; SameSite=Lax; Secure";
+  }
+  function deleteCookie(name) {
+    document.cookie = name + "=; path=/; max-age=0; SameSite=Lax; Secure";
+  }
+  function newId() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return Math.random().toString(36).slice(2) + Date.now().toString(36);
+  }
+
+  var ref = "";
+  try { ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch (e) {}
+
+  // Short links: georgekanaroglou.com/cv, /in and /mail forward here with ?ref=...
+  var REF_NAMES = { cv: "CV", "in": "LinkedIn", mail: "Email" };
+
+  function source() {
+    if (q.get("utm_source")) return q.get("utm_source");
+    var r = (q.get("ref") || "").toLowerCase();
+    if (r) return REF_NAMES[r] || r;
+    if (!ref) return "Direct";
+    if (ref === location.hostname.replace(/^www\./, "")) return "Internal";
+    if (ref === "t.co" || ref === "x.com") return "X";
+    var map = [["linkedin", "LinkedIn"], ["lnkd.in", "LinkedIn"], ["outlook", "Email"], ["mail.", "Email"],
+               ["google", "Google"], ["bing", "Bing"], ["duckduckgo", "DuckDuckGo"], ["github", "GitHub"],
+               ["twitter", "X"], ["facebook", "Facebook"], ["instagram", "Instagram"]];
+    for (var i = 0; i < map.length; i++) { if (ref.indexOf(map[i][0]) > -1) return map[i][1]; }
+    return ref;
+  }
+
+  var w = window.innerWidth;
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+
+  var base = {
+    site: SITE,
+    page: location.pathname,
+    source: source(),
+    referrer: ref,
+    utm_source: q.get("utm_source") || "",
+    utm_medium: q.get("utm_medium") || "",
+    utm_campaign: q.get("utm_campaign") || "",
+    device: w < 768 ? "Mobile" : w < 1024 ? "Tablet" : "Desktop",
+    screen: w,
+    language: navigator.language || "",
+    timezone: tz
+  };
+
+  // Tidy the address bar once the source is recorded, so visitors just see georgekanaroglou.com.
+  try {
+    var tidy = false;
+    ["ref", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "notrack"].forEach(function (k) {
+      if (q.has(k)) tidy = true;
+    });
+    if (tidy && history.replaceState) history.replaceState(null, "", location.pathname + location.hash);
+  } catch (e) {}
+
+  var visitorType = null;
+
+  function send(event, extra) {
+    if (notrack || isBot || getCookie("gk_consent") !== "yes") return;
+    var vid = getCookie("gk_vid");
+    if (visitorType === null) visitorType = vid ? "returning" : "new";
+    if (!vid) vid = newId();
+    var sid = getCookie("gk_sid") || newId();
+    setCookie("gk_vid", vid, 60 * 60 * 24 * 365);
+    setCookie("gk_sid", sid, 60 * 30);
+    var d = Object.assign({}, base, { event: event, vid: vid, sid: sid, visitor: visitorType }, extra || {});
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, body: JSON.stringify(d) }); } catch (e) {}
+  }
+
+  window.gkTrack = send;
+
+  var start = Date.now(), viewSent = false, left = false;
+  function sendView() {
+    if (viewSent) return;
+    viewSent = true;
+    start = Date.now();
+    send("view");
+  }
+
+  var bannerTimer;
+  function openBanner() {
+    clearTimeout(bannerTimer);
+    banner.hidden = false;
+    void banner.offsetWidth; // set the start position before it animates in
+    banner.classList.add("is-open");
+  }
+  function closeBanner() {
+    var hadFocus = banner.contains(document.activeElement);
+    banner.classList.remove("is-open");
+    bannerTimer = setTimeout(function () { banner.hidden = true; }, 400);
+    // Keyboard users keep their place instead of being dropped at the top of the page
+    if (hadFocus && !settings.hidden) settings.focus({ preventScroll: true });
+  }
+
+  function decide(choice) {
+    setCookie("gk_consent", choice, 60 * 60 * 24 * 182);
+    closeBanner();
+    if (choice === "yes") {
+      sendView();
+    } else {
+      deleteCookie("gk_vid");
+      deleteCookie("gk_sid");
+    }
+  }
+
+  banner.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-consent]");
+    if (b) decide(b.getAttribute("data-consent"));
+  });
+  settings.hidden = false;
+  settings.addEventListener("click", function () {
+    openBanner();
+    banner.querySelector("button").focus({ preventScroll: true });
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden" && viewSent && !left) {
+      left = true;
+      send("leave", { seconds: Math.round((Date.now() - start) / 1000) });
+    }
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest) return;
+    if (e.target.closest('a[href^="mailto:"]')) send("email_click");
+    else if (e.target.closest('a[href="#contact"]')) send("cta_click", { label: "Get in touch" });
+  });
+
+  var choice = getCookie("gk_consent");
+  // Without a current "yes", no analytics cookies are kept (for example after consent expires).
+  if (choice !== "yes") {
+    deleteCookie("gk_vid");
+    deleteCookie("gk_sid");
+  }
+  if (!choice) openBanner();
+  else if (choice === "yes") sendView();
+})();
+</script>
+
+
+<script>
+/* Lets visitors pause the scrolling strip. */
+(function () {
+  var t = document.querySelector(".ticker"), b = document.querySelector(".ticker-toggle");
+  if (!t || !b) return;
+  b.addEventListener("click", function () {
+    var paused = b.getAttribute("aria-pressed") !== "true";
+    b.setAttribute("aria-pressed", paused ? "true" : "false");
+    t.classList.toggle("is-paused", paused);
+  });
+})();
+</script>
+
+<script>
+/* Copy email button. Shown only where the browser allows copying. */
+(function () {
+  var b = document.getElementById("copy-email"), s = document.getElementById("copy-status");
+  var span = b && b.querySelector(".copy-label");
+  if (!b || !navigator.clipboard || !window.isSecureContext) return;
+  var label = span.textContent, t;
+  function swap(text) {
+    span.textContent = text;
+    if (span.animate) span.animate([{ opacity: 0, filter: "blur(2px)" }, { opacity: 1, filter: "blur(0)" }],
+      { duration: 200, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+  }
+  b.hidden = false;
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(["hello", "georgekanaroglou.com"].join("@")).then(function () {
+      swap("Αντιγράφηκε");
+      b.setAttribute("data-copied", "");
+      s.textContent = "Η διεύθυνση email αντιγράφηκε";
+      clearTimeout(t);
+      t = setTimeout(function () { swap(label); b.removeAttribute("data-copied"); s.textContent = ""; }, 2000);
+      if (typeof window.gkTrack === "function") window.gkTrack("email_click", { label: "copy" });
+    }, function () {});
+  });
+})();
+</script>
+</body>
+</html>
