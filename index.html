@@ -979,7 +979,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
   var SETTLE = "transform 650ms cubic-bezier(0.32, 0.72, 0, 1)";
-  var rot = 0, tiltX = 0, tiltY = 0, tracked = false, suppressClick = false;
+  var rot = 0, tiltX = 0, tiltY = 0, tracked = false, suppressClick = false, everTurned = false, inView = false, autoDue = false;
 
   function isFlipped(deg) { return Math.abs(Math.round(deg / 180)) % 2 === 1; }
   function apply(transition) {
@@ -987,22 +987,23 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     card.style.transition = transition;
     card.style.transform = "rotateX(" + tiltX.toFixed(2) + "deg) rotateY(" + (rot + tiltY).toFixed(2) + "deg)";
   }
-  function setState(on, moveFocus) {
+  function setState(on, moveFocus, auto) {
+    if (on) everTurned = true;
     card.classList.toggle("is-flipped", on);
     front.setAttribute("aria-expanded", on ? "true" : "false");
     front.inert = on; back.inert = !on;
-    if (on && !tracked && typeof window.gkTrack === "function") { tracked = true; window.gkTrack("cta_click", { label: "Get in touch" }); }
+    if (on && !auto && !tracked && typeof window.gkTrack === "function") { tracked = true; window.gkTrack("cta_click", { label: "Get in touch" }); }   // automatic turns aren't counted
     if (moveFocus) setTimeout(function () { (on ? back.querySelector(".email") : front).focus({ preventScroll: true }); }, reduce ? 0 : 340);
   }
-  function settle(target, moveFocus) {
+  function settle(target, moveFocus, auto) {
     rot = target; tiltX = 0; tiltY = 0;
     apply(SETTLE);
-    setState(isFlipped(rot), moveFocus);
+    setState(isFlipped(rot), moveFocus, auto);
   }
-  function turnTo(on, moveFocus) {
+  function turnTo(on, moveFocus, auto) {
     var k = Math.round(rot / 180);
     if ((Math.abs(k) % 2 === 1) !== on) k += 1;   // always turn the same way, like flipping a real card
-    settle(k * 180, moveFocus);
+    settle(k * 180, moveFocus, auto);
   }
 
   front.addEventListener("click", function () { if (suppressClick) return; turnTo(true, true); });
@@ -1060,6 +1061,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   var peek = null, armed = true, peekTimer, FIRST = 1800, AGAIN = 350;
   function nudge() {
     if (card.classList.contains("is-flipped") || scene.matches(":hover") || scene.classList.contains("is-dragging") || scene.contains(document.activeElement)) return;
+    if (everTurned || autoDue || document.hidden) return;   // once they've seen the back (or it's about to turn), the reminder has done its job
     if (peek && peek.playState === "running") return;
     peek = card.animate([
       { transform: "rotateY(0deg)" },
@@ -1072,18 +1074,37 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   ["pointerenter", "pointerdown", "keydown"].forEach(function (t) {
     scene.addEventListener(t, function () { if (peek) peek.cancel(); });
   });
-  if (!reduce && card.animate && window.IntersectionObserver) {
+  if (window.IntersectionObserver) {
     var top = document.querySelector(".top"), headerH = top ? Math.round(top.getBoundingClientRect().height) : 0;
     new IntersectionObserver(function (entries) {
       var e = entries[0];
-      if (e.intersectionRatio < 0.25) { armed = true; clearTimeout(peekTimer); return; }   // out of sight: ready to play again
+      if (e.intersectionRatio < 0.25) { inView = false; armed = true; clearTimeout(peekTimer); return; }   // out of sight: ready to play again
+      if (e.intersectionRatio >= 0.7) inView = true;
       if (armed && e.intersectionRatio >= 0.7) {
         armed = false;
         var wait = Math.max(AGAIN, FIRST - performance.now());   // the first play waits for the page to settle
-        peekTimer = setTimeout(nudge, wait);
+        if (!reduce && card.animate) peekTimer = setTimeout(nudge, wait);
       }
     }, { threshold: [0, 0.25, 0.7], rootMargin: "-" + headerH + "px 0px 0px 0px" }).observe(scene);   // behind the sticky header counts as out of sight
   }
+
+  // Until the card has been turned, the reminder repeats every 3 seconds while it's on screen.
+  // If it still hasn't been turned after 10 seconds, it turns itself, as soon as nobody is touching it and it's in view.
+  function busy() { return scene.matches(":hover") || scene.classList.contains("is-dragging") || scene.contains(document.activeElement); }
+  if (!reduce && card.animate) {
+    setTimeout(function remind() {   // the first reminder plays at 1.8 seconds; these follow it every 3 seconds
+      if (everTurned) return;
+      if (inView) nudge();
+      setTimeout(remind, 3000);
+    }, FIRST + 3000);
+  }
+  setTimeout(function autoTurn() {
+    if (everTurned) return;
+    autoDue = true;
+    if (!inView || busy() || document.hidden) { setTimeout(autoTurn, 1000); return; }   // wait for a better moment
+    if (peek) peek.cancel();
+    turnTo(true, false, true);
+  }, 10000);
 
   // The white tile around the card: moving onto it plays the reminder pivot (at most every 2.5 seconds),
   // and clicking anywhere on it turns the card over, or back again.
