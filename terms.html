@@ -399,6 +399,42 @@
     .card-hint-icon { transition: none; }
   }
 
+  /* ---------- Selected work: a list you open one project at a time ---------- */
+  .work { padding-block: clamp(3rem, 7vw, 5.5rem); }
+  .work-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .5rem 1rem; padding-bottom: clamp(1.25rem, 2.5vw, 2rem); }
+  .work-title { margin-left: -0.032em; font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 900; line-height: .9; letter-spacing: -.045em; }
+  .work-count { color: var(--muted); font-size: .9rem; font-weight: 600; white-space: nowrap; }
+  .work-list { list-style: none; border-top: 3px solid var(--black); }
+  .work-list > li { border-bottom: 1px solid var(--black); }
+  .work-h { font: inherit; letter-spacing: inherit; }
+  .work-item {
+    display: grid; grid-template-columns: minmax(9rem, 15rem) minmax(0, 1fr) auto; align-items: center; gap: .5rem clamp(1rem, 3vw, 2.5rem);
+    width: 100%; padding: clamp(1rem, 2vw, 1.5rem) 0; cursor: pointer; text-align: left; color: var(--black); background: none; border: 0;
+    transition: color 150ms ease;
+  }
+  .work-item:active { opacity: .7; }
+  .work-item:focus-visible { outline-offset: 4px; }
+  .work-stat { display: grid; gap: .3rem; }
+  .work-num { font-size: clamp(1.75rem, 3.6vw, 3rem); font-weight: 900; line-height: .95; letter-spacing: -.04em; }
+  .work-label, .work-meta { color: var(--muted); font-size: .875rem; font-weight: 600; line-height: 1.3; }
+  .work-main { display: grid; gap: .35rem; }
+  .work-name { font-size: clamp(1.15rem, 2vw, 1.6rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+  .work-item[aria-expanded="true"] { color: var(--cobalt); }
+  .work-item[aria-expanded="true"] .index-plus { transform: rotate(45deg); }
+  @media (hover: hover) and (pointer: fine) { .work-item:hover { color: var(--cobalt); } }
+  .work-detail { padding: 0 0 clamp(1.25rem, 2.5vw, 2rem); }
+  .work-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem clamp(1.5rem, 3vw, 2.5rem); }
+  .work-facts div { padding-top: .6rem; border-top: 3px solid var(--cobalt); }
+  .work-facts dt { font-size: .875rem; font-weight: 800; }
+  .work-facts dd { margin: .35rem 0 0; font-size: 1rem; line-height: 1.45; }
+  @media (max-width: 760px) {
+    .work-item { grid-template-columns: minmax(0, 1fr) auto; }
+    .work-stat { grid-column: 1; }
+    .work-main { grid-column: 1; }
+    .work-item .index-plus { grid-column: 2; grid-row: 1 / span 2; }
+    .work-facts { grid-template-columns: minmax(0, 1fr); }
+  }
+
   /* ---------- Footer ---------- */
   footer {
     padding-block: 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
@@ -470,7 +506,7 @@
 
   /* ---------- Reduced motion: fewer and gentler, not none ---------- */
   @media (prefers-reduced-motion: reduce) {
-    .logo, .logo-gk, .logo-word, .acc, .acc.is-open, .acc-content, .index-plus, .index-name { transition: none; }
+    .logo, .logo-gk, .logo-word, .acc, .acc.is-open, .acc-content, .index-plus, .index-name, .work-item { transition: none; }
     .index-item:hover .index-name, .index-item:focus-visible .index-name { transform: none; }   /* colour change only */
     .btn:active, .copy-btn:active { transform: none; }
     .consent, .consent.is-open { transform: none; transition: opacity 200ms ease; }
@@ -571,8 +607,8 @@
   <h2>Working together</h2>
   <p>Nothing on this site is an offer to provide services. Any work we do together is agreed separately, in writing, with its own terms.</p>
 
-  <h2>Case studies and names</h2>
-  <p>Case studies describe work I’ve done, including university and group projects, with teammates credited. Names of people, companies and brands are used only to describe that work. They belong to their owners, and their mention doesn’t mean they endorse this site.</p>
+  <h2>Selected work and names</h2>
+  <p>Selected work describes work I’ve done, including university and group projects, with teammates credited. Names of people, companies and brands are used only to describe that work. They belong to their owners, and their mention doesn’t mean they endorse this site.</p>
 
   <h2>Copyright</h2>
   <p>© 2026 George Kanaroglou. The text, logo and design of this site are mine. Please don’t copy or reuse them without asking. You may quote short parts with a credit and a link. The Inter Tight typeface is used under the SIL Open Font License.</p>
@@ -852,6 +888,24 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   addEventListener("pointerup", function () { down = false; mode(); paint(); });
   document.addEventListener("mouseleave", function () { c.classList.add("is-out"); });
   document.addEventListener("click", function () { setTimeout(mode, 0); });   // the card may have just turned
+})();
+</script>
+<script>
+/* Selected work: click a project to see the question, what I did and the result. One open at a time. */
+(function () {
+  var items = [].slice.call(document.querySelectorAll(".work-item"));
+  function set(b, on) {
+    b.setAttribute("aria-expanded", on ? "true" : "false");
+    var panel = document.getElementById(b.getAttribute("aria-controls"));
+    if (panel) panel.classList.toggle("is-open", on);
+  }
+  items.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var opening = b.getAttribute("aria-expanded") !== "true";
+      items.forEach(function (x) { if (x !== b) set(x, false); });
+      set(b, opening);
+    });
+  });
 })();
 </script>
 </body>
