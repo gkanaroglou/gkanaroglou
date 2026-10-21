@@ -150,16 +150,16 @@
      Orange: the name, then the index. The two bottoms line up. */
   .opening {
     display: grid;
-    grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .5) minmax(0, 1fr);
+    grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .55) minmax(0, 1fr);
     grid-template-rows: auto auto;
   }
   /* Tile 1, on Paper: "Get in touch." and its line on the left, the card on the right */
   .opening-head {
-    grid-column: 2; grid-row: 1; container-type: inline-size;
+    grid-column: 2; grid-row: 1; align-self: center; container-type: inline-size;
     padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(2.25rem, 5vw, 4rem) 0;
   }
   .opening-copy {
-    grid-column: 3; grid-row: 1;
+    grid-column: 3; grid-row: 1; align-self: center;
     padding: clamp(2.25rem, 5vw, 4rem) max(var(--gutter), calc((100vw - 1200px) / 2)) clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.75rem);
   }
   /* "Get in touch." sits on Paper here: black heading, grey line, and the card pushed to the bottom so it ends level with the panel */
@@ -169,8 +169,8 @@
   .opening .card-front:focus-visible { outline-color: var(--black); }
   .opening h1 {
     font-weight: 900; letter-spacing: -.045em; line-height: .88;
-    font-size: clamp(2.75rem, 9vw, 9.5rem);
-    font-size: clamp(2.75rem, 19.5cqi, 9.5rem);   /* fills its column on any screen */
+    font-size: clamp(2.75rem, 9vw, 10rem);
+    font-size: clamp(2.75rem, 22cqi, 10rem);   /* sized so the heading and its line stand about as tall as the card */
   }
   .opening h1 span { display: block; }
   /* Optical alignment: letters carry a little built-in space before them, so the big headings are pulled left by it.
