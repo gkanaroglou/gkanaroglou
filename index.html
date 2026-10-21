@@ -151,22 +151,30 @@
   .opening {
     display: grid;
     grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .58) minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto;
   }
+  /* Top row: "Get in touch." on one line across the full content width, then a black rule across the page */
+  .opening-head {
+    grid-column: 1 / -1; grid-row: 1; container-type: inline-size;
+    padding: clamp(2.25rem, 5vw, 4rem) calc((100% - var(--content)) / 2) clamp(1.75rem, 3vw, 2.5rem);
+    border-bottom: 3px solid var(--black);
+  }
+  /* Under the rule: the card on the left, its top level with the black panel's */
   .opening-copy {
-    grid-column: 2; grid-row: 1 / span 2; container-type: inline-size;
+    grid-column: 2; grid-row: 2;
     display: flex; flex-direction: column; align-items: flex-start;
     padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 5vw, 4rem) 0;
   }
   /* "Get in touch." sits on Paper here: black heading, grey line, and the card pushed to the bottom so it ends level with the panel */
   .opening .contact-title { color: var(--black); }
   .opening .contact-lede { color: var(--muted); }
-  .opening .contact-card-cell { width: min(100%, 24rem); margin-top: auto; padding: clamp(1.5rem, 2.5vw, 2rem) 0 0; }
+  .opening .contact-card-cell { width: min(100%, 32rem); padding: 0; }
   .opening .card-front:focus-visible { outline-color: var(--black); }
   .opening h1 {
     font-weight: 900; letter-spacing: -.045em; line-height: .88;
-    font-size: clamp(2.75rem, 9vw, 7rem);
-    font-size: clamp(2.75rem, 19.5cqi, 9.5rem);   /* the headline fills its column on any screen */
+    font-size: clamp(2.5rem, 9vw, 10rem);
+    font-size: clamp(2.5rem, 15.5cqi, 10rem);   /* one line on any screen, in both languages */
+    white-space: nowrap;
   }
   .opening h1 span { display: block; }
   /* Optical alignment: letters carry a little built-in space before them, so the big headings are pulled left by it.
@@ -174,7 +182,7 @@
   .opening h1, .contact-title { margin-left: -0.032em; }
 
   .field {
-    grid-column: 3; grid-row: 1 / span 2;
+    grid-column: 3; grid-row: 2;
     display: flex; flex-direction: column; justify-content: flex-start; gap: 2.5rem;
     padding: clamp(2.25rem, 5vw, 4rem) max(var(--gutter), calc((100vw - 1200px) / 2)) clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.75rem);
     color: #000; background: var(--orange);
@@ -254,7 +262,8 @@
   @media (max-width: 760px) {
     .opening { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; min-height: 0; }
     .opening-copy, .field { grid-column: 1; grid-row: auto; }
-    .opening-copy { padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2.5rem; }
+    .opening-head { grid-column: 1; padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2rem; }
+    .opening-copy { padding: 2rem var(--gutter) 2.5rem; }
     .opening .contact-card-cell { width: min(100%, 30rem); }
     .field { padding: 1.75rem var(--gutter) 2.5rem; }
   }
@@ -586,9 +595,11 @@
 
 <main id="main">
   <section class="opening">
-    <div class="opening-copy" id="contact">
+    <div class="opening-head" id="contact">
       <h1 class="contact-title">Get in touch.</h1>
       <p class="contact-lede">Want to work together or talk marketing? Turn the card over.</p>
+    </div>
+    <div class="opening-copy">
       <!-- Business card, from the brand book: the short form on the front, the details on the back -->
       <div class="contact-card-cell">
       <div class="card-scene">
