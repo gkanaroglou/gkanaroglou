@@ -159,19 +159,21 @@
   }
   /* Cobalt window under the headline: the full wordmark slides through it as you scroll, like a car passing */
   .mark-run {
-    grid-column: 2; grid-row: 2; align-self: start; position: relative; overflow: hidden; min-height: 12rem; container-type: inline-size;
+    grid-column: 2; grid-row: 2; align-self: start; position: relative; overflow: hidden; aspect-ratio: 100 / 46; container-type: inline-size;
     margin: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 5vw, 4rem) 0;
     color: var(--paper); background: var(--cobalt);
   }
-  /* Sized from the window's width, like the sketch: GK across the top, its bar cropped, the K running off the edge */
-  /* Sized from the window's width, like the sketch: GK across the top, its bar cropped, the K running off the edge */
-  .mark-run-word { position: absolute; top: -11cqw; left: -2cqw; height: 58cqw; width: auto; aspect-ratio: 1462 / 168; fill: currentColor; }
+  /* The wordmark is exactly the height of the box: its bar touches the top edge, its letters the bottom */
+  .mark-run-word { position: absolute; top: 0; left: 0; height: 100%; width: auto; aspect-ratio: 1462 / 160; fill: currentColor; }
   .opening h1 {
     font-weight: 900; letter-spacing: -.045em; line-height: .88;
     font-size: clamp(2.75rem, 9vw, 7rem);
     font-size: clamp(2.75rem, 19.5cqi, 9.5rem);   /* the headline fills its column on any screen */
   }
   .opening h1 span { display: block; }
+  /* Optical alignment: letters carry a little built-in space before them, so the big headings are pulled left by it.
+     The ink of the first letter then lines up exactly with the Cobalt window and the column edge. */
+  .opening h1, .contact-title { margin-left: -0.032em; }
 
   .field {
     grid-column: 3; grid-row: 1 / span 2;
@@ -180,7 +182,7 @@
     color: #000; background: var(--orange);
   }
   /* The index: a black panel, the five disciplines numbered 01 to 05 */
-  .index { padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 2.5vw, 1.75rem) .75rem; color: var(--paper); background: var(--black); }
+  .index { flex: 1; padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 2.5vw, 1.75rem) .75rem; color: var(--paper); background: var(--black); }
   .index-head {
     display: flex; justify-content: space-between; gap: 1rem;
     padding-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: .8125rem; font-weight: 600;
@@ -255,7 +257,7 @@
     .opening { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; min-height: 0; }
     .opening-copy, .field, .mark-run { grid-column: 1; grid-row: auto; }
     .opening-copy { padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2.5rem; }
-    .mark-run { min-height: 11rem; margin: 0; }
+    .mark-run { margin: 0; }
     .field { padding: 1.75rem var(--gutter) 2.5rem; }
   }
 
@@ -321,7 +323,19 @@
   .card-front { grid-template-rows: 1fr auto; align-items: end; cursor: inherit; color: #000; background: var(--orange); }
   .card-mark { position: absolute; top: clamp(1rem, 6cqw, 2rem); left: clamp(1rem, 6cqw, 2rem); width: 38cqw; height: auto; fill: currentColor; }
   .card-cta { grid-row: 2; font-size: clamp(1.4rem, 8cqw, 2.6rem); font-weight: 900; line-height: .95; letter-spacing: -.04em; }
-  .card-hint { grid-row: 2; justify-self: end; font-size: .8125rem; font-weight: 600; }
+  /* The hint looks like a control, so the card reads as something to press */
+  .card-hint {
+    grid-row: 2; justify-self: end; display: inline-flex; align-items: center; gap: .4rem;
+    padding: .4rem .7rem; font-size: .8125rem; font-weight: 700; line-height: 1; white-space: nowrap;
+    border: 2px solid #000; transition: color 150ms ease, background-color 150ms ease;
+  }
+  /* Narrow cards: the hint moves up into the empty top-right corner, so it never crowds "Get in touch" */
+  @container (max-width: 24rem) { .card-hint { grid-row: 1; align-self: start; } }
+  .card-hint-icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; transition: transform 350ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) {
+    .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--orange); background: #000; }
+    .card-scene:hover .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
+  }
   .card-front:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; }
 
 
@@ -358,6 +372,7 @@
     .card.is-flipped .card-front { opacity: 0; }
     .card.is-flipped .card-back { opacity: 1; }
     .card-scene { cursor: pointer; }
+    .card-hint-icon { transition: none; }
   }
 
   /* ---------- Footer ---------- */
@@ -459,7 +474,7 @@
   </div>
 </header>
 <script>
-/* GK grows into the full Gkanaroglou wordmark: once for visitors arriving from another site,
+/* GK grows into the full Gkanaroglou wordmark: on every page load, including a refresh,
    and whenever a mouse rests on it. It only grows when the full name has room beside the links. */
 (function () {
   var mark = document.querySelector(".mark"), nav = document.querySelector(".top-nav");
@@ -483,9 +498,7 @@
   mark.addEventListener("focus", function () { if (mark.matches(":focus-visible")) open(); });
   mark.addEventListener("blur", close);
 
-  var internal = false;
-  try { internal = document.referrer && new URL(document.referrer).hostname === location.hostname; } catch (e) {}
-  if (!internal && !reduce) {
+  if (!reduce) {
     window.addEventListener("load", function () {
       setTimeout(function () {
         open();
