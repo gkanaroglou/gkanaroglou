@@ -167,16 +167,6 @@
   .opening .contact-lede { color: var(--muted); }
   .opening .contact-card-cell { width: 100%; padding: 0; }
   .opening .card-front:focus-visible { outline-color: var(--black); }
-  /* The email in plain sight: nobody has to find it by turning the card */
-  .contact-direct { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; margin-top: clamp(1.5rem, 3vw, 2.25rem); }
-  .contact-direct .email { font-size: clamp(1.15rem, 2.6vw, 2rem); }
-  .contact-direct .copy-row { margin: 0; }
-  .contact-direct .copy-btn { color: var(--black); border-color: var(--black); }
-  .contact-direct .copy-btn[data-copied] { color: #000; background: var(--orange); border-color: var(--orange); }
-  @media (hover: hover) and (pointer: fine) {
-    .contact-direct .email:hover { border-color: var(--black); }
-    .contact-direct .copy-btn:not([data-copied]):hover { color: var(--paper); background: var(--black); }
-  }
   .opening h1 {
     font-weight: 900; letter-spacing: -.045em; line-height: .88;
     font-size: clamp(2.75rem, 9vw, 9.5rem);
@@ -347,19 +337,28 @@
   .card-cta { grid-row: 2; font-size: clamp(1.4rem, 8cqw, 2.6rem); font-weight: 900; line-height: .95; letter-spacing: -.04em; }
   /* The hint looks like a control, so the card reads as something to press */
   .card-hint {
-    grid-row: 2; justify-self: end; display: inline-flex; align-items: center; gap: .4rem;
+    grid-row: 1; align-self: start; justify-self: end; display: inline-flex; align-items: center; gap: .4rem;
     padding: .55rem .9rem; font-size: .9rem; font-weight: 800; line-height: 1; white-space: nowrap;
     color: var(--cobalt); background: var(--paper); border: 2px solid var(--paper);
     transition: color 150ms ease, background-color 150ms ease;
   }
-  /* Narrow cards: the hint moves up into the empty top-right corner, so it never crowds "Get in touch" */
-  @container (max-width: 24rem) { .card-hint { grid-row: 1; align-self: start; } }
   .card-hint-icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; transition: transform 350ms var(--ease-out); }
   @media (hover: hover) and (pointer: fine) {
     .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--paper); background: transparent; }
     .card-scene:hover .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
   }
   .card-front:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; }
+  /* A folded corner: a flap of the Paper back shows through, the universal sign that there is another side.
+     The cut-away part takes the colour of whatever the card sits on. It peels a little further on hover. */
+  .card-scene { --behind: var(--black); }
+  .opening .card-scene { --behind: var(--paper); }
+  .card-front::after {
+    content: ""; position: absolute; right: 0; bottom: 0; width: clamp(1.75rem, 9cqw, 2.75rem); aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--paper) 0 calc(50% - 1.5px), var(--black) calc(50% - 1.5px) calc(50% + 1.5px), var(--behind) calc(50% + 1.5px));
+    transition: width 250ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) { .card-scene:hover .card:not(.is-flipped) .card-front::after { width: clamp(2.5rem, 13cqw, 4rem); } }
+  @media (prefers-reduced-motion: reduce) { .card-front::after { transition: none; } }
 
 
   .card p { margin: 0; color: inherit; }
@@ -397,6 +396,13 @@
     .card-scene { cursor: pointer; }
     .card-hint-icon { transition: none; }
   }
+
+  /* ---------- "Prefer email?": the plain address, at the bottom of the page ---------- */
+  .email-strip { padding-block: clamp(2.5rem, 6vw, 4.5rem); color: var(--paper); background: var(--black); }
+  .email-strip-inner { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.5rem; }
+  .email-strip-label { width: 100%; color: var(--concrete); font-size: clamp(1.05rem, 1.5vw, 1.25rem); font-weight: 600; }
+  .email-strip .copy-row { margin: 0; }
+  .email-strip a:focus-visible, .email-strip button:focus-visible { outline-color: var(--paper); }
 
   /* ---------- Footer ---------- */
   footer {
@@ -440,6 +446,27 @@
   @media (hover: hover) and (pointer: fine) {
     .consent .btn:hover { color: #000; background: var(--paper); border-color: var(--paper); }
   }
+
+  /* ---------- Cursor: a black square with a Paper edge, so it shows on every colour ----------
+     Over links and buttons it becomes an orange block; over the card, a "Turn over" label.
+     Mouse and trackpad only, and only once the script has started, so touch and keyboard are untouched. */
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+  .cursor {
+    position: fixed; left: 0; top: 0; z-index: 100; pointer-events: none;
+    display: flex; align-items: center; justify-content: center; gap: .35rem;
+    width: 14px; height: 14px; overflow: hidden; white-space: nowrap;
+    color: #000; background: var(--black); border: 2px solid var(--paper);
+    font: 800 .8125rem/1 var(--font);
+    transition: width 180ms var(--ease-out), height 180ms var(--ease-out), background-color 120ms ease, border-color 120ms ease, opacity 150ms ease;
+  }
+  .cursor.is-out { opacity: 0; }
+  .cursor.is-link { width: 22px; height: 22px; background: var(--orange); border-color: #000; }
+  .cursor.is-card { width: 8.5rem; height: 2.5rem; background: var(--paper); border: 3px solid #000; }
+  .cursor.is-drag { width: 5.5rem; }
+  .cursor-label { display: none; align-items: center; gap: .35rem; }
+  .cursor.is-card .cursor-label { display: inline-flex; }
+  .cursor-icon { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; }
+  @media (prefers-reduced-motion: reduce) { .cursor { transition: none; } }
 
   /* ---------- Moving between pages: the header stays put, the page crossfades ---------- */
   @view-transition { navigation: auto; }
@@ -613,11 +640,7 @@
   <section class="opening">
     <div class="opening-head" id="contact">
       <h1 class="contact-title">Get in touch.</h1>
-      <p class="contact-lede">Want to work together or talk marketing? Email me, or turn the card over.</p>
-      <div class="contact-direct">
-        <a class="email" data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello at georgekanaroglou.com</a>
-        <div class="copy-row"><button type="button" class="copy-btn" id="copy-email" hidden><span class="copy-label">Copy email</span></button><span class="sr-only" id="copy-status" aria-live="polite"></span></div>
-      </div>
+      <p class="contact-lede">Want to work together or talk marketing? Turn the card over.</p>
     </div>
     <div class="opening-copy">
       <!-- Business card, from the brand book: the short form on the front, the details on the back -->
@@ -641,6 +664,7 @@
                 <a class="email card-email" data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello at georgekanaroglou.com</a>
                 <span class="card-place">London and Athens</span>
               </div>
+              <div class="copy-row"><button type="button" class="copy-btn" hidden><span class="copy-label">Copy email</span></button><span class="sr-only copy-status" aria-live="polite"></span></div>
             </div>
           </div>
         </div>
@@ -669,6 +693,13 @@
     </div>
   </section>
 
+  <section class="email-strip" aria-label="Email">
+    <div class="wrap email-strip-inner">
+      <p class="email-strip-label">Prefer email?</p>
+      <a class="email" data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello at georgekanaroglou.com</a>
+      <div class="copy-row"><button type="button" class="copy-btn" hidden><span class="copy-label">Copy email</span></button><span class="sr-only copy-status" aria-live="polite"></span></div>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -866,27 +897,29 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 
 
 <script>
-/* Copy email button. Shown only where the browser allows copying. */
+/* Copy email buttons (on the card's back and in the strip). Shown only where the browser allows copying. */
 (function () {
-  var b = document.getElementById("copy-email"), s = document.getElementById("copy-status");
-  var span = b && b.querySelector(".copy-label");
-  if (!b || !navigator.clipboard || !window.isSecureContext) return;
-  var label = span.textContent, t;
-  function swap(text) {
-    span.textContent = text;
-    if (span.animate) span.animate([{ opacity: 0, filter: "blur(2px)" }, { opacity: 1, filter: "blur(0)" }],
-      { duration: 200, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
-  }
-  b.hidden = false;
-  b.addEventListener("click", function () {
-    navigator.clipboard.writeText(["hello", "georgekanaroglou.com"].join("@")).then(function () {
-      swap("Copied");
-      b.setAttribute("data-copied", "");
-      s.textContent = "Email address copied";
-      clearTimeout(t);
-      t = setTimeout(function () { swap(label); b.removeAttribute("data-copied"); s.textContent = ""; }, 2000);
-      if (typeof window.gkTrack === "function") window.gkTrack("email_click", { label: "copy" });
-    }, function () {});
+  if (!navigator.clipboard || !window.isSecureContext) return;
+  [].forEach.call(document.querySelectorAll(".copy-btn"), function (b) {
+    var span = b.querySelector(".copy-label"), s = b.parentNode.querySelector(".copy-status");
+    if (!span) return;
+    var label = span.textContent, t;
+    function swap(text) {
+      span.textContent = text;
+      if (span.animate) span.animate([{ opacity: 0, filter: "blur(2px)" }, { opacity: 1, filter: "blur(0)" }],
+        { duration: 200, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    }
+    b.hidden = false;
+    b.addEventListener("click", function () {
+      navigator.clipboard.writeText(["hello", "georgekanaroglou.com"].join("@")).then(function () {
+        swap("Copied");
+        b.setAttribute("data-copied", "");
+        if (s) s.textContent = "Email address copied";
+        clearTimeout(t);
+        t = setTimeout(function () { swap(label); b.removeAttribute("data-copied"); if (s) s.textContent = ""; }, 2000);
+        if (typeof window.gkTrack === "function") window.gkTrack("email_click", { label: "copy" });
+      }, function () {});
+    });
   });
 })();
 </script>
@@ -1046,6 +1079,45 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   }
 
   if (location.hash === "#contact") setTimeout(function () { turnTo(true, false); }, 700);
+})();
+</script>
+<script>
+/* The Nu-Brutalism cursor. It follows the pointer exactly, with no lag, so it never feels slippery.
+   Over the card it says what will happen: "Turn over", or "Spin" while you drag. */
+(function () {
+  if (!window.matchMedia || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  var c = document.createElement("div");
+  c.className = "cursor is-out"; c.setAttribute("aria-hidden", "true");
+  var TURN = "Turn over", SPIN = "Spin";
+  c.innerHTML = '<span class="cursor-label"><svg class="cursor-icon" viewBox="0 0 24 24" focusable="false"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 3.5v5h-5"/></svg><span class="cursor-text"></span></span>';
+  document.body.appendChild(c);
+  document.documentElement.classList.add("has-cursor");
+  var text = c.querySelector(".cursor-text"), x = -100, y = -100, down = false, frame = 0, target = null;
+  function paint() {
+    frame = 0;
+    c.style.transform = "translate3d(" + x + "px," + y + "px,0) translate(-50%,-50%)" + (down ? " scale(.88)" : "");
+  }
+  function mode() {
+    var scene = target && target.closest && target.closest(".card-scene");
+    var card = scene && scene.querySelector(".card");
+    var onBackControl = target && target.closest && target.closest(".card-back a, .card-back button");
+    var dragging = scene && scene.classList.contains("is-dragging");
+    var onCard = scene && card && !card.classList.contains("is-flipped") && !onBackControl;
+    c.classList.toggle("is-card", !!(onCard || dragging));
+    c.classList.toggle("is-drag", !!dragging);
+    text.textContent = dragging ? SPIN : TURN;
+    c.classList.toggle("is-link", !onCard && !dragging && !!(target && target.closest && target.closest("a[href], button, [role='button'], label")));
+  }
+  addEventListener("pointermove", function (e) {
+    if (e.pointerType !== "mouse") return;
+    x = e.clientX; y = e.clientY; target = e.target;
+    c.classList.remove("is-out"); mode();
+    if (!frame) frame = requestAnimationFrame(paint);
+  }, { passive: true });
+  addEventListener("pointerdown", function (e) { if (e.pointerType === "mouse") { down = true; paint(); } });
+  addEventListener("pointerup", function () { down = false; mode(); paint(); });
+  document.addEventListener("mouseleave", function () { c.classList.add("is-out"); });
+  document.addEventListener("click", function () { setTimeout(mode, 0); });   // the card may have just turned
 })();
 </script>
 </body>

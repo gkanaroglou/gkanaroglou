@@ -40,7 +40,7 @@
 
   /* =====================================================================
      Gkanaroglou brand, Nu-Brutalism. Roughly 50% Paper, 25% Black,
-     15% Signal Orange, 7% Cobalt, 3% Concrete. One loud field per screen. (No Cobalt on this page yet.)
+     15% Signal Orange, 7% Cobalt, 3% Concrete. One loud field per screen. Cobalt appears once, on the business card.
      Structure is the decoration: 3px black rules, no boxes, shadows or rounded corners.
      ===================================================================== */
   :root {
@@ -151,24 +151,26 @@
   .opening {
     display: grid;
     grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .58) minmax(0, 1fr);
-    grid-template-rows: auto 1fr;   /* headline takes what it needs, the Cobalt window fills the rest */
+    grid-template-rows: auto auto;
+  }
+  /* Tile 1, on Paper: "Get in touch." and its line on the left, the card on the right */
+  .opening-head {
+    grid-column: 2; grid-row: 1; container-type: inline-size;
+    padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(2.25rem, 5vw, 4rem) 0;
   }
   .opening-copy {
-    grid-column: 2; grid-row: 1; container-type: inline-size;
-    padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(1.75rem, 3vw, 2.5rem) 0;
+    grid-column: 3; grid-row: 1;
+    padding: clamp(2.25rem, 5vw, 4rem) max(var(--gutter), calc((100vw - 1200px) / 2)) clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.75rem);
   }
-  /* Cobalt window under the headline: the full wordmark slides through it as you scroll, like a car passing */
-  .mark-run {
-    grid-column: 2; grid-row: 2; align-self: start; position: relative; overflow: hidden; aspect-ratio: 100 / 46; container-type: inline-size;
-    margin: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 5vw, 4rem) 0;
-    color: var(--paper); background: var(--cobalt);
-  }
-  /* The wordmark is exactly the height of the box: its bar touches the top edge, its letters the bottom */
-  .mark-run-word { position: absolute; top: 0; left: 0; height: 100%; width: auto; aspect-ratio: 1462 / 160; fill: currentColor; }
+  /* "Get in touch." sits on Paper here: black heading, grey line, and the card pushed to the bottom so it ends level with the panel */
+  .opening .contact-title { color: var(--black); }
+  .opening .contact-lede { color: var(--muted); }
+  .opening .contact-card-cell { width: 100%; padding: 0; }
+  .opening .card-front:focus-visible { outline-color: var(--black); }
   .opening h1 {
     font-weight: 900; letter-spacing: -.045em; line-height: .88;
-    font-size: clamp(2.75rem, 9vw, 7rem);
-    font-size: clamp(2.75rem, 19.5cqi, 9.5rem);   /* the headline fills its column on any screen */
+    font-size: clamp(2.75rem, 9vw, 9.5rem);
+    font-size: clamp(2.75rem, 19.5cqi, 9.5rem);   /* fills its column on any screen */
   }
   .opening h1 span { display: block; }
   /* Optical alignment: letters carry a little built-in space before them, so the big headings are pulled left by it.
@@ -176,9 +178,9 @@
   .opening h1, .contact-title { margin-left: -0.032em; }
 
   .field {
-    grid-column: 3; grid-row: 1 / span 2;
+    grid-column: 1 / -1; grid-row: 2;
     display: flex; flex-direction: column; justify-content: flex-start; gap: 2.5rem;
-    padding: clamp(2.25rem, 5vw, 4rem) max(var(--gutter), calc((100vw - 1200px) / 2)) clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.75rem);
+    padding: clamp(2.5rem, 5vw, 4rem) calc((100% - var(--content)) / 2);
     color: #000; background: var(--orange);
   }
   /* The index: a black panel, the five disciplines numbered 01 to 05 */
@@ -244,6 +246,15 @@
   .index-base { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); list-style: none; border-top: 3px solid var(--paper); }
   .index-base li + li { border-left: 1px solid var(--concrete); }
   .index-base strong { width: min-content; font-size: clamp(1.05rem, 1.45vw, 1.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -.015em; }   /* one word per line, so both always match */
+  /* Wide screens: the panel spans the page, so the disciplines and the foundations sit side by side inside it */
+  @media (min-width: 1000px) {
+    .index { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); column-gap: clamp(2rem, 4vw, 3.5rem); align-content: start; }
+    .index > .index-head { grid-column: 1; grid-row: 1; }
+    .index > .index-list { grid-column: 1; grid-row: 2 / span 2; align-self: start; }
+    .index > .index-head-base { grid-column: 2; grid-row: 1; padding: 0 0 clamp(1.25rem, 2.5vw, 2rem); }
+    .index > .index-base { grid-column: 2; grid-row: 2; align-self: start; }
+    .index > .acc-base { grid-column: 2; grid-row: 3; }
+  }
   /* The smallest phones: the two foundations stack as full-width rows, like the disciplines above them */
   @media (max-width: 359px) {
     .index-base { grid-template-columns: minmax(0, 1fr); }
@@ -255,9 +266,10 @@
 
   @media (max-width: 760px) {
     .opening { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; min-height: 0; }
-    .opening-copy, .field, .mark-run { grid-column: 1; grid-row: auto; }
-    .opening-copy { padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2.5rem; }
-    .mark-run { margin: 0; }
+    .opening-head, .opening-copy, .field { grid-column: 1; grid-row: auto; }
+    .opening-head { padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2rem; }
+    .opening-copy { padding: 0 var(--gutter) 2.5rem; }
+    .opening .contact-card-cell { width: min(100%, 30rem); }
     .field { padding: 1.75rem var(--gutter) 2.5rem; }
   }
 
@@ -312,7 +324,7 @@
 
   /* The card: 85 x 55, like a real one. Click or tap to turn it over. */
   .card-scene { container-type: inline-size; width: 100%; aspect-ratio: 85 / 55; perspective: 1600px; }
-  .card-scene { cursor: grab; touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+  .card-scene { cursor: pointer; touch-action: pan-y; -webkit-user-select: none; user-select: none; }
   .card-scene.is-dragging { cursor: grabbing; }
   .card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 600ms var(--ease-in-out); }
   .card.is-flipped { transform: rotateY(180deg); }
@@ -320,29 +332,39 @@
     position: absolute; inset: 0; display: grid; padding: clamp(1rem, 6cqw, 2rem);
     -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 0; text-align: left; font: inherit;
   }
-  .card-front { grid-template-rows: 1fr auto; align-items: end; cursor: inherit; color: #000; background: var(--orange); }
+  .card-front { grid-template-rows: 1fr auto; align-items: end; cursor: inherit; color: var(--paper); background: var(--cobalt); }
   .card-mark { position: absolute; top: clamp(1rem, 6cqw, 2rem); left: clamp(1rem, 6cqw, 2rem); width: 38cqw; height: auto; fill: currentColor; }
   .card-cta { grid-row: 2; font-size: clamp(1.4rem, 8cqw, 2.6rem); font-weight: 900; line-height: .95; letter-spacing: -.04em; }
   /* The hint looks like a control, so the card reads as something to press */
   .card-hint {
-    grid-row: 2; justify-self: end; display: inline-flex; align-items: center; gap: .4rem;
-    padding: .4rem .7rem; font-size: .8125rem; font-weight: 700; line-height: 1; white-space: nowrap;
-    border: 2px solid #000; transition: color 150ms ease, background-color 150ms ease;
+    grid-row: 1; align-self: start; justify-self: end; display: inline-flex; align-items: center; gap: .4rem;
+    padding: .55rem .9rem; font-size: .9rem; font-weight: 800; line-height: 1; white-space: nowrap;
+    color: var(--cobalt); background: var(--paper); border: 2px solid var(--paper);
+    transition: color 150ms ease, background-color 150ms ease;
   }
-  /* Narrow cards: the hint moves up into the empty top-right corner, so it never crowds "Get in touch" */
-  @container (max-width: 24rem) { .card-hint { grid-row: 1; align-self: start; } }
   .card-hint-icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; transition: transform 350ms var(--ease-out); }
   @media (hover: hover) and (pointer: fine) {
-    .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--orange); background: #000; }
+    .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--paper); background: transparent; }
     .card-scene:hover .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
   }
   .card-front:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; }
+  /* A folded corner: a flap of the Paper back shows through, the universal sign that there is another side.
+     The cut-away part takes the colour of whatever the card sits on. It peels a little further on hover. */
+  .card-scene { --behind: var(--black); }
+  .opening .card-scene { --behind: var(--paper); }
+  .card-front::after {
+    content: ""; position: absolute; right: 0; bottom: 0; width: clamp(1.75rem, 9cqw, 2.75rem); aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--paper) 0 calc(50% - 1.5px), var(--black) calc(50% - 1.5px) calc(50% + 1.5px), var(--behind) calc(50% + 1.5px));
+    transition: width 250ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) { .card-scene:hover .card:not(.is-flipped) .card-front::after { width: clamp(2.5rem, 13cqw, 4rem); } }
+  @media (prefers-reduced-motion: reduce) { .card-front::after { transition: none; } }
 
 
   .card p { margin: 0; color: inherit; }
   .card-back {
     transform: rotateY(180deg); grid-template-rows: auto auto 1fr; align-content: start;
-    color: var(--black); background: var(--paper); border-top: 3px solid var(--paper);
+    color: var(--black); background: var(--paper); border: 3px solid var(--black);
   }
   .card-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding-top: .5rem; border-top: 3px solid var(--black); }
   .card-name { font-size: clamp(1.1rem, 6cqw, 1.9rem); font-weight: 900; line-height: 1; letter-spacing: -.03em; }
@@ -374,6 +396,13 @@
     .card-scene { cursor: pointer; }
     .card-hint-icon { transition: none; }
   }
+
+  /* ---------- "Prefer email?": the plain address, at the bottom of the page ---------- */
+  .email-strip { padding-block: clamp(2.5rem, 6vw, 4.5rem); color: var(--paper); background: var(--black); }
+  .email-strip-inner { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.5rem; }
+  .email-strip-label { width: 100%; color: var(--concrete); font-size: clamp(1.05rem, 1.5vw, 1.25rem); font-weight: 600; }
+  .email-strip .copy-row { margin: 0; }
+  .email-strip a:focus-visible, .email-strip button:focus-visible { outline-color: var(--paper); }
 
   /* ---------- Footer ---------- */
   footer {
@@ -417,6 +446,27 @@
   @media (hover: hover) and (pointer: fine) {
     .consent .btn:hover { color: #000; background: var(--paper); border-color: var(--paper); }
   }
+
+  /* ---------- Cursor: a black square with a Paper edge, so it shows on every colour ----------
+     Over links and buttons it becomes an orange block; over the card, a "Turn over" label.
+     Mouse and trackpad only, and only once the script has started, so touch and keyboard are untouched. */
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+  .cursor {
+    position: fixed; left: 0; top: 0; z-index: 100; pointer-events: none;
+    display: flex; align-items: center; justify-content: center; gap: .35rem;
+    width: 14px; height: 14px; overflow: hidden; white-space: nowrap;
+    color: #000; background: var(--black); border: 2px solid var(--paper);
+    font: 800 .8125rem/1 var(--font);
+    transition: width 180ms var(--ease-out), height 180ms var(--ease-out), background-color 120ms ease, border-color 120ms ease, opacity 150ms ease;
+  }
+  .cursor.is-out { opacity: 0; }
+  .cursor.is-link { width: 22px; height: 22px; background: var(--orange); border-color: #000; }
+  .cursor.is-card { width: 8.5rem; height: 2.5rem; background: var(--paper); border: 3px solid #000; }
+  .cursor.is-drag { width: 5.5rem; }
+  .cursor-label { display: none; align-items: center; gap: .35rem; }
+  .cursor.is-card .cursor-label { display: inline-flex; }
+  .cursor-icon { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; }
+  @media (prefers-reduced-motion: reduce) { .cursor { transition: none; } }
 
   /* ---------- Moving between pages: the header stays put, the page crossfades ---------- */
   @view-transition { navigation: auto; }
@@ -739,5 +789,71 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 
 
 
+<script>
+/* Copy email buttons (on the card's back and in the strip). Shown only where the browser allows copying. */
+(function () {
+  if (!navigator.clipboard || !window.isSecureContext) return;
+  [].forEach.call(document.querySelectorAll(".copy-btn"), function (b) {
+    var span = b.querySelector(".copy-label"), s = b.parentNode.querySelector(".copy-status");
+    if (!span) return;
+    var label = span.textContent, t;
+    function swap(text) {
+      span.textContent = text;
+      if (span.animate) span.animate([{ opacity: 0, filter: "blur(2px)" }, { opacity: 1, filter: "blur(0)" }],
+        { duration: 200, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    }
+    b.hidden = false;
+    b.addEventListener("click", function () {
+      navigator.clipboard.writeText(["hello", "georgekanaroglou.com"].join("@")).then(function () {
+        swap("Copied");
+        b.setAttribute("data-copied", "");
+        if (s) s.textContent = "Email address copied";
+        clearTimeout(t);
+        t = setTimeout(function () { swap(label); b.removeAttribute("data-copied"); if (s) s.textContent = ""; }, 2000);
+        if (typeof window.gkTrack === "function") window.gkTrack("email_click", { label: "copy" });
+      }, function () {});
+    });
+  });
+})();
+</script>
+<script>
+/* The Nu-Brutalism cursor. It follows the pointer exactly, with no lag, so it never feels slippery.
+   Over the card it says what will happen: "Turn over", or "Spin" while you drag. */
+(function () {
+  if (!window.matchMedia || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  var c = document.createElement("div");
+  c.className = "cursor is-out"; c.setAttribute("aria-hidden", "true");
+  var TURN = "Turn over", SPIN = "Spin";
+  c.innerHTML = '<span class="cursor-label"><svg class="cursor-icon" viewBox="0 0 24 24" focusable="false"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 3.5v5h-5"/></svg><span class="cursor-text"></span></span>';
+  document.body.appendChild(c);
+  document.documentElement.classList.add("has-cursor");
+  var text = c.querySelector(".cursor-text"), x = -100, y = -100, down = false, frame = 0, target = null;
+  function paint() {
+    frame = 0;
+    c.style.transform = "translate3d(" + x + "px," + y + "px,0) translate(-50%,-50%)" + (down ? " scale(.88)" : "");
+  }
+  function mode() {
+    var scene = target && target.closest && target.closest(".card-scene");
+    var card = scene && scene.querySelector(".card");
+    var onBackControl = target && target.closest && target.closest(".card-back a, .card-back button");
+    var dragging = scene && scene.classList.contains("is-dragging");
+    var onCard = scene && card && !card.classList.contains("is-flipped") && !onBackControl;
+    c.classList.toggle("is-card", !!(onCard || dragging));
+    c.classList.toggle("is-drag", !!dragging);
+    text.textContent = dragging ? SPIN : TURN;
+    c.classList.toggle("is-link", !onCard && !dragging && !!(target && target.closest && target.closest("a[href], button, [role='button'], label")));
+  }
+  addEventListener("pointermove", function (e) {
+    if (e.pointerType !== "mouse") return;
+    x = e.clientX; y = e.clientY; target = e.target;
+    c.classList.remove("is-out"); mode();
+    if (!frame) frame = requestAnimationFrame(paint);
+  }, { passive: true });
+  addEventListener("pointerdown", function (e) { if (e.pointerType === "mouse") { down = true; paint(); } });
+  addEventListener("pointerup", function () { down = false; mode(); paint(); });
+  document.addEventListener("mouseleave", function () { c.classList.add("is-out"); });
+  document.addEventListener("click", function () { setTimeout(mode, 0); });   // the card may have just turned
+})();
+</script>
 </body>
 </html>
