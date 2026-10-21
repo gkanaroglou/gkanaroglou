@@ -344,8 +344,8 @@
   }
   .card-hint-icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; transition: transform 350ms var(--ease-out); }
   @media (hover: hover) and (pointer: fine) {
-    .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--paper); background: transparent; }
-    .card-scene:hover .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
+    .card-scene:hover .card:not(.is-flipped) .card-hint, .opening:has(.opening-head:hover, .opening-copy:hover) .card:not(.is-flipped) .card-hint { color: var(--paper); background: transparent; }
+    .card-scene:hover .card:not(.is-flipped) .card-hint-icon, .opening:has(.opening-head:hover, .opening-copy:hover) .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
   }
   .card-front:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; }
   /* A folded corner: a flap of the Paper back shows through, the universal sign that there is another side.
@@ -357,7 +357,14 @@
     background: linear-gradient(135deg, var(--paper) 0 calc(50% - 1.5px), var(--black) calc(50% - 1.5px) calc(50% + 1.5px), var(--behind) calc(50% + 1.5px));
     transition: width 250ms var(--ease-out);
   }
-  @media (hover: hover) and (pointer: fine) { .card-scene:hover .card:not(.is-flipped) .card-front::after { width: clamp(2.5rem, 13cqw, 4rem); } }
+  @media (hover: hover) and (pointer: fine) {
+    .card-scene:hover .card:not(.is-flipped) .card-front::after,
+    .opening:has(.opening-head:hover, .opening-copy:hover) .card:not(.is-flipped) .card-front::after { width: clamp(2.5rem, 13cqw, 4rem); }
+    /* Anywhere on the white top tile, the card lifts onto a hard black block, ready to be turned */
+    .opening .card-scene { transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out); }
+    .opening:has(.opening-head:hover, .opening-copy:hover) .card-scene:not(:has(.card.is-flipped)) { transform: translate(-4px, -8px); box-shadow: 8px 8px 0 var(--black); }
+  }
+  @media (prefers-reduced-motion: reduce) { .opening .card-scene { transition: none; } }
   @media (prefers-reduced-motion: reduce) { .card-front::after { transition: none; } }
 
 
@@ -1059,7 +1066,8 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   // never when it's turned over, and not at all with reduced motion.
   var peek = null, armed = true, peekTimer, FIRST = 1800, AGAIN = 350;
   function nudge() {
-    if (card.classList.contains("is-flipped") || scene.matches(":hover") || scene.classList.contains("is-dragging") || scene.contains(document.activeElement)) return;
+    var tile = scene.closest(".opening"), lifted = tile && tile.querySelector(".opening-head:hover, .opening-copy:hover");
+    if (card.classList.contains("is-flipped") || lifted || scene.matches(":hover") || scene.classList.contains("is-dragging") || scene.contains(document.activeElement)) return;
     if (peek && peek.playState === "running") return;
     peek = card.animate([
       { transform: "rotateY(0deg)" },
