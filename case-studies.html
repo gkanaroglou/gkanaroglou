@@ -36,7 +36,7 @@
 
   /* =====================================================================
      Gkanaroglou brand, Nu-Brutalism. Roughly 50% Paper, 25% Black,
-     15% Signal Orange, 7% Cobalt, 3% Concrete. One loud field per screen. (No Cobalt on this page yet.)
+     15% Signal Orange, 7% Cobalt, 3% Concrete. One loud field per screen. Cobalt appears once, on the business card.
      Structure is the decoration: 3px black rules, no boxes, shadows or rounded corners.
      ===================================================================== */
   :root {
@@ -147,20 +147,12 @@
   .opening {
     display: grid;
     grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .58) minmax(0, 1fr);
-    grid-template-rows: auto 1fr;   /* headline takes what it needs, the Cobalt window fills the rest */
+    grid-template-rows: auto 1fr;
   }
   .opening-copy {
     grid-column: 2; grid-row: 1; container-type: inline-size;
     padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(1.75rem, 3vw, 2.5rem) 0;
   }
-  /* Cobalt window under the headline: the full wordmark slides through it as you scroll, like a car passing */
-  .mark-run {
-    grid-column: 2; grid-row: 2; align-self: start; position: relative; overflow: hidden; aspect-ratio: 100 / 46; container-type: inline-size;
-    margin: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 5vw, 4rem) 0;
-    color: var(--paper); background: var(--cobalt);
-  }
-  /* The wordmark is exactly the height of the box: its bar touches the top edge, its letters the bottom */
-  .mark-run-word { position: absolute; top: 0; left: 0; height: 100%; width: auto; aspect-ratio: 1462 / 160; fill: currentColor; }
   .opening h1 {
     font-weight: 900; letter-spacing: -.045em; line-height: .88;
     font-size: clamp(2.75rem, 9vw, 7rem);
@@ -251,9 +243,8 @@
 
   @media (max-width: 760px) {
     .opening { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; min-height: 0; }
-    .opening-copy, .field, .mark-run { grid-column: 1; grid-row: auto; }
+    .opening-copy, .field { grid-column: 1; grid-row: auto; }
     .opening-copy { padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2.5rem; }
-    .mark-run { margin: 0; }
     .field { padding: 1.75rem var(--gutter) 2.5rem; }
   }
 
@@ -316,20 +307,20 @@
     position: absolute; inset: 0; display: grid; padding: clamp(1rem, 6cqw, 2rem);
     -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 0; text-align: left; font: inherit;
   }
-  .card-front { grid-template-rows: 1fr auto; align-items: end; cursor: inherit; color: #000; background: var(--orange); }
+  .card-front { grid-template-rows: 1fr auto; align-items: end; cursor: inherit; color: var(--paper); background: var(--cobalt); }
   .card-mark { position: absolute; top: clamp(1rem, 6cqw, 2rem); left: clamp(1rem, 6cqw, 2rem); width: 38cqw; height: auto; fill: currentColor; }
   .card-cta { grid-row: 2; font-size: clamp(1.4rem, 8cqw, 2.6rem); font-weight: 900; line-height: .95; letter-spacing: -.04em; }
   /* The hint looks like a control, so the card reads as something to press */
   .card-hint {
     grid-row: 2; justify-self: end; display: inline-flex; align-items: center; gap: .4rem;
     padding: .4rem .7rem; font-size: .8125rem; font-weight: 700; line-height: 1; white-space: nowrap;
-    border: 2px solid #000; transition: color 150ms ease, background-color 150ms ease;
+    border: 2px solid currentColor; transition: color 150ms ease, background-color 150ms ease;
   }
   /* Narrow cards: the hint moves up into the empty top-right corner, so it never crowds "Get in touch" */
   @container (max-width: 24rem) { .card-hint { grid-row: 1; align-self: start; } }
   .card-hint-icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; transition: transform 350ms var(--ease-out); }
   @media (hover: hover) and (pointer: fine) {
-    .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--orange); background: #000; }
+    .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--cobalt); background: var(--paper); border-color: var(--paper); }
     .card-scene:hover .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
   }
   .card-front:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; }
