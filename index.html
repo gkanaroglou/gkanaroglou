@@ -153,28 +153,24 @@
     grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .58) minmax(0, 1fr);
     grid-template-rows: auto auto;
   }
-  /* Top row: "Get in touch." on one line across the full content width, then a black rule across the page */
+  /* Tile 1, on Paper: "Get in touch." and its line on the left, the card on the right */
   .opening-head {
-    grid-column: 1 / -1; grid-row: 1; container-type: inline-size;
-    padding: clamp(2.25rem, 5vw, 4rem) calc((100% - var(--content)) / 2) clamp(1.75rem, 3vw, 2.5rem);
-    border-bottom: 3px solid var(--black);
+    grid-column: 2; grid-row: 1; container-type: inline-size;
+    padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(2.25rem, 5vw, 4rem) 0;
   }
-  /* Under the rule: the card on the left, its top level with the black panel's */
   .opening-copy {
-    grid-column: 2; grid-row: 2;
-    display: flex; flex-direction: column; align-items: flex-start;
-    padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 5vw, 4rem) 0;
+    grid-column: 3; grid-row: 1;
+    padding: clamp(2.25rem, 5vw, 4rem) max(var(--gutter), calc((100vw - 1200px) / 2)) clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.75rem);
   }
   /* "Get in touch." sits on Paper here: black heading, grey line, and the card pushed to the bottom so it ends level with the panel */
   .opening .contact-title { color: var(--black); }
   .opening .contact-lede { color: var(--muted); }
-  .opening .contact-card-cell { width: min(100%, 32rem); padding: 0; }
+  .opening .contact-card-cell { width: 100%; padding: 0; }
   .opening .card-front:focus-visible { outline-color: var(--black); }
   .opening h1 {
     font-weight: 900; letter-spacing: -.045em; line-height: .88;
-    font-size: clamp(2.5rem, 9vw, 10rem);
-    font-size: clamp(2.5rem, 15.5cqi, 10rem);   /* one line on any screen, in both languages */
-    white-space: nowrap;
+    font-size: clamp(2.75rem, 9vw, 9.5rem);
+    font-size: clamp(2.75rem, 19.5cqi, 9.5rem);   /* fills its column on any screen */
   }
   .opening h1 span { display: block; }
   /* Optical alignment: letters carry a little built-in space before them, so the big headings are pulled left by it.
@@ -182,9 +178,9 @@
   .opening h1, .contact-title { margin-left: -0.032em; }
 
   .field {
-    grid-column: 3; grid-row: 2;
+    grid-column: 1 / -1; grid-row: 2;
     display: flex; flex-direction: column; justify-content: flex-start; gap: 2.5rem;
-    padding: clamp(2.25rem, 5vw, 4rem) max(var(--gutter), calc((100vw - 1200px) / 2)) clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.75rem);
+    padding: clamp(2.5rem, 5vw, 4rem) calc((100% - var(--content)) / 2);
     color: #000; background: var(--orange);
   }
   /* The index: a black panel, the five disciplines numbered 01 to 05 */
@@ -250,6 +246,15 @@
   .index-base { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); list-style: none; border-top: 3px solid var(--paper); }
   .index-base li + li { border-left: 1px solid var(--concrete); }
   .index-base strong { width: min-content; font-size: clamp(1.05rem, 1.45vw, 1.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -.015em; }   /* one word per line, so both always match */
+  /* Wide screens: the panel spans the page, so the disciplines and the foundations sit side by side inside it */
+  @media (min-width: 1000px) {
+    .index { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); column-gap: clamp(2rem, 4vw, 3.5rem); align-content: start; }
+    .index > .index-head { grid-column: 1; grid-row: 1; }
+    .index > .index-list { grid-column: 1; grid-row: 2 / span 2; align-self: start; }
+    .index > .index-head-base { grid-column: 2; grid-row: 1; padding: 0 0 clamp(1.25rem, 2.5vw, 2rem); }
+    .index > .index-base { grid-column: 2; grid-row: 2; align-self: start; }
+    .index > .acc-base { grid-column: 2; grid-row: 3; }
+  }
   /* The smallest phones: the two foundations stack as full-width rows, like the disciplines above them */
   @media (max-width: 359px) {
     .index-base { grid-template-columns: minmax(0, 1fr); }
@@ -261,9 +266,9 @@
 
   @media (max-width: 760px) {
     .opening { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; min-height: 0; }
-    .opening-copy, .field { grid-column: 1; grid-row: auto; }
-    .opening-head { grid-column: 1; padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2rem; }
-    .opening-copy { padding: 2rem var(--gutter) 2.5rem; }
+    .opening-head, .opening-copy, .field { grid-column: 1; grid-row: auto; }
+    .opening-head { padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2rem; }
+    .opening-copy { padding: 0 var(--gutter) 2.5rem; }
     .opening .contact-card-cell { width: min(100%, 30rem); }
     .field { padding: 1.75rem var(--gutter) 2.5rem; }
   }
@@ -894,16 +899,22 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 
   var wide = window.matchMedia ? matchMedia("(min-width: 761px)") : { matches: true };
   function reserve() {
-    if (!wide.matches) { index.style.minHeight = ""; return; }
-    var accs = [].slice.call(index.querySelectorAll(".acc"));
-    var cs = getComputedStyle(index), open = 0, tallest = 0, content = 0;
-    accs.forEach(function (a) {
-      if (a.classList.contains("is-open")) open += a.getBoundingClientRect().height;
-      tallest = Math.max(tallest, a.querySelector(".acc-content").scrollHeight);
-    });
-    [].forEach.call(index.children, function (c) { content += c.getBoundingClientRect().height; });
-    var closed = content - open + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-    index.style.minHeight = Math.ceil(closed + tallest) + "px";
+    index.style.minHeight = "";
+    if (!wide.matches) return;
+    var cs = getComputedStyle(index), pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    var h = function (el) { return el ? el.getBoundingClientRect().height : 0; };
+    var tallest = function (list) { return list.reduce(function (m, a) { return Math.max(m, a.querySelector(".acc-content").scrollHeight); }, 0); };
+    var head1 = index.querySelector(".index-head:not(.index-head-base)"), list = index.querySelector(".index-list");
+    var head2 = index.querySelector(".index-head-base"), base = index.querySelector(".index-base");
+    var accList = [].slice.call(list.querySelectorAll(".acc")), accBase = [].slice.call(index.querySelectorAll(".acc-base"));
+    var listClosed = h(list) - accList.reduce(function (t, a) { return t + (a.classList.contains("is-open") ? h(a) : 0); }, 0);
+    var need;
+    if (cs.display === "grid") {   // side by side: the taller column, with its tallest explanation open
+      need = Math.max(h(head1) + listClosed + tallest(accList), h(head2) + h(base) + tallest(accBase));
+    } else {                       // stacked: everything, plus the tallest explanation anywhere
+      need = h(head1) + listClosed + h(head2) + h(base) + Math.max(tallest(accList), tallest(accBase));
+    }
+    index.style.minHeight = Math.ceil(need + pad) + "px";
   }
   reserve();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserve);
