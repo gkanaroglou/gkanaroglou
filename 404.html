@@ -320,6 +320,7 @@
 
   /* The card: 85 x 55, like a real one. Click or tap to turn it over. */
   .card-scene { container-type: inline-size; width: 100%; aspect-ratio: 85 / 55; perspective: 1600px; }
+  @media (max-width: 359px) { .card-scene { aspect-ratio: 85 / 62; } }   /* the smallest phones: a touch taller, so the back's buttons always fit */
   .card-scene { cursor: pointer; touch-action: pan-y; -webkit-user-select: none; user-select: none; }
   .card-scene.is-dragging { cursor: grabbing; }
   .card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 600ms var(--ease-in-out); }
@@ -359,7 +360,7 @@
 
   .card p { margin: 0; color: inherit; }
   .card-back {
-    transform: rotateY(180deg); grid-template-rows: auto 1fr; align-content: stretch; row-gap: .75rem;
+    transform: rotateY(180deg); grid-template-rows: auto 1fr auto; align-content: stretch; row-gap: .75rem;
     color: var(--black); background: var(--paper); border: 3px solid var(--black);
   }
   .card-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding-top: .5rem; border-top: 3px solid var(--black); }
@@ -369,8 +370,20 @@
   .card-turn:active { opacity: .7; }
   .card-bottom { align-self: end; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: .5rem 1rem; }
   .card-details { display: grid; gap: .45rem; }
+  /* The email sits in the middle of the back, the two buttons along the bottom */
+  .card-back > .email { align-self: center; justify-self: start; }
+  .card-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+  .card-actions .copy-row { margin: 0; }
+  .card-link, .foot-linkedin {
+    display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .45rem .95rem;
+    color: var(--black); background: transparent; border: 2px solid var(--black);
+    font-size: .95rem; font-weight: 700; text-decoration: none; transition: color 150ms ease, background-color 150ms ease;
+  }
+  .card-link:active, .foot-linkedin:active { opacity: .7; }
+  .ext-icon { width: .8rem; height: .8rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: square; }
+  @media (hover: hover) and (pointer: fine) { .card-link:hover, .foot-linkedin:hover { color: var(--paper); background: var(--black); } }
   /* Small cards: a little less space around the details, so the bigger text always fits */
-  @container (max-width: 20rem) { .card-back { padding: .85rem; row-gap: .3rem; } .card-name { font-size: clamp(1.05rem, 7cqw, 1.2rem); } .card-details { gap: .25rem; } .card-back .copy-btn { min-height: 40px; padding: .35rem .75rem; } }
+  @container (max-width: 20rem) { .card-back { padding: .85rem; row-gap: .3rem; } .card-name { font-size: clamp(1.05rem, 7cqw, 1.2rem); } .card-details { gap: .25rem; } .card-back .copy-btn, .card-link { min-height: 36px; padding: .3rem .6rem; font-size: .8125rem; } .card-actions { gap: .4rem; } }
   .card-back .email { color: var(--black); font-size: clamp(1rem, 5.4cqw, 1.7rem); font-weight: 800; letter-spacing: -.02em; border-bottom-width: 3px; border-bottom-color: var(--cobalt); }
   .card-place { color: var(--black); font-size: clamp(.95rem, 4cqw, 1.2rem); font-weight: 600; }
   .card-back .copy-row { margin: 0; }
@@ -446,12 +459,54 @@
   }
   .foot-links a:active, .linkish:active { opacity: .7; }
   .linkish[hidden] { display: none; }
-  /* Contact details at the foot of every page: name, email and where I work. No street address. */
+  /* Contact at the foot of every page: the email and LinkedIn. */
   .foot-address { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.5rem; font-style: normal; color: var(--black); }
   .foot-address strong { font-weight: 800; }
   .foot-address a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; text-underline-offset: 3px; }
   .foot-address a:active { opacity: .7; }
+  .foot-address .foot-linkedin { min-height: 40px; padding: .35rem .8rem; font-size: .875rem; text-decoration: none; cursor: pointer; font-family: inherit; }
   .foot-base { padding-top: .25rem; font-size: .8125rem; }
+
+  /* ---------- Email list pop-up: a Paper card rising from the bottom-left ---------- */
+  .signup {
+    position: fixed; z-index: 9; left: calc(var(--gutter) * .6); bottom: calc(clamp(.75rem, 3vw, 1.5rem) + env(safe-area-inset-bottom, 0px));
+    width: min(24rem, 100% - 1.5rem); padding: 1.25rem 1.25rem 1.1rem;
+    color: var(--black); background: var(--paper); border: 3px solid var(--black);
+    opacity: 0; transform: translateY(1.5rem); transition: opacity 250ms var(--ease-out), transform 400ms var(--ease-drawer);
+  }
+  .signup.is-open { opacity: 1; transform: none; }
+  .signup[hidden] { display: none; }
+  .signup-close { position: absolute; top: .4rem; right: .4rem; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; cursor: pointer; color: var(--black); background: none; border: 0; }
+  .signup-close svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: square; }
+  .signup-title { padding-right: 2.5rem; font-size: clamp(1.5rem, 4vw, 1.9rem); font-weight: 900; line-height: 1; letter-spacing: -.04em; }
+  .signup-text { margin-top: .6rem; color: var(--muted); font-size: .95rem; line-height: 1.4; }
+  .signup-form { display: grid; gap: .75rem; margin-top: 1rem; }
+  .signup-email { width: 100%; min-height: 48px; padding: .6rem .8rem; font: inherit; font-size: 16px; color: var(--black); background: #fff; border: 2px solid var(--black); border-radius: 0; }
+  .signup-email:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+  .signup-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .signup-consent { display: flex; align-items: flex-start; gap: .6rem; font-size: .875rem; line-height: 1.4; cursor: pointer; }
+  .signup-consent input { flex-shrink: 0; width: 1.15rem; height: 1.15rem; margin-top: .1rem; accent-color: var(--black); cursor: pointer; }
+  .signup-consent a { text-underline-offset: 2px; }
+  .signup-submit { justify-self: start; }
+  .signup-submit:disabled { opacity: .6; cursor: default; }
+  .signup-status { min-height: 1.2em; font-size: .9rem; font-weight: 700; }
+  @media (max-width: 760px) { .signup { left: .75rem; right: .75rem; width: auto; } }
+
+  /* ---------- Back to top: a black square, bottom right, once you've scrolled ---------- */
+  .to-top {
+    position: fixed; z-index: 8; right: max(var(--gutter), env(safe-area-inset-right, 0px)); bottom: calc(clamp(.75rem, 3vw, 1.5rem) + env(safe-area-inset-bottom, 0px));
+    display: grid; place-items: center; width: 48px; height: 48px; padding: 0; cursor: pointer;
+    color: var(--paper); background: var(--black); border: 2px solid var(--paper);
+    opacity: 0; visibility: hidden; transform: translateY(.75rem);
+    transition: opacity 200ms var(--ease-out), transform 250ms var(--ease-out), visibility 0s linear 250ms, background-color 150ms ease;
+  }
+  .to-top.is-shown { opacity: 1; visibility: visible; transform: none; transition: opacity 200ms var(--ease-out), transform 250ms var(--ease-out), visibility 0s, background-color 150ms ease; }
+  .to-top svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: square; }
+  .to-top:active { transform: scale(.94); }
+  .to-top:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+  @media (hover: hover) and (pointer: fine) { .to-top:hover { color: #000; background: var(--orange); } }
+  /* Out of the way while the cookie banner or the pop-up is open */
+  .consent.is-open ~ .to-top, .signup.is-open ~ .to-top { opacity: 0; visibility: hidden; }
 
   /* ---------- Cookie banner: a black block rising from the bottom edge ---------- */
   .consent {
@@ -467,6 +522,15 @@
   .consent p { font-size: .95rem; }
   .consent a { color: var(--paper); }
   .consent-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .consent-actions [hidden] { display: none; }
+  /* Customise: one line per kind of cookie, each with its own tick box */
+  .consent-prefs { display: grid; gap: .6rem; padding: .9rem 0 .2rem; border-top: 1px solid var(--muted); }
+  .consent-prefs[hidden] { display: none; }
+  .consent-opt { display: flex; align-items: flex-start; gap: .7rem; font-size: .9rem; line-height: 1.4; cursor: pointer; }
+  .consent-opt input { flex-shrink: 0; width: 1.15rem; height: 1.15rem; margin-top: .1rem; accent-color: var(--orange); cursor: pointer; }
+  .consent-opt input:disabled { cursor: default; }
+  .consent-opt strong { display: block; font-weight: 800; }
+  .consent-opt input:focus-visible { outline: 3px solid var(--paper); outline-offset: 2px; }
   .consent .btn { color: var(--paper); border-color: var(--paper); }
   /* Accept and Decline are styled identically: declining is exactly as easy and as prominent as accepting */
   .consent .btn-primary { color: var(--paper); background: transparent; border-color: var(--paper); }
@@ -506,7 +570,7 @@
     .logo, .logo-gk, .logo-word, .acc, .acc.is-open, .acc-content, .index-plus, .index-name, .work-item { transition: none; }
     .index-item:hover .index-name, .index-item:focus-visible .index-name { transform: none; }   /* colour change only */
     .btn:active, .copy-btn:active { transform: none; }
-    .consent, .consent.is-open { transform: none; transition: opacity 200ms ease; }
+    .consent, .consent.is-open, .signup, .signup.is-open, .to-top, .to-top.is-shown { transform: none; transition: opacity 200ms ease; }
   }
 
   /* ================= 404 ================= */
@@ -586,9 +650,8 @@
 <footer>
   <div class="wrap foot">
     <address class="foot-address">
-      <strong>George Kanaroglou</strong>
       <a data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello at georgekanaroglou.com</a>
-      <span>London and Athens</span>
+      <a class="foot-linkedin" href="https://www.linkedin.com/in/georgekanaroglou/" target="_blank" rel="noopener" aria-label="LinkedIn (opens in a new tab)">LinkedIn <svg class="ext-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M5 3h8v8M13 3 3 13"/></svg></a>
     </address>
     <span class="foot-links">
       <a href="/privacy.html">Privacy</a>
