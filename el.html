@@ -344,8 +344,8 @@
   }
   .card-hint-icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; transition: transform 350ms var(--ease-out); }
   @media (hover: hover) and (pointer: fine) {
-    .card-scene:hover .card:not(.is-flipped) .card-hint, .opening:has(.opening-head:hover, .opening-copy:hover) .card:not(.is-flipped) .card-hint { color: var(--paper); background: transparent; }
-    .card-scene:hover .card:not(.is-flipped) .card-hint-icon, .opening:has(.opening-head:hover, .opening-copy:hover) .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
+    .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--paper); background: transparent; }
+    .card-scene:hover .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
   }
   .card-front:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; }
   /* A folded corner: a flap of the Paper back shows through, the universal sign that there is another side.
@@ -357,14 +357,7 @@
     background: linear-gradient(135deg, var(--paper) 0 calc(50% - 1.5px), var(--black) calc(50% - 1.5px) calc(50% + 1.5px), var(--behind) calc(50% + 1.5px));
     transition: width 250ms var(--ease-out);
   }
-  @media (hover: hover) and (pointer: fine) {
-    .card-scene:hover .card:not(.is-flipped) .card-front::after,
-    .opening:has(.opening-head:hover, .opening-copy:hover) .card:not(.is-flipped) .card-front::after { width: clamp(2.5rem, 13cqw, 4rem); }
-    /* Anywhere on the white top tile, the card lifts onto a hard black block, ready to be turned */
-    .opening .card-scene { transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out); }
-    .opening:has(.opening-head:hover, .opening-copy:hover) .card-scene:not(:has(.card.is-flipped)) { transform: translate(-4px, -8px); box-shadow: 8px 8px 0 var(--black); }
-  }
-  @media (prefers-reduced-motion: reduce) { .opening .card-scene { transition: none; } }
+  @media (hover: hover) and (pointer: fine) { .card-scene:hover .card:not(.is-flipped) .card-front::after { width: clamp(2.5rem, 13cqw, 4rem); } }
   @media (prefers-reduced-motion: reduce) { .card-front::after { transition: none; } }
 
 
@@ -1070,8 +1063,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   // never when it's turned over, and not at all with reduced motion.
   var peek = null, armed = true, peekTimer, FIRST = 1800, AGAIN = 350;
   function nudge() {
-    var tile = scene.closest(".opening"), lifted = tile && tile.querySelector(".opening-head:hover, .opening-copy:hover");
-    if (card.classList.contains("is-flipped") || lifted || scene.matches(":hover") || scene.classList.contains("is-dragging") || scene.contains(document.activeElement)) return;
+    if (card.classList.contains("is-flipped") || scene.matches(":hover") || scene.classList.contains("is-dragging") || scene.contains(document.activeElement)) return;
     if (peek && peek.playState === "running") return;
     peek = card.animate([
       { transform: "rotateY(0deg)" },
@@ -1097,6 +1089,30 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     }, { threshold: [0, 0.25, 0.7], rootMargin: "-" + headerH + "px 0px 0px 0px" }).observe(scene);   // behind the sticky header counts as out of sight
   }
 
+  // The white tile around the card: moving onto it plays the reminder pivot (at most every 2.5 seconds),
+  // and clicking anywhere on it turns the card over, or back again.
+  var tile = scene.closest(".opening");
+  if (tile) {
+    var inTile = false, lastNudge = 0;
+    if (!reduce && fine) {
+      tile.addEventListener("pointermove", function (e) {
+        if (e.pointerType !== "mouse") return;
+        var here = !!e.target.closest(".opening-head, .opening-copy");
+        if (here && !inTile && !e.target.closest(".card-scene") && performance.now() - lastNudge > 2500) {
+          lastNudge = performance.now(); nudge();
+        }
+        inTile = here;
+      });
+      tile.addEventListener("pointerleave", function () { inTile = false; });
+    }
+    tile.addEventListener("click", function (e) {
+      if (!e.target.closest(".opening-head, .opening-copy") || e.target.closest(".card-scene, a, button")) return;
+      if (window.getSelection && String(window.getSelection())) return;   // they were selecting text, not clicking
+      if (peek) peek.cancel();
+      turnTo(!card.classList.contains("is-flipped"), false);
+    });
+  }
+
   if (location.hash === "#contact") setTimeout(function () { turnTo(true, false); }, 700);
 })();
 </script>
@@ -1107,7 +1123,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   if (!window.matchMedia || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
   var c = document.createElement("div");
   c.className = "cursor is-out"; c.setAttribute("aria-hidden", "true");
-  var TURN = "Γυρίστε την", SPIN = "Γυρίστε";
+  var TURN = "Γυρίστε την", BACK = "Γυρίστε πίσω", SPIN = "Γυρίστε";
   c.innerHTML = '<span class="cursor-label"><svg class="cursor-icon" viewBox="0 0 24 24" focusable="false"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 3.5v5h-5"/></svg><span class="cursor-text"></span></span>';
   document.body.appendChild(c);
   document.documentElement.classList.add("has-cursor");
@@ -1122,10 +1138,14 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var onBackControl = target && target.closest && target.closest(".card-back a, .card-back button");
     var dragging = scene && scene.classList.contains("is-dragging");
     var onCard = scene && card && !card.classList.contains("is-flipped") && !onBackControl;
-    c.classList.toggle("is-card", !!(onCard || dragging));
+    var isLink = !!(target && target.closest && target.closest("a[href], button, [role='button'], label"));
+    var inTile = !scene && !isLink && target && target.closest && target.closest(".opening-head, .opening-copy");
+    var tileCard = inTile && document.querySelector(".opening .card");
+    var tileBack = tileCard && tileCard.classList.contains("is-flipped");
+    c.classList.toggle("is-card", !!(onCard || dragging || inTile));
     c.classList.toggle("is-drag", !!dragging);
-    text.textContent = dragging ? SPIN : TURN;
-    c.classList.toggle("is-link", !onCard && !dragging && !!(target && target.closest && target.closest("a[href], button, [role='button'], label")));
+    text.textContent = dragging ? SPIN : (tileBack ? BACK : TURN);
+    c.classList.toggle("is-link", !onCard && !dragging && !inTile && isLink);
   }
   addEventListener("pointermove", function (e) {
     if (e.pointerType !== "mouse") return;
