@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Γιώργος Κανάρογλου | Ολοκληρωμένο marketing</title>
+<meta name="description" content="Γιώργος Κανάρογλου. Ολοκληρωμένο marketing: τιμολόγηση, στρατηγική brand, ψηφιακό marketing, ανάλυση δεδομένων και ψυχολογία καταναλωτή. Λονδίνο και Αθήνα.">
+<meta name="theme-color" content="#F5F5F2">
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Γιώργος Κανάρογλου">
+<meta property="og:title" content="Γιώργος Κανάρογλου | Ολοκληρωμένο marketing">
+<meta property="og:description" content="Γιώργος Κανάρογλου. Ολοκληρωμένο marketing: τιμολόγηση, στρατηγική brand, ψηφιακό marketing, ανάλυση δεδομένων και ψυχολογία καταναλωτή. Λονδίνο και Αθήνα.">
+<meta property="og:url" content="https://georgekanaroglou.com/el">
+<meta property="og:image" content="https://georgekanaroglou.com/og-image-el.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γιώργος Κανάρογλου. Ολοκληρωμένο marketing.">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://georgekanaroglou.com/el">
+<link rel="alternate" hreflang="en" href="https://georgekanaroglou.com/">
+<link rel="alternate" hreflang="el" href="https://georgekanaroglou.com/el">
+<link rel="alternate" hreflang="x-default" href="https://georgekanaroglou.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Inter Tight, served from this site (no request to Google, so no visitor IP address goes to Google on page load).
+     Weights 500 to 900, Latin and Greek. SIL Open Font License: see /assets/fonts/OFL.txt */
+  @font-face {
+    font-family: "Inter Tight";
+    src: url("/assets/fonts/inter-tight.woff2") format("woff2");
+    font-weight: 500 900; font-style: normal; font-display: swap;
+  }
+
+  /* =====================================================================
+     Gkanaroglou brand, Nu-Brutalism. Roughly 50% Paper, 25% Black,
+     15% Signal Orange, 7% Cobalt, 3% Concrete. One loud field per screen. (No Cobalt on this page yet.)
+     Structure is the decoration: 3px black rules, no boxes, shadows or rounded corners.
+     ===================================================================== */
+  :root {
+    --paper: #F5F5F2;
+    --black: #000000;
+    --orange: #FF4F12;   /* black text on it, never Paper */
+    --cobalt: #1E36FF;   /* Paper text on it, never orange */
+    --concrete: #D9D9D4;
+    --muted: #4D4D49;    /* Black at about 70% on Paper, for secondary text */
+    --font: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+
+    --gutter: max(clamp(1.25rem, 4vw, 3rem), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+    --content: min(1200px, 100% - 2 * var(--gutter));
+
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);      /* entering, exiting, press */
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* movement on screen */
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* surfaces rising from an edge */
+    color-scheme: light;
+  }
+
+  /* ---------- Base ---------- */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh;
+    background: var(--paper); color: var(--black);
+    font-family: var(--font); font-size: 1.0625rem; font-weight: 500; line-height: 1.45;
+  }
+  main { flex: 1; }
+  a { color: inherit; }
+  a, button { touch-action: manipulation; }
+  button { font: inherit; -webkit-user-select: none; user-select: none; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+  ::selection { color: #000; background: var(--orange); }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  .wrap { width: var(--content); margin-inline: auto; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* ---------- Header ---------- */
+  /* The header stays with you all the way down. Solid Paper, so the page scrolls cleanly beneath it. */
+  .top {
+    position: sticky; top: 0; z-index: 5;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: var(--paper); border-bottom: 3px solid var(--black);
+    overflow: hidden; overflow: clip;   /* the hidden part of the centred wordmark never widens the page */
+    view-transition-name: site-header;
+  }
+  /* Jump links and keyboard focus stop below the header instead of behind it */
+  html { scroll-padding-top: 6rem; }
+  /* Three columns: an empty left, the logo in the middle, the language link on the right */
+  .top .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 1rem; padding-block: 1rem; }
+  .top .mark { grid-column: 2; justify-self: center; }
+  .top .top-nav { grid-column: 3; justify-self: end; }
+
+  /* Logo: the GK mark. The G stays put while "Kanaroglou" sweeps out behind it on the 12° slant,
+     and the mark's own K fades through a light blur so the two Ks never double up. */
+  .mark { display: inline-flex; align-items: center; min-height: 44px; -webkit-user-select: none; user-select: none; }
+  .logo { --h: 30px; position: relative; display: block; height: var(--h); aspect-ratio: 340 / 168; transition: transform 500ms var(--ease-in-out); }
+  /* Centred logo: as the name opens to the right, the whole logo slides left by half the extra width, so it stays centred */
+  .mark.is-full .logo { transform: translateX(calc(var(--h) * -3.339)); transition-duration: 700ms; }
+  .logo svg { position: absolute; top: 0; left: 0; height: 100%; overflow: visible; fill: currentColor; }
+  .logo-gk { width: 100%; transition: opacity 200ms var(--ease-out) 300ms, filter 200ms var(--ease-out) 300ms; }
+  .logo-word {
+    width: calc(100% * 1462 / 340); pointer-events: none;
+    /* At rest it shows only what both logos share: the G and the heading bar up to the end of the mark */
+    clip-path: polygon(0 0, 23.11% 0, 22.44% 27.4%, 11.97% 27.4%, 10.23% 100%, 0 100%);
+    transition: clip-path 500ms var(--ease-in-out);
+  }
+  .mark.is-full .logo-gk { opacity: 0; filter: blur(2px); transition-duration: 160ms; transition-delay: 120ms; }   /* hands over as the new K arrives */
+  /* Open: the bar leads and the letters follow, both on the 12° slant */
+  .mark.is-full .logo-word { clip-path: polygon(0 0, 102.42% 0, 101.76% 27.4%, 101.76% 27.4%, 100% 100%, 0 100%); transition-duration: 700ms; }
+
+  .top-nav { display: flex; flex-wrap: wrap; align-items: center; column-gap: 1.25rem; }
+  .lang, .nav-link, .top-link {
+    display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; text-decoration: none;
+    -webkit-user-select: none; user-select: none;
+    transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+  }
+  .lang { color: var(--muted); font-weight: 600; }
+  .lang-short { display: none; }
+  .nav-link { border-bottom: 3px solid transparent; }
+  .top-link { padding: .5rem 1rem; color: var(--paper); background: var(--black); }
+  .mark:active, .lang:active, .nav-link:active, .top-link:active { opacity: .7; }
+  @media (hover: hover) and (pointer: fine) {
+    .lang:hover { color: var(--black); }
+    .nav-link:hover { border-color: var(--black); }
+    .top-link:hover { color: #000; background: var(--orange); }
+  }
+  @media (max-width: 520px) {
+    .lang-full { display: none; }
+    .lang-short { display: inline; }
+  }
+  @media (max-width: 420px) {
+    .logo { --h: 26px; }
+    .top-nav { column-gap: .6rem; }
+    .lang, .nav-link, .top-link { font-size: .95rem; }
+    .top-link { padding-inline: .6rem; }
+  }
+
+  /* ---------- Opening: headline on Paper, the screen's one orange field to its right ---------- */
+  /* Two columns, each with a top and a bottom:
+     Paper: the headline, then the explanation of whatever is selected in the index.
+     Orange: the name, then the index. The two bottoms line up. */
+  .opening {
+    display: grid;
+    grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .58) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;   /* headline takes what it needs, the Cobalt window fills the rest */
+  }
+  .opening-copy {
+    grid-column: 2; grid-row: 1; container-type: inline-size;
+    padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(1.75rem, 3vw, 2.5rem) 0;
+  }
+  /* Cobalt window under the headline: the full wordmark slides through it as you scroll, like a car passing */
+  .mark-run {
+    grid-column: 2; grid-row: 2; align-self: start; position: relative; overflow: hidden; min-height: 12rem; container-type: inline-size;
+    margin: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 5vw, 4rem) 0;
+    color: var(--paper); background: var(--cobalt);
+  }
+  /* Sized from the window's width, like the sketch: GK across the top, its bar cropped, the K running off the edge */
+  /* Sized from the window's width, like the sketch: GK across the top, its bar cropped, the K running off the edge */
+  .mark-run-word { position: absolute; top: -11cqw; left: -2cqw; height: 58cqw; width: auto; aspect-ratio: 1462 / 168; fill: currentColor; }
+  .opening h1 {
+    font-weight: 900; letter-spacing: -.045em; line-height: .88;
+    font-size: clamp(2.75rem, 9vw, 7rem);
+    font-size: clamp(2.75rem, 19.5cqi, 9.5rem);   /* the headline fills its column on any screen */
+  }
+  .opening h1 span { display: block; }
+
+  .field {
+    grid-column: 3; grid-row: 1 / span 2;
+    display: flex; flex-direction: column; justify-content: flex-start; gap: 2.5rem;
+    padding: clamp(2.25rem, 5vw, 4rem) max(var(--gutter), calc((100vw - 1200px) / 2)) clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.75rem);
+    color: #000; background: var(--orange);
+  }
+  /* The index: a black panel, the five disciplines numbered 01 to 05 */
+  .index { padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 2.5vw, 1.75rem) .75rem; color: var(--paper); background: var(--black); }
+  .index-head {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: .8125rem; font-weight: 600;
+  }
+  .index-label { color: var(--orange); }
+  .index-list { list-style: none; border-top: 3px solid var(--paper); }
+  .index-list li {
+    border-bottom: 1px solid var(--concrete);
+    font-size: clamp(1.25rem, 1.9vw, 1.65rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em;
+  }
+  .index-list li:last-child { border-bottom: 0; }
+
+  /* Every item is a button that opens its explanation */
+  .index-item {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    width: 100%; padding: .6rem 0 .55rem; cursor: pointer; text-align: left;
+    color: inherit; background: none; border: 0; transition: color 150ms ease;
+  }
+  .index-item:focus-visible { outline: 3px solid var(--paper); outline-offset: 2px; }
+  .index-item:active { opacity: .7; }
+  .index-item[aria-expanded="true"] { color: var(--orange); }
+
+  /* A small plus that turns into a cross while its explanation is open */
+  .index-plus { position: relative; flex-shrink: 0; align-self: center; width: .85rem; height: .85rem; transition: transform 250ms var(--ease-out); }
+  .index-plus::before, .index-plus::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: currentColor; }
+  .index-plus::after { transform: rotate(90deg); }
+  .index-item[aria-expanded="true"] .index-plus { transform: rotate(45deg); }
+  .index-item-base { position: relative; }
+  .index-item-base .index-plus { position: absolute; top: 1.15rem; right: .9rem; }
+
+  /* Hover: the name magnifies slightly, so it's clear it can be clicked */
+  .index-name { display: inline-block; transform-origin: left center; transition: transform 200ms var(--ease-out); }
+  .index-base .index-name { transform-origin: left top; }
+  .index-item:focus-visible .index-name { transform: scale(1.06); }
+  @media (hover: hover) and (pointer: fine) { .index-item:hover .index-name { transform: scale(1.06); } }
+  .index-item-base { display: grid; align-content: start; gap: .3rem; height: 100%; padding: .75rem 2.25rem .5rem 0; }
+  .index-base li + li .index-item-base { padding-left: 1rem; }
+  .index-desc { color: var(--concrete); font-size: .8125rem; font-weight: 600; letter-spacing: 0; }
+  .index-item-base[aria-expanded="true"] .index-desc { color: var(--orange); }
+  @media (hover: hover) and (pointer: fine) {
+    .index-item:hover, .index-item:hover .index-desc { color: var(--orange); }
+  }
+
+  /* Each explanation opens straight under its item and pushes the rest down.
+     An accordion is the one place a height change is the right tool; it is short and eases out. */
+  .acc { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows 220ms var(--ease-out), visibility 0s linear 220ms; }
+  .acc.is-open { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows 220ms var(--ease-out), visibility 0s; }
+  .acc-inner { min-height: 0; overflow: hidden; }
+  .acc-content { display: grid; justify-items: start; gap: .9rem; padding: .1rem 0 1.1rem; opacity: 0; transition: opacity 200ms var(--ease-out); }
+  .acc.is-open .acc-content { opacity: 1; }
+  .acc-base .acc-content { padding-top: 1rem; }
+  .acc-body { max-width: 44ch; font-size: 1rem; font-weight: 500; line-height: 1.45; letter-spacing: 0; }
+  @media (hover: hover) and (pointer: fine) { .index .btn-primary:hover { color: #000; background: var(--paper); border-color: var(--paper); } }
+  /* The two foundations sit beneath the disciplines, side by side, like a base */
+  .index-head-base { padding: 1.5rem 0 .9rem; }
+  .index-base { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); list-style: none; border-top: 3px solid var(--paper); }
+  .index-base li + li { border-left: 1px solid var(--concrete); }
+  .index-base strong { width: min-content; font-size: clamp(1.05rem, 1.45vw, 1.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -.015em; }   /* one word per line, so both always match */
+  /* The smallest phones: the two foundations stack as full-width rows, like the disciplines above them */
+  @media (max-width: 359px) {
+    .index-base { grid-template-columns: minmax(0, 1fr); }
+    .index-base li + li { border-left: 0; border-top: 1px solid var(--concrete); }
+    .index-base li + li .index-item-base { padding-left: 0; }
+    .index-item-base .index-plus { right: 0; }
+    .index-base strong { width: auto; }
+  }
+
+  @media (max-width: 760px) {
+    .opening { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; min-height: 0; }
+    .opening-copy, .field, .mark-run { grid-column: 1; grid-row: auto; }
+    .opening-copy { padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2.5rem; }
+    .mark-run { min-height: 11rem; margin: 0; }
+    .field { padding: 1.75rem var(--gutter) 2.5rem; }
+  }
+
+  /* ---------- Buttons: square, black-ruled, flat ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; min-width: 7.5rem; padding: .6rem 1.4rem; cursor: pointer;
+    font-weight: 700; text-decoration: none; color: var(--black); background: transparent; border: 2px solid var(--black);
+    transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+  .btn:active { transform: scale(0.97); transition-duration: 100ms; }   /* press lands fast, release settles */
+  .btn-primary { color: #000; background: var(--orange); border-color: var(--orange); }
+
+  /* ---------- Contact: a Black block ---------- */
+  .contact { padding-block: clamp(3.5rem, 8vw, 6rem); color: var(--paper); background: var(--black); }
+  .contact p { margin-bottom: .75rem; color: var(--concrete); }
+  .contact a:focus-visible, .contact button:focus-visible { outline-color: var(--paper); }
+  .email {
+    font-size: clamp(1.15rem, 4.2vw, 3rem); font-weight: 900; letter-spacing: -.04em;
+    text-decoration: none; border-bottom: 4px solid var(--orange); overflow-wrap: anywhere;
+    transition: border-color 150ms ease;
+  }
+  .copy-row { margin-top: 1.25rem; }
+  .copy-btn {
+    display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 8.5rem;
+    padding: .5rem 1rem; cursor: pointer; font-size: .95rem; font-weight: 700;
+    color: var(--paper); background: transparent; border: 2px solid var(--paper);
+    transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+  .copy-btn[hidden] { display: none; }
+  .copy-btn:active { transform: scale(0.97); transition-duration: 100ms; }
+  .copy-btn[data-copied] { color: #000; background: var(--orange); border-color: var(--orange); }
+  .contact .more { margin: 2.25rem 0 0; }
+  .contact .more a { color: var(--paper); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--paper); transition: border-color 150ms ease; }
+  .email:active, .contact .more a:active { opacity: .7; }
+  @media (hover: hover) and (pointer: fine) {
+    .email:hover { border-color: var(--paper); }
+    .copy-btn:hover { color: #000; background: var(--paper); }
+    .contact .more a:hover { border-color: var(--orange); }
+  }
+
+  /* "Get in touch." on the left, the business card on the right */
+  /* Same columns as the opening: "Get in touch." sits under the headline, the card sits exactly under the black panel */
+  .contact-grid {
+    display: grid; align-items: start;
+    grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .58) minmax(0, 1fr);
+  }
+  .contact-copy { grid-column: 2; padding-right: clamp(1.5rem, 4vw, 3.5rem); container-type: inline-size; }
+  .contact-card-cell { grid-column: 3; padding: 0 max(var(--gutter), calc((100vw - 1200px) / 2)) 0 clamp(1.5rem, 3vw, 2.75rem); }
+  .contact-title { font-size: clamp(3rem, 9vw, 7.5rem); font-weight: 900; line-height: .88; letter-spacing: -.045em; color: var(--paper); }
+  .contact-lede { max-width: 30ch; margin: 1.25rem 0 0; font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 600; line-height: 1.35; color: var(--concrete); }
+
+  /* The card: 85 x 55, like a real one. Click or tap to turn it over. */
+  .card-scene { container-type: inline-size; width: 100%; aspect-ratio: 85 / 55; perspective: 1600px; }
+  .card-scene { cursor: grab; touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+  .card-scene.is-dragging { cursor: grabbing; }
+  .card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 600ms var(--ease-in-out); }
+  .card.is-flipped { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute; inset: 0; display: grid; padding: clamp(1rem, 6cqw, 2rem);
+    -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 0; text-align: left; font: inherit;
+  }
+  .card-front { grid-template-rows: 1fr auto; align-items: end; cursor: inherit; color: #000; background: var(--orange); }
+  .card-mark { position: absolute; top: clamp(1rem, 6cqw, 2rem); left: clamp(1rem, 6cqw, 2rem); width: 38cqw; height: auto; fill: currentColor; }
+  .card-cta { grid-row: 2; font-size: clamp(1.4rem, 8cqw, 2.6rem); font-weight: 900; line-height: .95; letter-spacing: -.04em; }
+  .card-hint { grid-row: 2; justify-self: end; font-size: .8125rem; font-weight: 600; }
+  .card-front:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; }
+
+
+  .card p { margin: 0; color: inherit; }
+  .card-back {
+    transform: rotateY(180deg); grid-template-rows: auto auto 1fr; align-content: start;
+    color: var(--black); background: var(--paper); border-top: 3px solid var(--paper);
+  }
+  .card-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding-top: .5rem; border-top: 3px solid var(--black); }
+  .card-name { font-size: clamp(1.1rem, 6cqw, 1.9rem); font-weight: 900; line-height: 1; letter-spacing: -.03em; }
+  .card .card-role { margin-top: .35rem; color: var(--muted); font-size: clamp(.85rem, 3.6cqw, 1.05rem); font-weight: 600; }
+  .card-turn { flex-shrink: 0; min-height: 32px; padding: 0; cursor: pointer; color: var(--black); background: none; border: 0; font-size: .8125rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .card-turn:active { opacity: .7; }
+  .card-bottom { align-self: end; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: .5rem 1rem; }
+  .card-details { display: grid; gap: .2rem; }
+  .card-back .email { color: var(--black); font-size: clamp(.9rem, 4.4cqw, 1.3rem); font-weight: 800; letter-spacing: -.02em; border-bottom-width: 3px; }
+  .card-place { color: var(--muted); font-size: clamp(.8rem, 3.2cqw, .95rem); font-weight: 600; }
+  .card-back .copy-row { margin: 0; }
+  .card-back .copy-btn { min-width: 0; min-height: 40px; padding: .35rem .8rem; font-size: .875rem; color: var(--black); border-color: var(--black); }
+  .card-back a:focus-visible, .card-back button:focus-visible { outline-color: var(--black); }
+  @media (hover: hover) and (pointer: fine) { .card-back .copy-btn:hover { color: var(--paper); background: var(--black); } .card-back .email:hover { border-color: var(--black); } }
+
+  @media (max-width: 760px) {
+    .contact-grid { grid-template-columns: minmax(0, 1fr); row-gap: 2.5rem; }
+    .contact-copy, .contact-card-cell { grid-column: 1; padding-inline: var(--gutter); }
+    .card-scene { max-width: 30rem; }
+  }
+  /* Reduced motion: the card swaps with a fade instead of turning */
+  @media (prefers-reduced-motion: reduce) {
+    .card, .card.is-flipped, .card-back { transform: none; }
+    .card { transition: none; }
+    .card-face { transition: opacity 200ms ease; }
+    .card-back { opacity: 0; }
+    .card.is-flipped .card-front { opacity: 0; }
+    .card.is-flipped .card-back { opacity: 1; }
+    .card-scene { cursor: pointer; }
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding-block: 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    border-top: 3px solid var(--black); font-size: .875rem; color: var(--muted);
+  }
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; flex-wrap: wrap; }
+  .foot-links { display: flex; gap: 1.25rem; }
+  .foot-links a, .linkish {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0; cursor: pointer;
+    color: var(--black); background: none; border: 0; font: inherit;
+    text-decoration: underline; text-underline-offset: 3px; transition: color 150ms ease;
+  }
+  .foot-links a:active, .linkish:active { opacity: .7; }
+  .linkish[hidden] { display: none; }
+  /* Contact details at the foot of every page: name, email and where I work. No street address. */
+  .foot-address { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.5rem; font-style: normal; color: var(--black); }
+  .foot-address strong { font-weight: 800; }
+  .foot-address a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; text-underline-offset: 3px; }
+  .foot-address a:active { opacity: .7; }
+  .foot-base { padding-top: .25rem; font-size: .8125rem; }
+
+  /* ---------- Cookie banner: a black block rising from the bottom edge ---------- */
+  .consent {
+    position: fixed; z-index: 10; left: 0; right: 0; margin-inline: auto;
+    bottom: calc(clamp(.75rem, 3vw, 1.5rem) + env(safe-area-inset-bottom, 0px));
+    width: min(40rem, 100% - 1.5rem); display: grid; gap: 1rem; padding: 1.25rem 1.5rem;
+    color: var(--paper); background: var(--black); border: 3px solid var(--paper);
+    opacity: 0; transform: translateY(100%);
+    transition: opacity 250ms var(--ease-out), transform 400ms var(--ease-drawer);
+  }
+  .consent.is-open { opacity: 1; transform: translateY(0); }
+  .consent[hidden] { display: none; }
+  .consent p { font-size: .95rem; }
+  .consent a { color: var(--paper); }
+  .consent-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .consent .btn { color: var(--paper); border-color: var(--paper); }
+  .consent .btn-primary { color: #000; background: var(--orange); border-color: var(--orange); }
+  .consent .btn:focus-visible, .consent a:focus-visible { outline-color: var(--paper); }
+  @media (hover: hover) and (pointer: fine) {
+    .consent .btn:hover { color: #000; background: var(--paper); border-color: var(--paper); }
+  }
+
+  /* ---------- Moving between pages: the header stays put, the page crossfades ---------- */
+  @view-transition { navigation: auto; }
+  ::view-transition-group(*) { animation-duration: 200ms; animation-timing-function: var(--ease-out); }
+  ::view-transition-old(*), ::view-transition-new(*) { animation-timing-function: var(--ease-out); }
+
+  /* ---------- Reduced motion: fewer and gentler, not none ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .logo, .logo-gk, .logo-word, .acc, .acc.is-open, .acc-content, .index-plus, .index-name { transition: none; }
+    .index-item:hover .index-name, .index-item:focus-visible .index-name { transform: none; }   /* colour change only */
+    .btn:active, .copy-btn:active { transform: none; }
+    .consent, .consent.is-open { transform: none; transition: opacity 200ms ease; }
+  }
+
+  /* Greek: "Ολοκληρωμένο" and "Επικοινωνία." are single long words, so both headings size to their column */
+  .opening h1 { font-size: clamp(2.1rem, 6vw, 6.5rem); font-size: clamp(2.1rem, 13.5cqi, 8rem); }
+  .contact-title { font-size: clamp(2.25rem, 9vw, 6rem); font-size: clamp(2.25rem, 15.5cqi, 7.5rem); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "George Kanaroglou",
+  "alternateName": "Γιώργος Κανάρογλου",
+  "url": "https://georgekanaroglou.com/",
+  "jobTitle": "Insights Lead",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Barracudaworks"
+  },
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "London School of Economics and Political Science"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Kent"
+    }
+  ],
+  "knowsAbout": [
+    "Pricing strategy",
+    "Brand strategy",
+    "Digital marketing",
+    "Marketing analytics",
+    "Consumer psychology"
+  ],
+  "knowsLanguage": [
+    "en",
+    "el"
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/el" aria-label="Γιώργος Κανάρογλου, αρχική σελίδα">
+      <span class="logo">
+        <svg class="logo-gk" viewBox="10 16 340 168" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M97.4,131.0 L97.4,131.9 L97.7,132.7 L98.2,133.4 L99.0,133.8 L99.8,134.0 L105.6,134.0 L106.7,134.4 L107.7,135.0 L108.7,136.3 L109.0,137.9 L108.8,139.4 L108.0,140.7 L106.6,141.7 L100.9,143.8 L96.0,145.0 L91.3,145.7 L86.8,146.0 L82.6,145.9 L78.3,145.3 L74.3,144.3 L69.6,142.6 L65.2,140.3 L61.3,137.4 L57.9,134.1 L55.1,130.5 L52.6,126.2 L50.8,121.7 L49.6,116.8 L49.1,112.8 L49.0,108.4 L49.3,104.2 L50.0,100.0 L51.1,95.8 L52.6,91.6 L54.4,87.5 L56.8,83.2 L59.3,79.3 L62.2,75.6 L65.3,72.1 L68.7,68.9 L72.4,65.9 L76.4,63.1 L80.5,60.7 L84.6,58.7 L89.7,56.7 L94.9,55.2 L99.8,54.4 L104.9,54.0 L338.1,54.0 L339.4,53.3 L340.2,52.1 L346.4,23.0 L346.2,21.5 L345.3,20.4 L343.9,20.0 L111.0,20.0 L102.1,20.7 L93.6,22.3 L84.6,24.8 L76.2,28.1 L70.9,30.6 L65.7,33.5 L60.2,36.9 L55.3,40.4 L50.2,44.5 L45.7,48.5 L41.1,53.1 L37.2,57.6 L33.1,62.7 L29.8,67.6 L26.4,73.0 L23.7,78.2 L21.1,83.9 L19.0,89.2 L17.2,95.1 L15.9,100.5 L14.9,106.4 L14.4,111.7 L14.2,117.5 L14.5,122.7 L15.2,128.3 L16.2,133.3 L17.7,138.6 L19.5,143.2 L21.8,148.0 L24.3,152.2 L27.4,156.5 L30.6,160.3 L34.3,163.9 L38.1,167.1 L42.5,170.1 L46.8,172.5 L53.0,175.3 L59.6,177.5 L67.0,179.1 L74.1,179.8 L79.0,180.0 L157.0,180.0 L158.4,179.6 L159.0,178.9 L159.4,178.0 L179.6,83.0 L179.6,82.0 L179.3,81.3 L178.8,80.6 L178.1,80.2 L177.3,80.0 L144.8,80.0 L143.5,80.4 L142.7,81.2 L142.3,82.3 L142.9,86.6 L143.0,89.9 L142.9,93.5 L142.5,97.2 L141.6,101.5 L140.9,102.6 L140.0,103.4 L139.0,103.8 L138.0,104.0 L105.1,104.0 L104.1,104.2 L103.3,104.8 L102.7,106.0Z"/><path fill-rule="evenodd" d="M185.6,177.0 L185.6,178.0 L186.1,179.0 L186.9,179.7 L187.9,180.0 L219.0,180.0 L219.8,179.9 L220.7,179.3 L221.3,178.4 L223.1,170.2 L223.9,168.7 L234.7,160.0 L235.9,159.4 L237.1,159.2 L238.6,159.6 L239.9,160.4 L255.6,179.2 L256.8,179.9 L306.1,180.0 L307.5,179.6 L308.2,178.9 L308.6,177.9 L308.6,176.9 L308.2,176.0 L273.2,134.4 L272.4,132.8 L272.4,131.0 L272.9,129.8 L273.8,128.8 L329.5,84.4 L330.0,83.7 L330.3,82.8 L330.2,81.9 L329.9,81.1 L329.0,80.3 L327.9,80.0 L281.0,80.0 L280.2,80.1 L279.4,80.5 L243.2,109.4 L242.0,110.1 L240.7,110.3 L239.2,109.9 L237.9,109.1 L237.0,107.8 L236.8,106.2 L241.6,82.9 L241.5,81.7 L240.8,80.6 L240.1,80.2 L239.2,80.0 L208.2,80.0 L206.9,80.4 L206.2,81.1 L205.8,82.0Z"/></svg>
+        <svg class="logo-word" viewBox="10 16 1462 168" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M97.4,131.0 L97.4,131.9 L97.7,132.7 L98.2,133.4 L99.0,133.8 L99.8,134.0 L105.6,134.0 L106.7,134.4 L107.7,135.0 L108.7,136.3 L109.0,137.9 L108.8,139.4 L108.0,140.7 L107.0,141.5 L105.4,142.2 L102.0,143.4 L98.8,144.3 L93.1,145.5 L87.6,146.0 L82.3,145.8 L77.4,145.1 L72.8,143.8 L68.2,141.9 L63.7,139.3 L59.8,136.1 L58.0,134.3 L56.3,132.1 L53.5,127.8 L51.3,123.2 L50.5,120.7 L49.8,117.9 L49.1,112.5 L49.0,107.0 L49.6,102.2 L50.6,97.5 L52.0,93.0 L54.0,88.3 L56.4,83.7 L59.3,79.3 L62.4,75.4 L66.0,71.5 L69.9,67.9 L74.1,64.6 L78.3,61.9 L82.9,59.4 L87.7,57.4 L92.3,55.9 L97.2,54.8 L102.1,54.1 L105.8,54.0 L1461.8,54.0 L1462.6,53.9 L1463.3,53.5 L1463.8,52.9 L1464.2,52.1 L1470.4,23.0 L1470.4,22.3 L1470.2,21.4 L1469.6,20.6 L1468.8,20.2 L1467.9,20.0 L113.0,20.0 L106.6,20.3 L102.1,20.7 L98.1,21.3 L90.1,23.2 L85.6,24.5 L81.6,25.9 L73.8,29.2 L65.7,33.5 L58.4,38.2 L51.0,43.8 L44.6,49.6 L38.2,56.4 L32.8,63.2 L27.8,70.7 L23.7,78.2 L21.9,82.0 L20.1,86.3 L17.5,94.1 L16.4,98.0 L15.5,102.4 L14.5,110.3 L14.2,115.1 L14.3,120.4 L14.7,125.1 L15.5,130.1 L16.5,134.6 L18.0,139.4 L19.7,143.6 L21.8,148.0 L24.1,151.9 L26.9,155.9 L29.7,159.3 L33.0,162.7 L36.4,165.7 L39.9,168.4 L44.0,171.0 L48.0,173.1 L54.3,175.8 L60.5,177.7 L67.4,179.1 L74.1,179.8 L79.0,180.0 L157.4,180.0 L158.1,179.7 L158.7,179.3 L159.2,178.7 L159.4,178.0 L179.6,83.0 L179.6,82.1 L179.3,81.2 L178.4,80.3 L177.2,80.0 L144.8,80.0 L144.1,80.1 L143.4,80.4 L142.9,80.9 L142.5,81.6 L142.3,82.3 L142.9,86.9 L143.0,90.5 L142.9,94.4 L142.3,98.3 L141.5,101.7 L140.9,102.7 L140.0,103.4 L139.0,103.8 L138.0,104.0 L105.2,104.0 L103.9,104.4 L103.2,105.0 L102.7,105.9Z M1354.3,80.0 L1353.5,80.1 L1352.7,80.5 L1352.2,81.1 L1351.8,81.9 L1342.1,127.6 L1341.5,131.9 L1341.1,136.0 L1341.1,140.2 L1341.5,144.2 L1342.2,148.2 L1343.3,152.2 L1344.7,155.9 L1346.4,159.3 L1348.4,162.6 L1350.7,165.6 L1354.0,169.0 L1357.6,171.9 L1361.6,174.5 L1365.9,176.6 L1370.3,178.1 L1375.1,179.2 L1380.1,179.9 L1385.3,180.0 L1390.6,179.6 L1395.9,178.7 L1401.2,177.3 L1406.4,175.5 L1411.3,173.3 L1416.3,170.5 L1421.1,167.3 L1425.6,163.8 L1428.8,160.9 L1432.1,157.5 L1434.9,154.2 L1437.5,150.8 L1439.9,147.3 L1442.2,143.3 L1444.1,139.6 L1445.7,135.7 L1447.0,131.9 L1448.1,127.7 L1457.6,83.0 L1457.6,81.9 L1457.0,80.9 L1456.2,80.2 L1455.2,80.0 L1426.2,80.0 L1425.3,80.2 L1424.5,80.7 L1424.1,81.3 L1423.8,82.0 L1414.2,127.5 L1413.4,129.9 L1412.3,132.4 L1410.6,135.2 L1408.5,137.9 L1406.0,140.3 L1403.3,142.3 L1400.4,143.9 L1397.3,145.1 L1394.2,145.8 L1391.1,146.0 L1388.1,145.7 L1385.4,145.0 L1382.8,143.8 L1380.6,142.2 L1378.8,140.3 L1377.4,137.9 L1376.4,135.3 L1375.9,132.5 L1375.9,130.0 L1376.1,127.6 L1385.6,83.0 L1385.6,82.1 L1385.4,81.3 L1384.5,80.4 L1383.3,80.0Z M1326.2,127.0 L1326.6,122.0 L1326.3,116.7 L1325.4,111.5 L1323.9,106.9 L1321.6,102.2 L1318.6,97.8 L1315.4,94.2 L1311.3,90.6 L1307.1,87.7 L1302.1,85.1 L1296.5,82.9 L1291.3,81.5 L1285.1,80.5 L1279.4,80.0 L1272.9,80.1 L1266.3,80.8 L1260.4,82.0 L1253.9,83.8 L1248.2,85.9 L1242.0,88.8 L1236.2,92.1 L1231.2,95.5 L1226.1,99.7 L1222.0,103.8 L1217.8,108.6 L1214.3,113.7 L1211.7,118.4 L1209.4,123.9 L1207.9,128.8 L1206.9,134.3 L1206.7,139.7 L1207.1,144.5 L1207.9,148.6 L1209.4,153.0 L1211.1,156.8 L1213.6,160.7 L1216.2,164.0 L1219.1,167.1 L1222.9,170.1 L1226.6,172.6 L1231.2,174.9 L1235.5,176.7 L1240.6,178.2 L1245.4,179.2 L1250.9,179.8 L1256.0,180.0 L1261.1,179.8 L1266.9,179.2 L1272.1,178.2 L1277.2,176.9 L1282.9,174.9 L1287.8,172.9 L1293.2,170.2 L1297.7,167.5 L1302.6,164.0 L1306.6,160.8 L1310.3,157.3 L1314.1,153.0 L1317.1,149.1 L1319.7,145.1 L1322.1,140.4 L1323.9,136.1 L1325.2,131.8Z M1293.3,131.4 L1291.7,135.6 L1289.4,139.5 L1286.3,143.3 L1282.6,146.6 L1278.3,149.4 L1273.9,151.6 L1269.2,153.1 L1264.2,153.9 L1259.5,153.9 L1257.3,153.7 L1254.8,153.2 L1250.7,151.8 L1247.1,149.8 L1245.5,148.5 L1244.0,147.0 L1242.7,145.4 L1241.6,143.8 L1240.7,142.1 L1240.0,140.2 L1239.5,138.3 L1239.2,136.2 L1239.2,133.8 L1239.4,131.2 L1240.0,128.5 L1240.9,125.9 L1242.1,123.3 L1243.6,120.8 L1245.2,118.7 L1247.3,116.4 L1249.5,114.3 L1252.0,112.4 L1254.3,110.9 L1257.1,109.4 L1260.0,108.2 L1263.0,107.2 L1266.0,106.5 L1269.0,106.1 L1272.0,106.0 L1275.0,106.2 L1277.5,106.6 L1280.2,107.3 L1282.8,108.3 L1285.1,109.5 L1287.0,110.9 L1289.0,112.6 L1290.6,114.6 L1291.9,116.7 L1292.9,119.0 L1293.6,121.3 L1294.0,123.6 L1294.1,126.2 L1293.8,128.8Z M1099.6,177.0 L1099.6,178.1 L1100.1,179.0 L1101.0,179.7 L1102.0,180.0 L1179.0,180.0 L1180.3,179.6 L1181.2,178.7 L1181.4,178.0 L1186.8,152.9 L1186.6,151.6 L1185.8,150.5 L1185.1,150.1 L1184.3,150.0 L1144.0,150.0 L1142.8,149.7 L1141.8,149.1 L1141.0,148.2 L1140.5,147.1 L1140.3,146.2 L1140.4,145.2 L1153.6,83.0 L1153.6,82.2 L1153.4,81.4 L1153.0,80.8 L1152.3,80.3 L1151.2,80.0 L1122.2,80.0 L1121.0,80.4 L1120.1,81.3 L1119.8,82.0Z M1037.8,133.9 L1033.9,151.7 L1033.4,152.4 L1032.1,153.6 L1030.7,154.0 L1027.9,154.0 L1024.4,153.5 L1021.0,152.7 L1018.0,151.5 L1015.2,149.8 L1013.1,148.2 L1011.4,146.3 L1009.9,144.3 L1008.7,142.1 L1007.9,139.7 L1007.3,137.2 L1007.1,134.7 L1007.3,132.0 L1007.7,129.7 L1008.4,127.1 L1009.4,124.7 L1010.6,122.5 L1012.0,120.3 L1013.7,118.2 L1015.5,116.2 L1017.8,114.1 L1022.0,111.1 L1026.7,108.7 L1029.6,107.6 L1032.4,106.9 L1035.0,106.4 L1038.4,106.0 L1039.1,105.6 L1039.7,105.0 L1040.1,104.1 L1044.6,82.8 L1044.5,81.9 L1044.1,81.1 L1043.4,80.4 L1042.5,80.1 L1036.5,80.5 L1030.6,81.5 L1024.8,82.9 L1019.0,84.8 L1013.4,87.1 L1007.4,90.2 L1002.3,93.4 L997.5,96.9 L993.0,100.7 L989.0,104.8 L985.4,109.2 L981.9,114.3 L979.4,119.0 L977.4,123.9 L975.9,128.8 L974.9,134.3 L974.7,139.2 L975.0,144.0 L976.0,149.1 L977.6,153.6 L979.7,157.8 L982.3,161.7 L985.8,165.8 L989.5,169.0 L993.5,171.9 L998.0,174.4 L1003.4,176.6 L1008.6,178.2 L1014.0,179.3 L1019.7,179.9 L1025.4,180.0 L1032.0,179.5 L1037.9,178.7 L1043.8,177.3 L1049.5,175.5 L1055.8,172.9 L1061.2,170.2 L1066.4,167.1 L1071.8,163.1 L1076.2,159.3 L1080.2,155.2 L1084.2,150.3 L1087.3,145.7 L1089.9,141.0 L1092.1,135.5 L1093.5,130.6 L1094.1,127.6 L1094.4,124.5 L1094.5,122.4 L1094.3,121.4 L1093.4,120.4 L1092.1,120.0 L1064.4,120.0 L1063.3,120.3 L1062.4,121.0 L1061.9,122.0 L1062.1,126.2 L1061.7,129.2 L1061.0,130.6 L1059.7,131.6 L1058.9,131.9 L1058.0,132.0 L1040.1,132.0 L1039.1,132.2 L1038.4,132.8Z M960.2,127.0 L960.6,122.0 L960.3,116.7 L959.4,111.5 L957.9,106.9 L955.6,102.2 L952.6,97.8 L949.4,94.2 L945.3,90.6 L941.1,87.7 L936.1,85.1 L930.5,82.9 L925.3,81.5 L919.1,80.5 L913.4,80.0 L906.9,80.1 L900.3,80.8 L894.4,82.0 L887.9,83.8 L882.2,85.9 L876.0,88.8 L870.2,92.1 L865.2,95.5 L860.1,99.7 L856.0,103.8 L851.8,108.6 L848.3,113.7 L845.7,118.4 L843.4,123.9 L841.9,128.8 L840.9,134.3 L840.7,139.7 L841.1,144.5 L841.9,148.6 L843.4,153.0 L845.1,156.8 L847.6,160.7 L850.2,164.0 L853.1,167.1 L856.9,170.1 L860.6,172.6 L865.2,174.9 L869.5,176.7 L874.6,178.2 L879.4,179.2 L884.9,179.8 L890.0,180.0 L895.1,179.8 L900.9,179.2 L906.1,178.2 L911.2,176.9 L916.9,174.9 L921.8,172.9 L927.2,170.2 L931.7,167.5 L936.6,164.0 L940.6,160.8 L944.3,157.3 L948.1,153.0 L951.1,149.1 L953.7,145.1 L956.1,140.4 L957.9,136.1 L959.2,131.8Z M927.3,131.4 L925.7,135.6 L923.4,139.5 L920.3,143.3 L916.6,146.6 L912.3,149.4 L907.9,151.6 L903.2,153.1 L898.2,153.9 L893.5,153.9 L891.3,153.7 L888.8,153.2 L884.7,151.8 L881.1,149.8 L879.5,148.5 L878.0,147.0 L876.7,145.4 L875.6,143.8 L874.7,142.1 L874.0,140.2 L873.5,138.3 L873.2,136.2 L873.2,133.8 L873.4,131.2 L874.0,128.5 L874.9,125.9 L876.1,123.3 L877.6,120.8 L879.2,118.7 L881.3,116.4 L883.5,114.3 L886.0,112.4 L888.3,110.9 L891.1,109.4 L894.0,108.2 L897.0,107.2 L900.0,106.5 L903.0,106.1 L906.0,106.0 L909.0,106.2 L911.5,106.6 L914.2,107.3 L916.8,108.3 L919.1,109.5 L921.0,110.9 L923.0,112.6 L924.6,114.6 L925.9,116.7 L926.9,119.0 L927.6,121.3 L928.0,123.6 L928.1,126.2 L927.8,128.8Z M711.6,177.0 L711.6,178.0 L712.1,179.0 L712.9,179.7 L713.8,180.0 L743.0,180.0 L744.0,179.8 L744.9,179.1 L745.4,178.1 L749.5,159.1 L750.1,158.0 L751.0,157.2 L752.2,156.7 L753.3,156.6 L754.3,156.7 L755.2,157.1 L756.0,157.7 L756.6,158.4 L766.8,178.7 L767.3,179.4 L768.0,179.8 L769.0,180.0 L807.6,180.0 L808.5,179.9 L809.3,179.4 L809.8,178.8 L810.1,178.0 L810.1,177.3 L809.9,176.5 L796.3,149.4 L796.0,148.4 L795.9,147.4 L796.3,146.0 L797.1,144.8 L801.7,141.8 L805.0,139.1 L808.3,136.0 L811.3,132.6 L813.7,129.4 L815.8,125.8 L817.5,122.3 L818.8,118.6 L819.9,114.6 L820.5,110.5 L820.6,106.5 L820.2,102.8 L819.4,99.1 L818.1,95.6 L816.3,92.3 L814.2,89.5 L812.4,87.6 L810.5,85.9 L808.4,84.5 L806.2,83.2 L803.6,82.1 L801.1,81.2 L798.6,80.6 L795.9,80.2 L792.3,80.0 L734.3,80.0 L733.4,80.2 L732.6,80.6 L732.1,81.2 L731.8,82.0Z M781.0,128.0 L778.1,127.6 L776.1,128.0 L760.7,128.0 L759.8,127.8 L759.0,127.4 L758.2,126.9 L757.6,126.2 L757.1,124.8 L757.0,123.4 L760.9,105.2 L761.5,103.7 L762.6,102.6 L763.6,102.2 L764.7,102.0 L781.4,102.0 L783.7,102.5 L786.6,102.0 L789.0,102.1 L791.2,102.6 L793.3,103.5 L795.0,104.8 L796.4,106.5 L797.3,108.1 L797.9,109.9 L798.1,111.9 L798.0,113.9 L797.6,116.0 L796.8,118.0 L795.8,119.9 L794.5,121.8 L792.9,123.4 L791.1,124.9 L789.3,126.1 L787.2,127.0 L785.1,127.7 L783.0,128.0Z M579.6,177.0 L579.6,178.0 L580.1,179.0 L580.9,179.7 L581.8,180.0 L609.5,180.0 L610.4,179.6 L611.2,178.8 L617.8,165.8 L618.7,164.8 L619.9,164.2 L621.2,164.0 L658.5,164.0 L659.6,164.2 L660.7,164.7 L661.5,165.5 L662.1,166.5 L662.4,167.6 L663.3,178.0 L663.8,179.1 L664.8,179.8 L665.7,180.0 L693.0,180.0 L693.9,179.8 L694.6,179.4 L695.1,178.9 L695.4,178.2 L696.3,173.7 L688.7,82.3 L688.5,81.5 L688.1,80.9 L687.2,80.2 L686.2,80.0 L629.5,80.0 L628.6,80.2 L627.9,80.6 L627.3,81.4 L580.4,173.7Z M660.1,139.7 L659.9,141.2 L659.1,142.7 L657.8,143.6 L656.3,144.0 L634.9,144.0 L633.7,143.6 L632.7,142.9 L631.9,142.0 L631.5,140.8 L631.4,139.5 L631.8,138.3 L649.7,103.0 L650.8,101.7 L652.4,101.0 L654.0,101.0 L655.4,101.6 L656.5,102.7 L657.1,104.1Z M457.6,177.0 L457.6,178.0 L458.1,179.0 L458.9,179.7 L459.9,180.0 L489.0,180.0 L489.8,179.9 L490.4,179.5 L491.1,178.9 L491.4,178.1 L497.7,148.6 L498.3,147.4 L499.2,146.5 L500.3,146.0 L501.6,145.8 L502.6,145.9 L503.5,146.3 L504.3,146.9 L504.9,147.7 L520.5,178.6 L521.0,179.2 L521.5,179.7 L522.8,180.0 L561.0,180.0 L561.8,179.9 L562.5,179.5 L563.1,178.8 L563.4,178.0 L583.6,83.0 L583.6,82.0 L583.2,81.0 L582.3,80.3 L581.2,80.0 L552.2,80.0 L551.4,80.1 L550.8,80.5 L550.2,81.1 L549.8,81.9 L543.5,111.4 L543.0,112.6 L542.1,113.5 L541.0,114.0 L539.7,114.2 L538.7,114.1 L537.8,113.7 L536.9,113.1 L536.3,112.3 L520.7,81.4 L520.3,80.8 L519.7,80.3 L518.5,80.0 L480.3,80.0 L479.5,80.1 L478.8,80.5 L478.2,81.2 L477.8,82.0Z M325.6,177.0 L325.6,178.0 L326.0,179.0 L326.9,179.7 L327.8,180.0 L355.5,180.0 L356.5,179.5 L357.2,178.8 L363.8,165.8 L364.7,164.8 L365.9,164.2 L367.2,164.0 L404.5,164.0 L405.6,164.2 L406.7,164.7 L407.5,165.5 L408.1,166.5 L408.4,167.6 L409.3,178.0 L409.8,179.1 L410.8,179.8 L411.7,180.0 L439.0,180.0 L439.9,179.8 L440.6,179.4 L441.1,178.9 L441.4,178.2 L442.3,173.7 L434.7,82.3 L434.5,81.5 L434.1,80.9 L433.2,80.2 L432.2,80.0 L375.5,80.0 L374.6,80.2 L373.9,80.6 L373.3,81.4 L326.4,173.7Z M395.6,103.1 L396.3,102.1 L397.3,101.4 L398.4,101.0 L399.6,100.9 L400.8,101.2 L401.8,101.9 L402.6,102.8 L403.1,103.9 L406.1,139.7 L405.8,141.4 L405.3,142.4 L404.5,143.2 L403.5,143.7 L402.5,144.0 L381.4,144.0 L379.9,143.7 L378.6,142.9 L377.7,141.6 L377.4,140.1 L377.6,138.6Z M185.6,177.0 L185.6,178.0 L186.1,179.0 L186.9,179.7 L187.9,180.0 L219.0,180.0 L219.8,179.9 L220.7,179.3 L221.3,178.4 L223.1,170.2 L223.9,168.7 L234.7,160.0 L235.9,159.4 L237.1,159.2 L238.6,159.6 L239.9,160.4 L255.6,179.2 L256.8,179.9 L257.5,180.0 L306.2,180.0 L306.9,179.9 L307.6,179.6 L308.2,178.9 L308.6,177.9 L308.6,176.9 L308.2,176.0 L273.2,134.4 L272.4,132.8 L272.4,131.0 L272.9,129.8 L273.8,128.8 L328.7,85.0 L329.3,84.1 L329.6,82.8 L329.6,81.9 L329.2,81.1 L328.3,80.3 L327.2,80.0 L281.0,80.0 L280.2,80.1 L279.4,80.5 L243.2,109.4 L242.0,110.1 L240.7,110.3 L239.2,109.9 L237.9,109.1 L237.0,107.8 L236.8,106.2 L241.6,82.9 L241.5,81.7 L240.8,80.6 L240.1,80.2 L239.2,80.0 L208.2,80.0 L207.5,80.1 L206.9,80.4 L206.2,81.1 L205.8,82.0Z"/></svg>
+      </span>
+    </a>
+    <nav class="top-nav" aria-label="Γλώσσα">
+      <a class="lang" href="/" lang="en" hreflang="en" aria-label="English"><span class="lang-full">English</span><span class="lang-short" aria-hidden="true">EN</span></a>
+    </nav>
+  </div>
+</header>
+<script>
+/* GK grows into the full Gkanaroglou wordmark: once for visitors arriving from another site,
+   and whenever a mouse rests on it. It only grows when the full name has room beside the links. */
+(function () {
+  var mark = document.querySelector(".mark"), nav = document.querySelector(".top-nav");
+  if (!mark) return;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function room() {
+    // The logo is centred, so the full name needs half its width free on each side
+    var logo = mark.querySelector(".logo");
+    var half = logo.offsetHeight * 1462 / 168 / 2;
+    var m = logo.getBoundingClientRect(), w = mark.parentNode.getBoundingClientRect();
+    var limit = nav && nav.offsetWidth ? nav.getBoundingClientRect().left : w.right;   // pages without a language link use the edge
+    var centre = m.left + m.width / 2;
+    return centre + half + 16 <= limit && centre - half >= w.left;
+  }
+  function open() { if (room()) mark.classList.add("is-full"); }
+  function close() { mark.classList.remove("is-full"); }
+  if (window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    mark.addEventListener("mouseenter", open);
+    mark.addEventListener("mouseleave", close);
+  }
+  mark.addEventListener("focus", function () { if (mark.matches(":focus-visible")) open(); });
+  mark.addEventListener("blur", close);
+
+  var internal = false;
+  try { internal = document.referrer && new URL(document.referrer).hostname === location.hostname; } catch (e) {}
+  if (!internal && !reduce) {
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        open();
+        setTimeout(function () { if (!mark.matches(":hover") && !mark.matches(":focus-visible")) close(); }, 2400);
+      }, 500);
+    });
+  }
+})();
+</script>
+
+<main>
+  <section class="opening">
+    <div class="opening-copy">
+      <h1><span>Ολοκληρωμένο</span> <span>marketing.</span></h1>
+    </div>
+    <div class="field">
+      <div class="index">
+        <p class="index-head"><span class="index-label">Τι κάνω</span><span>Τρεις τομείς</span></p>
+        <ol class="index-list">
+          <li><button type="button" class="index-item" data-topic="pricing-strategy" aria-expanded="false" aria-controls="acc-pricing-strategy"><span class="index-name">Στρατηγική τιμολόγησης</span><span class="index-plus" aria-hidden="true"></span></button>
+            <div class="acc" id="acc-pricing-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Τιμές που οι πελάτες είναι διατεθειμένοι να πληρώσουν και που αναπτύσσουν την επιχείρηση. Βρίσκω τι εκτιμούν οι πελάτες, ελέγχω πόσα θα πλήρωναν και χτίζω γύρω από αυτό τα πακέτα και τα επίπεδα τιμών.</p><a class="btn btn-primary" href="/case-studies#pricing-strategy" aria-label="Μελέτες περίπτωσης: Στρατηγική τιμολόγησης">Μελέτες περίπτωσης</a></div></div></div></li>
+          <li><button type="button" class="index-item" data-topic="brand-strategy" aria-expanded="false" aria-controls="acc-brand-strategy"><span class="index-name">Στρατηγική brand</span><span class="index-plus" aria-hidden="true"></span></button>
+            <div class="acc" id="acc-brand-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Αποφασίζω τι πρεσβεύει ένα brand και το κάνω την εύκολη επιλογή. Τοποθέτηση, μηνύματα και πώς δείχνει το brand δίπλα στους ανταγωνιστές του.</p><a class="btn btn-primary" href="/case-studies#brand-strategy" aria-label="Μελέτες περίπτωσης: Στρατηγική brand">Μελέτες περίπτωσης</a></div></div></div></li>
+          <li><button type="button" class="index-item" data-topic="digital-marketing" aria-expanded="false" aria-controls="acc-digital-marketing"><span class="index-name">Ψηφιακό marketing</span><span class="index-plus" aria-hidden="true"></span></button>
+            <div class="acc" id="acc-digital-marketing"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Μετατρέπω την προσοχή στο διαδίκτυο σε αποτελέσματα. Στρατηγική καναλιών, περιεχόμενο και διαφημιστικές καμπάνιες, όλα μετρημένα με βάση πραγματικούς στόχους.</p><a class="btn btn-primary" href="/case-studies#digital-marketing" aria-label="Μελέτες περίπτωσης: Ψηφιακό marketing">Μελέτες περίπτωσης</a></div></div></div></li>
+        </ol>
+        <p class="index-head index-head-base"><span class="index-label">Με βάση</span><span>Δύο θεμέλια</span></p>
+        <ul class="index-base">
+          <li><button type="button" class="index-item index-item-base" data-topic="marketing-analytics" aria-expanded="false" aria-controls="acc-marketing-analytics"><strong class="index-name">Ανάλυση δεδομένων</strong><span class="index-desc">Τι δείχνουν τα δεδομένα</span><span class="index-plus" aria-hidden="true"></span></button></li>
+          <li><button type="button" class="index-item index-item-base" data-topic="consumer-psychology" aria-expanded="false" aria-controls="acc-consumer-psychology"><strong class="index-name">Ψυχολογία καταναλωτή</strong><span class="index-desc">Πώς αποφασίζουν πραγματικά οι άνθρωποι</span><span class="index-plus" aria-hidden="true"></span></button></li>
+        </ul>
+        <div class="acc acc-base" id="acc-marketing-analytics"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Τα στοιχεία πίσω από κάθε απόφαση. Έρευνες, πειράματα και dashboards που δείχνουν τι λειτουργεί και τι πρέπει να αλλάξει, και στους τρεις τομείς.</p><a class="btn btn-primary" href="/case-studies#marketing-analytics" aria-label="Μελέτες περίπτωσης: Ανάλυση δεδομένων">Μελέτες περίπτωσης</a></div></div></div>
+        <div class="acc acc-base" id="acc-consumer-psychology"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Πώς αποφασίζουν πραγματικά οι άνθρωποι. Αρχιτεκτονική επιλογών, συνήθειες και κοινωνική απόδειξη, ώστε η σωστή επιλογή να είναι και η εύκολη, και στους τρεις τομείς.</p><a class="btn btn-primary" href="/case-studies#consumer-psychology" aria-label="Μελέτες περίπτωσης: Ψυχολογία καταναλωτή">Μελέτες περίπτωσης</a></div></div></div>
+      </div>
+    </div>
+    <div class="mark-run" aria-hidden="true">
+      <svg class="mark-run-word" viewBox="10 16 1462 168" focusable="false"><path fill-rule="evenodd" d="M97.4,131.0 L97.4,131.9 L97.7,132.7 L98.2,133.4 L99.0,133.8 L99.8,134.0 L105.6,134.0 L106.7,134.4 L107.7,135.0 L108.7,136.3 L109.0,137.9 L108.8,139.4 L108.0,140.7 L107.0,141.5 L105.4,142.2 L102.0,143.4 L98.8,144.3 L93.1,145.5 L87.6,146.0 L82.3,145.8 L77.4,145.1 L72.8,143.8 L68.2,141.9 L63.7,139.3 L59.8,136.1 L58.0,134.3 L56.3,132.1 L53.5,127.8 L51.3,123.2 L50.5,120.7 L49.8,117.9 L49.1,112.5 L49.0,107.0 L49.6,102.2 L50.6,97.5 L52.0,93.0 L54.0,88.3 L56.4,83.7 L59.3,79.3 L62.4,75.4 L66.0,71.5 L69.9,67.9 L74.1,64.6 L78.3,61.9 L82.9,59.4 L87.7,57.4 L92.3,55.9 L97.2,54.8 L102.1,54.1 L105.8,54.0 L1461.8,54.0 L1462.6,53.9 L1463.3,53.5 L1463.8,52.9 L1464.2,52.1 L1470.4,23.0 L1470.4,22.3 L1470.2,21.4 L1469.6,20.6 L1468.8,20.2 L1467.9,20.0 L113.0,20.0 L106.6,20.3 L102.1,20.7 L98.1,21.3 L90.1,23.2 L85.6,24.5 L81.6,25.9 L73.8,29.2 L65.7,33.5 L58.4,38.2 L51.0,43.8 L44.6,49.6 L38.2,56.4 L32.8,63.2 L27.8,70.7 L23.7,78.2 L21.9,82.0 L20.1,86.3 L17.5,94.1 L16.4,98.0 L15.5,102.4 L14.5,110.3 L14.2,115.1 L14.3,120.4 L14.7,125.1 L15.5,130.1 L16.5,134.6 L18.0,139.4 L19.7,143.6 L21.8,148.0 L24.1,151.9 L26.9,155.9 L29.7,159.3 L33.0,162.7 L36.4,165.7 L39.9,168.4 L44.0,171.0 L48.0,173.1 L54.3,175.8 L60.5,177.7 L67.4,179.1 L74.1,179.8 L79.0,180.0 L157.4,180.0 L158.1,179.7 L158.7,179.3 L159.2,178.7 L159.4,178.0 L179.6,83.0 L179.6,82.1 L179.3,81.2 L178.4,80.3 L177.2,80.0 L144.8,80.0 L144.1,80.1 L143.4,80.4 L142.9,80.9 L142.5,81.6 L142.3,82.3 L142.9,86.9 L143.0,90.5 L142.9,94.4 L142.3,98.3 L141.5,101.7 L140.9,102.7 L140.0,103.4 L139.0,103.8 L138.0,104.0 L105.2,104.0 L103.9,104.4 L103.2,105.0 L102.7,105.9Z M1354.3,80.0 L1353.5,80.1 L1352.7,80.5 L1352.2,81.1 L1351.8,81.9 L1342.1,127.6 L1341.5,131.9 L1341.1,136.0 L1341.1,140.2 L1341.5,144.2 L1342.2,148.2 L1343.3,152.2 L1344.7,155.9 L1346.4,159.3 L1348.4,162.6 L1350.7,165.6 L1354.0,169.0 L1357.6,171.9 L1361.6,174.5 L1365.9,176.6 L1370.3,178.1 L1375.1,179.2 L1380.1,179.9 L1385.3,180.0 L1390.6,179.6 L1395.9,178.7 L1401.2,177.3 L1406.4,175.5 L1411.3,173.3 L1416.3,170.5 L1421.1,167.3 L1425.6,163.8 L1428.8,160.9 L1432.1,157.5 L1434.9,154.2 L1437.5,150.8 L1439.9,147.3 L1442.2,143.3 L1444.1,139.6 L1445.7,135.7 L1447.0,131.9 L1448.1,127.7 L1457.6,83.0 L1457.6,81.9 L1457.0,80.9 L1456.2,80.2 L1455.2,80.0 L1426.2,80.0 L1425.3,80.2 L1424.5,80.7 L1424.1,81.3 L1423.8,82.0 L1414.2,127.5 L1413.4,129.9 L1412.3,132.4 L1410.6,135.2 L1408.5,137.9 L1406.0,140.3 L1403.3,142.3 L1400.4,143.9 L1397.3,145.1 L1394.2,145.8 L1391.1,146.0 L1388.1,145.7 L1385.4,145.0 L1382.8,143.8 L1380.6,142.2 L1378.8,140.3 L1377.4,137.9 L1376.4,135.3 L1375.9,132.5 L1375.9,130.0 L1376.1,127.6 L1385.6,83.0 L1385.6,82.1 L1385.4,81.3 L1384.5,80.4 L1383.3,80.0Z M1326.2,127.0 L1326.6,122.0 L1326.3,116.7 L1325.4,111.5 L1323.9,106.9 L1321.6,102.2 L1318.6,97.8 L1315.4,94.2 L1311.3,90.6 L1307.1,87.7 L1302.1,85.1 L1296.5,82.9 L1291.3,81.5 L1285.1,80.5 L1279.4,80.0 L1272.9,80.1 L1266.3,80.8 L1260.4,82.0 L1253.9,83.8 L1248.2,85.9 L1242.0,88.8 L1236.2,92.1 L1231.2,95.5 L1226.1,99.7 L1222.0,103.8 L1217.8,108.6 L1214.3,113.7 L1211.7,118.4 L1209.4,123.9 L1207.9,128.8 L1206.9,134.3 L1206.7,139.7 L1207.1,144.5 L1207.9,148.6 L1209.4,153.0 L1211.1,156.8 L1213.6,160.7 L1216.2,164.0 L1219.1,167.1 L1222.9,170.1 L1226.6,172.6 L1231.2,174.9 L1235.5,176.7 L1240.6,178.2 L1245.4,179.2 L1250.9,179.8 L1256.0,180.0 L1261.1,179.8 L1266.9,179.2 L1272.1,178.2 L1277.2,176.9 L1282.9,174.9 L1287.8,172.9 L1293.2,170.2 L1297.7,167.5 L1302.6,164.0 L1306.6,160.8 L1310.3,157.3 L1314.1,153.0 L1317.1,149.1 L1319.7,145.1 L1322.1,140.4 L1323.9,136.1 L1325.2,131.8Z M1293.3,131.4 L1291.7,135.6 L1289.4,139.5 L1286.3,143.3 L1282.6,146.6 L1278.3,149.4 L1273.9,151.6 L1269.2,153.1 L1264.2,153.9 L1259.5,153.9 L1257.3,153.7 L1254.8,153.2 L1250.7,151.8 L1247.1,149.8 L1245.5,148.5 L1244.0,147.0 L1242.7,145.4 L1241.6,143.8 L1240.7,142.1 L1240.0,140.2 L1239.5,138.3 L1239.2,136.2 L1239.2,133.8 L1239.4,131.2 L1240.0,128.5 L1240.9,125.9 L1242.1,123.3 L1243.6,120.8 L1245.2,118.7 L1247.3,116.4 L1249.5,114.3 L1252.0,112.4 L1254.3,110.9 L1257.1,109.4 L1260.0,108.2 L1263.0,107.2 L1266.0,106.5 L1269.0,106.1 L1272.0,106.0 L1275.0,106.2 L1277.5,106.6 L1280.2,107.3 L1282.8,108.3 L1285.1,109.5 L1287.0,110.9 L1289.0,112.6 L1290.6,114.6 L1291.9,116.7 L1292.9,119.0 L1293.6,121.3 L1294.0,123.6 L1294.1,126.2 L1293.8,128.8Z M1099.6,177.0 L1099.6,178.1 L1100.1,179.0 L1101.0,179.7 L1102.0,180.0 L1179.0,180.0 L1180.3,179.6 L1181.2,178.7 L1181.4,178.0 L1186.8,152.9 L1186.6,151.6 L1185.8,150.5 L1185.1,150.1 L1184.3,150.0 L1144.0,150.0 L1142.8,149.7 L1141.8,149.1 L1141.0,148.2 L1140.5,147.1 L1140.3,146.2 L1140.4,145.2 L1153.6,83.0 L1153.6,82.2 L1153.4,81.4 L1153.0,80.8 L1152.3,80.3 L1151.2,80.0 L1122.2,80.0 L1121.0,80.4 L1120.1,81.3 L1119.8,82.0Z M1037.8,133.9 L1033.9,151.7 L1033.4,152.4 L1032.1,153.6 L1030.7,154.0 L1027.9,154.0 L1024.4,153.5 L1021.0,152.7 L1018.0,151.5 L1015.2,149.8 L1013.1,148.2 L1011.4,146.3 L1009.9,144.3 L1008.7,142.1 L1007.9,139.7 L1007.3,137.2 L1007.1,134.7 L1007.3,132.0 L1007.7,129.7 L1008.4,127.1 L1009.4,124.7 L1010.6,122.5 L1012.0,120.3 L1013.7,118.2 L1015.5,116.2 L1017.8,114.1 L1022.0,111.1 L1026.7,108.7 L1029.6,107.6 L1032.4,106.9 L1035.0,106.4 L1038.4,106.0 L1039.1,105.6 L1039.7,105.0 L1040.1,104.1 L1044.6,82.8 L1044.5,81.9 L1044.1,81.1 L1043.4,80.4 L1042.5,80.1 L1036.5,80.5 L1030.6,81.5 L1024.8,82.9 L1019.0,84.8 L1013.4,87.1 L1007.4,90.2 L1002.3,93.4 L997.5,96.9 L993.0,100.7 L989.0,104.8 L985.4,109.2 L981.9,114.3 L979.4,119.0 L977.4,123.9 L975.9,128.8 L974.9,134.3 L974.7,139.2 L975.0,144.0 L976.0,149.1 L977.6,153.6 L979.7,157.8 L982.3,161.7 L985.8,165.8 L989.5,169.0 L993.5,171.9 L998.0,174.4 L1003.4,176.6 L1008.6,178.2 L1014.0,179.3 L1019.7,179.9 L1025.4,180.0 L1032.0,179.5 L1037.9,178.7 L1043.8,177.3 L1049.5,175.5 L1055.8,172.9 L1061.2,170.2 L1066.4,167.1 L1071.8,163.1 L1076.2,159.3 L1080.2,155.2 L1084.2,150.3 L1087.3,145.7 L1089.9,141.0 L1092.1,135.5 L1093.5,130.6 L1094.1,127.6 L1094.4,124.5 L1094.5,122.4 L1094.3,121.4 L1093.4,120.4 L1092.1,120.0 L1064.4,120.0 L1063.3,120.3 L1062.4,121.0 L1061.9,122.0 L1062.1,126.2 L1061.7,129.2 L1061.0,130.6 L1059.7,131.6 L1058.9,131.9 L1058.0,132.0 L1040.1,132.0 L1039.1,132.2 L1038.4,132.8Z M960.2,127.0 L960.6,122.0 L960.3,116.7 L959.4,111.5 L957.9,106.9 L955.6,102.2 L952.6,97.8 L949.4,94.2 L945.3,90.6 L941.1,87.7 L936.1,85.1 L930.5,82.9 L925.3,81.5 L919.1,80.5 L913.4,80.0 L906.9,80.1 L900.3,80.8 L894.4,82.0 L887.9,83.8 L882.2,85.9 L876.0,88.8 L870.2,92.1 L865.2,95.5 L860.1,99.7 L856.0,103.8 L851.8,108.6 L848.3,113.7 L845.7,118.4 L843.4,123.9 L841.9,128.8 L840.9,134.3 L840.7,139.7 L841.1,144.5 L841.9,148.6 L843.4,153.0 L845.1,156.8 L847.6,160.7 L850.2,164.0 L853.1,167.1 L856.9,170.1 L860.6,172.6 L865.2,174.9 L869.5,176.7 L874.6,178.2 L879.4,179.2 L884.9,179.8 L890.0,180.0 L895.1,179.8 L900.9,179.2 L906.1,178.2 L911.2,176.9 L916.9,174.9 L921.8,172.9 L927.2,170.2 L931.7,167.5 L936.6,164.0 L940.6,160.8 L944.3,157.3 L948.1,153.0 L951.1,149.1 L953.7,145.1 L956.1,140.4 L957.9,136.1 L959.2,131.8Z M927.3,131.4 L925.7,135.6 L923.4,139.5 L920.3,143.3 L916.6,146.6 L912.3,149.4 L907.9,151.6 L903.2,153.1 L898.2,153.9 L893.5,153.9 L891.3,153.7 L888.8,153.2 L884.7,151.8 L881.1,149.8 L879.5,148.5 L878.0,147.0 L876.7,145.4 L875.6,143.8 L874.7,142.1 L874.0,140.2 L873.5,138.3 L873.2,136.2 L873.2,133.8 L873.4,131.2 L874.0,128.5 L874.9,125.9 L876.1,123.3 L877.6,120.8 L879.2,118.7 L881.3,116.4 L883.5,114.3 L886.0,112.4 L888.3,110.9 L891.1,109.4 L894.0,108.2 L897.0,107.2 L900.0,106.5 L903.0,106.1 L906.0,106.0 L909.0,106.2 L911.5,106.6 L914.2,107.3 L916.8,108.3 L919.1,109.5 L921.0,110.9 L923.0,112.6 L924.6,114.6 L925.9,116.7 L926.9,119.0 L927.6,121.3 L928.0,123.6 L928.1,126.2 L927.8,128.8Z M711.6,177.0 L711.6,178.0 L712.1,179.0 L712.9,179.7 L713.8,180.0 L743.0,180.0 L744.0,179.8 L744.9,179.1 L745.4,178.1 L749.5,159.1 L750.1,158.0 L751.0,157.2 L752.2,156.7 L753.3,156.6 L754.3,156.7 L755.2,157.1 L756.0,157.7 L756.6,158.4 L766.8,178.7 L767.3,179.4 L768.0,179.8 L769.0,180.0 L807.6,180.0 L808.5,179.9 L809.3,179.4 L809.8,178.8 L810.1,178.0 L810.1,177.3 L809.9,176.5 L796.3,149.4 L796.0,148.4 L795.9,147.4 L796.3,146.0 L797.1,144.8 L801.7,141.8 L805.0,139.1 L808.3,136.0 L811.3,132.6 L813.7,129.4 L815.8,125.8 L817.5,122.3 L818.8,118.6 L819.9,114.6 L820.5,110.5 L820.6,106.5 L820.2,102.8 L819.4,99.1 L818.1,95.6 L816.3,92.3 L814.2,89.5 L812.4,87.6 L810.5,85.9 L808.4,84.5 L806.2,83.2 L803.6,82.1 L801.1,81.2 L798.6,80.6 L795.9,80.2 L792.3,80.0 L734.3,80.0 L733.4,80.2 L732.6,80.6 L732.1,81.2 L731.8,82.0Z M781.0,128.0 L778.1,127.6 L776.1,128.0 L760.7,128.0 L759.8,127.8 L759.0,127.4 L758.2,126.9 L757.6,126.2 L757.1,124.8 L757.0,123.4 L760.9,105.2 L761.5,103.7 L762.6,102.6 L763.6,102.2 L764.7,102.0 L781.4,102.0 L783.7,102.5 L786.6,102.0 L789.0,102.1 L791.2,102.6 L793.3,103.5 L795.0,104.8 L796.4,106.5 L797.3,108.1 L797.9,109.9 L798.1,111.9 L798.0,113.9 L797.6,116.0 L796.8,118.0 L795.8,119.9 L794.5,121.8 L792.9,123.4 L791.1,124.9 L789.3,126.1 L787.2,127.0 L785.1,127.7 L783.0,128.0Z M579.6,177.0 L579.6,178.0 L580.1,179.0 L580.9,179.7 L581.8,180.0 L609.5,180.0 L610.4,179.6 L611.2,178.8 L617.8,165.8 L618.7,164.8 L619.9,164.2 L621.2,164.0 L658.5,164.0 L659.6,164.2 L660.7,164.7 L661.5,165.5 L662.1,166.5 L662.4,167.6 L663.3,178.0 L663.8,179.1 L664.8,179.8 L665.7,180.0 L693.0,180.0 L693.9,179.8 L694.6,179.4 L695.1,178.9 L695.4,178.2 L696.3,173.7 L688.7,82.3 L688.5,81.5 L688.1,80.9 L687.2,80.2 L686.2,80.0 L629.5,80.0 L628.6,80.2 L627.9,80.6 L627.3,81.4 L580.4,173.7Z M660.1,139.7 L659.9,141.2 L659.1,142.7 L657.8,143.6 L656.3,144.0 L634.9,144.0 L633.7,143.6 L632.7,142.9 L631.9,142.0 L631.5,140.8 L631.4,139.5 L631.8,138.3 L649.7,103.0 L650.8,101.7 L652.4,101.0 L654.0,101.0 L655.4,101.6 L656.5,102.7 L657.1,104.1Z M457.6,177.0 L457.6,178.0 L458.1,179.0 L458.9,179.7 L459.9,180.0 L489.0,180.0 L489.8,179.9 L490.4,179.5 L491.1,178.9 L491.4,178.1 L497.7,148.6 L498.3,147.4 L499.2,146.5 L500.3,146.0 L501.6,145.8 L502.6,145.9 L503.5,146.3 L504.3,146.9 L504.9,147.7 L520.5,178.6 L521.0,179.2 L521.5,179.7 L522.8,180.0 L561.0,180.0 L561.8,179.9 L562.5,179.5 L563.1,178.8 L563.4,178.0 L583.6,83.0 L583.6,82.0 L583.2,81.0 L582.3,80.3 L581.2,80.0 L552.2,80.0 L551.4,80.1 L550.8,80.5 L550.2,81.1 L549.8,81.9 L543.5,111.4 L543.0,112.6 L542.1,113.5 L541.0,114.0 L539.7,114.2 L538.7,114.1 L537.8,113.7 L536.9,113.1 L536.3,112.3 L520.7,81.4 L520.3,80.8 L519.7,80.3 L518.5,80.0 L480.3,80.0 L479.5,80.1 L478.8,80.5 L478.2,81.2 L477.8,82.0Z M325.6,177.0 L325.6,178.0 L326.0,179.0 L326.9,179.7 L327.8,180.0 L355.5,180.0 L356.5,179.5 L357.2,178.8 L363.8,165.8 L364.7,164.8 L365.9,164.2 L367.2,164.0 L404.5,164.0 L405.6,164.2 L406.7,164.7 L407.5,165.5 L408.1,166.5 L408.4,167.6 L409.3,178.0 L409.8,179.1 L410.8,179.8 L411.7,180.0 L439.0,180.0 L439.9,179.8 L440.6,179.4 L441.1,178.9 L441.4,178.2 L442.3,173.7 L434.7,82.3 L434.5,81.5 L434.1,80.9 L433.2,80.2 L432.2,80.0 L375.5,80.0 L374.6,80.2 L373.9,80.6 L373.3,81.4 L326.4,173.7Z M395.6,103.1 L396.3,102.1 L397.3,101.4 L398.4,101.0 L399.6,100.9 L400.8,101.2 L401.8,101.9 L402.6,102.8 L403.1,103.9 L406.1,139.7 L405.8,141.4 L405.3,142.4 L404.5,143.2 L403.5,143.7 L402.5,144.0 L381.4,144.0 L379.9,143.7 L378.6,142.9 L377.7,141.6 L377.4,140.1 L377.6,138.6Z M185.6,177.0 L185.6,178.0 L186.1,179.0 L186.9,179.7 L187.9,180.0 L219.0,180.0 L219.8,179.9 L220.7,179.3 L221.3,178.4 L223.1,170.2 L223.9,168.7 L234.7,160.0 L235.9,159.4 L237.1,159.2 L238.6,159.6 L239.9,160.4 L255.6,179.2 L256.8,179.9 L257.5,180.0 L306.2,180.0 L306.9,179.9 L307.6,179.6 L308.2,178.9 L308.6,177.9 L308.6,176.9 L308.2,176.0 L273.2,134.4 L272.4,132.8 L272.4,131.0 L272.9,129.8 L273.8,128.8 L328.7,85.0 L329.3,84.1 L329.6,82.8 L329.6,81.9 L329.2,81.1 L328.3,80.3 L327.2,80.0 L281.0,80.0 L280.2,80.1 L279.4,80.5 L243.2,109.4 L242.0,110.1 L240.7,110.3 L239.2,109.9 L237.9,109.1 L237.0,107.8 L236.8,106.2 L241.6,82.9 L241.5,81.7 L240.8,80.6 L240.1,80.2 L239.2,80.0 L208.2,80.0 L207.5,80.1 L206.9,80.4 L206.2,81.1 L205.8,82.0Z"/></svg>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-grid">
+      <div class="contact-copy">
+        <h2 class="contact-title">Επικοινωνία.</h2>
+        <p class="contact-lede">Θέλετε να συνεργαστούμε ή να μιλήσουμε για marketing; Γυρίστε την κάρτα.</p>
+      </div>
+
+      <!-- Business card, from the brand book: the short form on the front, the details on the back -->
+      <div class="contact-card-cell">
+      <div class="card-scene">
+        <div class="card" id="card">
+          <button type="button" class="card-face card-front" id="card-front" aria-expanded="false" aria-controls="card-back">
+            <svg class="card-mark" viewBox="10 16 340 168" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M97.4,131.0 L97.4,131.9 L97.7,132.7 L98.2,133.4 L99.0,133.8 L99.8,134.0 L105.6,134.0 L106.7,134.4 L107.7,135.0 L108.7,136.3 L109.0,137.9 L108.8,139.4 L108.0,140.7 L106.6,141.7 L100.9,143.8 L96.0,145.0 L91.3,145.7 L86.8,146.0 L82.6,145.9 L78.3,145.3 L74.3,144.3 L69.6,142.6 L65.2,140.3 L61.3,137.4 L57.9,134.1 L55.1,130.5 L52.6,126.2 L50.8,121.7 L49.6,116.8 L49.1,112.8 L49.0,108.4 L49.3,104.2 L50.0,100.0 L51.1,95.8 L52.6,91.6 L54.4,87.5 L56.8,83.2 L59.3,79.3 L62.2,75.6 L65.3,72.1 L68.7,68.9 L72.4,65.9 L76.4,63.1 L80.5,60.7 L84.6,58.7 L89.7,56.7 L94.9,55.2 L99.8,54.4 L104.9,54.0 L338.1,54.0 L339.4,53.3 L340.2,52.1 L346.4,23.0 L346.2,21.5 L345.3,20.4 L343.9,20.0 L111.0,20.0 L102.1,20.7 L93.6,22.3 L84.6,24.8 L76.2,28.1 L70.9,30.6 L65.7,33.5 L60.2,36.9 L55.3,40.4 L50.2,44.5 L45.7,48.5 L41.1,53.1 L37.2,57.6 L33.1,62.7 L29.8,67.6 L26.4,73.0 L23.7,78.2 L21.1,83.9 L19.0,89.2 L17.2,95.1 L15.9,100.5 L14.9,106.4 L14.4,111.7 L14.2,117.5 L14.5,122.7 L15.2,128.3 L16.2,133.3 L17.7,138.6 L19.5,143.2 L21.8,148.0 L24.3,152.2 L27.4,156.5 L30.6,160.3 L34.3,163.9 L38.1,167.1 L42.5,170.1 L46.8,172.5 L53.0,175.3 L59.6,177.5 L67.0,179.1 L74.1,179.8 L79.0,180.0 L157.0,180.0 L158.4,179.6 L159.0,178.9 L159.4,178.0 L179.6,83.0 L179.6,82.0 L179.3,81.3 L178.8,80.6 L178.1,80.2 L177.3,80.0 L144.8,80.0 L143.5,80.4 L142.7,81.2 L142.3,82.3 L142.9,86.6 L143.0,89.9 L142.9,93.5 L142.5,97.2 L141.6,101.5 L140.9,102.6 L140.0,103.4 L139.0,103.8 L138.0,104.0 L105.1,104.0 L104.1,104.2 L103.3,104.8 L102.7,106.0Z M185.6,177.0 L185.6,178.0 L186.1,179.0 L186.9,179.7 L187.9,180.0 L219.0,180.0 L219.8,179.9 L220.7,179.3 L221.3,178.4 L223.1,170.2 L223.9,168.7 L234.7,160.0 L235.9,159.4 L237.1,159.2 L238.6,159.6 L239.9,160.4 L255.6,179.2 L256.8,179.9 L306.1,180.0 L307.5,179.6 L308.2,178.9 L308.6,177.9 L308.6,176.9 L308.2,176.0 L273.2,134.4 L272.4,132.8 L272.4,131.0 L272.9,129.8 L273.8,128.8 L329.5,84.4 L330.0,83.7 L330.3,82.8 L330.2,81.9 L329.9,81.1 L329.0,80.3 L327.9,80.0 L281.0,80.0 L280.2,80.1 L279.4,80.5 L243.2,109.4 L242.0,110.1 L240.7,110.3 L239.2,109.9 L237.9,109.1 L237.0,107.8 L236.8,106.2 L241.6,82.9 L241.5,81.7 L240.8,80.6 L240.1,80.2 L239.2,80.0 L208.2,80.0 L206.9,80.4 L206.2,81.1 L205.8,82.0Z"/></svg>
+            <span class="card-cta">Επικοινωνία</span>
+            <span class="card-hint" aria-hidden="true">Σύρετε ή πατήστε</span>
+            <span class="sr-only">: δείτε τα στοιχεία επικοινωνίας μου</span>
+          </button>
+          <div class="card-face card-back" id="card-back" inert>
+            <div class="card-top">
+              <p class="card-name">Γιώργος Κανάρογλου</p>
+              <button type="button" class="card-turn" id="card-turn">Γυρίστε πίσω</button>
+            </div>
+            <p class="card-role">Ολοκληρωμένο marketing</p>
+            <div class="card-bottom">
+              <div class="card-details">
+                <a class="email card-email" data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello στο georgekanaroglou.com</a>
+                <span class="card-place">Λονδίνο και Αθήνα</span>
+              </div>
+              <div class="copy-row"><button type="button" class="copy-btn" id="copy-email" hidden><span class="copy-label">Αντιγραφή email</span></button><span class="sr-only" id="copy-status" aria-live="polite"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <address class="foot-address">
+      <strong>Γιώργος Κανάρογλου</strong>
+      <a data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello στο georgekanaroglou.com</a>
+      <span>Λονδίνο και Αθήνα</span>
+    </address>
+    <span class="foot-links">
+      <a href="/privacy-el.html">Απόρρητο</a>
+      <button type="button" class="linkish" id="cookie-settings" hidden>Ρυθμίσεις cookies</button>
+    </span>
+  </div>
+  <div class="wrap foot-base">© 2026 Γιώργος Κανάρογλου</div>
+</footer>
+
+<script>
+/* Builds email links in the browser, so the address isn't in the page code for spam bots to collect. */
+document.querySelectorAll("[data-mail-user]").forEach(function (a) {
+  var address = a.getAttribute("data-mail-user") + "@" + a.getAttribute("data-mail-domain");
+  a.href = "mailto:" + address;
+  a.textContent = address;
+});
+</script>
+
+<div class="consent" id="consent" role="region" aria-label="Επιλογή cookies" hidden>
+  <p>Χρησιμοποιώ cookies για να μετράω τις επισκέψεις και να βλέπω τι λειτουργεί στον ιστότοπο. Χωρίς διαφημίσεις και χωρίς παρακολούθηση σε άλλους ιστότοπους. <a href="/privacy-el.html">Πώς τα χρησιμοποιώ</a></p>
+  <div class="consent-actions">
+    <button type="button" class="btn btn-primary" data-consent="yes">Αποδοχή</button>
+    <button type="button" class="btn" data-consent="no">Απόρριψη</button>
+  </div>
+</div>
+
+<script>
+/* Site analytics with consent. Data goes to George's own Google Sheet. */
+(function () {
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbz5sD8rScVK1-w9RdmOq4RDYou_SAV5GeR1eWoshG4t2qJh_NkrpBA9lp_AXw14qMOM/exec";
+  if (ENDPOINT.indexOf("https://script.google.com/") !== 0) return;
+
+  var SITE = "georgekanaroglou.com";
+  var banner = document.getElementById("consent");
+  var settings = document.getElementById("cookie-settings");
+  var q = new URLSearchParams(location.search);
+
+  // Visit georgekanaroglou.com/?notrack=1 once on each of your devices to stop counting your own visits (?notrack=0 to undo).
+  var notrack = false;
+  try {
+    if (q.get("notrack") === "1") localStorage.setItem("gk-notrack", "1");
+    if (q.get("notrack") === "0") localStorage.removeItem("gk-notrack");
+    notrack = localStorage.getItem("gk-notrack") === "1";
+  } catch (e) {}
+  var isBot = navigator.webdriver || /bot|crawl|spider|slurp|headless|preview|lighthouse/i.test(navigator.userAgent);
+
+  function getCookie(name) {
+    var m = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function setCookie(name, value, seconds) {
+    document.cookie = name + "=" + encodeURIComponent(value) + "; path=/; max-age=" + seconds + "; SameSite=Lax; Secure";
+  }
+  function deleteCookie(name) {
+    document.cookie = name + "=; path=/; max-age=0; SameSite=Lax; Secure";
+  }
+  function newId() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return Math.random().toString(36).slice(2) + Date.now().toString(36);
+  }
+
+  var ref = "";
+  try { ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch (e) {}
+
+  // Short links: georgekanaroglou.com/cv, /in and /mail forward here with ?ref=...
+  var REF_NAMES = { cv: "CV", "in": "LinkedIn", mail: "Email" };
+
+  function source() {
+    if (q.get("utm_source")) return q.get("utm_source");
+    var r = (q.get("ref") || "").toLowerCase();
+    if (r) return REF_NAMES[r] || r;
+    if (!ref) return "Direct";
+    if (ref === location.hostname.replace(/^www\./, "")) return "Internal";
+    if (ref === "t.co" || ref === "x.com") return "X";
+    var map = [["linkedin", "LinkedIn"], ["lnkd.in", "LinkedIn"], ["outlook", "Email"], ["mail.", "Email"],
+               ["google", "Google"], ["bing", "Bing"], ["duckduckgo", "DuckDuckGo"], ["github", "GitHub"],
+               ["twitter", "X"], ["facebook", "Facebook"], ["instagram", "Instagram"]];
+    for (var i = 0; i < map.length; i++) { if (ref.indexOf(map[i][0]) > -1) return map[i][1]; }
+    return ref;
+  }
+
+  var w = window.innerWidth;
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+
+  var base = {
+    site: SITE,
+    page: location.pathname,
+    source: source(),
+    referrer: ref,
+    utm_source: q.get("utm_source") || "",
+    utm_medium: q.get("utm_medium") || "",
+    utm_campaign: q.get("utm_campaign") || "",
+    device: w < 768 ? "Mobile" : w < 1024 ? "Tablet" : "Desktop",
+    screen: w,
+    language: navigator.language || "",
+    timezone: tz
+  };
+
+  // Tidy the address bar once the source is recorded, so visitors just see georgekanaroglou.com.
+  try {
+    var tidy = false;
+    ["ref", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "notrack"].forEach(function (k) {
+      if (q.has(k)) tidy = true;
+    });
+    if (tidy && history.replaceState) history.replaceState(null, "", location.pathname + location.hash);
+  } catch (e) {}
+
+  var visitorType = null;
+
+  function send(event, extra) {
+    if (notrack || isBot || getCookie("gk_consent") !== "yes") return;
+    var vid = getCookie("gk_vid");
+    if (visitorType === null) visitorType = vid ? "returning" : "new";
+    if (!vid) vid = newId();
+    var sid = getCookie("gk_sid") || newId();
+    setCookie("gk_vid", vid, 60 * 60 * 24 * 365);
+    setCookie("gk_sid", sid, 60 * 30);
+    var d = Object.assign({}, base, { event: event, vid: vid, sid: sid, visitor: visitorType }, extra || {});
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, body: JSON.stringify(d) }); } catch (e) {}
+  }
+
+  window.gkTrack = send;
+
+  var start = Date.now(), viewSent = false, left = false;
+  function sendView() {
+    if (viewSent) return;
+    viewSent = true;
+    start = Date.now();
+    send("view");
+  }
+
+  var bannerTimer;
+  function openBanner() {
+    clearTimeout(bannerTimer);
+    banner.hidden = false;
+    void banner.offsetWidth; // set the start position before it animates in
+    banner.classList.add("is-open");
+  }
+  function closeBanner() {
+    var hadFocus = banner.contains(document.activeElement);
+    banner.classList.remove("is-open");
+    bannerTimer = setTimeout(function () { banner.hidden = true; }, 400);
+    // Keyboard users keep their place instead of being dropped at the top of the page
+    if (hadFocus && !settings.hidden) settings.focus({ preventScroll: true });
+  }
+
+  function decide(choice) {
+    setCookie("gk_consent", choice, 60 * 60 * 24 * 182);
+    closeBanner();
+    if (choice === "yes") {
+      sendView();
+    } else {
+      deleteCookie("gk_vid");
+      deleteCookie("gk_sid");
+    }
+  }
+
+  banner.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-consent]");
+    if (b) decide(b.getAttribute("data-consent"));
+  });
+  settings.hidden = false;
+  settings.addEventListener("click", function () {
+    openBanner();
+    banner.querySelector("button").focus({ preventScroll: true });
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden" && viewSent && !left) {
+      left = true;
+      send("leave", { seconds: Math.round((Date.now() - start) / 1000) });
+    }
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest) return;
+    if (e.target.closest('a[href^="mailto:"]')) send("email_click");
+    else if (e.target.closest('a[href="#contact"]')) send("cta_click", { label: "Get in touch" });
+  });
+
+  var choice = getCookie("gk_consent");
+  // Without a current "yes", no analytics cookies are kept (for example after consent expires).
+  if (choice !== "yes") {
+    deleteCookie("gk_vid");
+    deleteCookie("gk_sid");
+  }
+  if (!choice) openBanner();
+  else if (choice === "yes") sendView();
+})();
+</script>
+
+
+
+<script>
+/* Copy email button. Shown only where the browser allows copying. */
+(function () {
+  var b = document.getElementById("copy-email"), s = document.getElementById("copy-status");
+  var span = b && b.querySelector(".copy-label");
+  if (!b || !navigator.clipboard || !window.isSecureContext) return;
+  var label = span.textContent, t;
+  function swap(text) {
+    span.textContent = text;
+    if (span.animate) span.animate([{ opacity: 0, filter: "blur(2px)" }, { opacity: 1, filter: "blur(0)" }],
+      { duration: 200, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+  }
+  b.hidden = false;
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(["hello", "georgekanaroglou.com"].join("@")).then(function () {
+      swap("Αντιγράφηκε");
+      b.setAttribute("data-copied", "");
+      s.textContent = "Η διεύθυνση email αντιγράφηκε";
+      clearTimeout(t);
+      t = setTimeout(function () { swap(label); b.removeAttribute("data-copied"); s.textContent = ""; }, 2000);
+      if (typeof window.gkTrack === "function") window.gkTrack("email_click", { label: "copy" });
+    }, function () {});
+  });
+})();
+</script>
+<script>
+/* The index works as an accordion: an item's explanation opens straight under it and pushes the rest down.
+   One open at a time, and all closed to start. When one above closes, the page scrolls with it so the row you clicked stays under your cursor. */
+(function () {
+  var items = [].slice.call(document.querySelectorAll(".index-item"));
+  function set(b, on) {
+    b.setAttribute("aria-expanded", on ? "true" : "false");
+    var panel = document.getElementById(b.getAttribute("aria-controls"));
+    if (panel) panel.classList.toggle("is-open", on);
+  }
+  items.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var opening = b.getAttribute("aria-expanded") !== "true";
+      var top0 = b.getBoundingClientRect().top, t0 = performance.now();
+      items.forEach(function (x) { if (x !== b) set(x, false); });
+      set(b, opening);
+      (function keep() {
+        var d = b.getBoundingClientRect().top - top0;
+        if (Math.abs(d) > 0.5) window.scrollBy(0, d);
+        if (performance.now() - t0 < 320) requestAnimationFrame(keep);
+      })();
+    });
+  });
+})();
+</script>
+<script>
+/* The Cobalt window: as you scroll, the Gkanaroglou wordmark slides through it.
+   It starts on GK at the top of the page and ends on the last letters as the window leaves the screen
+   (or as the page ends, if that comes first). Only transform changes, so it stays smooth. */
+(function () {
+  var run = document.querySelector(".mark-run"), word = run && run.querySelector(".mark-run-word");
+  if (!run || !word) return;
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var start = 0, end = 1, dist = 0, ticking = false;
+
+  function measure() {
+    var r = run.getBoundingClientRect(), top = r.top + scrollY, bottom = r.bottom + scrollY;
+    var maxScroll = document.documentElement.scrollHeight - innerHeight;
+    start = Math.max(0, top - innerHeight);              // when the window comes into view
+    end = Math.max(start + 1, Math.min(bottom, maxScroll)); // when it leaves, or the page ends
+    dist = Math.max(0, word.getBoundingClientRect().width - r.width * 1.04);
+    update();
+  }
+  function update() {
+    ticking = false;
+    var p = Math.min(1, Math.max(0, (scrollY - start) / (end - start)));
+    word.style.transform = "translate3d(" + (-p * dist).toFixed(1) + "px, 0, 0)";
+  }
+  addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener("resize", measure);
+  addEventListener("load", measure);
+  if (window.ResizeObserver) new ResizeObserver(function () { measure(); }).observe(document.querySelector(".opening"));
+  measure();
+})();
+</script>
+<script>
+/* The business card. On a computer it tilts towards the cursor. Grab it (or swipe it on a phone) to spin it;
+   let go and it settles on the nearest face, and a quick flick carries it round. A plain click or tap turns it over.
+   Keyboard: Enter on the front turns it, "Turn back" turns it back. Reduced motion: a fade, no spinning. */
+(function () {
+  var scene = document.querySelector(".card-scene"), card = document.getElementById("card");
+  var front = document.getElementById("card-front"), back = document.getElementById("card-back"), turn = document.getElementById("card-turn");
+  if (!scene || !card || !front || !back) return;
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var SETTLE = "transform 650ms cubic-bezier(0.32, 0.72, 0, 1)";
+  var rot = 0, tiltX = 0, tiltY = 0, tracked = false, suppressClick = false;
+
+  function isFlipped(deg) { return Math.abs(Math.round(deg / 180)) % 2 === 1; }
+  function apply(transition) {
+    if (reduce) return;
+    card.style.transition = transition;
+    card.style.transform = "rotateX(" + tiltX.toFixed(2) + "deg) rotateY(" + (rot + tiltY).toFixed(2) + "deg)";
+  }
+  function setState(on, moveFocus) {
+    card.classList.toggle("is-flipped", on);
+    front.setAttribute("aria-expanded", on ? "true" : "false");
+    front.inert = on; back.inert = !on;
+    if (on && !tracked && typeof window.gkTrack === "function") { tracked = true; window.gkTrack("cta_click", { label: "Get in touch" }); }
+    if (moveFocus) setTimeout(function () { (on ? back.querySelector(".email") : front).focus({ preventScroll: true }); }, reduce ? 0 : 340);
+  }
+  function settle(target, moveFocus) {
+    rot = target; tiltX = 0; tiltY = 0;
+    apply(SETTLE);
+    setState(isFlipped(rot), moveFocus);
+  }
+  function turnTo(on, moveFocus) {
+    var k = Math.round(rot / 180);
+    if ((Math.abs(k) % 2 === 1) !== on) k += 1;   // always turn the same way, like flipping a real card
+    settle(k * 180, moveFocus);
+  }
+
+  front.addEventListener("click", function () { if (suppressClick) return; turnTo(true, true); });
+  turn.addEventListener("click", function () { turnTo(false, true); });
+
+  if (!reduce) {
+    // Hover tilt: the card leans a little towards the cursor
+    if (fine) {
+      scene.addEventListener("pointermove", function (e) {
+        if (drag || e.pointerType !== "mouse") return;
+        var r = scene.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        tiltY = x * 14 * (isFlipped(rot) ? -1 : 1); tiltX = -y * 9;
+        apply("transform 200ms cubic-bezier(0.23, 1, 0.32, 1)");
+      });
+      scene.addEventListener("pointerleave", function () { if (drag) return; tiltX = 0; tiltY = 0; apply("transform 450ms cubic-bezier(0.23, 1, 0.32, 1)"); });
+    }
+    // Drag to spin
+    var drag = null;
+    scene.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0 || e.target.closest(".card-back a, .card-back button")) return;
+      drag = { x: e.clientX, y: e.clientY, rot: rot, lastX: e.clientX, lastT: performance.now(), vel: 0, moved: false, id: e.pointerId };
+    });
+    scene.addEventListener("pointermove", function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved) {
+        if (Math.abs(dx) < 6 || Math.abs(dx) < Math.abs(dy)) return;   // small or vertical moves: a tap, or the page scrolling
+        drag.moved = true; scene.setPointerCapture(e.pointerId); scene.classList.add("is-dragging");
+      }
+      var now = performance.now(), dt = Math.max(1, now - drag.lastT);
+      drag.vel = (e.clientX - drag.lastX) * 0.55 / dt;   // degrees per millisecond
+      drag.lastX = e.clientX; drag.lastT = now;
+      rot = drag.rot + dx * 0.55;
+      tiltY = 0; tiltX = Math.max(-12, Math.min(12, -dy * 0.08));
+      apply("none");
+    });
+    function end(e) {
+      if (!drag || (e && e.pointerId !== drag.id)) return;
+      var d = drag; drag = null; scene.classList.remove("is-dragging");
+      if (!d.moved) return;   // a plain tap: the click handler turns the card
+      suppressClick = true; setTimeout(function () { suppressClick = false; }, 0);
+      var vel = performance.now() - d.lastT > 90 ? 0 : d.vel;   // a pause before letting go cancels the flick
+      var projected = rot + vel * 160;   // a quick flick carries the card further round
+      settle(Math.round(projected / 180) * 180, false);
+    }
+    scene.addEventListener("pointerup", end);
+    scene.addEventListener("pointercancel", end);
+  }
+
+  if (location.hash === "#contact") setTimeout(function () { turnTo(true, false); }, 700);
+})();
+</script>
+<script>
+/* Keeps the Cobalt window one fixed size, at least 46% as tall as it is wide. The black panel is given the same
+   bottom line as a minimum, so the two end level; opening an item fills that space first, then grows past it. Wide screens only. */
+(function () {
+  var run = document.querySelector(".mark-run"), index = document.querySelector(".index");
+  if (!run || !index) return;
+  var wide = matchMedia("(min-width: 761px)");
+  function size() {
+    run.style.height = ""; index.style.minHeight = "";
+    if (!wide.matches) return;
+    var open = 0;
+    document.querySelectorAll(".acc.is-open").forEach(function (a) { open += a.offsetHeight; });
+    var i = index.getBoundingClientRect(), r = run.getBoundingClientRect();
+    var closedBottom = i.bottom - open;
+    // At least 46% as tall as it is wide: just enough that the sliding letters are never cut off
+    var h = Math.max(192, Math.round(r.width * 0.46), Math.round(closedBottom - r.top));
+    run.style.height = h + "px";
+    // If the window's minimum is taller than the closed panel, the panel gets the same bottom line as a minimum
+    index.style.minHeight = Math.round(r.top + h - i.top) + "px";
+  }
+  size();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(size);
+  addEventListener("load", size);
+  addEventListener("resize", function () { if (!document.querySelector(".acc.is-open")) size(); });
+})();
+</script>
+</body>
+</html>
