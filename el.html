@@ -405,6 +405,7 @@
   .work-title { margin-left: -0.032em; font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 900; line-height: .9; letter-spacing: -.045em; }
   .work-count { color: var(--muted); font-size: .9rem; font-weight: 600; white-space: nowrap; }
   .work-list { list-style: none; border-top: 3px solid var(--black); }
+  .work-soon { padding-top: clamp(1rem, 2vw, 1.5rem); border-top: 3px solid var(--black); color: var(--muted); font-size: clamp(1.15rem, 2vw, 1.6rem); font-weight: 800; letter-spacing: -.02em; }
   .work-list > li { border-bottom: 1px solid var(--black); }
   .work-h { font: inherit; letter-spacing: inherit; }
   .work-item {
@@ -729,51 +730,8 @@
 
   <section class="work" id="work" aria-labelledby="work-title">
     <div class="wrap">
-      <div class="work-head"><h2 class="work-title" id="work-title">Επιλεγμένες εργασίες.</h2><span class="work-count">Τρία projects</span></div>
-      <ul class="work-list">
-        <li>
-          <h3 class="work-h"><button type="button" class="work-item" aria-expanded="false" aria-controls="work-lumo">
-            <span class="work-stat"><span class="work-num">£149 / £199</span><span class="work-label">Τιμή λανσαρίσματος σε δύο εκδόσεις</span></span>
-            <span class="work-main"><span class="work-name">Τιμολόγηση μιας έξυπνης συσκευής μαγειρέματος πριν από το λανσάρισμα</span><span class="work-meta">Στρατηγική τιμολόγησης · Ομαδικό project, LSE · 2026</span></span>
-            <span class="index-plus" aria-hidden="true"></span>
-          </button></h3>
-          <div class="acc work-acc" id="work-lumo"><div class="acc-inner"><div class="acc-content work-detail">
-            <dl class="work-facts">
-              <div><dt>Το ερώτημα</dt><dd>Πόσο πρέπει να κοστίζει μια νέα έξυπνη συσκευή μαγειρέματος και σε πόσες εκδόσεις;</dd></div>
-              <div><dt>Τι έκανα</dt><dd>Μια μελέτη conjoint για το ποια χαρακτηριστικά εκτιμούν οι καταναλωτές και μια έρευνα Van Westendorp για το εύρος τιμών που θα αποδέχονταν.</dd></div>
-              <div><dt>Αποτέλεσμα</dt><dd>Λανσάρισμα σε δύο εκδόσεις, στα £149 και £199.</dd></div>
-            </dl>
-          </div></div></div>
-        </li>
-        <li>
-          <h3 class="work-h"><button type="button" class="work-item" aria-expanded="false" aria-controls="work-google-ads">
-            <span class="work-stat"><span class="work-num">15×</span><span class="work-label">Αύξηση εσόδων</span></span>
-            <span class="work-main"><span class="work-name">Δεκαπενταπλάσια ανάπτυξη ενός λογαριασμού Google Ads</span><span class="work-meta">Ψηφιακό marketing · Προσομοίωση Google Ads · 2026</span></span>
-            <span class="index-plus" aria-hidden="true"></span>
-          </button></h3>
-          <div class="acc work-acc" id="work-google-ads"><div class="acc-inner"><div class="acc-content work-detail">
-            <dl class="work-facts">
-              <div><dt>Το ερώτημα</dt><dd>Πόσο θα μπορούσε να αναπτυχθεί ένας μικρός λογαριασμός αναζήτησης κατά τη διάρκεια της προσομοίωσης;</dd></div>
-              <div><dt>Τι έκανα</dt><dd>Διαχείριση και βελτιστοποίηση καμπανιών αναζήτησης σε προσομοίωση Google Ads.</dd></div>
-              <div><dt>Αποτέλεσμα</dt><dd>Τα έσοδα αυξήθηκαν από περίπου $4.100 σε $61.700, με μέγιστο ROAS 5,27. Βαθμολογία 100/100.</dd></div>
-            </dl>
-          </div></div></div>
-        </li>
-        <li>
-          <h3 class="work-h"><button type="button" class="work-item" aria-expanded="false" aria-controls="work-fan-engagement">
-            <span class="work-stat"><span class="work-num">78%</span><span class="work-label">Βαθμός διπλωματικής</span></span>
-            <span class="work-main"><span class="work-name">Τι κάνει τους φίλους του μηχανοκίνητου αθλητισμού να συμμετέχουν online</span><span class="work-meta">Ψυχολογία καταναλωτή · Διπλωματική, University of Kent · 2025</span></span>
-            <span class="index-plus" aria-hidden="true"></span>
-          </button></h3>
-          <div class="acc work-acc" id="work-fan-engagement"><div class="acc-inner"><div class="acc-content work-detail">
-            <dl class="work-facts">
-              <div><dt>Το ερώτημα</dt><dd>Ποιοι παράγοντες οδηγούν τη συμμετοχή των φιλάθλων στις ψηφιακές πλατφόρμες του μηχανοκίνητου αθλητισμού;</dd></div>
-              <div><dt>Τι έκανα</dt><dd>Ερευνητική εργασία προπτυχιακού επιπέδου στο University of Kent.</dd></div>
-              <div><dt>Αποτέλεσμα</dt><dd>Βαθμός 78%, στο πλαίσιο πτυχίου First Class.</dd></div>
-            </dl>
-          </div></div></div>
-        </li>
-      </ul>
+      <div class="work-head"><h2 class="work-title" id="work-title">Επιλεγμένες εργασίες.</h2></div>
+      <p class="work-soon">Έρχονται σύντομα.</p>
     </div>
   </section>
 </main>
