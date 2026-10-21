@@ -74,6 +74,9 @@
   h1, h2, h3 { text-wrap: balance; }
   p { text-wrap: pretty; }
   .wrap { width: var(--content); margin-inline: auto; }
+  /* Skip link: hidden until a keyboard user tabs to it, then it jumps straight past the header */
+  .skip-link { position: absolute; z-index: 20; left: var(--gutter); top: -4rem; padding: .6rem 1rem; color: var(--paper); background: var(--black); font-weight: 700; text-decoration: none; }
+  .skip-link:focus { top: .75rem; outline: 3px solid var(--orange); outline-offset: 2px; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   /* ---------- Header ---------- */
@@ -178,7 +181,10 @@
     display: flex; justify-content: space-between; gap: 1rem;
     padding-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: .8125rem; font-weight: 600;
   }
-  .index-label { color: var(--orange); }
+  .index-label { color: var(--orange); font: inherit; letter-spacing: 0; }
+  /* Each item's heading wraps its button: the structure search engines and screen readers read */
+  .index-h { font: inherit; letter-spacing: inherit; line-height: inherit; }
+  .index-base .index-h { height: 100%; }
   .index-list { list-style: none; border-top: 3px solid var(--paper); }
   .index-list li {
     border-bottom: 1px solid var(--concrete);
@@ -356,7 +362,7 @@
     border-top: 3px solid var(--black); font-size: .875rem; color: var(--muted);
   }
   .foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; flex-wrap: wrap; }
-  .foot-links { display: flex; gap: 1.25rem; }
+  .foot-links { display: flex; flex-wrap: wrap; column-gap: 1.25rem; }
   .foot-links a, .linkish {
     display: inline-flex; align-items: center; min-height: 44px; padding: 0; cursor: pointer;
     color: var(--black); background: none; border: 0; font: inherit;
@@ -386,7 +392,8 @@
   .consent a { color: var(--paper); }
   .consent-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
   .consent .btn { color: var(--paper); border-color: var(--paper); }
-  .consent .btn-primary { color: #000; background: var(--orange); border-color: var(--orange); }
+  /* Accept and Decline are styled identically: declining is exactly as easy and as prominent as accepting */
+  .consent .btn-primary { color: var(--paper); background: transparent; border-color: var(--paper); }
   .consent .btn:focus-visible, .consent a:focus-visible { outline-color: var(--paper); }
   @media (hover: hover) and (pointer: fine) {
     .consent .btn:hover { color: #000; background: var(--paper); border-color: var(--paper); }
@@ -418,6 +425,7 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <header class="top">
   <div class="wrap">
@@ -470,7 +478,7 @@
 })();
 </script>
 
-<main class="nf">
+<main class="nf" id="main">
   <h1>Off track.</h1>
   <p>This page doesn’t exist. The link may be old or mistyped.</p>
   <div class="nf-links">
@@ -489,6 +497,8 @@
     </address>
     <span class="foot-links">
       <a href="/privacy.html">Privacy</a>
+      <a href="/cookies.html">Cookies</a>
+      <a href="/terms.html">Terms</a>
     </span>
   </div>
   <div class="wrap foot-base">© 2026 George Kanaroglou</div>

@@ -2,15 +2,16 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>George Kanaroglou | Full-stack marketing</title>
-<meta name="description" content="George Kanaroglou. Full-stack marketing: pricing, brand strategy, digital marketing, analytics and consumer psychology. Based in London and Athens.">
+<title>George Kanaroglou | Full-stack marketing, London and Athens</title>
+<meta name="description" content="Pricing strategy, brand strategy and digital marketing, built on marketing analytics and consumer psychology. George Kanaroglou, London and Athens.">
 <meta name="theme-color" content="#F5F5F2">
 <meta name="color-scheme" content="light">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="George Kanaroglou">
-<meta property="og:title" content="George Kanaroglou | Full-stack marketing">
-<meta property="og:description" content="George Kanaroglou. Full-stack marketing: pricing, brand strategy, digital marketing, analytics and consumer psychology. Based in London and Athens.">
+<meta property="og:title" content="George Kanaroglou | Full-stack marketing, London and Athens">
+<meta property="og:description" content="Pricing strategy, brand strategy and digital marketing, built on marketing analytics and consumer psychology. George Kanaroglou, London and Athens.">
 <meta property="og:url" content="https://georgekanaroglou.com/">
 <meta property="og:image" content="https://georgekanaroglou.com/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -77,6 +78,9 @@
   h1, h2, h3 { text-wrap: balance; }
   p { text-wrap: pretty; }
   .wrap { width: var(--content); margin-inline: auto; }
+  /* Skip link: hidden until a keyboard user tabs to it, then it jumps straight past the header */
+  .skip-link { position: absolute; z-index: 20; left: var(--gutter); top: -4rem; padding: .6rem 1rem; color: var(--paper); background: var(--black); font-weight: 700; text-decoration: none; }
+  .skip-link:focus { top: .75rem; outline: 3px solid var(--orange); outline-offset: 2px; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   /* ---------- Header ---------- */
@@ -181,7 +185,10 @@
     display: flex; justify-content: space-between; gap: 1rem;
     padding-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: .8125rem; font-weight: 600;
   }
-  .index-label { color: var(--orange); }
+  .index-label { color: var(--orange); font: inherit; letter-spacing: 0; }
+  /* Each item's heading wraps its button: the structure search engines and screen readers read */
+  .index-h { font: inherit; letter-spacing: inherit; line-height: inherit; }
+  .index-base .index-h { height: 100%; }
   .index-list { list-style: none; border-top: 3px solid var(--paper); }
   .index-list li {
     border-bottom: 1px solid var(--concrete);
@@ -359,7 +366,7 @@
     border-top: 3px solid var(--black); font-size: .875rem; color: var(--muted);
   }
   .foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; flex-wrap: wrap; }
-  .foot-links { display: flex; gap: 1.25rem; }
+  .foot-links { display: flex; flex-wrap: wrap; column-gap: 1.25rem; }
   .foot-links a, .linkish {
     display: inline-flex; align-items: center; min-height: 44px; padding: 0; cursor: pointer;
     color: var(--black); background: none; border: 0; font: inherit;
@@ -389,7 +396,8 @@
   .consent a { color: var(--paper); }
   .consent-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
   .consent .btn { color: var(--paper); border-color: var(--paper); }
-  .consent .btn-primary { color: #000; background: var(--orange); border-color: var(--orange); }
+  /* Accept and Decline are styled identically: declining is exactly as easy and as prominent as accepting */
+  .consent .btn-primary { color: var(--paper); background: transparent; border-color: var(--paper); }
   .consent .btn:focus-visible, .consent a:focus-visible { outline-color: var(--paper); }
   @media (hover: hover) and (pointer: fine) {
     .consent .btn:hover { color: #000; background: var(--paper); border-color: var(--paper); }
@@ -411,40 +419,108 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "George Kanaroglou",
-  "alternateName": "Γιώργος Κανάρογλου",
-  "url": "https://georgekanaroglou.com/",
-  "jobTitle": "Insights Lead",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "Barracudaworks"
-  },
-  "alumniOf": [
+  "@graph": [
     {
-      "@type": "CollegeOrUniversity",
-      "name": "London School of Economics and Political Science"
+      "@type": "WebSite",
+      "@id": "https://georgekanaroglou.com/#website",
+      "url": "https://georgekanaroglou.com/",
+      "name": "George Kanaroglou",
+      "alternateName": "Γιώργος Κανάρογλου",
+      "inLanguage": [
+        "en-GB",
+        "el"
+      ],
+      "publisher": {
+        "@id": "https://georgekanaroglou.com/#person"
+      }
     },
     {
-      "@type": "CollegeOrUniversity",
-      "name": "University of Kent"
+      "@type": "ProfilePage",
+      "@id": "https://georgekanaroglou.com/#profile",
+      "url": "https://georgekanaroglou.com/",
+      "name": "George Kanaroglou | Full-stack marketing, London and Athens",
+      "inLanguage": "en-GB",
+      "isPartOf": {
+        "@id": "https://georgekanaroglou.com/#website"
+      },
+      "mainEntity": {
+        "@id": "https://georgekanaroglou.com/#person"
+      },
+      "dateModified": "2026-10-22"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://georgekanaroglou.com/#person",
+      "name": "George Kanaroglou",
+      "alternateName": "Γιώργος Κανάρογλου",
+      "url": "https://georgekanaroglou.com/",
+      "jobTitle": "Insights Lead",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Barracudaworks"
+      },
+      "alumniOf": [
+        {
+          "@type": "CollegeOrUniversity",
+          "name": "London School of Economics and Political Science"
+        },
+        {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Kent"
+        }
+      ],
+      "knowsAbout": [
+        "Pricing strategy",
+        "Brand strategy",
+        "Digital marketing",
+        "Marketing analytics",
+        "Consumer psychology",
+        "Conjoint analysis",
+        "Price sensitivity research",
+        "Brand positioning",
+        "Sports marketing",
+        "Motorsport marketing"
+      ],
+      "knowsLanguage": [
+        "en",
+        "el"
+      ],
+      "workLocation": [
+        {
+          "@type": "Place",
+          "name": "London",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "London",
+            "addressCountry": "GB"
+          }
+        },
+        {
+          "@type": "Place",
+          "name": "Athens",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Athens",
+            "addressCountry": "GR"
+          }
+        }
+      ],
+      "description": "Full-stack marketer based in London and Athens, working across pricing strategy, brand strategy and digital marketing, built on marketing analytics and consumer psychology."
     }
-  ],
-  "knowsAbout": [
-    "Pricing strategy",
-    "Brand strategy",
-    "Digital marketing",
-    "Marketing analytics",
-    "Consumer psychology"
-  ],
-  "knowsLanguage": [
-    "en",
-    "el"
   ]
 }
 </script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- Cookie banner: first in the keyboard order, though it shows at the bottom of the screen -->
+<div class="consent" id="consent" role="region" aria-label="Cookie choice" hidden>
+  <p>I use cookies to count visits and see what’s working on this site. No ads, and no tracking on other sites. <a href="/privacy.html">How I use them</a></p>
+  <div class="consent-actions">
+    <button type="button" class="btn btn-primary" data-consent="yes">Accept</button>
+    <button type="button" class="btn" data-consent="no">Decline</button>
+  </div>
+</div>
 
 <header class="top">
   <div class="wrap">
@@ -497,26 +573,26 @@
 })();
 </script>
 
-<main>
+<main id="main">
   <section class="opening">
     <div class="opening-copy">
       <h1><span>Full&#8209;stack</span> <span>marketing.</span></h1>
     </div>
     <div class="field">
       <div class="index">
-        <p class="index-head"><span class="index-label">What I do</span><span>Three disciplines</span></p>
+        <div class="index-head"><h2 class="index-label">What I do</h2><span>Three disciplines</span></div>
         <ol class="index-list">
-          <li><button type="button" class="index-item" data-topic="pricing-strategy" aria-expanded="false" aria-controls="acc-pricing-strategy"><span class="index-name">Pricing strategy</span><span class="index-plus" aria-hidden="true"></span></button>
+          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="pricing-strategy" aria-expanded="false" aria-controls="acc-pricing-strategy"><span class="index-name">Pricing strategy</span><span class="index-plus" aria-hidden="true"></span></button></h3>
             <div class="acc" id="acc-pricing-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Setting prices people will pay and that grow the business. I find what customers value, test what they would pay, and build the tiers and packages around it.</p><a class="btn btn-primary" href="/case-studies#pricing-strategy" aria-label="Case studies: Pricing strategy">Case studies</a></div></div></div></li>
-          <li><button type="button" class="index-item" data-topic="brand-strategy" aria-expanded="false" aria-controls="acc-brand-strategy"><span class="index-name">Brand strategy</span><span class="index-plus" aria-hidden="true"></span></button>
+          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="brand-strategy" aria-expanded="false" aria-controls="acc-brand-strategy"><span class="index-name">Brand strategy</span><span class="index-plus" aria-hidden="true"></span></button></h3>
             <div class="acc" id="acc-brand-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Deciding what a brand stands for, and making it the easy choice. Positioning, messaging and how the brand looks next to its competitors.</p><a class="btn btn-primary" href="/case-studies#brand-strategy" aria-label="Case studies: Brand strategy">Case studies</a></div></div></div></li>
-          <li><button type="button" class="index-item" data-topic="digital-marketing" aria-expanded="false" aria-controls="acc-digital-marketing"><span class="index-name">Digital marketing</span><span class="index-plus" aria-hidden="true"></span></button>
+          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="digital-marketing" aria-expanded="false" aria-controls="acc-digital-marketing"><span class="index-name">Digital marketing</span><span class="index-plus" aria-hidden="true"></span></button></h3>
             <div class="acc" id="acc-digital-marketing"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Turning attention online into results. Channel strategy, content and paid campaigns, all measured against real goals.</p><a class="btn btn-primary" href="/case-studies#digital-marketing" aria-label="Case studies: Digital marketing">Case studies</a></div></div></div></li>
         </ol>
-        <p class="index-head index-head-base"><span class="index-label">Built on</span><span>Two foundations</span></p>
+        <div class="index-head index-head-base"><h2 class="index-label">Built on</h2><span>Two foundations</span></div>
         <ul class="index-base">
-          <li><button type="button" class="index-item index-item-base" data-topic="marketing-analytics" aria-expanded="false" aria-controls="acc-marketing-analytics"><strong class="index-name">Marketing analytics</strong><span class="index-desc">What the data shows</span><span class="index-plus" aria-hidden="true"></span></button></li>
-          <li><button type="button" class="index-item index-item-base" data-topic="consumer-psychology" aria-expanded="false" aria-controls="acc-consumer-psychology"><strong class="index-name">Consumer psychology</strong><span class="index-desc">How people really decide</span><span class="index-plus" aria-hidden="true"></span></button></li>
+          <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="marketing-analytics" aria-expanded="false" aria-controls="acc-marketing-analytics"><strong class="index-name">Marketing analytics</strong><span class="index-desc">What the data shows</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
+          <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="consumer-psychology" aria-expanded="false" aria-controls="acc-consumer-psychology"><strong class="index-name">Consumer psychology</strong><span class="index-desc">How people really decide</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
         </ul>
         <div class="acc acc-base" id="acc-marketing-analytics"><div class="acc-inner"><div class="acc-content"><p class="acc-body">The evidence under every decision. Surveys, experiments and dashboards that show what is working and what to change, across all three disciplines.</p><a class="btn btn-primary" href="/case-studies#marketing-analytics" aria-label="Case studies: Marketing analytics">Case studies</a></div></div></div>
         <div class="acc acc-base" id="acc-consumer-psychology"><div class="acc-inner"><div class="acc-content"><p class="acc-body">How people really decide. Choice architecture, habits and social proof, used to make the right choice the easy one, across all three disciplines.</p><a class="btn btn-primary" href="/case-studies#consumer-psychology" aria-label="Case studies: Consumer psychology">Case studies</a></div></div></div>
@@ -574,6 +650,8 @@
     </address>
     <span class="foot-links">
       <a href="/privacy.html">Privacy</a>
+      <a href="/cookies.html">Cookies</a>
+      <a href="/terms.html">Terms</a>
       <button type="button" class="linkish" id="cookie-settings" hidden>Cookie settings</button>
     </span>
   </div>
@@ -589,13 +667,6 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 });
 </script>
 
-<div class="consent" id="consent" role="region" aria-label="Cookie choice" hidden>
-  <p>I use cookies to count visits and see what’s working on this site. No ads, and no tracking on other sites. <a href="/privacy.html">How I use them</a></p>
-  <div class="consent-actions">
-    <button type="button" class="btn btn-primary" data-consent="yes">Accept</button>
-    <button type="button" class="btn" data-consent="no">Decline</button>
-  </div>
-</div>
 
 <script>
 /* Site analytics with consent. Data goes to George's own Google Sheet. */
@@ -665,7 +736,6 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     utm_medium: q.get("utm_medium") || "",
     utm_campaign: q.get("utm_campaign") || "",
     device: w < 768 ? "Mobile" : w < 1024 ? "Tablet" : "Desktop",
-    screen: w,
     language: navigator.language || "",
     timezone: tz
   };
@@ -690,7 +760,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     setCookie("gk_vid", vid, 60 * 60 * 24 * 365);
     setCookie("gk_sid", sid, 60 * 30);
     var d = Object.assign({}, base, { event: event, vid: vid, sid: sid, visitor: visitorType }, extra || {});
-    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, body: JSON.stringify(d) }); } catch (e) {}
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true, body: JSON.stringify(d) }); } catch (e) {}
   }
 
   window.gkTrack = send;
