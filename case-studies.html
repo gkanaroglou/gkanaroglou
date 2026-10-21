@@ -99,7 +99,14 @@
 
   /* Logo: the GK mark. The G stays put while "Kanaroglou" sweeps out behind it on the 12° slant,
      and the mark's own K fades through a light blur so the two Ks never double up. */
-  .mark { display: inline-flex; align-items: center; min-height: 44px; -webkit-user-select: none; user-select: none; }
+  .mark { position: relative; display: inline-flex; align-items: center; min-height: 44px; -webkit-user-select: none; user-select: none; }
+  /* Clean Paper behind the logo and the language link, the full height of the bar, so the pattern only shows around them.
+     The logo's panel widens with the logo as it opens into the full name, so the name always sits on Paper. */
+  .mark::before, .lang::before { content: ""; position: absolute; z-index: -1; top: -1rem; bottom: -1rem; background: var(--paper); }
+  .mark::before { left: 50%; width: calc(var(--h, 30px) * 340 / 168 + 1.75rem); transform: translateX(-50%); transition: width 500ms var(--ease-in-out); }
+  .mark.is-full::before { width: calc(var(--h, 30px) * 1462 / 168 + 1.75rem); transition-duration: 700ms; }
+  .lang { position: relative; }
+  .lang::before { left: -.85rem; right: -.85rem; }
   .logo { --h: 30px; position: relative; display: block; height: var(--h); aspect-ratio: 340 / 168; transition: transform 500ms var(--ease-in-out); }
   /* Centred logo: as the name opens to the right, the whole logo slides left by half the extra width, so it stays centred */
   .mark.is-full .logo { transform: translateX(calc(var(--h) * -3.339)); transition-duration: 700ms; }
@@ -136,7 +143,7 @@
     .lang-short { display: inline; }
   }
   @media (max-width: 420px) {
-    .logo { --h: 26px; }
+    .logo, .mark { --h: 26px; }
     .top-nav { column-gap: .6rem; }
     .lang, .nav-link, .top-link { font-size: .95rem; }
     .top-link { padding-inline: .6rem; }
@@ -468,7 +475,7 @@
 
   /* ---------- Reduced motion: fewer and gentler, not none ---------- */
   @media (prefers-reduced-motion: reduce) {
-    .logo, .logo-gk, .logo-word, .acc, .acc.is-open, .acc-content, .index-plus, .index-name { transition: none; }
+    .logo, .logo-gk, .logo-word, .mark::before, .acc, .acc.is-open, .acc-content, .index-plus, .index-name { transition: none; }
     .index-item:hover .index-name, .index-item:focus-visible .index-name { transform: none; }   /* colour change only */
     .btn:active, .copy-btn:active { transform: none; }
     .consent, .consent.is-open { transform: none; transition: opacity 200ms ease; }
