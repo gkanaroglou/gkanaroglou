@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://georgekanaroglou.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="George Kanaroglou. Full-stack marketing.">
+<meta property="og:image:alt" content="George Kanaroglou. Pricing, brand and digital marketing.">
 <meta property="og:locale" content="en_GB">
 <meta property="og:locale:alternate" content="el_GR">
 <meta name="twitter:card" content="summary_large_image">
@@ -150,7 +150,7 @@
      Orange: the name, then the index. The two bottoms line up. */
   .opening {
     display: grid;
-    grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .58) minmax(0, 1fr);
+    grid-template-columns: calc((100% - var(--content)) / 2) calc(var(--content) * .5) minmax(0, 1fr);
     grid-template-rows: auto auto;
   }
   /* Tile 1, on Paper: "Get in touch." and its line on the left, the card on the right */
@@ -363,20 +363,22 @@
 
   .card p { margin: 0; color: inherit; }
   .card-back {
-    transform: rotateY(180deg); grid-template-rows: auto auto 1fr; align-content: start;
+    transform: rotateY(180deg); grid-template-rows: auto 1fr; align-content: stretch; row-gap: .75rem;
     color: var(--black); background: var(--paper); border: 3px solid var(--black);
   }
   .card-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding-top: .5rem; border-top: 3px solid var(--black); }
-  .card-name { font-size: clamp(1.1rem, 6cqw, 1.9rem); font-weight: 900; line-height: 1; letter-spacing: -.03em; }
+  .card-name { font-size: clamp(1.25rem, 7.5cqw, 2.4rem); font-weight: 900; line-height: 1; letter-spacing: -.03em; }
   .card .card-role { margin-top: .35rem; color: var(--muted); font-size: clamp(.85rem, 3.6cqw, 1.05rem); font-weight: 600; }
-  .card-turn { flex-shrink: 0; min-height: 32px; padding: 0; cursor: pointer; color: var(--black); background: none; border: 0; font-size: .8125rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .card-turn { flex-shrink: 0; min-height: 32px; padding: 0; cursor: pointer; color: var(--black); background: none; border: 0; font-size: .9rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   .card-turn:active { opacity: .7; }
   .card-bottom { align-self: end; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: .5rem 1rem; }
-  .card-details { display: grid; gap: .2rem; }
-  .card-back .email { color: var(--black); font-size: clamp(.9rem, 4.4cqw, 1.3rem); font-weight: 800; letter-spacing: -.02em; border-bottom-width: 3px; }
-  .card-place { color: var(--muted); font-size: clamp(.8rem, 3.2cqw, .95rem); font-weight: 600; }
+  .card-details { display: grid; gap: .45rem; }
+  /* Small cards: a little less space around the details, so the bigger text always fits */
+  @container (max-width: 20rem) { .card-back { padding: .85rem; row-gap: .3rem; } .card-name { font-size: clamp(1.05rem, 7cqw, 1.2rem); } .card-details { gap: .25rem; } .card-back .copy-btn { min-height: 40px; padding: .35rem .75rem; } }
+  .card-back .email { color: var(--black); font-size: clamp(1rem, 5.4cqw, 1.7rem); font-weight: 800; letter-spacing: -.02em; border-bottom-width: 3px; border-bottom-color: var(--cobalt); }
+  .card-place { color: var(--black); font-size: clamp(.95rem, 4cqw, 1.2rem); font-weight: 600; }
   .card-back .copy-row { margin: 0; }
-  .card-back .copy-btn { min-width: 0; min-height: 40px; padding: .35rem .8rem; font-size: .875rem; color: var(--black); border-color: var(--black); }
+  .card-back .copy-btn { min-width: 0; min-height: 44px; padding: .45rem .95rem; font-size: .95rem; color: var(--black); border-color: var(--black); }
   .card-back a:focus-visible, .card-back button:focus-visible { outline-color: var(--black); }
   @media (hover: hover) and (pointer: fine) { .card-back .copy-btn:hover { color: var(--paper); background: var(--black); } .card-back .email:hover { border-color: var(--black); } }
 
@@ -396,13 +398,6 @@
     .card-scene { cursor: pointer; }
     .card-hint-icon { transition: none; }
   }
-
-  /* ---------- "Prefer email?": the plain address, at the bottom of the page ---------- */
-  .email-strip { padding-block: clamp(2.5rem, 6vw, 4.5rem); color: var(--paper); background: var(--black); }
-  .email-strip-inner { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.5rem; }
-  .email-strip-label { width: 100%; color: var(--concrete); font-size: clamp(1.05rem, 1.5vw, 1.25rem); font-weight: 600; }
-  .email-strip .copy-row { margin: 0; }
-  .email-strip a:focus-visible, .email-strip button:focus-visible { outline-color: var(--paper); }
 
   /* ---------- Footer ---------- */
   footer {
@@ -790,7 +785,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 
 
 <script>
-/* Copy email buttons (on the card's back and in the strip). Shown only where the browser allows copying. */
+/* Copy email buttons (on the card's back). Shown only where the browser allows copying. */
 (function () {
   if (!navigator.clipboard || !window.isSecureContext) return;
   [].forEach.call(document.querySelectorAll(".copy-btn"), function (b) {
@@ -823,7 +818,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   if (!window.matchMedia || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
   var c = document.createElement("div");
   c.className = "cursor is-out"; c.setAttribute("aria-hidden", "true");
-  var TURN = "Turn over", SPIN = "Spin";
+  var TURN = "Turn over", BACK = "Turn back", SPIN = "Spin";
   c.innerHTML = '<span class="cursor-label"><svg class="cursor-icon" viewBox="0 0 24 24" focusable="false"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 3.5v5h-5"/></svg><span class="cursor-text"></span></span>';
   document.body.appendChild(c);
   document.documentElement.classList.add("has-cursor");
@@ -838,10 +833,14 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var onBackControl = target && target.closest && target.closest(".card-back a, .card-back button");
     var dragging = scene && scene.classList.contains("is-dragging");
     var onCard = scene && card && !card.classList.contains("is-flipped") && !onBackControl;
-    c.classList.toggle("is-card", !!(onCard || dragging));
+    var isLink = !!(target && target.closest && target.closest("a[href], button, [role='button'], label"));
+    var inTile = !scene && !isLink && target && target.closest && target.closest(".opening-head, .opening-copy, .contact-copy, .contact-card-cell");
+    var tileCard = inTile && (inTile.closest(".opening, .contact") || document).querySelector(".card");
+    var tileBack = tileCard && tileCard.classList.contains("is-flipped");
+    c.classList.toggle("is-card", !!(onCard || dragging || inTile));
     c.classList.toggle("is-drag", !!dragging);
-    text.textContent = dragging ? SPIN : TURN;
-    c.classList.toggle("is-link", !onCard && !dragging && !!(target && target.closest && target.closest("a[href], button, [role='button'], label")));
+    text.textContent = dragging ? SPIN : (tileBack ? BACK : TURN);
+    c.classList.toggle("is-link", !onCard && !dragging && !inTile && isLink);
   }
   addEventListener("pointermove", function (e) {
     if (e.pointerType !== "mouse") return;
