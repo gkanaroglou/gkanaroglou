@@ -1110,15 +1110,16 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     turnTo(true, false, true);
   }, 10000);
 
-  // The white tile around the card: moving onto it plays the reminder pivot (at most every 2.5 seconds),
-  // and clicking anywhere on it turns the card over, or back again.
-  var tile = scene.closest(".opening");
+  // The area around the card (the homepage's white tile, or the contact section on other pages): moving onto it
+  // plays the reminder pivot (at most every 2.5 seconds), and clicking anywhere on it turns the card over, or back again.
+  var AREA = ".opening-head, .opening-copy, .contact-copy, .contact-card-cell";
+  var tile = scene.closest(".opening, .contact");
   if (tile) {
     var inTile = false, lastNudge = 0;
     if (!reduce && fine) {
       tile.addEventListener("pointermove", function (e) {
         if (e.pointerType !== "mouse") return;
-        var here = !!e.target.closest(".opening-head, .opening-copy");
+        var here = !!e.target.closest(AREA);
         if (here && !inTile && !e.target.closest(".card-scene") && performance.now() - lastNudge > 2500) {
           lastNudge = performance.now(); nudge();
         }
@@ -1127,7 +1128,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
       tile.addEventListener("pointerleave", function () { inTile = false; });
     }
     tile.addEventListener("click", function (e) {
-      if (!e.target.closest(".opening-head, .opening-copy") || e.target.closest(".card-scene, a, button")) return;
+      if (!e.target.closest(AREA) || e.target.closest(".card-scene, a, button")) return;
       if (window.getSelection && String(window.getSelection())) return;   // they were selecting text, not clicking
       if (peek) peek.cancel();
       turnTo(!card.classList.contains("is-flipped"), false);
@@ -1160,8 +1161,8 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var dragging = scene && scene.classList.contains("is-dragging");
     var onCard = scene && card && !card.classList.contains("is-flipped") && !onBackControl;
     var isLink = !!(target && target.closest && target.closest("a[href], button, [role='button'], label"));
-    var inTile = !scene && !isLink && target && target.closest && target.closest(".opening-head, .opening-copy");
-    var tileCard = inTile && document.querySelector(".opening .card");
+    var inTile = !scene && !isLink && target && target.closest && target.closest(".opening-head, .opening-copy, .contact-copy, .contact-card-cell");
+    var tileCard = inTile && (inTile.closest(".opening, .contact") || document).querySelector(".card");
     var tileBack = tileCard && tileCard.classList.contains("is-flipped");
     c.classList.toggle("is-card", !!(onCard || dragging || inTile));
     c.classList.toggle("is-drag", !!dragging);
