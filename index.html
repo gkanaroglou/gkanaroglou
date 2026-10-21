@@ -154,9 +154,15 @@
     grid-template-rows: auto 1fr;
   }
   .opening-copy {
-    grid-column: 2; grid-row: 1; container-type: inline-size;
-    padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(1.75rem, 3vw, 2.5rem) 0;
+    grid-column: 2; grid-row: 1 / span 2; container-type: inline-size;
+    display: flex; flex-direction: column; align-items: flex-start;
+    padding: clamp(2.25rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 5vw, 4rem) 0;
   }
+  /* "Get in touch." sits on Paper here: black heading, grey line, and the card pushed to the bottom so it ends level with the panel */
+  .opening .contact-title { color: var(--black); }
+  .opening .contact-lede { color: var(--muted); }
+  .opening .contact-card-cell { width: min(100%, 24rem); margin-top: auto; padding: clamp(1.5rem, 2.5vw, 2rem) 0 0; }
+  .opening .card-front:focus-visible { outline-color: var(--black); }
   .opening h1 {
     font-weight: 900; letter-spacing: -.045em; line-height: .88;
     font-size: clamp(2.75rem, 9vw, 7rem);
@@ -249,6 +255,7 @@
     .opening { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; min-height: 0; }
     .opening-copy, .field { grid-column: 1; grid-row: auto; }
     .opening-copy { padding: clamp(2.5rem, 10vw, 3.5rem) var(--gutter) 2.5rem; }
+    .opening .contact-card-cell { width: min(100%, 30rem); }
     .field { padding: 1.75rem var(--gutter) 2.5rem; }
   }
 
@@ -333,7 +340,7 @@
   .card p { margin: 0; color: inherit; }
   .card-back {
     transform: rotateY(180deg); grid-template-rows: auto auto 1fr; align-content: start;
-    color: var(--black); background: var(--paper); border-top: 3px solid var(--paper);
+    color: var(--black); background: var(--paper); border: 3px solid var(--black);
   }
   .card-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding-top: .5rem; border-top: 3px solid var(--black); }
   .card-name { font-size: clamp(1.1rem, 6cqw, 1.9rem); font-weight: 900; line-height: 1; letter-spacing: -.03em; }
@@ -579,38 +586,9 @@
 
 <main id="main">
   <section class="opening">
-    <div class="opening-copy">
-      <h1><span>Full&#8209;stack</span> <span>marketing.</span></h1>
-    </div>
-    <div class="field">
-      <div class="index">
-        <div class="index-head"><h2 class="index-label">What I do</h2><span>Three disciplines</span></div>
-        <ol class="index-list">
-          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="pricing-strategy" aria-expanded="false" aria-controls="acc-pricing-strategy"><span class="index-name">Pricing strategy</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-pricing-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Setting prices people will pay and that grow the business. I find what customers value, test what they would pay, and build the tiers and packages around it.</p><a class="btn btn-primary" href="/case-studies#pricing-strategy" aria-label="Case studies: Pricing strategy">Case studies</a></div></div></div></li>
-          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="brand-strategy" aria-expanded="false" aria-controls="acc-brand-strategy"><span class="index-name">Brand strategy</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-brand-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Deciding what a brand stands for, and making it the easy choice. Positioning, messaging and how the brand looks next to its competitors.</p><a class="btn btn-primary" href="/case-studies#brand-strategy" aria-label="Case studies: Brand strategy">Case studies</a></div></div></div></li>
-          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="digital-marketing" aria-expanded="false" aria-controls="acc-digital-marketing"><span class="index-name">Digital marketing</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-digital-marketing"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Turning attention online into results. Channel strategy, content and paid campaigns, all measured against real goals.</p><a class="btn btn-primary" href="/case-studies#digital-marketing" aria-label="Case studies: Digital marketing">Case studies</a></div></div></div></li>
-        </ol>
-        <div class="index-head index-head-base"><h2 class="index-label">Built on</h2><span>Two foundations</span></div>
-        <ul class="index-base">
-          <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="marketing-analytics" aria-expanded="false" aria-controls="acc-marketing-analytics"><strong class="index-name">Marketing analytics</strong><span class="index-desc">What the data shows</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
-          <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="consumer-psychology" aria-expanded="false" aria-controls="acc-consumer-psychology"><strong class="index-name">Consumer psychology</strong><span class="index-desc">How people really decide</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
-        </ul>
-        <div class="acc acc-base" id="acc-marketing-analytics"><div class="acc-inner"><div class="acc-content"><p class="acc-body">The evidence under every decision. Surveys, experiments and dashboards that show what is working and what to change, across all three disciplines.</p><a class="btn btn-primary" href="/case-studies#marketing-analytics" aria-label="Case studies: Marketing analytics">Case studies</a></div></div></div>
-        <div class="acc acc-base" id="acc-consumer-psychology"><div class="acc-inner"><div class="acc-content"><p class="acc-body">How people really decide. Choice architecture, habits and social proof, used to make the right choice the easy one, across all three disciplines.</p><a class="btn btn-primary" href="/case-studies#consumer-psychology" aria-label="Case studies: Consumer psychology">Case studies</a></div></div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
-    <div class="contact-grid">
-      <div class="contact-copy">
-        <h2 class="contact-title">Get in touch.</h2>
-        <p class="contact-lede">Want to work together or talk marketing? Turn the card over.</p>
-      </div>
-
+    <div class="opening-copy" id="contact">
+      <h1 class="contact-title">Get in touch.</h1>
+      <p class="contact-lede">Want to work together or talk marketing? Turn the card over.</p>
       <!-- Business card, from the brand book: the short form on the front, the details on the back -->
       <div class="contact-card-cell">
       <div class="card-scene">
@@ -639,7 +617,28 @@
       </div>
       </div>
     </div>
+    <div class="field">
+      <div class="index">
+        <div class="index-head"><h2 class="index-label">What I do</h2><span>Three disciplines</span></div>
+        <ol class="index-list">
+          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="pricing-strategy" aria-expanded="false" aria-controls="acc-pricing-strategy"><span class="index-name">Pricing strategy</span><span class="index-plus" aria-hidden="true"></span></button></h3>
+            <div class="acc" id="acc-pricing-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Setting prices people will pay and that grow the business. I find what customers value, test what they would pay, and build the tiers and packages around it.</p><a class="btn btn-primary" href="/case-studies#pricing-strategy" aria-label="Case studies: Pricing strategy">Case studies</a></div></div></div></li>
+          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="brand-strategy" aria-expanded="false" aria-controls="acc-brand-strategy"><span class="index-name">Brand strategy</span><span class="index-plus" aria-hidden="true"></span></button></h3>
+            <div class="acc" id="acc-brand-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Deciding what a brand stands for, and making it the easy choice. Positioning, messaging and how the brand looks next to its competitors.</p><a class="btn btn-primary" href="/case-studies#brand-strategy" aria-label="Case studies: Brand strategy">Case studies</a></div></div></div></li>
+          <li><h3 class="index-h"><button type="button" class="index-item" data-topic="digital-marketing" aria-expanded="false" aria-controls="acc-digital-marketing"><span class="index-name">Digital marketing</span><span class="index-plus" aria-hidden="true"></span></button></h3>
+            <div class="acc" id="acc-digital-marketing"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Turning attention online into results. Channel strategy, content and paid campaigns, all measured against real goals.</p><a class="btn btn-primary" href="/case-studies#digital-marketing" aria-label="Case studies: Digital marketing">Case studies</a></div></div></div></li>
+        </ol>
+        <div class="index-head index-head-base"><h2 class="index-label">Built on</h2><span>Two foundations</span></div>
+        <ul class="index-base">
+          <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="marketing-analytics" aria-expanded="false" aria-controls="acc-marketing-analytics"><strong class="index-name">Marketing analytics</strong><span class="index-desc">What the data shows</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
+          <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="consumer-psychology" aria-expanded="false" aria-controls="acc-consumer-psychology"><strong class="index-name">Consumer psychology</strong><span class="index-desc">How people really decide</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
+        </ul>
+        <div class="acc acc-base" id="acc-marketing-analytics"><div class="acc-inner"><div class="acc-content"><p class="acc-body">The evidence under every decision. Surveys, experiments and dashboards that show what is working and what to change, across all three disciplines.</p><a class="btn btn-primary" href="/case-studies#marketing-analytics" aria-label="Case studies: Marketing analytics">Case studies</a></div></div></div>
+        <div class="acc acc-base" id="acc-consumer-psychology"><div class="acc-inner"><div class="acc-content"><p class="acc-body">How people really decide. Choice architecture, habits and social proof, used to make the right choice the easy one, across all three disciplines.</p><a class="btn btn-primary" href="/case-studies#consumer-psychology" aria-label="Case studies: Consumer psychology">Case studies</a></div></div></div>
+      </div>
+    </div>
   </section>
+
 </main>
 
 <footer>
