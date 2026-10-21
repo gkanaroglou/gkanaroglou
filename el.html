@@ -88,7 +88,9 @@
   .top {
     position: sticky; top: 0; z-index: 5;
     padding-top: env(safe-area-inset-top, 0px);
-    background: var(--paper); border-bottom: 3px solid var(--black);
+    --pattern-size: 775px;   /* half size: about three rows of squares fit in the bar, so the waves show */
+    background: var(--paper) url("/assets/hiding-squares.svg") 0 0 / var(--pattern-size) var(--pattern-size) repeat;   /* the hiding-squares pattern, never stretched */
+    border-bottom: 3px solid var(--black);
     overflow: hidden; overflow: clip;   /* the hidden part of the centred wordmark never widens the page */
     view-transition-name: site-header;
   }
