@@ -486,40 +486,43 @@
   .work-group .acc .work-detail { padding-inline: .9rem; }
   @media (prefers-reduced-motion: reduce) { .work-jump a { transition: none; } }
 
-  /* ---------- 3D motion, paper-like: panels unfold from the row that opens them, filtered groups fold away and back ---------- */
-  /* Motion tokens. Personality: Corporate. Signature easing for most motion, an entrance and an exit curve,
-     and three durations. Mobile runs at 0.8x with less 3D. */
-  :root { --m-std: cubic-bezier(0.2, 0, 0, 1); --m-in: cubic-bezier(0.05, 0.7, 0.1, 1); --m-out: cubic-bezier(0.3, 0, 1, 1);
-          --d-quick: 200ms; --d-std: 300ms; --d-slow: 450ms; }
-  @media (max-width: 640px) { :root { --d-quick: 160ms; --d-std: 240ms; --d-slow: 360ms; } }
+  /* ---------- 3D motion, paper-like: panels unfold from the row that opens them, filtered groups fold away and back ----------
+     Transitions throughout, so a quick second click reverses from the current position instead of restarting.
+     Open 250ms, close 150ms, both on the site's --ease-out. Opened from the keyboard, rows change instantly. */
   .acc-inner { perspective: 900px; }
-  /* Primary: the panel unfolds from its row. Secondary: its three columns follow 40ms apart. The plus already turns into a cross. */
-  .acc .acc-content, .acc .work-detail { transform-origin: 50% 0; transform: rotateX(-14deg) translateY(-6px); opacity: 0; transition: opacity var(--d-quick) var(--m-out), transform var(--d-quick) var(--m-out); }
-  .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; opacity: 1; transition: opacity var(--d-std) var(--m-std), transform var(--d-std) var(--m-in); }
-  .acc .work-facts > div { opacity: 0; transform: translateY(6px); transition: opacity var(--d-quick) var(--m-out), transform var(--d-quick) var(--m-out); }
-  .acc.is-open .work-facts > div { opacity: 1; transform: none; transition: opacity var(--d-std) var(--m-std), transform var(--d-std) var(--m-in); }
-  .acc.is-open .work-facts > div:nth-child(1) { transition-delay: 60ms; }
-  .acc.is-open .work-facts > div:nth-child(2) { transition-delay: 100ms; }
-  .acc.is-open .work-facts > div:nth-child(3) { transition-delay: 140ms; }
+  .acc { transition: grid-template-rows 150ms var(--ease-out), visibility 0s linear 150ms; }
+  .acc.is-open { transition: grid-template-rows 250ms var(--ease-out), visibility 0s; }
+  .acc .acc-content, .acc .work-detail { transform-origin: 50% 0; transform: rotateX(-14deg) translateY(-6px); opacity: 0; transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
+  .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; opacity: 1; transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out); }
+  .acc .work-facts > div { opacity: 0; transform: translateY(6px); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
+  .acc.is-open .work-facts > div { opacity: 1; transform: none; transition-duration: 250ms; }
+  .acc.is-open .work-facts > div:nth-child(1) { transition-delay: 40ms; }
+  .acc.is-open .work-facts > div:nth-child(2) { transition-delay: 80ms; }
+  .acc.is-open .work-facts > div:nth-child(3) { transition-delay: 120ms; }
+  .acc[data-instant], .acc[data-instant] .acc-content, .acc[data-instant] .work-detail, .acc[data-instant] .work-facts > div { transition: none; }
+  .index-plus { transition: transform 150ms var(--ease-out); }
   .work-groups { display: grid; gap: clamp(2rem, 4vw, 3rem); perspective: 1800px; }
   .work-group + .work-group { margin-top: 0; }
   .work-group { transform-origin: 50% 0; }
-  .work-jump a { transition: background-color var(--d-quick) var(--m-std), color var(--d-quick) var(--m-std), transform 120ms var(--m-std); }
-  .work-jump a:active { opacity: 1; transform: scale(.97); }
+  .work-jump a { transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease; }
   .work-jump a[aria-pressed="true"] { color: var(--paper); background: var(--black); }
   .work-jump a[aria-pressed="true"] span { color: var(--concrete); }
-  /* Reduced motion: no movement, just a short fade */
   @media (prefers-reduced-motion: reduce) {
-    .acc .acc-content, .acc .work-detail, .acc .work-facts > div { transform: none; transition: opacity 120ms linear; }
-    .acc.is-open .acc-content, .acc.is-open .work-detail, .acc.is-open .work-facts > div { transform: none; transition: opacity 120ms linear; transition-delay: 0ms; }
+    .acc, .acc.is-open { transition: visibility 0s; }
+    .acc .acc-content, .acc .work-detail, .acc .work-facts > div, .acc.is-open .acc-content, .acc.is-open .work-detail, .acc.is-open .work-facts > div { transform: none; transition: opacity 150ms ease; transition-delay: 0ms; }
     .work-jump a, .work-jump a:active { transform: none; }
   }
 
-  /* Accordion timing from the motion system: the plus turns in 150ms, the row opens in 250ms and closes faster, on an ease-in */
-  .index-plus { transition-duration: 150ms; transition-timing-function: var(--m-std); }
-  .acc.is-open { transition: grid-template-rows 250ms var(--m-std), visibility 0s; }
-  .acc { transition: grid-template-rows 200ms var(--m-out), visibility 0s linear 200ms; }
-  @media (prefers-reduced-motion: reduce) { .acc, .acc.is-open { transition: none; } }
+  /* Review fixes: hover scale reduced (hovered dozens of times), keyboard focus changes instantly, press at .96 not .94 */
+  .index-name { transition: transform 150ms var(--ease-out); }
+  .index-item:focus-visible .index-name { transform: scale(1.03); transition: none; }
+  @media (hover: hover) and (pointer: fine) { .index-item:hover .index-name { transform: scale(1.03); } }
+  .card-hint-icon { transition: transform 250ms var(--ease-out); }
+  .to-top:active { transform: scale(.96); }
+  @media (prefers-reduced-motion: reduce) { .card-hint-icon { transition: none; } }
+
+  /* The filter count changes width as it updates ("11 projects" to "4 of 11 projects"): fixed-width digits stop the numbers jittering */
+  .work-count { font-variant-numeric: tabular-nums; }
 
   /* ---------- Articles: a Black block, one row per article ---------- */
   .articles { padding-block: clamp(3rem, 7vw, 5.5rem); color: var(--paper); background: var(--black); }
@@ -668,78 +671,68 @@
   @media (prefers-reduced-motion: reduce) { .site-link, .site-caret { transition: none; } }
 
   /* ---------- Page turn between pages (browsers without view transitions just load the page) ----------
-     Primary: the page turns a few degrees, like a sheet. The header is shared, so it stays still and anchors you.
-     Secondary: on project and article pages the black masthead unfolds from the header just after the page lands.
-     Phones get a flat slide (no 3D); reduced motion gets a short crossfade, because full-screen movement can trigger vestibular discomfort. */
-  :root { --m-std: cubic-bezier(0.2, 0, 0, 1); --m-in: cubic-bezier(0.05, 0.7, 0.1, 1); --m-out: cubic-bezier(0.3, 0, 1, 1); }
-  .mast { view-transition-name: mast; }
-  ::view-transition-old(root) { animation: 280ms var(--m-out) both turn-out; }
-  ::view-transition-new(root) { animation: 400ms var(--m-in) 100ms both turn-in; }
+     The page turns a few degrees, like a sheet, while the shared header stays still. Old page out in 200ms, new page in 280ms,
+     both on the site's --ease-out. Phones get a flat slide. Reduced motion gets a short crossfade only. */
+  ::view-transition-old(root) { animation: 200ms var(--ease-out) both turn-out; }
+  ::view-transition-new(root) { animation: 280ms var(--ease-out) 40ms both turn-in; }
   html:active-view-transition-type(back)::view-transition-old(root) { animation-name: turn-out-back; }
   html:active-view-transition-type(back)::view-transition-new(root) { animation-name: turn-in-back; }
-  ::view-transition-new(mast):only-child { transform-origin: 50% 0; animation: 300ms var(--m-in) 200ms both mast-in; }
-  ::view-transition-old(mast):only-child { animation: 160ms var(--m-out) both fade-out; }
-  ::view-transition-group(mast) { animation-duration: 300ms; animation-timing-function: var(--m-std); }
   @keyframes turn-out { to { opacity: 0; transform: perspective(1600px) translateX(-2%) rotateY(4deg) scale(.98); } }
   @keyframes turn-in { from { opacity: 0; transform: perspective(1600px) translateX(3%) rotateY(-5deg) scale(.98); } }
   @keyframes turn-out-back { to { opacity: 0; transform: perspective(1600px) translateX(2%) rotateY(-4deg) scale(.98); } }
   @keyframes turn-in-back { from { opacity: 0; transform: perspective(1600px) translateX(-3%) rotateY(5deg) scale(.98); } }
-  @keyframes mast-in { from { opacity: 0; transform: perspective(1200px) rotateX(-10deg) translateY(-8px); } }
   @keyframes fade-out { to { opacity: 0; } }
+  @keyframes fade-in-only { from { opacity: 0; } }
   @keyframes slide-out { to { opacity: 0; transform: translateX(-2%); } }
   @keyframes slide-in { from { opacity: 0; transform: translateX(3%); } }
   @keyframes slide-out-back { to { opacity: 0; transform: translateX(2%); } }
   @keyframes slide-in-back { from { opacity: 0; transform: translateX(-3%); } }
   @media (max-width: 640px) {
-    ::view-transition-old(root) { animation: 160ms var(--m-out) both slide-out; }
-    ::view-transition-new(root) { animation: 360ms var(--m-in) 30ms both slide-in; }
+    ::view-transition-old(root) { animation: 150ms var(--ease-out) both slide-out; }
+    ::view-transition-new(root) { animation: 250ms var(--ease-out) 30ms both slide-in; }
     html:active-view-transition-type(back)::view-transition-old(root) { animation-name: slide-out-back; }
     html:active-view-transition-type(back)::view-transition-new(root) { animation-name: slide-in-back; }
-    ::view-transition-new(mast):only-child { animation: 240ms var(--m-std) 120ms both fade-in-only; }
   }
-  @keyframes fade-in-only { from { opacity: 0; } }
   @media (prefers-reduced-motion: reduce) {
-    ::view-transition-old(root), ::view-transition-old(mast) { animation: 120ms linear both fade-out; }
-    ::view-transition-new(root), ::view-transition-new(mast) { animation: 150ms linear both fade-in-only; }
-    ::view-transition-group(mast) { animation: none; }
+    ::view-transition-old(root) { animation: 150ms ease both fade-out; }
+    ::view-transition-new(root) { animation: 200ms ease both fade-in-only; }
   }
 
-  /* ---------- Interaction states, from the motion system (Corporate) ----------
-     Hover: in under 100ms, out at 180ms. Press: 0.97 for 60ms, back in 100ms. Focus ring settles in 150ms.
-     The Work menu drops from the header like the other panels: band first, then its links 30ms apart. */
-  :root { --m-std: cubic-bezier(0.2, 0, 0, 1); --m-in: cubic-bezier(0.05, 0.7, 0.1, 1); --m-out: cubic-bezier(0.3, 0, 1, 1); }
-  .site-link, .work-item .work-name, .post-link-title, .side li a, .post-more li a, .work-jump a, .btn { transition-duration: 180ms; transition-timing-function: var(--m-std); }
-  @media (hover: hover) and (pointer: fine) {
-    .site-link:hover, .work-item:hover .work-name, .post-link:hover .post-link-title, .side li a:hover, .post-more li a:hover, .work-jump a:hover, .btn:hover { transition-duration: 90ms; }
-  }
-  .btn:active, .site-work:active, .work-jump a:active { opacity: 1; transform: scale(.97); transition: transform 60ms var(--m-std); }
-  .site-link:focus-visible, .work-item:focus-visible, .work-jump a:focus-visible, .btn:focus-visible, .post-link:focus-visible, .side li a:focus-visible, .post-more li a:focus-visible, .mast-back:focus-visible, .post-back:focus-visible { animation: focus-in 150ms var(--m-std); }
-  @keyframes focus-in { from { outline-offset: 0; outline-color: transparent; } }
-  .copy-btn[data-copied] { animation: copied 300ms var(--m-std); }
-  @keyframes copied { 0% { transform: scale(.97); } 60% { transform: scale(1.04); } 100% { transform: none; } }
-  .site-menu { transform-origin: 50% 0; }
-  .site-menu.is-open { animation: menu-in 200ms var(--m-in) both; }
-  .site-menu.is-closing { animation: menu-out 150ms var(--m-out) both; }
-  .site-menu.is-open .wrap > a { animation: menu-item 200ms var(--m-in) both; }
-  .site-menu.is-open .wrap > a:nth-child(2) { animation-delay: 30ms; }
-  .site-menu.is-open .wrap > a:nth-child(3) { animation-delay: 60ms; }
-  .site-menu.is-open .wrap > a:nth-child(4) { animation-delay: 90ms; }
-  .site-menu.is-open .wrap > a:nth-child(5) { animation-delay: 120ms; }
-  .site-menu.is-open .wrap > a:nth-child(6) { animation-delay: 150ms; }
-  .site-menu.is-open .wrap > a:nth-child(7) { animation-delay: 180ms; }
-  @keyframes menu-in { from { opacity: 0; transform: perspective(1200px) rotateX(-12deg) translateY(-6px); } }
-  @keyframes menu-out { to { opacity: 0; transform: perspective(1200px) rotateX(-8deg) translateY(-4px); } }
-  @keyframes menu-item { from { opacity: 0; transform: translateY(-6px); } }
-  .site-caret { transition-duration: 150ms; }
+  /* ---------- Interaction states ----------
+     Uses the site's own --ease-out. Hover and colour: 150ms ease. Press: scale .97 on a 160ms ease-out transition.
+     Anything started from the keyboard changes instantly, because it is repeated far more often than a click. */
+  :root { --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); }
+  .site-link { transition: border-color 150ms ease, transform 160ms var(--ease-out); }
+  .work-item .work-name, .post-link-title, .side li a, .post-more li a { transition: color 150ms ease, border-color 150ms ease; }
+  .btn { transition: transform 160ms var(--ease-out), color 150ms ease, background-color 150ms ease, border-color 150ms ease; }
+  .btn:active, .site-work:active, .work-jump a:active { opacity: 1; transform: scale(.97); }
+  .copy-btn[data-copied] { animation: copied 250ms var(--ease-out); }
+  @keyframes copied { from { transform: scale(.97); } }
+  .site-caret { transition: transform 150ms var(--ease-out); }
+  /* Work menu: a dropdown, so it grows from the Work button rather than from the centre. Transitions, not keyframes,
+     so opening and closing quickly just reverses it from wherever it is. Opens in 200ms, closes in 150ms. */
+  .site-menu { opacity: 0; visibility: hidden; pointer-events: none; transform: perspective(1200px) rotateX(-8deg) scale(.98); transform-origin: 3rem 0;
+    transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out), visibility 0s linear 150ms; }
+  .site-menu[data-open] { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s; }
+  .site-menu .wrap > a { opacity: 0; transform: translateY(-4px); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
+  .site-menu[data-open] .wrap > a { opacity: 1; transform: none; transition-duration: 200ms; }
+  .site-menu[data-open] .wrap > a:nth-child(2) { transition-delay: 30ms; }
+  .site-menu[data-open] .wrap > a:nth-child(3) { transition-delay: 60ms; }
+  .site-menu[data-open] .wrap > a:nth-child(4) { transition-delay: 90ms; }
+  .site-menu[data-open] .wrap > a:nth-child(5) { transition-delay: 120ms; }
+  .site-menu[data-open] .wrap > a:nth-child(6) { transition-delay: 150ms; }
+  .site-menu[data-open] .wrap > a:nth-child(7) { transition-delay: 180ms; }
+  .site-menu[data-instant], .site-menu[data-instant] .wrap > a { transition: none; }
   @media (prefers-reduced-motion: reduce) {
-    .btn:active, .site-work:active, .work-jump a:active { transform: none; }
-    .site-link:focus-visible, .work-item:focus-visible, .work-jump a:focus-visible, .btn:focus-visible, .post-link:focus-visible, .side li a:focus-visible, .post-more li a:focus-visible, .mast-back:focus-visible, .post-back:focus-visible, .copy-btn[data-copied] { animation: none; }
-    .site-menu.is-open, .site-menu.is-closing { animation: fade-in-only 120ms linear both; }
-    .site-menu.is-closing { animation-name: fade-out; }
-    .site-menu.is-open .wrap > a { animation: none; }
+    .btn:active, .site-work:active, .work-jump a:active, .site-menu, .site-menu .wrap > a { transform: none; }
+    .site-menu .wrap > a, .site-menu[data-open] .wrap > a { transition-delay: 0ms; }
+    .copy-btn[data-copied] { animation: none; }
   }
-  @keyframes fade-in-only { from { opacity: 0; } }
-  @keyframes fade-out { to { opacity: 0; } }
+
+  /* Tracking by size (Apple's rule): large type is already tightened; small bold labels get a touch of positive tracking to stay legible */
+  .work-count, .side-type, .mast-type, .mast-meta, .post-meta, .case-field, .chart-notes, .post-link-meta, .site-menu a span, figcaption { letter-spacing: .01em; }
+  /* Higher contrast when the system asks for it: grey text becomes black */
+  @media (prefers-contrast: more) { :root { --muted: #000; } }
 
 </style>
 <script type="application/ld+json">
@@ -869,24 +862,30 @@
 </header>
 <div class="site-menu" id="site-menu" hidden><div class="wrap"><a class="sm-all" href="/#work">All work <span>11</span></a><a href="/#work-group-client">Client work <span>1</span></a><a href="/#work-group-pricing">Pricing <span>4</span></a><a href="/#work-group-brand">Brand <span>2</span></a><a href="/#work-group-digital">Digital marketing <span>2</span></a><a href="/#work-group-research">Customer research and forecasting <span>2</span></a><a class="sm-articles" href="/#articles">Articles <span>3</span></a></div></div>
 <script>
-/* Work menu: opens a band under the header with each type of work, closes on Escape, outside clicks and link clicks */
+/* Work menu. Opens under the header, closes on Escape, outside clicks and link clicks.
+   Opened or closed from the keyboard, it changes instantly. */
 (function () {
   var b = document.querySelector(".site-work"), m = document.getElementById("site-menu"), top = document.querySelector(".top");
   if (!b || !m || !top) return;
-  function place() { m.style.top = Math.max(0, top.getBoundingClientRect().bottom) + "px"; }
-  var shut;
-  function open() { clearTimeout(shut); m.classList.remove("is-closing"); place(); m.hidden = false; m.classList.add("is-open"); b.setAttribute("aria-expanded", "true"); }
-  function close() {   // the band folds back up (150ms) before it is hidden
-    if (m.hidden) return;
-    b.setAttribute("aria-expanded", "false"); m.classList.remove("is-open"); m.classList.add("is-closing");
-    clearTimeout(shut); shut = setTimeout(function () { m.hidden = true; m.classList.remove("is-closing"); }, 150);
+  m.hidden = false;   // the CSS now hides it, so it can transition
+  function isOpen() { return m.hasAttribute("data-open"); }
+  function place() {
+    m.style.top = Math.max(0, top.getBoundingClientRect().bottom) + "px";
+    var r = b.getBoundingClientRect(); m.style.transformOrigin = Math.round(r.left + r.width / 2) + "px 0";   // grow from the button
   }
-  b.addEventListener("click", function (e) { e.stopPropagation(); if (m.hidden) open(); else close(); });
-  document.addEventListener("click", function (e) { if (!m.hidden && !m.contains(e.target)) close(); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !m.hidden) { close(); b.focus(); } });
-  m.addEventListener("click", function (e) { if (e.target.closest("a")) close(); });
-  window.addEventListener("resize", function () { if (!m.hidden) place(); });
-  window.addEventListener("scroll", function () { if (!m.hidden) place(); }, { passive: true });
+  function instant(on) {
+    if (!on) return;
+    m.setAttribute("data-instant", "");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { m.removeAttribute("data-instant"); }); });
+  }
+  function open(kb) { place(); instant(kb); m.setAttribute("data-open", ""); b.setAttribute("aria-expanded", "true"); }
+  function close(kb) { if (!isOpen()) return; instant(kb); m.removeAttribute("data-open"); b.setAttribute("aria-expanded", "false"); }
+  b.addEventListener("click", function (e) { e.stopPropagation(); var kb = e.detail === 0; if (isOpen()) close(kb); else open(kb); });
+  document.addEventListener("click", function (e) { if (isOpen() && !m.contains(e.target)) close(e.detail === 0); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && isOpen()) { close(true); b.focus(); } });
+  m.addEventListener("click", function (e) { if (e.target.closest("a")) close(true); });
+  window.addEventListener("resize", function () { if (isOpen()) place(); });
+  window.addEventListener("scroll", function () { if (isOpen()) place(); }, { passive: true });
 })();
 </script>
 <script>
@@ -915,7 +914,9 @@
   mark.addEventListener("focus", function () { if (mark.matches(":focus-visible")) open(); });
   mark.addEventListener("blur", close);
 
-  if (!reduce) {
+  var seen = false;   // the full name plays on the first page of a visit only; after that it waits for a hover
+  try { seen = sessionStorage.getItem("gk-logo") === "1"; sessionStorage.setItem("gk-logo", "1"); } catch (e) {}
+  if (!reduce && !seen) {
     window.addEventListener("load", function () {
       setTimeout(function () {
         open();
@@ -1430,7 +1431,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   if (!scene || !card || !front || !back) return;
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
-  var SETTLE = "transform 650ms cubic-bezier(0.32, 0.72, 0, 1)";
+  var spin = null;   // the running spring, if any
   var rot = 0, tiltX = 0, tiltY = 0, tracked = false, suppressClick = false, everTurned = false, inView = false, autoDue = false;
 
   function isFlipped(deg) { return Math.abs(Math.round(deg / 180)) % 2 === 1; }
@@ -1447,10 +1448,25 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     if (on && !auto && !tracked && typeof window.gkTrack === "function") { tracked = true; window.gkTrack("cta_click", { label: "Get in touch" }); }   // automatic turns aren't counted
     if (moveFocus) setTimeout(function () { (on ? back.querySelector(".email") : front).focus({ preventScroll: true }); }, reduce ? 0 : 340);
   }
-  function settle(target, moveFocus, auto) {
-    rot = target; tiltX = 0; tiltY = 0;
-    apply(SETTLE);
-    setState(isFlipped(rot), moveFocus, auto);
+  // Settling is a spring, not a fixed-length animation, so it starts from where the card is right now and carries
+  // the speed of the flick that let go of it. Apple's values: a turn from a click is critically damped (1.0, response
+  // 0.45s, no overshoot); a throw has momentum, so it gets 0.8 (response 0.4s), a slight overshoot that reads as weight.
+  function stopSpin() { if (spin) { cancelAnimationFrame(spin); spin = null; } }
+  function settle(target, moveFocus, auto, velocity, damping) {
+    setState(isFlipped(target), moveFocus, auto);
+    stopSpin();
+    if (reduce) { rot = target; return; }
+    tiltX = 0; tiltY = 0;
+    var v = velocity || 0, ratio = damping || 1, response = ratio < 1 ? 0.4 : 0.45;
+    var k = Math.pow(2 * Math.PI / response, 2), c = 4 * Math.PI * ratio / response, last = performance.now();
+    function step(now) {
+      var dt = Math.min(0.064, Math.max(0, (now - last) / 1000)); last = now;
+      for (var n = 0, h = dt / 4; n < 4; n++) { v += (-k * (rot - target) - c * v) * h; rot += v * h; }
+      if (Math.abs(rot - target) < 0.05 && Math.abs(v) < 0.5) { rot = target; spin = null; apply("none"); return; }
+      apply("none");
+      spin = requestAnimationFrame(step);
+    }
+    spin = requestAnimationFrame(step);
   }
   function turnTo(on, moveFocus, auto) {
     var k = Math.round(rot / 180);
@@ -1465,18 +1481,19 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     // Hover tilt: the card leans a little towards the cursor
     if (fine) {
       scene.addEventListener("pointermove", function (e) {
-        if (drag || e.pointerType !== "mouse") return;
+        if (drag || spin || e.pointerType !== "mouse") return;   // never fight a running spring
         var r = scene.getBoundingClientRect();
         var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
         tiltY = x * 14 * (isFlipped(rot) ? -1 : 1); tiltX = -y * 9;
         apply("transform 200ms cubic-bezier(0.23, 1, 0.32, 1)");
       });
-      scene.addEventListener("pointerleave", function () { if (drag) return; tiltX = 0; tiltY = 0; apply("transform 450ms cubic-bezier(0.23, 1, 0.32, 1)"); });
+      scene.addEventListener("pointerleave", function () { if (drag || spin) return; tiltX = 0; tiltY = 0; apply("transform 450ms cubic-bezier(0.23, 1, 0.32, 1)"); });
     }
     // Drag to spin
     var drag = null;
     scene.addEventListener("pointerdown", function (e) {
       if (e.button !== 0 || e.target.closest(".card-back a, .card-back button")) return;
+      stopSpin();   // grabbing a moving card catches it exactly where it is
       drag = { x: e.clientX, y: e.clientY, rot: rot, lastX: e.clientX, lastT: performance.now(), vel: 0, moved: false, id: e.pointerId };
     });
     scene.addEventListener("pointermove", function (e) {
@@ -1498,9 +1515,9 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
       var d = drag; drag = null; scene.classList.remove("is-dragging");
       if (!d.moved) return;   // a plain tap: the click handler turns the card
       suppressClick = true; setTimeout(function () { suppressClick = false; }, 0);
-      var vel = performance.now() - d.lastT > 90 ? 0 : d.vel;   // a pause before letting go cancels the flick
-      var projected = rot + vel * 160;   // a quick flick carries the card further round
-      settle(Math.round(projected / 180) * 180, false);
+      var vel = performance.now() - d.lastT > 90 ? 0 : d.vel * 1000;   // degrees per second; a pause before letting go cancels the flick
+      var projected = rot + (vel / 1000) * 0.99 / (1 - 0.99);   // Apple's momentum projection: where the flick would come to rest
+      settle(Math.round(projected / 180) * 180, false, false, vel, vel ? 0.8 : 1);   // hand the flick's speed to the spring
     }
     scene.addEventListener("pointerup", end);
     scene.addEventListener("pointercancel", end);
@@ -1666,10 +1683,11 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 </script>
 <script>
 /* Filter Selected work by type.
-   1. Groups that leave fold back on their top edge (exit, ease-in, quick).
-   2. The list then changes height smoothly, so the articles below glide instead of jumping.
-   3. Groups that arrive unfold in reading order, 50ms apart (entrance, ease-out).
-   The count updates to say what is showing. Header links such as /#work-group-pricing apply the same filter. */
+   1. Groups that leave fold back on their top edge (150ms, ease-out).
+   2. Groups that stay, and everything below, slide to their new place (FLIP, transform only, 250ms ease-in-out).
+   3. Groups that arrive unfold in reading order, 50ms apart (250ms, ease-out).
+   Chosen from the keyboard, the filter applies instantly. The count says what is showing.
+   Header links such as /#work-group-pricing apply the same filter. */
 (function () {
   var bar = document.querySelector(".work-jump"), list = document.querySelector(".work-groups");
   if (!bar || !list) return;
@@ -1681,12 +1699,18 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   var current = "all", busy = [], run = 0;
   links.forEach(function (a) { a.setAttribute("role", "button"); a.setAttribute("aria-pressed", a.dataset.filter === "all" ? "true" : "false"); });
   if (count) count.setAttribute("aria-live", "polite");
-  function d(ms) { return innerWidth <= 640 ? Math.round(ms * .8) : ms; }
+  function d(ms) { return ms; }
   function label(n) { return n === total ? totalText : el ? n + " από " + total + " εργασίες" : n + " of " + total + " projects"; }
   function apply(type, animate) {
     if (type === current) return;
     if (type !== "all" && !groups.some(function (g) { return g.dataset.type === type; })) return;
     current = type; var mine = ++run;
+    // Interrupted mid-fold? Note what's on screen first, so the next motion starts from there instead of jumping
+    var live = new Map();
+    busy.forEach(function (an) {
+      var el = an.effect && an.effect.target;
+      if (el && el.classList && el.classList.contains("work-group")) { var cs = getComputedStyle(el); live.set(el, { opacity: cs.opacity, transform: cs.transform }); }
+    });
     busy.forEach(function (an) { an.cancel(); }); busy = [];
     links.forEach(function (a) { a.setAttribute("aria-pressed", String(a.dataset.filter === type)); });
     var show = groups.filter(function (g) { return type === "all" || g.dataset.type === type; });
@@ -1695,27 +1719,35 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var n = show.reduce(function (k, g) { return k + g.querySelectorAll(".work-item").length; }, 0);
     if (count) count.textContent = label(n);
     var move = animate && !mq.matches, small = innerWidth <= 640, tilt = small ? 0 : 35;
+    if (move) show.forEach(function (g) {   // a group caught halfway out comes straight back from where it is
+      var L = live.get(g); if (!L || g.hidden) return;
+      busy.push(g.animate([{ opacity: L.opacity, transform: L.transform }, { opacity: 1, transform: "none" }], { duration: 250, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }));
+    });
     function swap() {
       if (mine !== run) return;
-      var h0 = list.offsetHeight;
+      // FLIP: note where the groups that stay, and everything below the list, sit now
+      var stay = groups.filter(function (g) { return !g.hidden && leave.indexOf(g) < 0; });
+      var follow = stay.concat([].slice.call(document.querySelectorAll(".articles, footer")));
+      var before = follow.map(function (el) { return el.getBoundingClientRect().top; });
       leave.forEach(function (g) { g.hidden = true; });
       arrive.forEach(function (g) { g.hidden = false; });
       if (!move) return;
-      var h1 = list.offsetHeight;
-      list.style.overflow = "hidden";
-      var grow = list.animate([{ height: h0 + "px" }, { height: h1 + "px" }], { duration: d(300), easing: "cubic-bezier(0.2, 0, 0, 1)" });
-      grow.onfinish = grow.oncancel = function () { list.style.overflow = ""; };
-      busy.push(grow);
+      // ...then slide them from where they were to where they are, with transform only (no layout per frame)
+      follow.forEach(function (el, i) {
+        var dy = before[i] - el.getBoundingClientRect().top;
+        if (Math.abs(dy) > 1) busy.push(el.animate([{ transform: "translateY(" + dy + "px)" }, { transform: "none" }], { duration: 250, easing: "cubic-bezier(0.77, 0, 0.175, 1)" }));
+      });
       arrive.forEach(function (g, i) {
         busy.push(g.animate([{ opacity: 0, transform: "rotateX(" + (-tilt) + "deg) translateY(-10px)" }, { opacity: 1, transform: "none" }],
-          { duration: d(300), delay: 60 + i * d(50), easing: "cubic-bezier(0.05, 0.7, 0.1, 1)", fill: "backwards" }));
+          { duration: 250, delay: 40 + i * 50, easing: "cubic-bezier(0.23, 1, 0.32, 1)", fill: "backwards" }));
       });
     }
     if (move && leave.length) {
       var left = leave.length, gone = [];
       leave.forEach(function (g) {
-        var an = g.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "rotateX(" + tilt + "deg) translateY(-10px)" }],
-          { duration: d(200), easing: "cubic-bezier(0.3, 0, 1, 1)", fill: "forwards" });
+        var L = live.get(g), from = L ? { opacity: L.opacity, transform: L.transform } : { opacity: 1, transform: "none" };
+        var an = g.animate([from, { opacity: 0, transform: "rotateX(" + tilt + "deg) translateY(-10px)" }],
+          { duration: 150, easing: "cubic-bezier(0.23, 1, 0.32, 1)", fill: "forwards" });
         busy.push(an); gone.push(an);
         an.onfinish = function () { if (--left === 0) { swap(); gone.forEach(function (x) { x.cancel(); }); } };   // groups are hidden now, so drop the held end state
       });
@@ -1723,7 +1755,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   }
   bar.addEventListener("click", function (e) {
     var a = e.target.closest("[data-filter]"); if (!a) return;
-    e.preventDefault(); apply(a.dataset.filter, true);
+    e.preventDefault(); apply(a.dataset.filter, e.detail !== 0);   // keyboard: instant
     history.replaceState(null, "", a.dataset.filter === "all" ? "#work" : "#work-group-" + a.dataset.filter);
   });
   bar.addEventListener("keydown", function (e) { if (e.key === " ") { var a = e.target.closest("[data-filter]"); if (a) { e.preventDefault(); a.click(); } } });
@@ -1744,6 +1776,16 @@ addEventListener("pagereveal", function (e) {
   var from = new URL(navigation.activation.from.url).pathname;
   e.viewTransition.types.add(depth(location.pathname) < depth(from) ? "back" : "forward");
 });
+</script>
+<script>
+/* Rows opened from the keyboard change instantly: no unfold */
+document.addEventListener("click", function (e) {
+  if (e.detail !== 0) return;
+  var t = e.target.closest(".work-item, .index-item"), p = t && document.getElementById(t.getAttribute("aria-controls"));
+  if (!p) return;
+  p.setAttribute("data-instant", "");
+  requestAnimationFrame(function () { requestAnimationFrame(function () { p.removeAttribute("data-instant"); }); });
+}, true);
 </script>
 </body>
 </html>
