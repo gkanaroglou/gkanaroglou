@@ -5,8 +5,8 @@
 
   Marketing, between London and Athens.
 
-  [Website](https://georgekanaroglou.com) · [LinkedIn](https://www.linkedin.com/in/georgekanaroglou/) · [Email](mailto:george@georgekanaroglou.com)
-</div>
+  [Website](https://georgekanaroglou.com) · [LinkedIn](https://www.linkedin.com/in/georgekanaroglou/) · [Email](mailto:hello@georgekanaroglou.com)
+  </div>
 
 ---
 
