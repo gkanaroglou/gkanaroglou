@@ -486,6 +486,19 @@
   .work-group .acc .work-detail { padding-inline: .9rem; }
   @media (prefers-reduced-motion: reduce) { .work-jump a { transition: none; } }
 
+  /* ---------- 3D motion, paper-like: panels unfold from the row that opens them, filtered groups fold away and back ---------- */
+  .acc-inner { perspective: 900px; }
+  .acc .acc-content, .acc .work-detail { transform-origin: 50% 0; transform: rotateX(-16deg) translateY(-6px); transition: opacity 180ms cubic-bezier(0.3, 0, 1, 1), transform 180ms cubic-bezier(0.3, 0, 1, 1); }
+  .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; transition: opacity 260ms cubic-bezier(0.2, 0, 0, 1) 40ms, transform 320ms cubic-bezier(0.05, 0.7, 0.1, 1); }
+  .work-groups { display: grid; gap: clamp(2rem, 4vw, 3rem); perspective: 1800px; }
+  .work-group + .work-group { margin-top: 0; }
+  .work-group { transform-origin: 50% 0; }
+  .work-jump a[aria-pressed="true"] { color: var(--paper); background: var(--black); }
+  .work-jump a[aria-pressed="true"] span { color: var(--concrete); }
+  @media (prefers-reduced-motion: reduce) {
+    .acc .acc-content, .acc .work-detail, .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; transition: none; }
+  }
+
   /* ---------- Articles: a Black block, one row per article ---------- */
   .articles { padding-block: clamp(3rem, 7vw, 5.5rem); color: var(--paper); background: var(--black); }
   .articles .work-count { color: var(--concrete); }
@@ -635,6 +648,17 @@
     .site-menu .sm-articles { display: inline-flex; margin-top: .4rem; padding-top: .8rem; border-top: 1px solid var(--muted); }
   }
   @media (prefers-reduced-motion: reduce) { .site-link, .site-caret { transition: none; } }
+
+  /* ---------- Page turn between pages (browsers without view transitions just load the page) ---------- */
+  ::view-transition-old(root) { animation: 200ms cubic-bezier(0.3, 0, 1, 1) both turn-out; }
+  ::view-transition-new(root) { animation: 420ms cubic-bezier(0.05, 0.7, 0.1, 1) 60ms both turn-in; }
+  html:active-view-transition-type(back)::view-transition-old(root) { animation-name: turn-out-back; }
+  html:active-view-transition-type(back)::view-transition-new(root) { animation-name: turn-in-back; }
+  @keyframes turn-out { to { opacity: 0; transform: perspective(1600px) translateX(-3%) rotateY(6deg) scale(.97); } }
+  @keyframes turn-in { from { opacity: 0; transform: perspective(1600px) translateX(4%) rotateY(-8deg) scale(.97); } }
+  @keyframes turn-out-back { to { opacity: 0; transform: perspective(1600px) translateX(3%) rotateY(-6deg) scale(.97); } }
+  @keyframes turn-in-back { from { opacity: 0; transform: perspective(1600px) translateX(-4%) rotateY(8deg) scale(.97); } }
+  @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
 
 </style>
 <script type="application/ld+json">
@@ -870,13 +894,14 @@
     </div>
   </section>
 
+
   <section class="work" id="work" aria-labelledby="work-title">
     <div class="wrap">
       <div class="work-head"><h2 class="work-title" id="work-title">Επιλεγμένες εργασίες.</h2><span class="work-count">11 εργασίες</span></div>
       <p class="work-intro">Πραγματικά προβλήματα με τα οποία έχω ασχοληθεί, για πελάτη και στο πλαίσιο του MSc μου στο LSE. Ανοίξτε ένα για μια σύντομη περίληψη ή διαβάστε την πλήρη ανάλυση με όλους τους υπολογισμούς (στα αγγλικά).</p>
-      <nav class="work-jump" aria-label="Είδη εργασίας"><a href="#work-group-client">Έργο για πελάτη <span>1</span></a><a href="#work-group-pricing">Τιμολόγηση <span>4</span></a><a href="#work-group-brand">Brand <span>2</span></a><a href="#work-group-digital">Ψηφιακό marketing <span>2</span></a><a href="#work-group-research">Έρευνα αγοράς και προβλέψεις <span>2</span></a></nav>
+      <nav class="work-jump" aria-label="Φιλτράρισμα ανά είδος εργασίας"><a href="#work" data-filter="all">Όλες <span>11</span></a><a href="#work-group-client" data-filter="client">Έργο για πελάτη <span>1</span></a><a href="#work-group-pricing" data-filter="pricing">Τιμολόγηση <span>4</span></a><a href="#work-group-brand" data-filter="brand">Brand <span>2</span></a><a href="#work-group-digital" data-filter="digital">Ψηφιακό marketing <span>2</span></a><a href="#work-group-research" data-filter="research">Έρευνα αγοράς και προβλέψεις <span>2</span></a></nav>
       <ul class="work-groups">
-        <li class="work-group">
+        <li class="work-group" data-type="client">
           <h3 class="work-group-title" id="work-group-client">Έργο για πελάτη <span>1 εργασία</span></h3>
           <ul class="work-list" aria-labelledby="work-group-client">
           <li>
@@ -892,7 +917,7 @@
           </li>
           </ul>
         </li>
-        <li class="work-group">
+        <li class="work-group" data-type="pricing">
           <h3 class="work-group-title" id="work-group-pricing">Τιμολόγηση <span>4 εργασίες</span></h3>
           <ul class="work-list" aria-labelledby="work-group-pricing">
           <li>
@@ -941,7 +966,7 @@
           </li>
           </ul>
         </li>
-        <li class="work-group">
+        <li class="work-group" data-type="brand">
           <h3 class="work-group-title" id="work-group-brand">Brand <span>2 εργασίες</span></h3>
           <ul class="work-list" aria-labelledby="work-group-brand">
           <li>
@@ -968,7 +993,7 @@
           </li>
           </ul>
         </li>
-        <li class="work-group">
+        <li class="work-group" data-type="digital">
           <h3 class="work-group-title" id="work-group-digital">Ψηφιακό marketing <span>2 εργασίες</span></h3>
           <ul class="work-list" aria-labelledby="work-group-digital">
           <li>
@@ -995,7 +1020,7 @@
           </li>
           </ul>
         </li>
-        <li class="work-group">
+        <li class="work-group" data-type="research">
           <h3 class="work-group-title" id="work-group-research">Έρευνα αγοράς και προβλέψεις <span>2 εργασίες</span></h3>
           <ul class="work-list" aria-labelledby="work-group-research">
           <li>
@@ -1552,6 +1577,67 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     if (mark) mark.focus({ preventScroll: true });
   });
 })();
+</script>
+<script>
+/* Filter Selected work by type. Groups that leave fold back on their top edge, groups that arrive unfold.
+   Works from the buttons and from links such as /#work-group-pricing in the header menu. */
+(function () {
+  var bar = document.querySelector(".work-jump");
+  if (!bar) return;
+  var groups = [].slice.call(document.querySelectorAll(".work-group[data-type]"));
+  var links = [].slice.call(bar.querySelectorAll("[data-filter]"));
+  var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var current = "all", busy = [];
+  links.forEach(function (a) { a.setAttribute("role", "button"); a.setAttribute("aria-pressed", a.dataset.filter === "all" ? "true" : "false"); });
+  function apply(type, animate) {
+    if (type === current) return;
+    if (type !== "all" && !groups.some(function (g) { return g.dataset.type === type; })) return;
+    current = type;
+    busy.forEach(function (an) { an.cancel(); }); busy = [];
+    links.forEach(function (a) { a.setAttribute("aria-pressed", String(a.dataset.filter === type)); });
+    var show = groups.filter(function (g) { return type === "all" || g.dataset.type === type; });
+    var leave = groups.filter(function (g) { return show.indexOf(g) < 0 && !g.hidden; });
+    var arrive = show.filter(function (g) { return g.hidden; });
+    var move = animate && !still;
+    function reveal() {
+      arrive.forEach(function (g, i) {
+        g.hidden = false;
+        if (move) busy.push(g.animate([{ opacity: 0, transform: "rotateX(-60deg) translateY(-12px)" }, { opacity: 1, transform: "none" }],
+          { duration: 320, delay: i * 50, easing: "cubic-bezier(0.05, 0.7, 0.1, 1)", fill: "backwards" }));
+      });
+    }
+    if (move && leave.length) {
+      var left = leave.length;
+      leave.forEach(function (g) {
+        var an = g.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "rotateX(60deg) translateY(-12px)" }], { duration: 180, easing: "cubic-bezier(0.3, 0, 1, 1)" });
+        busy.push(an);
+        an.onfinish = function () { g.hidden = true; if (--left === 0) reveal(); };
+      });
+    } else { leave.forEach(function (g) { g.hidden = true; }); reveal(); }
+  }
+  bar.addEventListener("click", function (e) {
+    var a = e.target.closest("[data-filter]"); if (!a) return;
+    e.preventDefault(); apply(a.dataset.filter, true);
+    history.replaceState(null, "", a.dataset.filter === "all" ? "#work" : "#work-group-" + a.dataset.filter);
+  });
+  bar.addEventListener("keydown", function (e) { if (e.key === " ") { var a = e.target.closest("[data-filter]"); if (a) { e.preventDefault(); a.click(); } } });
+  function fromHash(animate) {
+    var m = location.hash.match(/^#work-group-([a-z-]+)$/), w = document.getElementById("work");
+    if (m) apply(m[1], animate); else if (location.hash === "#work") apply("all", animate); else return;
+    if (w) w.scrollIntoView({ behavior: animate && !still ? "smooth" : "auto" });
+  }
+  fromHash(false);
+  addEventListener("hashchange", function () { fromHash(true); });
+})();
+</script>
+<script>
+/* Tell the page turn which way to go: back when arriving on a homepage from a deeper page */
+addEventListener("pagereveal", function (e) {
+  if (!e.viewTransition || !window.navigation || !navigation.activation || !navigation.activation.from) return;
+  function depth(p) { return /^\/(el|index\.html|el\.html)?$/.test(p) ? 0 : 1; }
+  var from = new URL(navigation.activation.from.url).pathname;
+  e.viewTransition.types.add(depth(location.pathname) < depth(from) ? "back" : "forward");
+});
 </script>
 </body>
 </html>
