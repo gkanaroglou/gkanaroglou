@@ -759,6 +759,13 @@
   /* Higher contrast when the system asks for it: grey text becomes black */
   @media (prefers-contrast: more) { :root { --muted: #000; } }
 
+  /* ---------- The three steps have one colour each, everywhere: problem orange, what I did cobalt, result black ---------- */
+  :root { --step-1: var(--orange); --step-2: var(--cobalt); --step-3: var(--black); }
+  .glance dl div:nth-child(1), .pc-steps > div:nth-child(1) { border-top-color: var(--step-1); }
+  .glance dl div:nth-child(2), .pc-steps > div:nth-child(2) { border-top-color: var(--step-2); }
+  .glance dl div:nth-child(3), .pc-steps > div:nth-child(3) { border-top-color: var(--step-3); }
+  .glance dl div { border-top-width: 4px; }
+
 </style>
 </head>
 <body>
@@ -863,7 +870,7 @@
     <p class="mast-type">Brand</p>
     <h1>Winning back a luxury hotel’s loyal guests after a high-tech makeover.</h1>
     <p class="mast-stand">Reading the reviews by type of guest, then planning a campaign with a different message for each.</p>
-    <p class="mast-meta">Brand strategy. Solo work, LSE Principles of Marketing.</p>
+    <p class="mast-meta">Brand strategy. Solo work, MG4E8 Principles of Marketing, LSE. Individual take-home assignment.</p>
   </div></header>
   <section class="glance" aria-label="At a glance"><div class="wrap"><dl>
     <div><dt>The problem</dt><dd>A spa hotel in the Alps added robot staff and smart features. Its reviews got worse. Was the brand damaged, and what campaign should follow?</dd></div>

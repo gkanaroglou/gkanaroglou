@@ -759,6 +759,13 @@
   /* Higher contrast when the system asks for it: grey text becomes black */
   @media (prefers-contrast: more) { :root { --muted: #000; } }
 
+  /* ---------- The three steps have one colour each, everywhere: problem orange, what I did cobalt, result black ---------- */
+  :root { --step-1: var(--orange); --step-2: var(--cobalt); --step-3: var(--black); }
+  .glance dl div:nth-child(1), .pc-steps > div:nth-child(1) { border-top-color: var(--step-1); }
+  .glance dl div:nth-child(2), .pc-steps > div:nth-child(2) { border-top-color: var(--step-2); }
+  .glance dl div:nth-child(3), .pc-steps > div:nth-child(3) { border-top-color: var(--step-3); }
+  .glance dl div { border-top-width: 4px; }
+
 </style>
 </head>
 <body>
@@ -863,7 +870,7 @@
     <p class="mast-type">Digital marketing</p>
     <h1>Growing a bag brand’s sales through Google Ads.</h1>
     <p class="mast-stand">Seven rounds running Google Ads for a bag brand. Sales grew from about $4,100 to $61,700.</p>
-    <p class="mast-meta">Digital marketing. Solo work, LSE Digital Marketing. Google Ads simulation.</p>
+    <p class="mast-meta">Digital marketing. Solo work, MG4F3 Digital Marketing, LSE. Paid Search &amp; Banner Ads Simulation, seven decision rounds.</p>
   </div></header>
   <section class="glance" aria-label="At a glance"><div class="wrap"><dl>
     <div><dt>The problem</dt><dd>I ran Google Ads for Buhi, a bag brand, over seven rounds. The budget and the product range grew each round.</dd></div>

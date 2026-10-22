@@ -759,6 +759,13 @@
   /* Higher contrast when the system asks for it: grey text becomes black */
   @media (prefers-contrast: more) { :root { --muted: #000; } }
 
+  /* ---------- The three steps have one colour each, everywhere: problem orange, what I did cobalt, result black ---------- */
+  :root { --step-1: var(--orange); --step-2: var(--cobalt); --step-3: var(--black); }
+  .glance dl div:nth-child(1), .pc-steps > div:nth-child(1) { border-top-color: var(--step-1); }
+  .glance dl div:nth-child(2), .pc-steps > div:nth-child(2) { border-top-color: var(--step-2); }
+  .glance dl div:nth-child(3), .pc-steps > div:nth-child(3) { border-top-color: var(--step-3); }
+  .glance dl div { border-top-width: 4px; }
+
 </style>
 </head>
 <body>
@@ -863,7 +870,7 @@
     <p class="mast-type">Customer research and forecasting</p>
     <h1>Forecasting how fast a new AI gadget would sell.</h1>
     <p class="mast-stand">A forecast of how sales would build year by year, what it means for production, and the launch price.</p>
-    <p class="mast-meta">Marketing analytics. Solo work, LSE Principles of Marketing.</p>
+    <p class="mast-meta">Marketing analytics. Solo work, MG4E8 Principles of Marketing, LSE. Individual take-home assignment.</p>
   </div></header>
   <section class="glance" aria-label="At a glance"><div class="wrap"><dl>
     <div><dt>The problem</dt><dd>A start-up was launching a screen-free AI device you wear. It needed to know how sales would build, to plan stock, factories and advertising.</dd></div>
