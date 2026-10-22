@@ -492,7 +492,7 @@
   .acc-inner { perspective: 900px; }
   .acc { transition: grid-template-rows 150ms var(--ease-out), visibility 0s linear 150ms; }
   .acc.is-open { transition: grid-template-rows 250ms var(--ease-out), visibility 0s; }
-  .acc .acc-content, .acc .work-detail { transform-origin: 50% 0; transform: rotateX(-14deg) translateY(-6px); opacity: 0; transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
+  .acc .acc-content, .acc .work-detail { transform: translateY(-6px); opacity: 0; transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
   .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; opacity: 1; transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out); }
   .acc .work-facts > div { opacity: 0; transform: translateY(6px); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
   .acc.is-open .work-facts > div { opacity: 1; transform: none; transition-duration: 250ms; }
@@ -531,45 +531,24 @@
   .glance dl div:nth-child(3), .pc-steps > .pc-step-3 { border-top-color: var(--step-3); }
   .glance dl div { border-top-width: 4px; }
 
-  /* ---------- Selected work as cards. Each card turns over, like the business card, to show the three steps.
-     Front and back share one grid cell, so the card is always as tall as its longest side. ---------- */
-  .work-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 1.75rem); padding-top: clamp(1rem, 2vw, 1.5rem); list-style: none; }
-  .work-group[data-type="client"] .pcard { grid-column: 1 / -1; }
-  .pcard { perspective: 1600px; }
-  .pcard-inner { display: grid; height: 100%; transform-style: preserve-3d; transition: transform 500ms var(--ease-in-out); }
-  .pcard.is-flipped .pcard-inner { transform: rotateY(180deg); }
-  .pcard[data-instant] .pcard-inner { transition: none; }
-  .pcard-face { position: relative; grid-area: 1 / 1; display: flex; flex-direction: column; min-height: 100%; padding: clamp(1.1rem, 2.4vw, 1.6rem);
-    background: var(--paper); border: 3px solid var(--black); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
-  .pcard-back { transform: rotateY(180deg); }
-  .pc-title { font-size: clamp(1.3rem, 2.3vw, 1.85rem); font-weight: 800; line-height: 1.1; letter-spacing: -.025em; transition: color 150ms ease; }
-  .pc-sub { max-width: 46ch; margin-top: .6rem; color: var(--muted); font-size: 1rem; line-height: 1.45; }
-  .pc-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.25rem; margin-top: auto; padding-top: 1.5rem; }
-  .pc-steps-front { margin-top: auto; padding-top: 1.5rem; }   /* the problem sits on the front; what I did and the result are on the back */
-  .pc-foot-front { margin-top: 0; padding-top: .75rem; justify-content: flex-end; }
-  .pc-legend { display: flex; flex-wrap: wrap; gap: .35rem 1rem; list-style: none; color: var(--muted); font-size: .8125rem; font-weight: 600; letter-spacing: .01em; }
-  .pc-legend li { display: inline-flex; align-items: center; gap: .4rem; }
-  .pc-legend li::before { content: ""; width: .7rem; height: .7rem; background: var(--step-1); }
-  .pc-legend li:nth-child(2)::before { background: var(--step-2); }
-  .pc-legend li:nth-child(3)::before { background: var(--step-3); }
-  .pc-turn { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0; color: var(--black); font: inherit; font-size: .95rem; font-weight: 800; background: none; border: 0; cursor: pointer; }
-  .pc-turn::before { content: ""; width: .5rem; height: .5rem; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); }
-  .pcard-front .pc-turn::after { content: ""; position: absolute; inset: 0; }   /* the whole front turns the card */
-  .pc-turn:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
-  .pc-steps { display: grid; gap: .9rem; }
-  .pc-steps > div { padding-top: .5rem; border-top: 4px solid var(--black); }
-  .pc-steps dt { font-size: .8125rem; font-weight: 800; letter-spacing: .01em; }
-  .pc-steps dd { margin: .25rem 0 0; font-size: .95rem; line-height: 1.45; }
-  .pcard-back .pc-foot { padding-top: 1.25rem; }
-  .pcard-back .pc-turn::before { transform: rotate(-135deg); }
-  .pcard-front:active .pc-title { opacity: .7; }
-  @media (hover: hover) and (pointer: fine) { .pcard-front:hover .pc-title { color: var(--cobalt); } }
-  @media (max-width: 760px) { .work-cards { grid-template-columns: minmax(0, 1fr); } }
-  @media (prefers-reduced-motion: reduce) {
-    .pcard-inner, .pcard.is-flipped .pcard-inner, .pcard-back { transform: none; transition: none; }
-    .pcard-face { transition: opacity 150ms ease, visibility 0s; }
-    .pcard.is-flipped .pcard-front, .pcard:not(.is-flipped) .pcard-back { opacity: 0; visibility: hidden; }
-  }
+  /* ---------- Selected work as a question wall. Each project opens on its question, which is the problem (so an orange edge).
+     What I did and the result sit underneath, always visible, in their colours. ---------- */
+  .qw-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 1.5rem); padding-top: clamp(1rem, 2vw, 1.5rem); list-style: none; }
+  .qw-tile { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; padding: clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.1rem, 2.4vw, 1.5rem) calc(clamp(1.1rem, 2.4vw, 1.5rem) + 8px);
+    background: var(--paper); border: 3px solid var(--black); box-shadow: inset 8px 0 0 var(--step-1, var(--orange)); }
+  .work-group[data-type="client"] .qw-tile { grid-column: 1 / -1; }
+  .work-group[data-type="client"] .qw-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(1.25rem, 3vw, 2.5rem); }
+  .qw-q { max-width: 26ch; font-size: clamp(1.35rem, 2.5vw, 2rem); font-weight: 900; line-height: 1.05; letter-spacing: -.03em; }
+  .qw-title { color: var(--muted); font-size: .95rem; font-weight: 600; line-height: 1.4; }
+  .qw-steps { display: grid; gap: .9rem; width: 100%; margin-top: .25rem; }
+  .qw-steps > div { padding-top: .5rem; border-top: 4px solid var(--black); }
+  .qw-steps > .pc-step-2 { border-top-color: var(--step-2, var(--cobalt)); }
+  .qw-steps > .pc-step-3 { border-top-color: var(--step-3, var(--black)); }
+  .qw-steps dt { font-size: .8125rem; font-weight: 800; letter-spacing: .01em; }
+  .qw-steps dd { margin: .25rem 0 0; font-size: .95rem; line-height: 1.45; }
+  .qw-tile .work-more { margin-top: auto; }   /* buttons line up along the bottom of each row */
+  .qw-tile .qw-steps { margin-bottom: .5rem; }
+  @media (max-width: 760px) { .qw-grid, .work-group[data-type="client"] .qw-steps { grid-template-columns: minmax(0, 1fr); } }
 
   /* ---------- Articles: a Black block, one row per article ---------- */
   .articles { padding-block: clamp(3rem, 7vw, 5.5rem); color: var(--paper); background: var(--black); }
@@ -724,10 +703,10 @@
   ::view-transition-new(root) { animation: 280ms var(--ease-out) 40ms both turn-in; }
   html:active-view-transition-type(back)::view-transition-old(root) { animation-name: turn-out-back; }
   html:active-view-transition-type(back)::view-transition-new(root) { animation-name: turn-in-back; }
-  @keyframes turn-out { to { opacity: 0; transform: perspective(1600px) translateX(-2%) rotateY(4deg) scale(.98); } }
-  @keyframes turn-in { from { opacity: 0; transform: perspective(1600px) translateX(3%) rotateY(-5deg) scale(.98); } }
-  @keyframes turn-out-back { to { opacity: 0; transform: perspective(1600px) translateX(2%) rotateY(-4deg) scale(.98); } }
-  @keyframes turn-in-back { from { opacity: 0; transform: perspective(1600px) translateX(-3%) rotateY(5deg) scale(.98); } }
+  @keyframes turn-out { to { opacity: 0; transform: translateX(-2%); } }
+  @keyframes turn-in { from { opacity: 0; transform: translateX(3%); } }
+  @keyframes turn-out-back { to { opacity: 0; transform: translateX(2%); } }
+  @keyframes turn-in-back { from { opacity: 0; transform: translateX(-3%); } }
   @keyframes fade-out { to { opacity: 0; } }
   @keyframes fade-in-only { from { opacity: 0; } }
   @keyframes slide-out { to { opacity: 0; transform: translateX(-2%); } }
@@ -758,7 +737,7 @@
   .site-caret { transition: transform 150ms var(--ease-out); }
   /* Work menu: a dropdown, so it grows from the Work button rather than from the centre. Transitions, not keyframes,
      so opening and closing quickly just reverses it from wherever it is. Opens in 200ms, closes in 150ms. */
-  .site-menu { opacity: 0; visibility: hidden; pointer-events: none; transform: perspective(1200px) rotateX(-8deg) scale(.98); transform-origin: 3rem 0;
+  .site-menu { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-4px) scale(.98); transform-origin: 3rem 0;
     transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out), visibility 0s linear 150ms; }
   .site-menu[data-open] { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s; }
   .site-menu .wrap > a { opacity: 0; transform: translateY(-4px); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
@@ -1011,19 +990,19 @@
         <div class="index-head"><h2 class="index-label">What I do</h2><span>Three disciplines</span></div>
         <ol class="index-list">
           <li><h3 class="index-h"><button type="button" class="index-item" data-topic="brand-strategy" aria-expanded="false" aria-controls="acc-brand-strategy"><span class="index-name">Brand strategy</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-brand-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I decide what a brand stands for, so people know why to choose it over the rest.</p></div></div></div></li>
+            <div class="acc" id="acc-brand-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I design strategies to build strong brands, maximise the value of existing ones and manage several brands in a portfolio.</p></div></div></div></li>
           <li><h3 class="index-h"><button type="button" class="index-item" data-topic="digital-marketing" aria-expanded="false" aria-controls="acc-digital-marketing"><span class="index-name">Digital marketing</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-digital-marketing"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I turn online attention into sales, through search ads, social media and content, each measured against a clear goal.</p></div></div></div></li>
+            <div class="acc" id="acc-digital-marketing"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I use digital channels to acquire, communicate with, engage, influence and retain customers, from paid search and banner ads to social media.</p></div></div></div></li>
           <li><h3 class="index-h"><button type="button" class="index-item" data-topic="pricing-strategy" aria-expanded="false" aria-controls="acc-pricing-strategy"><span class="index-name">Pricing strategy</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-pricing-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I find out what customers value and what they would pay, then set prices around that which grow the business.</p></div></div></div></li>
+            <div class="acc" id="acc-pricing-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I treat price as part of the value proposition to the customer. I measure how customers respond to price, then make segment-specific pricing decisions.</p></div></div></div></li>
         </ol>
         <div class="index-head index-head-base"><h2 class="index-label">Built on</h2><span>Two foundations</span></div>
         <ul class="index-base">
           <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="marketing-analytics" aria-expanded="false" aria-controls="acc-marketing-analytics"><strong class="index-name">Marketing analytics</strong><span class="index-desc">What the data shows</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
           <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="consumer-psychology" aria-expanded="false" aria-controls="acc-consumer-psychology"><strong class="index-name">Consumer psychology</strong><span class="index-desc">How people really decide</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
         </ul>
-        <div class="acc acc-base" id="acc-marketing-analytics"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I use surveys, tests and reports to show what is working and what to change.</p></div></div></div>
-        <div class="acc acc-base" id="acc-consumer-psychology"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I use habits, first impressions and the pull of what others do to make the right choice the easy one.</p></div></div></div>
+        <div class="acc acc-base" id="acc-marketing-analytics"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I design research, from interviews to questionnaires, and analyse the data with regression, discrete choice modelling and A/B testing, so decisions rest on evidence.</p></div></div></div>
+        <div class="acc acc-base" id="acc-consumer-psychology"><div class="acc-inner"><div class="acc-content"><p class="acc-body">I predict how people acquire information, form attitudes and make choices, spot the biases in their decisions, and use choice architecture to help them choose better.</p></div></div></div>
       </div>
     </div>
   </section>
@@ -1032,157 +1011,85 @@
   <section class="work" id="work" aria-labelledby="work-title">
     <div class="wrap">
       <div class="work-head"><h2 class="work-title" id="work-title">Selected work.</h2><span class="work-count">9 projects</span></div>
-      <p class="work-intro">Problems I’ve worked on, for a client and during my MSc at LSE. Open one for a short summary, or read the full write-up with all the working.</p>
+      <p class="work-intro">Problems I’ve worked on, for a client and during my MSc Marketing at LSE. Open one for a short summary, or read the full write-up with all the working.</p>
       <nav class="work-jump" aria-label="Filter by type of work"><a href="#work" data-filter="all">All work <span>9</span></a><a href="#work-group-client" data-filter="client">Client work <span>1</span></a><a href="#work-group-brand" data-filter="brand">Brand <span>2</span></a><a href="#work-group-digital" data-filter="digital">Digital marketing <span>2</span></a><a href="#work-group-research" data-filter="research">Customer research and forecasting <span>2</span></a><a href="#work-group-pricing" data-filter="pricing">Pricing <span>2</span></a></nav>
       <ul class="work-groups">
         <li class="work-group" data-type="client">
           <h3 class="work-group-title" id="work-group-client">Client work <span>1 project</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-client">
-          <li class="pcard" id="card-social-pulse">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-social-pulse">A reporting system that shows Sophia Flörsch’s team what to post</h4>
-                <p class="pc-sub">For Barracudaworks, a sports marketing agency.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>Barracudaworks needed a way to measure the social media of racing driver Sophia Flörsch. It had to show what reaches the right fans, what fits her brand and what helps her sponsors.</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-social-pulse" aria-describedby="pc-social-pulse">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-social-pulse" role="group" aria-labelledby="pc-social-pulse">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I designed the system around five questions: what we post, how people respond, who we reach, where it leads, and whether it fits the brand. A weekly report says what to do next. A monthly report tests those ideas on real posts. I built it to run automatically in Python.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>The team could judge each post on more than views, and the weekly report took one day to make instead of four.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/social-pulse.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-client">
+          <li class="qw-tile" id="qw-social-pulse">
+            <h4 class="qw-q">How should an athlete’s team decide what to post?</h4>
+            <p class="qw-title">A reporting system that shows Sophia Flörsch’s team what to post</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I designed the system around five questions: what we post, how people respond, who we reach, where it leads, and whether it fits the brand. A weekly report says what to do next. A monthly report tests those ideas on real posts. I built it to run automatically in Python.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>The team could judge each post on more than views, and the weekly report took one day to make instead of four.</dd></div></dl>
+            <a class="btn work-more" href="/work/social-pulse.html">Read the full write-up</a>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="brand">
           <h3 class="work-group-title" id="work-group-brand">Brand <span>2 projects</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-brand">
-          <li class="pcard" id="card-jaguar">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-jaguar">Why Jaguar’s rebrand angered its fans, and how to win them back</h4>
-                <p class="pc-sub">A memo to Jaguar’s creative chief on what went wrong.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>In 2024, Jaguar dropped its familiar look overnight. Fans and the press mocked it. Why did it go so wrong, and what should Jaguar do now?</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-jaguar" aria-describedby="pc-jaguar">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-jaguar" role="group" aria-labelledby="pc-jaguar">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I traced the reaction step by step: what people noticed first, how they felt, why explanations didn’t help, and how the mockery spread. Then I wrote a plan to win people back, with its risks.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>People judged the new look on feeling before hearing any reasons, and loyal owners felt it no longer represented them. The plan brings back a few familiar details, lets trusted reviewers and owners drive the new cars, and invites people along rather than telling them to accept it.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/jaguar.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-brand">
+          <li class="qw-tile" id="qw-jaguar">
+            <h4 class="qw-q">Why did Jaguar’s 2024 rebrand go so wrong, and how does it win fans back?</h4>
+            <p class="qw-title">Why Jaguar’s rebrand angered its fans, and how to win them back</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I traced the reaction step by step: what people noticed first, how they felt, why explanations didn’t help, and how the mockery spread. Then I wrote a plan to win people back, with its risks.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>People judged the new look on feeling before hearing any reasons, and loyal owners felt it no longer represented them. The plan brings back a few familiar details, lets trusted reviewers and owners drive the new cars, and invites people along rather than telling them to accept it.</dd></div></dl>
+            <a class="btn work-more" href="/work/jaguar.html">Read the full write-up</a>
           </li>
-          <li class="pcard" id="card-royal-grand">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-royal-grand">Winning back a luxury hotel’s loyal guests after a high-tech makeover</h4>
-                <p class="pc-sub">Old guests missed the warmth. New guests loved the tech.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>A spa hotel in the Alps added robot staff and smart features. Its reviews got worse. Was the brand damaged, and what campaign should follow?</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-royal-grand" aria-describedby="pc-royal-grand">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-royal-grand" role="group" aria-labelledby="pc-royal-grand">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I split the reviews by type of guest and compared what each group praised and missed. Then I planned a campaign with a different message for each group, and a way to measure it.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Loyal guests rated it far lower and missed the warmth and familiar faces. New international guests rated it above the old average. The campaign tells real stories of staff and families to loyal guests, and encourages new guests to share their stays.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/royal-grand.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <li class="qw-tile" id="qw-royal-grand">
+            <h4 class="qw-q">Did a high-tech makeover damage a luxury hotel’s brand?</h4>
+            <p class="qw-title">Winning back a luxury hotel’s loyal guests after a high-tech makeover</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I split the reviews by type of guest and compared what each group praised and missed. Then I planned a campaign with a different message for each group, and a way to measure it.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Loyal guests rated it far lower and missed the warmth and familiar faces. New international guests rated it above the old average. The campaign tells real stories of staff and families to loyal guests, and encourages new guests to share their stays.</dd></div></dl>
+            <a class="btn work-more" href="/work/royal-grand.html">Read the full write-up</a>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="digital">
           <h3 class="work-group-title" id="work-group-digital">Digital marketing <span>2 projects</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-digital">
-          <li class="pcard" id="card-google-ads">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-google-ads">Growing a bag brand’s sales through Google Ads</h4>
-                <p class="pc-sub">A seven-round Google Ads simulation. Sales grew 15 times.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>I ran Google Ads for Buhi, a bag brand, over seven rounds. The budget and the product range grew each round.</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-google-ads" aria-describedby="pc-google-ads">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-google-ads" role="group" aria-labelledby="pc-google-ads">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I wrote ads and chose search terms for six types of customer, in their own words. Then I cut the search terms that didn’t sell, moved money to the ads that did, and added display, retargeting and shopping ads.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Sales grew from about $4,100 to $61,700. Matching the ads’ wording to the product pages more than doubled sales in one round. Ads shown to people who had left items in their basket earned $7.82 for every $1 spent.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/google-ads.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-digital">
+          <li class="qw-tile" id="qw-google-ads">
+            <h4 class="qw-q">How do you grow a bag brand’s sales through Google Ads?</h4>
+            <p class="qw-title">Growing a bag brand’s sales through Google Ads</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I wrote ads and chose search terms for six types of customer, in their own words. Then I cut the search terms that didn’t sell, moved money to the ads that did, and added display, retargeting and shopping ads.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Sales grew from about $4,100 to $61,700. Matching the ads’ wording to the product pages more than doubled sales in one round. Ads shown to people who had left items in their basket earned $7.82 for every $1 spent.</dd></div></dl>
+            <a class="btn work-more" href="/work/google-ads.html">Read the full write-up</a>
           </li>
-          <li class="pcard" id="card-keywords">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-keywords">Splitting a small ad budget across search terms</h4>
-                <p class="pc-sub">Where $100 a day earns the most.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>A consultancy had $100 a day for search ads across five search terms. How much should it bid on each?</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-keywords" aria-describedby="pc-keywords">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-keywords" role="group" aria-labelledby="pc-keywords">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I modelled how cost and clicks change as each bid goes up. Then I found the mix of bids that earns the most within the budget.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Three search terms earn the money. One loses money at any price and should be switched off. And the budget is too small: each extra dollar would bring back almost three.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/keywords.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <li class="qw-tile" id="qw-keywords">
+            <h4 class="qw-q">How should $100 a day be split across five search terms?</h4>
+            <p class="qw-title">Splitting a small ad budget across search terms</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I modelled how cost and clicks change as each bid goes up. Then I found the mix of bids that earns the most within the budget.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Three search terms earn the money. One loses money at any price and should be switched off. And the budget is too small: each extra dollar would bring back almost three.</dd></div></dl>
+            <a class="btn work-more" href="/work/keywords.html">Read the full write-up</a>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="research">
           <h3 class="work-group-title" id="work-group-research">Customer research and forecasting <span>2 projects</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-research">
-          <li class="pcard" id="card-lumibank">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-lumibank">Choosing which customers a new banking app should go after first</h4>
-                <p class="pc-sub">From interviews and survey answers from 180 people.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>A new banking app for young professionals had to choose who to target at launch, and which features to launch with.</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-lumibank" aria-describedby="pc-lumibank">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-lumibank" role="group" aria-labelledby="pc-lumibank">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I turned interviews into the questions that matter, then used survey answers from 180 people to sort them into groups with similar needs. Then I tested which features they valued most, and what makes someone likely to sign up.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Two of the three groups, about three in four people, want the same things: an app that is easy to use and a bank they can trust. Launch for them first, with no monthly fee, 2% cashback, a five-minute sign-up and strong security.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/lumibank.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-research">
+          <li class="qw-tile" id="qw-lumibank">
+            <h4 class="qw-q">Who should a new banking app go after first?</h4>
+            <p class="qw-title">Choosing which customers a new banking app should go after first</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I turned interviews into the questions that matter, then used survey answers from 180 people to sort them into groups with similar needs. Then I tested which features they valued most, and what makes someone likely to sign up.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Two of the three groups, about three in four people, want the same things: an app that is easy to use and a bank they can trust. Launch for them first, with no monthly fee, 2% cashback, a five-minute sign-up and strong security.</dd></div></dl>
+            <a class="btn work-more" href="/work/lumibank.html">Read the full write-up</a>
           </li>
-          <li class="pcard" id="card-halo">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-halo">Forecasting how fast a new AI gadget would sell</h4>
-                <p class="pc-sub">So the company could plan production and advertising.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>A start-up was launching a screen-free AI device you wear. It needed to know how sales would build, to plan stock, factories and advertising.</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-halo" aria-describedby="pc-halo">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-halo" role="group" aria-labelledby="pc-halo">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I estimated how many people might buy it, from survey data. Then I used a standard model of how new products spread by word of mouth, and costed production year by year.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Sales start slowly, peak in year seven and level off by year thirteen. The biggest risk is weak word of mouth. I recommended launching at £699.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/halo.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <li class="qw-tile" id="qw-halo">
+            <h4 class="qw-q">How fast will a screen-free AI gadget sell?</h4>
+            <p class="qw-title">Forecasting how fast a new AI gadget would sell</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I estimated how many people might buy it, from survey data. Then I used a standard model of how new products spread by word of mouth, and costed production year by year.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Sales start slowly, peak in year seven and level off by year thirteen. The biggest risk is weak word of mouth. I recommended launching at £699.</dd></div></dl>
+            <a class="btn work-more" href="/work/halo.html">Read the full write-up</a>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="pricing">
           <h3 class="work-group-title" id="work-group-pricing">Pricing <span>2 projects</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-pricing">
-          <li class="pcard" id="card-clickassist">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-clickassist">Showing an AI start-up it was charging far too little</h4>
-                <p class="pc-sub">To online shops, its chat tool was worth hundreds of times its price.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>A start-up sold an AI chat tool for websites at $399 a month. Was that the right price for an online shop, and for a software company?</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-clickassist" aria-describedby="pc-clickassist">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-clickassist" role="group" aria-labelledby="pc-clickassist">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I worked out what the tool was worth to each one: extra sales for the shop, and fewer support emails for the software company. Then I checked how much the answer changes if my assumptions are wrong.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>For the shop, the tool was worth about $218,000 a month, mostly from extra sales. For the software company, it was worth about $4,600, from saved support costs. So the two need different prices, each linked to the value they get.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/clickassist.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-pricing">
+          <li class="qw-tile" id="qw-clickassist">
+            <h4 class="qw-q">Was $399 a month the right price for an AI chat tool?</h4>
+            <p class="qw-title">Showing an AI start-up it was charging far too little</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I worked out what the tool was worth to each one: extra sales for the shop, and fewer support emails for the software company. Then I checked how much the answer changes if my assumptions are wrong.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>For the shop, the tool was worth about $218,000 a month, mostly from extra sales. For the software company, it was worth about $4,600, from saved support costs. So the two need different prices, each linked to the value they get.</dd></div></dl>
+            <a class="btn work-more" href="/work/clickassist.html">Read the full write-up</a>
           </li>
-          <li class="pcard" id="card-blanket">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-blanket">Choosing which versions of a smart blanket to sell, and at what price</h4>
-                <p class="pc-sub">Two products beat one, and fewer people walked away.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>The problem</dt><dd>A heated blanket could add cooling, two separate sides, automatic control and an eco mode. Which versions should launch, and at what price?</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-blanket" aria-describedby="pc-blanket">Turn over</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-blanket" role="group" aria-labelledby="pc-blanket">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I used ratings from 150 people of different versions at different prices to work out what each feature was worth to them. Then I grouped people with similar tastes and tested every possible pair of products.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Some people mainly want a low price. Others will pay far more for cooling, or for two sides set separately. A £70 basic model next to a £190 premium one earned 5% more than any single product, and cut the share who would buy nothing from a third to under a fifth.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/blanket.html">Read the full write-up</a><button type="button" class="pc-turn">Turn back</button></div>
-              </div>
-            </div>
+          <li class="qw-tile" id="qw-blanket">
+            <h4 class="qw-q">Which versions of a smart blanket should launch, and at what price?</h4>
+            <p class="qw-title">Choosing which versions of a smart blanket to sell, and at what price</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>What I did</dt><dd>I used ratings from 150 people of different versions at different prices to work out what each feature was worth to them. Then I grouped people with similar tastes and tested every possible pair of products.</dd></div><div class="pc-step-3"><dt>The result</dt><dd>Some people mainly want a low price. Others will pay far more for cooling, or for two sides set separately. A £70 basic model next to a £190 premium one earned 5% more than any single product, and cut the share who would buy nothing from a third to under a fifth.</dd></div></dl>
+            <a class="btn work-more" href="/work/blanket.html">Read the full write-up</a>
           </li>
           </ul>
         </li>
@@ -1701,7 +1608,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 <script>
 /* Selected work: click a project to see the question, what I did and the result. One open at a time. */
 (function () {
-  var items = [].slice.call(document.querySelectorAll(".pcard"));
+  var items = [].slice.call(document.querySelectorAll(".qw-tile"));
   function set(b, on) {
     b.setAttribute("aria-expanded", on ? "true" : "false");
     var panel = document.getElementById(b.getAttribute("aria-controls"));
@@ -1745,7 +1652,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   if (!bar || !list) return;
   var groups = [].slice.call(list.querySelectorAll(".work-group[data-type]"));
   var links = [].slice.call(bar.querySelectorAll("[data-filter]"));
-  var count = document.querySelector("#work .work-count"), total = groups.reduce(function (n, g) { return n + g.querySelectorAll(".pcard").length; }, 0);
+  var count = document.querySelector("#work .work-count"), total = groups.reduce(function (n, g) { return n + g.querySelectorAll(".qw-tile").length; }, 0);
   var el = /^el/.test(document.documentElement.lang), totalText = count ? count.textContent : "";
   var mq = window.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
   var current = "all", busy = [], run = 0;
@@ -1768,9 +1675,9 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var show = groups.filter(function (g) { return type === "all" || g.dataset.type === type; });
     var leave = groups.filter(function (g) { return show.indexOf(g) < 0 && !g.hidden; });
     var arrive = show.filter(function (g) { return g.hidden; });
-    var n = show.reduce(function (k, g) { return k + g.querySelectorAll(".pcard").length; }, 0);
+    var n = show.reduce(function (k, g) { return k + g.querySelectorAll(".qw-tile").length; }, 0);
     if (count) count.textContent = label(n);
-    var move = animate && !mq.matches, small = innerWidth <= 640, tilt = small ? 0 : 35;
+    var move = animate && !mq.matches;
     if (move) show.forEach(function (g) {   // a group caught halfway out comes straight back from where it is
       var L = live.get(g); if (!L || g.hidden) return;
       busy.push(g.animate([{ opacity: L.opacity, transform: L.transform }, { opacity: 1, transform: "none" }], { duration: 250, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }));
@@ -1790,7 +1697,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
         if (Math.abs(dy) > 1) busy.push(el.animate([{ transform: "translateY(" + dy + "px)" }, { transform: "none" }], { duration: 250, easing: "cubic-bezier(0.77, 0, 0.175, 1)" }));
       });
       arrive.forEach(function (g, i) {
-        busy.push(g.animate([{ opacity: 0, transform: "rotateX(" + (-tilt) + "deg) translateY(-10px)" }, { opacity: 1, transform: "none" }],
+        busy.push(g.animate([{ opacity: 0, transform: "translateY(-8px)" }, { opacity: 1, transform: "none" }],
           { duration: 250, delay: 40 + i * 50, easing: "cubic-bezier(0.23, 1, 0.32, 1)", fill: "backwards" }));
       });
     }
@@ -1798,7 +1705,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
       var left = leave.length, gone = [];
       leave.forEach(function (g) {
         var L = live.get(g), from = L ? { opacity: L.opacity, transform: L.transform } : { opacity: 1, transform: "none" };
-        var an = g.animate([from, { opacity: 0, transform: "rotateX(" + tilt + "deg) translateY(-10px)" }],
+        var an = g.animate([from, { opacity: 0, transform: "translateY(-8px)" }],
           { duration: 150, easing: "cubic-bezier(0.23, 1, 0.32, 1)", fill: "forwards" });
         busy.push(an); gone.push(an);
         an.onfinish = function () { if (--left === 0) { swap(); gone.forEach(function (x) { x.cancel(); }); } };   // groups are hidden now, so drop the held end state
@@ -1838,25 +1745,6 @@ document.addEventListener("click", function (e) {
   p.setAttribute("data-instant", "");
   requestAnimationFrame(function () { requestAnimationFrame(function () { p.removeAttribute("data-instant"); }); });
 }, true);
-</script>
-<script>
-/* Project cards turn over to show the problem, what I did and the result. Focus follows to the side you can see;
-   the hidden side is inert. Turned with the keyboard, a card changes instantly. */
-(function () {
-  [].forEach.call(document.querySelectorAll(".pcard"), function (c) {
-    var front = c.querySelector(".pcard-front"), back = c.querySelector(".pcard-back"), open = front.querySelector(".pc-turn"), shut = back.querySelector(".pc-turn");
-    back.inert = true;
-    function turn(on, kb) {
-      if (kb) { c.setAttribute("data-instant", ""); requestAnimationFrame(function () { requestAnimationFrame(function () { c.removeAttribute("data-instant"); }); }); }
-      c.classList.toggle("is-flipped", on);
-      open.setAttribute("aria-expanded", on ? "true" : "false");
-      front.inert = on; back.inert = !on;
-      (on ? back.querySelector("a") : open).focus({ preventScroll: true });
-    }
-    open.addEventListener("click", function (e) { turn(true, e.detail === 0); });
-    shut.addEventListener("click", function (e) { turn(false, e.detail === 0); });
-  });
-})();
 </script>
 </body>
 </html>

@@ -601,10 +601,10 @@
   ::view-transition-new(root) { animation: 280ms var(--ease-out) 40ms both turn-in; }
   html:active-view-transition-type(back)::view-transition-old(root) { animation-name: turn-out-back; }
   html:active-view-transition-type(back)::view-transition-new(root) { animation-name: turn-in-back; }
-  @keyframes turn-out { to { opacity: 0; transform: perspective(1600px) translateX(-2%) rotateY(4deg) scale(.98); } }
-  @keyframes turn-in { from { opacity: 0; transform: perspective(1600px) translateX(3%) rotateY(-5deg) scale(.98); } }
-  @keyframes turn-out-back { to { opacity: 0; transform: perspective(1600px) translateX(2%) rotateY(-4deg) scale(.98); } }
-  @keyframes turn-in-back { from { opacity: 0; transform: perspective(1600px) translateX(-3%) rotateY(5deg) scale(.98); } }
+  @keyframes turn-out { to { opacity: 0; transform: translateX(-2%); } }
+  @keyframes turn-in { from { opacity: 0; transform: translateX(3%); } }
+  @keyframes turn-out-back { to { opacity: 0; transform: translateX(2%); } }
+  @keyframes turn-in-back { from { opacity: 0; transform: translateX(-3%); } }
   @keyframes fade-out { to { opacity: 0; } }
   @keyframes fade-in-only { from { opacity: 0; } }
   @keyframes slide-out { to { opacity: 0; transform: translateX(-2%); } }
@@ -635,7 +635,7 @@
   .site-caret { transition: transform 150ms var(--ease-out); }
   /* Work menu: a dropdown, so it grows from the Work button rather than from the centre. Transitions, not keyframes,
      so opening and closing quickly just reverses it from wherever it is. Opens in 200ms, closes in 150ms. */
-  .site-menu { opacity: 0; visibility: hidden; pointer-events: none; transform: perspective(1200px) rotateX(-8deg) scale(.98); transform-origin: 3rem 0;
+  .site-menu { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-4px) scale(.98); transform-origin: 3rem 0;
     transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out), visibility 0s linear 150ms; }
   .site-menu[data-open] { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s; }
   .site-menu .wrap > a { opacity: 0; transform: translateY(-4px); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }

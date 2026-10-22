@@ -492,7 +492,7 @@
   .acc-inner { perspective: 900px; }
   .acc { transition: grid-template-rows 150ms var(--ease-out), visibility 0s linear 150ms; }
   .acc.is-open { transition: grid-template-rows 250ms var(--ease-out), visibility 0s; }
-  .acc .acc-content, .acc .work-detail { transform-origin: 50% 0; transform: rotateX(-14deg) translateY(-6px); opacity: 0; transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
+  .acc .acc-content, .acc .work-detail { transform: translateY(-6px); opacity: 0; transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
   .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; opacity: 1; transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out); }
   .acc .work-facts > div { opacity: 0; transform: translateY(6px); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
   .acc.is-open .work-facts > div { opacity: 1; transform: none; transition-duration: 250ms; }
@@ -531,45 +531,24 @@
   .glance dl div:nth-child(3), .pc-steps > .pc-step-3 { border-top-color: var(--step-3); }
   .glance dl div { border-top-width: 4px; }
 
-  /* ---------- Selected work as cards. Each card turns over, like the business card, to show the three steps.
-     Front and back share one grid cell, so the card is always as tall as its longest side. ---------- */
-  .work-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 1.75rem); padding-top: clamp(1rem, 2vw, 1.5rem); list-style: none; }
-  .work-group[data-type="client"] .pcard { grid-column: 1 / -1; }
-  .pcard { perspective: 1600px; }
-  .pcard-inner { display: grid; height: 100%; transform-style: preserve-3d; transition: transform 500ms var(--ease-in-out); }
-  .pcard.is-flipped .pcard-inner { transform: rotateY(180deg); }
-  .pcard[data-instant] .pcard-inner { transition: none; }
-  .pcard-face { position: relative; grid-area: 1 / 1; display: flex; flex-direction: column; min-height: 100%; padding: clamp(1.1rem, 2.4vw, 1.6rem);
-    background: var(--paper); border: 3px solid var(--black); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
-  .pcard-back { transform: rotateY(180deg); }
-  .pc-title { font-size: clamp(1.3rem, 2.3vw, 1.85rem); font-weight: 800; line-height: 1.1; letter-spacing: -.025em; transition: color 150ms ease; }
-  .pc-sub { max-width: 46ch; margin-top: .6rem; color: var(--muted); font-size: 1rem; line-height: 1.45; }
-  .pc-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.25rem; margin-top: auto; padding-top: 1.5rem; }
-  .pc-steps-front { margin-top: auto; padding-top: 1.5rem; }   /* the problem sits on the front; what I did and the result are on the back */
-  .pc-foot-front { margin-top: 0; padding-top: .75rem; justify-content: flex-end; }
-  .pc-legend { display: flex; flex-wrap: wrap; gap: .35rem 1rem; list-style: none; color: var(--muted); font-size: .8125rem; font-weight: 600; letter-spacing: .01em; }
-  .pc-legend li { display: inline-flex; align-items: center; gap: .4rem; }
-  .pc-legend li::before { content: ""; width: .7rem; height: .7rem; background: var(--step-1); }
-  .pc-legend li:nth-child(2)::before { background: var(--step-2); }
-  .pc-legend li:nth-child(3)::before { background: var(--step-3); }
-  .pc-turn { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0; color: var(--black); font: inherit; font-size: .95rem; font-weight: 800; background: none; border: 0; cursor: pointer; }
-  .pc-turn::before { content: ""; width: .5rem; height: .5rem; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); }
-  .pcard-front .pc-turn::after { content: ""; position: absolute; inset: 0; }   /* the whole front turns the card */
-  .pc-turn:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
-  .pc-steps { display: grid; gap: .9rem; }
-  .pc-steps > div { padding-top: .5rem; border-top: 4px solid var(--black); }
-  .pc-steps dt { font-size: .8125rem; font-weight: 800; letter-spacing: .01em; }
-  .pc-steps dd { margin: .25rem 0 0; font-size: .95rem; line-height: 1.45; }
-  .pcard-back .pc-foot { padding-top: 1.25rem; }
-  .pcard-back .pc-turn::before { transform: rotate(-135deg); }
-  .pcard-front:active .pc-title { opacity: .7; }
-  @media (hover: hover) and (pointer: fine) { .pcard-front:hover .pc-title { color: var(--cobalt); } }
-  @media (max-width: 760px) { .work-cards { grid-template-columns: minmax(0, 1fr); } }
-  @media (prefers-reduced-motion: reduce) {
-    .pcard-inner, .pcard.is-flipped .pcard-inner, .pcard-back { transform: none; transition: none; }
-    .pcard-face { transition: opacity 150ms ease, visibility 0s; }
-    .pcard.is-flipped .pcard-front, .pcard:not(.is-flipped) .pcard-back { opacity: 0; visibility: hidden; }
-  }
+  /* ---------- Selected work as a question wall. Each project opens on its question, which is the problem (so an orange edge).
+     What I did and the result sit underneath, always visible, in their colours. ---------- */
+  .qw-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 1.5rem); padding-top: clamp(1rem, 2vw, 1.5rem); list-style: none; }
+  .qw-tile { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; padding: clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.1rem, 2.4vw, 1.5rem) calc(clamp(1.1rem, 2.4vw, 1.5rem) + 8px);
+    background: var(--paper); border: 3px solid var(--black); box-shadow: inset 8px 0 0 var(--step-1, var(--orange)); }
+  .work-group[data-type="client"] .qw-tile { grid-column: 1 / -1; }
+  .work-group[data-type="client"] .qw-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(1.25rem, 3vw, 2.5rem); }
+  .qw-q { max-width: 26ch; font-size: clamp(1.35rem, 2.5vw, 2rem); font-weight: 900; line-height: 1.05; letter-spacing: -.03em; }
+  .qw-title { color: var(--muted); font-size: .95rem; font-weight: 600; line-height: 1.4; }
+  .qw-steps { display: grid; gap: .9rem; width: 100%; margin-top: .25rem; }
+  .qw-steps > div { padding-top: .5rem; border-top: 4px solid var(--black); }
+  .qw-steps > .pc-step-2 { border-top-color: var(--step-2, var(--cobalt)); }
+  .qw-steps > .pc-step-3 { border-top-color: var(--step-3, var(--black)); }
+  .qw-steps dt { font-size: .8125rem; font-weight: 800; letter-spacing: .01em; }
+  .qw-steps dd { margin: .25rem 0 0; font-size: .95rem; line-height: 1.45; }
+  .qw-tile .work-more { margin-top: auto; }   /* buttons line up along the bottom of each row */
+  .qw-tile .qw-steps { margin-bottom: .5rem; }
+  @media (max-width: 760px) { .qw-grid, .work-group[data-type="client"] .qw-steps { grid-template-columns: minmax(0, 1fr); } }
 
   /* ---------- Articles: a Black block, one row per article ---------- */
   .articles { padding-block: clamp(3rem, 7vw, 5.5rem); color: var(--paper); background: var(--black); }
@@ -728,10 +707,10 @@
   ::view-transition-new(root) { animation: 280ms var(--ease-out) 40ms both turn-in; }
   html:active-view-transition-type(back)::view-transition-old(root) { animation-name: turn-out-back; }
   html:active-view-transition-type(back)::view-transition-new(root) { animation-name: turn-in-back; }
-  @keyframes turn-out { to { opacity: 0; transform: perspective(1600px) translateX(-2%) rotateY(4deg) scale(.98); } }
-  @keyframes turn-in { from { opacity: 0; transform: perspective(1600px) translateX(3%) rotateY(-5deg) scale(.98); } }
-  @keyframes turn-out-back { to { opacity: 0; transform: perspective(1600px) translateX(2%) rotateY(-4deg) scale(.98); } }
-  @keyframes turn-in-back { from { opacity: 0; transform: perspective(1600px) translateX(-3%) rotateY(5deg) scale(.98); } }
+  @keyframes turn-out { to { opacity: 0; transform: translateX(-2%); } }
+  @keyframes turn-in { from { opacity: 0; transform: translateX(3%); } }
+  @keyframes turn-out-back { to { opacity: 0; transform: translateX(2%); } }
+  @keyframes turn-in-back { from { opacity: 0; transform: translateX(-3%); } }
   @keyframes fade-out { to { opacity: 0; } }
   @keyframes fade-in-only { from { opacity: 0; } }
   @keyframes slide-out { to { opacity: 0; transform: translateX(-2%); } }
@@ -762,7 +741,7 @@
   .site-caret { transition: transform 150ms var(--ease-out); }
   /* Work menu: a dropdown, so it grows from the Work button rather than from the centre. Transitions, not keyframes,
      so opening and closing quickly just reverses it from wherever it is. Opens in 200ms, closes in 150ms. */
-  .site-menu { opacity: 0; visibility: hidden; pointer-events: none; transform: perspective(1200px) rotateX(-8deg) scale(.98); transform-origin: 3rem 0;
+  .site-menu { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-4px) scale(.98); transform-origin: 3rem 0;
     transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out), visibility 0s linear 150ms; }
   .site-menu[data-open] { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s; }
   .site-menu .wrap > a { opacity: 0; transform: translateY(-4px); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
@@ -1015,19 +994,19 @@
         <div class="index-head"><h2 class="index-label">Τι κάνω</h2><span>Τρεις τομείς</span></div>
         <ol class="index-list">
           <li><h3 class="index-h"><button type="button" class="index-item" data-topic="brand-strategy" aria-expanded="false" aria-controls="acc-brand-strategy"><span class="index-name">Στρατηγική brand</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-brand-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Ορίζω τι πρεσβεύει ένα brand, ώστε ο κόσμος να ξέρει γιατί να το προτιμήσει από τα υπόλοιπα.</p></div></div></div></li>
+            <div class="acc" id="acc-brand-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Σχεδιάζω στρατηγικές για ισχυρά brands, μεγιστοποιώ την αξία των υπαρχόντων και διαχειρίζομαι πολλά brands σε ένα χαρτοφυλάκιο.</p></div></div></div></li>
           <li><h3 class="index-h"><button type="button" class="index-item" data-topic="digital-marketing" aria-expanded="false" aria-controls="acc-digital-marketing"><span class="index-name">Ψηφιακό marketing</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-digital-marketing"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Μετατρέπω την προσοχή στο διαδίκτυο σε πωλήσεις, με διαφημίσεις στις μηχανές αναζήτησης, social media και περιεχόμενο, το καθένα με μετρήσιμο στόχο.</p></div></div></div></li>
+            <div class="acc" id="acc-digital-marketing"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Χρησιμοποιώ τα ψηφιακά κανάλια για να προσελκύσω, να επικοινωνήσω, να εμπλέξω, να επηρεάσω και να διατηρήσω πελάτες, από το paid search και τα banner ads ως τα social media.</p></div></div></div></li>
           <li><h3 class="index-h"><button type="button" class="index-item" data-topic="pricing-strategy" aria-expanded="false" aria-controls="acc-pricing-strategy"><span class="index-name">Στρατηγική τιμολόγησης</span><span class="index-plus" aria-hidden="true"></span></button></h3>
-            <div class="acc" id="acc-pricing-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Βρίσκω τι εκτιμούν οι πελάτες και πόσα θα έδιναν, και πάνω σε αυτό ορίζω τιμές που βοηθούν την επιχείρηση να μεγαλώσει.</p></div></div></div></li>
+            <div class="acc" id="acc-pricing-strategy"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Αντιμετωπίζω την τιμή ως μέρος της πρότασης αξίας προς τον πελάτη. Μετρώ πώς αντιδρούν οι πελάτες στην τιμή και παίρνω αποφάσεις τιμολόγησης για κάθε τμήμα πελατών.</p></div></div></div></li>
         </ol>
         <div class="index-head index-head-base"><h2 class="index-label">Χτισμένα πάνω σε</h2><span>Δύο θεμέλια</span></div>
         <ul class="index-base">
           <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="marketing-analytics" aria-expanded="false" aria-controls="acc-marketing-analytics"><strong class="index-name">Ανάλυση δεδομένων</strong><span class="index-desc">Τι δείχνουν τα δεδομένα</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
           <li><h3 class="index-h"><button type="button" class="index-item index-item-base" data-topic="consumer-psychology" aria-expanded="false" aria-controls="acc-consumer-psychology"><strong class="index-name">Ψυχολογία καταναλωτή</strong><span class="index-desc">Πώς αποφασίζουν πραγματικά οι άνθρωποι</span><span class="index-plus" aria-hidden="true"></span></button></h3></li>
         </ul>
-        <div class="acc acc-base" id="acc-marketing-analytics"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Με έρευνες, δοκιμές και αναφορές δείχνω τι αποδίδει και τι πρέπει να αλλάξει.</p></div></div></div>
-        <div class="acc acc-base" id="acc-consumer-psychology"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Χρησιμοποιώ τις συνήθειες, τις πρώτες εντυπώσεις και την επιρροή των άλλων, ώστε η σωστή επιλογή να είναι και η πιο εύκολη.</p></div></div></div>
+        <div class="acc acc-base" id="acc-marketing-analytics"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Σχεδιάζω έρευνες, από συνεντεύξεις ως ερωτηματολόγια, και αναλύω τα δεδομένα με παλινδρόμηση, μοντέλα διακριτής επιλογής και A/B testing, ώστε οι αποφάσεις να στηρίζονται σε στοιχεία.</p></div></div></div>
+        <div class="acc acc-base" id="acc-consumer-psychology"><div class="acc-inner"><div class="acc-content"><p class="acc-body">Προβλέπω πώς οι άνθρωποι αναζητούν πληροφορίες, σχηματίζουν στάσεις και κάνουν επιλογές, εντοπίζω τις προκαταλήψεις στις αποφάσεις τους και χρησιμοποιώ την αρχιτεκτονική επιλογής για να τους βοηθήσω να επιλέγουν καλύτερα.</p></div></div></div>
       </div>
     </div>
   </section>
@@ -1036,157 +1015,85 @@
   <section class="work" id="work" aria-labelledby="work-title">
     <div class="wrap">
       <div class="work-head"><h2 class="work-title" id="work-title">Επιλεγμένες εργασίες.</h2><span class="work-count">9 εργασίες</span></div>
-      <p class="work-intro">Προβλήματα με τα οποία έχω ασχοληθεί, για πελάτη και στο πλαίσιο του MSc μου στο LSE. Ανοίξτε ένα για μια σύντομη περίληψη ή διαβάστε την πλήρη ανάλυση με όλους τους υπολογισμούς (στα αγγλικά).</p>
+      <p class="work-intro">Προβλήματα με τα οποία έχω ασχοληθεί, για πελάτη και στο πλαίσιο του MSc Marketing στο LSE. Ανοίξτε ένα για μια σύντομη περίληψη ή διαβάστε την πλήρη ανάλυση με όλους τους υπολογισμούς (στα αγγλικά).</p>
       <nav class="work-jump" aria-label="Φιλτράρισμα ανά είδος εργασίας"><a href="#work" data-filter="all">Όλες <span>9</span></a><a href="#work-group-client" data-filter="client">Έργο για πελάτη <span>1</span></a><a href="#work-group-brand" data-filter="brand">Brand <span>2</span></a><a href="#work-group-digital" data-filter="digital">Ψηφιακό marketing <span>2</span></a><a href="#work-group-research" data-filter="research">Έρευνα αγοράς και προβλέψεις <span>2</span></a><a href="#work-group-pricing" data-filter="pricing">Τιμολόγηση <span>2</span></a></nav>
       <ul class="work-groups">
         <li class="work-group" data-type="client">
           <h3 class="work-group-title" id="work-group-client">Έργο για πελάτη <span>1 εργασία</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-client">
-          <li class="pcard" id="card-social-pulse">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-social-pulse">Σύστημα αναφορών που δείχνει στην ομάδα της Sophia Flörsch τι να ανεβάζει</h4>
-                <p class="pc-sub">Για τη Barracudaworks, εταιρεία sports marketing.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Η Barracudaworks χρειαζόταν έναν τρόπο να μετρά τα social media της οδηγού αγώνων Sophia Flörsch: τι φτάνει στους σωστούς fans, τι ταιριάζει με το brand της και τι ωφελεί τους χορηγούς της.</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-social-pulse" aria-describedby="pc-social-pulse">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-social-pulse" role="group" aria-labelledby="pc-social-pulse">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Έστησα το σύστημα γύρω από πέντε ερωτήματα: τι ανεβάζουμε, πώς αντιδρά ο κόσμος, ποιους φτάνουμε, πού οδηγεί και αν ταιριάζει με το brand. Μια εβδομαδιαία αναφορά προτείνει τα επόμενα βήματα και μια μηνιαία τα δοκιμάζει σε πραγματικές αναρτήσεις. Όλο αυτό το έφτιαξα να τρέχει αυτόματα σε Python.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Η ομάδα μπορούσε να κρίνει κάθε ανάρτηση όχι μόνο από τις προβολές, και η εβδομαδιαία αναφορά ετοιμαζόταν σε μία μέρα αντί για τέσσερις.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/social-pulse.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-client">
+          <li class="qw-tile" id="qw-social-pulse">
+            <h4 class="qw-q">Πώς αποφασίζει η ομάδα ενός αθλητή τι να ανεβάσει;</h4>
+            <p class="qw-title">Σύστημα αναφορών που δείχνει στην ομάδα της Sophia Flörsch τι να ανεβάζει</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Έστησα το σύστημα γύρω από πέντε ερωτήματα: τι ανεβάζουμε, πώς αντιδρά ο κόσμος, ποιους φτάνουμε, πού οδηγεί και αν ταιριάζει με το brand. Μια εβδομαδιαία αναφορά προτείνει τα επόμενα βήματα και μια μηνιαία τα δοκιμάζει σε πραγματικές αναρτήσεις. Όλο αυτό το έφτιαξα να τρέχει αυτόματα σε Python.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Η ομάδα μπορούσε να κρίνει κάθε ανάρτηση όχι μόνο από τις προβολές, και η εβδομαδιαία αναφορά ετοιμαζόταν σε μία μέρα αντί για τέσσερις.</dd></div></dl>
+            <a class="btn work-more" href="/work/social-pulse.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="brand">
           <h3 class="work-group-title" id="work-group-brand">Brand <span>2 εργασίες</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-brand">
-          <li class="pcard" id="card-jaguar">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-jaguar">Γιατί το rebrand της Jaguar εξόργισε τους fans της και πώς μπορεί να τους ξανακερδίσει</h4>
-                <p class="pc-sub">Υπόμνημα προς τον δημιουργικό διευθυντή της Jaguar για το τι πήγε στραβά.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Το 2024 η Jaguar εγκατέλειψε από τη μια μέρα στην άλλη τη γνώριμη εικόνα της. Fans και Τύπος τη γελοιοποίησαν. Γιατί πήγε τόσο στραβά και τι πρέπει να κάνει τώρα;</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-jaguar" aria-describedby="pc-jaguar">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-jaguar" role="group" aria-labelledby="pc-jaguar">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Ανέλυσα την αντίδραση βήμα βήμα: τι πρόσεξε πρώτα ο κόσμος, πώς ένιωσε, γιατί δεν έπιασαν οι εξηγήσεις και πώς απλώθηκε η κοροϊδία. Μετά έγραψα ένα σχέδιο για να ξανακερδίσει η Jaguar τον κόσμο, μαζί με τους κινδύνους του.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Ο κόσμος έκρινε τη νέα εικόνα με το συναίσθημα, πριν ακούσει οποιαδήποτε εξήγηση, και οι πιστοί ιδιοκτήτες ένιωσαν ότι η μάρκα δεν τους εκφράζει πια. Το σχέδιο φέρνει πίσω μερικές γνώριμες λεπτομέρειες, βάζει αξιόπιστους δημοσιογράφους και ιδιοκτήτες να οδηγήσουν τα νέα αυτοκίνητα, και προσκαλεί τον κόσμο να ακολουθήσει αντί να του επιβάλει την αλλαγή.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/jaguar.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-brand">
+          <li class="qw-tile" id="qw-jaguar">
+            <h4 class="qw-q">Γιατί το rebrand της Jaguar το 2024 πήγε τόσο στραβά, και πώς ξανακερδίζει τους fans της;</h4>
+            <p class="qw-title">Γιατί το rebrand της Jaguar εξόργισε τους fans της και πώς μπορεί να τους ξανακερδίσει</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Ανέλυσα την αντίδραση βήμα βήμα: τι πρόσεξε πρώτα ο κόσμος, πώς ένιωσε, γιατί δεν έπιασαν οι εξηγήσεις και πώς απλώθηκε η κοροϊδία. Μετά έγραψα ένα σχέδιο για να ξανακερδίσει η Jaguar τον κόσμο, μαζί με τους κινδύνους του.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Ο κόσμος έκρινε τη νέα εικόνα με το συναίσθημα, πριν ακούσει οποιαδήποτε εξήγηση, και οι πιστοί ιδιοκτήτες ένιωσαν ότι η μάρκα δεν τους εκφράζει πια. Το σχέδιο φέρνει πίσω μερικές γνώριμες λεπτομέρειες, βάζει αξιόπιστους δημοσιογράφους και ιδιοκτήτες να οδηγήσουν τα νέα αυτοκίνητα, και προσκαλεί τον κόσμο να ακολουθήσει αντί να του επιβάλει την αλλαγή.</dd></div></dl>
+            <a class="btn work-more" href="/work/jaguar.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
-          <li class="pcard" id="card-royal-grand">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-royal-grand">Πώς να ξανακερδίσει ένα πολυτελές ξενοδοχείο τους πιστούς πελάτες του μετά από μια high-tech ανακαίνιση</h4>
-                <p class="pc-sub">Στους παλιούς πελάτες έλειψε η ζεστασιά. Οι νέοι λάτρεψαν την τεχνολογία.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Ένα ξενοδοχείο spa στις Άλπεις πρόσθεσε ρομπότ στην εξυπηρέτηση και έξυπνες λειτουργίες. Οι κριτικές χειροτέρεψαν. Έπαθε ζημιά η εικόνα του, και ποια καμπάνια πρέπει να ακολουθήσει;</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-royal-grand" aria-describedby="pc-royal-grand">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-royal-grand" role="group" aria-labelledby="pc-royal-grand">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Χώρισα τις κριτικές ανά τύπο πελάτη και σύγκρινα τι επαινούσε και τι αναζητούσε η κάθε ομάδα. Μετά σχεδίασα μια καμπάνια με διαφορετικό μήνυμα για κάθε ομάδα και έναν τρόπο να μετρηθεί η απήχησή της.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πιστοί πελάτες το βαθμολόγησαν πολύ χαμηλότερα, γιατί τους έλειψαν η ζεστασιά και τα γνώριμα πρόσωπα. Οι νέοι πελάτες από το εξωτερικό το βαθμολόγησαν πάνω από τον παλιό μέσο όρο. Η καμπάνια λέει στους πιστούς πελάτες αληθινές ιστορίες προσωπικού και οικογενειών, και ενθαρρύνει τους νέους να μοιράζονται τη διαμονή τους.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/royal-grand.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <li class="qw-tile" id="qw-royal-grand">
+            <h4 class="qw-q">Έβλαψε μια high-tech ανακαίνιση το brand ενός πολυτελούς ξενοδοχείου;</h4>
+            <p class="qw-title">Πώς να ξανακερδίσει ένα πολυτελές ξενοδοχείο τους πιστούς πελάτες του μετά από μια high-tech ανακαίνιση</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Χώρισα τις κριτικές ανά τύπο πελάτη και σύγκρινα τι επαινούσε και τι αναζητούσε η κάθε ομάδα. Μετά σχεδίασα μια καμπάνια με διαφορετικό μήνυμα για κάθε ομάδα και έναν τρόπο να μετρηθεί η απήχησή της.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πιστοί πελάτες το βαθμολόγησαν πολύ χαμηλότερα, γιατί τους έλειψαν η ζεστασιά και τα γνώριμα πρόσωπα. Οι νέοι πελάτες από το εξωτερικό το βαθμολόγησαν πάνω από τον παλιό μέσο όρο. Η καμπάνια λέει στους πιστούς πελάτες αληθινές ιστορίες προσωπικού και οικογενειών, και ενθαρρύνει τους νέους να μοιράζονται τη διαμονή τους.</dd></div></dl>
+            <a class="btn work-more" href="/work/royal-grand.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="digital">
           <h3 class="work-group-title" id="work-group-digital">Ψηφιακό marketing <span>2 εργασίες</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-digital">
-          <li class="pcard" id="card-google-ads">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-google-ads">Περισσότερες πωλήσεις για μια εταιρεία τσαντών μέσω Google Ads</h4>
-                <p class="pc-sub">Προσομοίωση Google Ads επτά γύρων. Οι πωλήσεις έγιναν 15 φορές μεγαλύτερες.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Διαχειρίστηκα τα Google Ads της Buhi, μιας εταιρείας τσαντών, για επτά γύρους. Σε κάθε γύρο μεγάλωναν ο προϋπολογισμός και η γκάμα.</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-google-ads" aria-describedby="pc-google-ads">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-google-ads" role="group" aria-labelledby="pc-google-ads">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Έγραψα διαφημίσεις και διάλεξα λέξεις-κλειδιά για έξι τύπους πελατών, με τα δικά τους λόγια. Μετά έκοψα όσες λέξεις-κλειδιά δεν έφερναν πωλήσεις, έδωσα περισσότερα χρήματα στις διαφημίσεις που πουλούσαν και πρόσθεσα display, retargeting και shopping ads.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πωλήσεις ανέβηκαν από περίπου $4.100 σε $61.700. Όταν το κείμενο των διαφημίσεων ταίριαξε με τις σελίδες των προϊόντων, οι πωλήσεις υπερδιπλασιάστηκαν μέσα σε έναν γύρο. Οι διαφημίσεις σε όσους είχαν αφήσει προϊόντα στο καλάθι απέφεραν $7,82 για κάθε $1.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/google-ads.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-digital">
+          <li class="qw-tile" id="qw-google-ads">
+            <h4 class="qw-q">Πώς αυξάνεις τις πωλήσεις μιας εταιρείας τσαντών μέσω Google Ads;</h4>
+            <p class="qw-title">Περισσότερες πωλήσεις για μια εταιρεία τσαντών μέσω Google Ads</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Έγραψα διαφημίσεις και διάλεξα λέξεις-κλειδιά για έξι τύπους πελατών, με τα δικά τους λόγια. Μετά έκοψα όσες λέξεις-κλειδιά δεν έφερναν πωλήσεις, έδωσα περισσότερα χρήματα στις διαφημίσεις που πουλούσαν και πρόσθεσα display, retargeting και shopping ads.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πωλήσεις ανέβηκαν από περίπου $4.100 σε $61.700. Όταν το κείμενο των διαφημίσεων ταίριαξε με τις σελίδες των προϊόντων, οι πωλήσεις υπερδιπλασιάστηκαν μέσα σε έναν γύρο. Οι διαφημίσεις σε όσους είχαν αφήσει προϊόντα στο καλάθι απέφεραν $7,82 για κάθε $1.</dd></div></dl>
+            <a class="btn work-more" href="/work/google-ads.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
-          <li class="pcard" id="card-keywords">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-keywords">Πώς να μοιραστεί ένας μικρός διαφημιστικός προϋπολογισμός σε λέξεις-κλειδιά</h4>
-                <p class="pc-sub">Πού αποδίδουν περισσότερο $100 την ημέρα.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια συμβουλευτική εταιρεία είχε $100 την ημέρα για διαφημίσεις αναζήτησης σε πέντε λέξεις-κλειδιά. Πόσο να προσφέρει για την καθεμία;</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-keywords" aria-describedby="pc-keywords">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-keywords" role="group" aria-labelledby="pc-keywords">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Υπολόγισα πώς αλλάζουν το κόστος και τα κλικ όσο ανεβαίνει η προσφορά για κάθε λέξη. Μετά βρήκα τον συνδυασμό προσφορών που φέρνει το μεγαλύτερο κέρδος μέσα στον προϋπολογισμό.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Τρεις λέξεις-κλειδιά φέρνουν τα χρήματα. Μία βγάζει ζημιά σε οποιαδήποτε τιμή και πρέπει να σταματήσει. Και ο προϋπολογισμός είναι μικρός: κάθε επιπλέον δολάριο θα έφερνε πίσω σχεδόν τρία.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/keywords.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <li class="qw-tile" id="qw-keywords">
+            <h4 class="qw-q">Πώς πρέπει να μοιραστούν $100 την ημέρα σε πέντε λέξεις-κλειδιά;</h4>
+            <p class="qw-title">Πώς να μοιραστεί ένας μικρός διαφημιστικός προϋπολογισμός σε λέξεις-κλειδιά</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Υπολόγισα πώς αλλάζουν το κόστος και τα κλικ όσο ανεβαίνει η προσφορά για κάθε λέξη. Μετά βρήκα τον συνδυασμό προσφορών που φέρνει το μεγαλύτερο κέρδος μέσα στον προϋπολογισμό.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Τρεις λέξεις-κλειδιά φέρνουν τα χρήματα. Μία βγάζει ζημιά σε οποιαδήποτε τιμή και πρέπει να σταματήσει. Και ο προϋπολογισμός είναι μικρός: κάθε επιπλέον δολάριο θα έφερνε πίσω σχεδόν τρία.</dd></div></dl>
+            <a class="btn work-more" href="/work/keywords.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="research">
           <h3 class="work-group-title" id="work-group-research">Έρευνα αγοράς και προβλέψεις <span>2 εργασίες</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-research">
-          <li class="pcard" id="card-lumibank">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-lumibank">Σε ποιους πελάτες να στοχεύσει πρώτα μια νέα τραπεζική εφαρμογή</h4>
-                <p class="pc-sub">Με βάση συνεντεύξεις και τις απαντήσεις 180 ατόμων σε έρευνα.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια νέα τραπεζική εφαρμογή για νέους επαγγελματίες έπρεπε να αποφασίσει σε ποιους θα απευθυνθεί στο λανσάρισμα και με ποιες λειτουργίες.</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-lumibank" aria-describedby="pc-lumibank">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-lumibank" role="group" aria-labelledby="pc-lumibank">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Από τις συνεντεύξεις έβγαλα τα ερωτήματα που μετράνε. Με τις απαντήσεις 180 ατόμων τους χώρισα σε ομάδες με παρόμοιες ανάγκες. Μετά εξέτασα ποιες λειτουργίες εκτιμούν περισσότερο και τι κάνει κάποιον να ανοίξει λογαριασμό.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Δύο από τις τρεις ομάδες, περίπου τρεις στους τέσσερις, θέλουν τα ίδια: μια εφαρμογή εύκολη στη χρήση και μια τράπεζα που μπορούν να εμπιστευτούν. Σε αυτούς λοιπόν πρώτα, χωρίς μηνιαία συνδρομή, με 2% επιστροφή χρημάτων, εγγραφή σε πέντε λεπτά και ισχυρή ασφάλεια.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/lumibank.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-research">
+          <li class="qw-tile" id="qw-lumibank">
+            <h4 class="qw-q">Σε ποιους να στοχεύσει πρώτα μια νέα τραπεζική εφαρμογή;</h4>
+            <p class="qw-title">Σε ποιους πελάτες να στοχεύσει πρώτα μια νέα τραπεζική εφαρμογή</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Από τις συνεντεύξεις έβγαλα τα ερωτήματα που μετράνε. Με τις απαντήσεις 180 ατόμων τους χώρισα σε ομάδες με παρόμοιες ανάγκες. Μετά εξέτασα ποιες λειτουργίες εκτιμούν περισσότερο και τι κάνει κάποιον να ανοίξει λογαριασμό.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Δύο από τις τρεις ομάδες, περίπου τρεις στους τέσσερις, θέλουν τα ίδια: μια εφαρμογή εύκολη στη χρήση και μια τράπεζα που μπορούν να εμπιστευτούν. Σε αυτούς λοιπόν πρώτα, χωρίς μηνιαία συνδρομή, με 2% επιστροφή χρημάτων, εγγραφή σε πέντε λεπτά και ισχυρή ασφάλεια.</dd></div></dl>
+            <a class="btn work-more" href="/work/lumibank.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
-          <li class="pcard" id="card-halo">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-halo">Πόσο γρήγορα θα πουλούσε μια νέα συσκευή AI</h4>
-                <p class="pc-sub">Για να σχεδιάσει η εταιρεία την παραγωγή και τη διαφήμιση.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια start-up ετοιμαζόταν να λανσάρει μια φορητή συσκευή AI χωρίς οθόνη. Έπρεπε να ξέρει πώς θα εξελιχθούν οι πωλήσεις, για να σχεδιάσει αποθέματα, παραγωγή και διαφήμιση.</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-halo" aria-describedby="pc-halo">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-halo" role="group" aria-labelledby="pc-halo">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Από δεδομένα έρευνας υπολόγισα πόσοι θα μπορούσαν να την αγοράσουν. Μετά χρησιμοποίησα ένα καθιερωμένο μοντέλο για το πώς διαδίδονται τα νέα προϊόντα από στόμα σε στόμα και κοστολόγησα την παραγωγή για κάθε χρόνο.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πωλήσεις ξεκινούν αργά, κορυφώνονται τον έβδομο χρόνο και σταθεροποιούνται ως τον δέκατο τρίτο. Ο μεγαλύτερος κίνδυνος είναι να μη διαδοθεί αρκετά από στόμα σε στόμα. Πρότεινα τιμή λανσαρίσματος £699.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/halo.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <li class="qw-tile" id="qw-halo">
+            <h4 class="qw-q">Πόσο γρήγορα θα πουλήσει μια συσκευή AI χωρίς οθόνη;</h4>
+            <p class="qw-title">Πόσο γρήγορα θα πουλούσε μια νέα συσκευή AI</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Από δεδομένα έρευνας υπολόγισα πόσοι θα μπορούσαν να την αγοράσουν. Μετά χρησιμοποίησα ένα καθιερωμένο μοντέλο για το πώς διαδίδονται τα νέα προϊόντα από στόμα σε στόμα και κοστολόγησα την παραγωγή για κάθε χρόνο.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πωλήσεις ξεκινούν αργά, κορυφώνονται τον έβδομο χρόνο και σταθεροποιούνται ως τον δέκατο τρίτο. Ο μεγαλύτερος κίνδυνος είναι να μη διαδοθεί αρκετά από στόμα σε στόμα. Πρότεινα τιμή λανσαρίσματος £699.</dd></div></dl>
+            <a class="btn work-more" href="/work/halo.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="pricing">
           <h3 class="work-group-title" id="work-group-pricing">Τιμολόγηση <span>2 εργασίες</span></h3>
-          <ul class="work-cards" aria-labelledby="work-group-pricing">
-          <li class="pcard" id="card-clickassist">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-clickassist">Μια AI start-up που χρέωνε πολύ λιγότερα απ’ όσα άξιζε</h4>
-                <p class="pc-sub">Για τα ηλεκτρονικά καταστήματα, το εργαλείο της άξιζε εκατοντάδες φορές την τιμή του.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια start-up πουλούσε ένα εργαλείο AI chat για ιστοσελίδες με $399 τον μήνα. Ήταν σωστή η τιμή για ένα ηλεκτρονικό κατάστημα; Για μια εταιρεία λογισμικού;</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-clickassist" aria-describedby="pc-clickassist">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-clickassist" role="group" aria-labelledby="pc-clickassist">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Υπολόγισα πόσο αξίζει το εργαλείο στον καθένα: επιπλέον πωλήσεις για το κατάστημα, λιγότερα αιτήματα υποστήριξης για την εταιρεία λογισμικού. Μετά έλεγξα πόσο αλλάζει το αποτέλεσμα αν οι παραδοχές μου δεν ισχύουν.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Για το κατάστημα, το εργαλείο άξιζε περίπου $218.000 τον μήνα, κυρίως από επιπλέον πωλήσεις. Για την εταιρεία λογισμικού, περίπου $4.600, από χαμηλότερο κόστος υποστήριξης. Άρα ο καθένας χρειάζεται διαφορετική τιμή, ανάλογα με την αξία που του δίνει το εργαλείο.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/clickassist.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <ul class="qw-grid" aria-labelledby="work-group-pricing">
+          <li class="qw-tile" id="qw-clickassist">
+            <h4 class="qw-q">Ήταν τα $399 τον μήνα η σωστή τιμή για ένα εργαλείο AI chat;</h4>
+            <p class="qw-title">Μια AI start-up που χρέωνε πολύ λιγότερα απ’ όσα άξιζε</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Υπολόγισα πόσο αξίζει το εργαλείο στον καθένα: επιπλέον πωλήσεις για το κατάστημα, λιγότερα αιτήματα υποστήριξης για την εταιρεία λογισμικού. Μετά έλεγξα πόσο αλλάζει το αποτέλεσμα αν οι παραδοχές μου δεν ισχύουν.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Για το κατάστημα, το εργαλείο άξιζε περίπου $218.000 τον μήνα, κυρίως από επιπλέον πωλήσεις. Για την εταιρεία λογισμικού, περίπου $4.600, από χαμηλότερο κόστος υποστήριξης. Άρα ο καθένας χρειάζεται διαφορετική τιμή, ανάλογα με την αξία που του δίνει το εργαλείο.</dd></div></dl>
+            <a class="btn work-more" href="/work/clickassist.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
-          <li class="pcard" id="card-blanket">
-            <div class="pcard-inner">
-              <div class="pcard-face pcard-front">
-                <h4 class="pc-title" id="pc-blanket">Ποιες εκδοχές μιας έξυπνης κουβέρτας να βγουν στην αγορά και σε ποια τιμή</h4>
-                <p class="pc-sub">Δύο προϊόντα απέδωσαν περισσότερο από ένα, και λιγότεροι έφυγαν χωρίς να αγοράσουν.</p>
-                <dl class="pc-steps pc-steps-front"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια θερμαινόμενη κουβέρτα μπορούσε να έχει επίσης ψύξη, δύο ζώνες με ξεχωριστή ρύθμιση, αυτόματο έλεγχο και λειτουργία εξοικονόμησης ενέργειας. Ποιες εκδοχές να κυκλοφορήσουν και σε ποια τιμή;</dd></div></dl>
-                <div class="pc-foot pc-foot-front"><button type="button" class="pc-turn" aria-expanded="false" aria-controls="pcb-blanket" aria-describedby="pc-blanket">Γυρίστε</button></div>
-              </div>
-              <div class="pcard-face pcard-back" id="pcb-blanket" role="group" aria-labelledby="pc-blanket">
-                <dl class="pc-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Με βάση τις βαθμολογίες 150 ατόμων για διάφορες εκδοχές σε διάφορες τιμές, υπολόγισα πόσο αξίζει για αυτούς κάθε χαρακτηριστικό. Μετά τους χώρισα σε ομάδες με παρόμοιες προτιμήσεις και δοκίμασα κάθε πιθανό ζευγάρι προϊόντων.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Κάποιοι θέλουν κυρίως χαμηλή τιμή. Άλλοι πληρώνουν πολύ περισσότερα για ψύξη ή για δύο ζώνες. Ένα βασικό μοντέλο στις £70 μαζί με ένα premium στις £190 έφερε 5% περισσότερα έσοδα από οποιοδήποτε μεμονωμένο προϊόν, και όσοι δεν θα αγόραζαν τίποτα έπεσαν από ένα στους τρεις σε λιγότερους από ένα στους πέντε.</dd></div></dl>
-                <div class="pc-foot"><a class="btn work-more" href="/work/blanket.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a><button type="button" class="pc-turn">Γυρίστε πίσω</button></div>
-              </div>
-            </div>
+          <li class="qw-tile" id="qw-blanket">
+            <h4 class="qw-q">Ποιες εκδοχές μιας έξυπνης κουβέρτας να βγουν στην αγορά, και σε ποια τιμή;</h4>
+            <p class="qw-title">Ποιες εκδοχές μιας έξυπνης κουβέρτας να βγουν στην αγορά και σε ποια τιμή</p>
+            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Με βάση τις βαθμολογίες 150 ατόμων για διάφορες εκδοχές σε διάφορες τιμές, υπολόγισα πόσο αξίζει για αυτούς κάθε χαρακτηριστικό. Μετά τους χώρισα σε ομάδες με παρόμοιες προτιμήσεις και δοκίμασα κάθε πιθανό ζευγάρι προϊόντων.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Κάποιοι θέλουν κυρίως χαμηλή τιμή. Άλλοι πληρώνουν πολύ περισσότερα για ψύξη ή για δύο ζώνες. Ένα βασικό μοντέλο στις £70 μαζί με ένα premium στις £190 έφερε 5% περισσότερα έσοδα από οποιοδήποτε μεμονωμένο προϊόν, και όσοι δεν θα αγόραζαν τίποτα έπεσαν από ένα στους τρεις σε λιγότερους από ένα στους πέντε.</dd></div></dl>
+            <a class="btn work-more" href="/work/blanket.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
           </li>
           </ul>
         </li>
@@ -1705,7 +1612,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 <script>
 /* Selected work: click a project to see the question, what I did and the result. One open at a time. */
 (function () {
-  var items = [].slice.call(document.querySelectorAll(".pcard"));
+  var items = [].slice.call(document.querySelectorAll(".qw-tile"));
   function set(b, on) {
     b.setAttribute("aria-expanded", on ? "true" : "false");
     var panel = document.getElementById(b.getAttribute("aria-controls"));
@@ -1749,7 +1656,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   if (!bar || !list) return;
   var groups = [].slice.call(list.querySelectorAll(".work-group[data-type]"));
   var links = [].slice.call(bar.querySelectorAll("[data-filter]"));
-  var count = document.querySelector("#work .work-count"), total = groups.reduce(function (n, g) { return n + g.querySelectorAll(".pcard").length; }, 0);
+  var count = document.querySelector("#work .work-count"), total = groups.reduce(function (n, g) { return n + g.querySelectorAll(".qw-tile").length; }, 0);
   var el = /^el/.test(document.documentElement.lang), totalText = count ? count.textContent : "";
   var mq = window.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
   var current = "all", busy = [], run = 0;
@@ -1772,9 +1679,9 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var show = groups.filter(function (g) { return type === "all" || g.dataset.type === type; });
     var leave = groups.filter(function (g) { return show.indexOf(g) < 0 && !g.hidden; });
     var arrive = show.filter(function (g) { return g.hidden; });
-    var n = show.reduce(function (k, g) { return k + g.querySelectorAll(".pcard").length; }, 0);
+    var n = show.reduce(function (k, g) { return k + g.querySelectorAll(".qw-tile").length; }, 0);
     if (count) count.textContent = label(n);
-    var move = animate && !mq.matches, small = innerWidth <= 640, tilt = small ? 0 : 35;
+    var move = animate && !mq.matches;
     if (move) show.forEach(function (g) {   // a group caught halfway out comes straight back from where it is
       var L = live.get(g); if (!L || g.hidden) return;
       busy.push(g.animate([{ opacity: L.opacity, transform: L.transform }, { opacity: 1, transform: "none" }], { duration: 250, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }));
@@ -1794,7 +1701,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
         if (Math.abs(dy) > 1) busy.push(el.animate([{ transform: "translateY(" + dy + "px)" }, { transform: "none" }], { duration: 250, easing: "cubic-bezier(0.77, 0, 0.175, 1)" }));
       });
       arrive.forEach(function (g, i) {
-        busy.push(g.animate([{ opacity: 0, transform: "rotateX(" + (-tilt) + "deg) translateY(-10px)" }, { opacity: 1, transform: "none" }],
+        busy.push(g.animate([{ opacity: 0, transform: "translateY(-8px)" }, { opacity: 1, transform: "none" }],
           { duration: 250, delay: 40 + i * 50, easing: "cubic-bezier(0.23, 1, 0.32, 1)", fill: "backwards" }));
       });
     }
@@ -1802,7 +1709,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
       var left = leave.length, gone = [];
       leave.forEach(function (g) {
         var L = live.get(g), from = L ? { opacity: L.opacity, transform: L.transform } : { opacity: 1, transform: "none" };
-        var an = g.animate([from, { opacity: 0, transform: "rotateX(" + tilt + "deg) translateY(-10px)" }],
+        var an = g.animate([from, { opacity: 0, transform: "translateY(-8px)" }],
           { duration: 150, easing: "cubic-bezier(0.23, 1, 0.32, 1)", fill: "forwards" });
         busy.push(an); gone.push(an);
         an.onfinish = function () { if (--left === 0) { swap(); gone.forEach(function (x) { x.cancel(); }); } };   // groups are hidden now, so drop the held end state
@@ -1842,25 +1749,6 @@ document.addEventListener("click", function (e) {
   p.setAttribute("data-instant", "");
   requestAnimationFrame(function () { requestAnimationFrame(function () { p.removeAttribute("data-instant"); }); });
 }, true);
-</script>
-<script>
-/* Project cards turn over to show the problem, what I did and the result. Focus follows to the side you can see;
-   the hidden side is inert. Turned with the keyboard, a card changes instantly. */
-(function () {
-  [].forEach.call(document.querySelectorAll(".pcard"), function (c) {
-    var front = c.querySelector(".pcard-front"), back = c.querySelector(".pcard-back"), open = front.querySelector(".pc-turn"), shut = back.querySelector(".pc-turn");
-    back.inert = true;
-    function turn(on, kb) {
-      if (kb) { c.setAttribute("data-instant", ""); requestAnimationFrame(function () { requestAnimationFrame(function () { c.removeAttribute("data-instant"); }); }); }
-      c.classList.toggle("is-flipped", on);
-      open.setAttribute("aria-expanded", on ? "true" : "false");
-      front.inert = on; back.inert = !on;
-      (on ? back.querySelector("a") : open).focus({ preventScroll: true });
-    }
-    open.addEventListener("click", function (e) { turn(true, e.detail === 0); });
-    shut.addEventListener("click", function (e) { turn(false, e.detail === 0); });
-  });
-})();
 </script>
 </body>
 </html>
