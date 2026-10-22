@@ -455,6 +455,12 @@
   .acc.is-open .work-detail { opacity: 1; }
   .work-facts dd { max-width: 42ch; }
 
+  /* Each row: the discipline, then the project. No headline numbers. */
+  .work-field { color: var(--muted); font-size: .95rem; font-weight: 700; line-height: 1.3; }
+  @media (max-width: 760px) { .work-field { grid-column: 1; } }
+  .work-more { margin-top: clamp(1.1rem, 2vw, 1.5rem); }
+  @media (hover: hover) and (pointer: fine) { .work-more:hover { color: var(--paper); background: var(--black); } }
+
   /* ---------- Articles: a Black block, one row per article ---------- */
   .articles { padding-block: clamp(3rem, 7vw, 5.5rem); color: var(--paper); background: var(--black); }
   .articles .work-count { color: var(--concrete); }
@@ -796,97 +802,128 @@
 
   <section class="work" id="work" aria-labelledby="work-title">
     <div class="wrap">
-      <div class="work-head"><h2 class="work-title" id="work-title">Selected work.</h2><span class="work-count">9 projects</span></div>
-      <p class="work-intro">From my MSc at LSE. The cases and data came from the course. The analysis and recommendations are mine.</p>
+      <div class="work-head"><h2 class="work-title" id="work-title">Selected work.</h2><span class="work-count">11 projects</span></div>
+      <p class="work-intro">Client work at Barracudaworks and projects from my MSc at LSE. Open a project for the summary, or go to its page for the full calculations and charts.</p>
       <ul class="work-list">
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-clickassist" aria-expanded="false" aria-controls="work-clickassist"><span class="work-stat"><span class="work-num">$218k</span><span class="work-label">a month in value to one client, against a $399 price</span></span><span class="work-main"><span class="work-name">Pricing an AI chat tool by the value it creates</span><span class="work-meta">Pricing strategy. Economic value analysis.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-social-pulse" aria-expanded="false" aria-controls="work-social-pulse"><span class="work-field">Marketing analytics</span><span class="work-main"><span class="work-name">Social Pulse: a social media measurement system</span><span class="work-meta">Client work at Barracudaworks.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-social-pulse" role="region" aria-labelledby="work-btn-social-pulse"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>The brief</dt><dd>Barracudaworks needed a measurement system for an athlete’s social media. It had to steer content towards the right audience, keep it on brand and create value for sponsors.</dd></div>
+              <div><dt>What I did</dt><dd>I designed a five-pillar system: content, interaction, audience, growth and brand. Weekly reports give brand-checked recommendations, and monthly reports test them on real posts. Then I built the reporting as a Python pipeline.</dd></div>
+              <div><dt>What it showed</dt><dd>Every result is now judged against the brand strategy and partner commitments, not just views. Automating the pipeline cut report production from four days to one.</dd></div>
+            </dl>
+            <a class="btn work-more" href="/work/social-pulse.html">See the full analysis</a>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-clickassist" aria-expanded="false" aria-controls="work-clickassist"><span class="work-field">Pricing strategy</span><span class="work-main"><span class="work-name">Pricing an AI chat tool by the value it creates</span><span class="work-meta">Economic value analysis.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-clickassist" role="region" aria-labelledby="work-btn-clickassist"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>A start-up priced its AI support widget like help desk software, at $399 a month. Was that right for an online shop and for a software company?</dd></div>
               <div><dt>What I did</dt><dd>Built the economic value for each client from the case benchmarks: extra sales, gross margin and fewer support tickets. Then tested every assumption from worst case to best case.</dd></div>
               <div><dt>What it showed</dt><dd>The value differs in kind, not just size. For the shop, 98% of it is extra sales. For the software firm, it is cost savings. So I recommended pricing each type of client on its own value metric. A high-revenue tier at $2,000 to $5,000 a month would still be only 1% to 2.5% of the value created.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/clickassist.html">See the full analysis</a>
           </div></div></div>
         </li>
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-jaguar" aria-expanded="false" aria-controls="work-jaguar"><span class="work-stat"><span class="work-num">4 causes</span><span class="work-label">behind the backlash, and three ways back</span></span><span class="work-main"><span class="work-name">Why Jaguar’s rebrand backfired, and how it could recover</span><span class="work-meta">Brand strategy. Consumer psychology.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-jaguar" aria-expanded="false" aria-controls="work-jaguar"><span class="work-field">Brand strategy</span><span class="work-main"><span class="work-name">Why Jaguar’s rebrand backfired, and how it could recover</span><span class="work-meta">Consumer psychology.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-jaguar" role="region" aria-labelledby="work-btn-jaguar"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>Jaguar’s 2024 rebrand removed its familiar look in one go. The reaction was ridicule. I wrote a memo, addressed to its Chief Creative Officer, on why it happened and what to do next.</dd></div>
               <div><dt>What I did</dt><dd>A behavioural diagnosis of the reaction, through attention, feeling, memory, identity and social proof. Then a recovery plan, the ways it could fail, and its ethics.</dd></div>
               <div><dt>What it showed</dt><dd>People judged the new look by feel before any explanation, and later messages were read through that first feeling. Loyal owners felt the brand no longer reflected them, and social proof spread the rejection. The fix: bring back a few familiar cues, let trusted reviewers and owners experience the cars, and invite people along rather than demand acceptance.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/jaguar.html">See the full analysis</a>
           </div></div></div>
         </li>
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-lumibank" aria-expanded="false" aria-controls="work-lumibank"><span class="work-stat"><span class="work-num">73%</span><span class="work-label">of the market in the two segments to launch with</span></span><span class="work-main"><span class="work-name">Who a challenger bank app should win first</span><span class="work-meta">Marketing analytics. Built in R.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-lumibank" aria-expanded="false" aria-controls="work-lumibank"><span class="work-field">Marketing analytics</span><span class="work-main"><span class="work-name">Who a challenger bank app should win first</span><span class="work-meta">Built in R.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-lumibank" role="region" aria-labelledby="work-btn-lumibank"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>A new banking app for young professionals needed to know who to target and what to launch with. I had interviews, open answers and survey data from 180 people.</dd></div>
               <div><dt>What I did</dt><dd>Coded the interviews into themes and turned them into measurable scales (Cronbach’s alpha 0.66 to 0.79). Then k-means segmentation, a conjoint study on seven features, ANOVA and chi-square tests across segments, and a regression on adoption intent.</dd></div>
               <div><dt>What it showed</dt><dd>Three segments: Trust-First Optimists, Ethical Convenience Seekers and Sceptical Pragmatists. Convenience drives adoption most, then trust, while fee sensitivity holds it back. The launch profile: no monthly fee, 2% cashback, five-minute sign-up, advanced security and 24/7 phone support.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/lumibank.html">See the full analysis</a>
           </div></div></div>
         </li>
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-blanket" aria-expanded="false" aria-controls="work-blanket"><span class="work-stat"><span class="work-num">£70 + £190</span><span class="work-label">the two-product line, picked from 28,680 pairs</span></span><span class="work-main"><span class="work-name">Designing and pricing a smart blanket line-up</span><span class="work-meta">Pricing strategy. Conjoint analysis in Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-blanket" aria-expanded="false" aria-controls="work-blanket"><span class="work-field">Pricing strategy</span><span class="work-main"><span class="work-name">Designing and pricing a smart blanket line-up</span><span class="work-meta">Conjoint analysis in Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-blanket" role="region" aria-labelledby="work-btn-blanket"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>Which versions of a heating and cooling blanket should launch, and at what prices? The data was 1,800 ratings from 150 people.</dd></div>
               <div><dt>What I did</dt><dd>Estimated what each feature is worth with conjoint regression. Grouped people by their own preferences with k-means. Then built a choice simulator and tested every possible two-product line.</dd></div>
               <div><dt>What it showed</dt><dd>Three clear groups: budget buyers who care about price and eco mode, people who sleep too warm and want cooling, and couples who want each side set separately. A £70 basic model plus a £190 premium model earned 5.2% more than the best single product, and cut the share who buy nothing from 32.7% to 18.7%.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/blanket.html">See the full analysis</a>
           </div></div></div>
         </li>
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-keywords" aria-expanded="false" aria-controls="work-keywords"><span class="work-stat"><span class="work-num">$670</span><span class="work-label">daily profit from a $100 daily ad budget</span></span><span class="work-main"><span class="work-name">Splitting a search ad budget across keywords</span><span class="work-meta">Digital marketing. Optimisation in Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-google-ads" aria-expanded="false" aria-controls="work-google-ads"><span class="work-field">Digital marketing</span><span class="work-main"><span class="work-name">Growing a Google Ads account from one campaign to three channels</span><span class="work-meta">Google Ads.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-google-ads" role="region" aria-labelledby="work-btn-google-ads"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>The brief</dt><dd>I ran Google Ads for Buhi Supply Co., a bag brand, over a seven-round simulation. The budget grew from $1,200 to $14,850, and the range from one product to three.</dd></div>
+              <div><dt>What I did</dt><dd>Matched each product to two customer personas and built keywords from how they search. Then paused over 46 keywords that didn’t convert, moved budget to the best returns, switched bidding from traffic to sales, and added display, retargeting and shopping ads.</dd></div>
+              <div><dt>What it showed</dt><dd>Matching ad copy to the landing pages more than doubled revenue in one round. Retargeting people who had added to cart returned $7.82 for every $1. Profit rose from $2,896 to $47,650, with a perfect score in every round and first place in three.</dd></div>
+            </dl>
+            <a class="btn work-more" href="/work/google-ads.html">See the full analysis</a>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-keywords" aria-expanded="false" aria-controls="work-keywords"><span class="work-field">Digital marketing</span><span class="work-main"><span class="work-name">Splitting a search ad budget across keywords</span><span class="work-meta">Optimisation in Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-keywords" role="region" aria-labelledby="work-btn-keywords"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>How should $100 a day be split across five search keywords, and what should each one bid?</dd></div>
               <div><dt>What I did</dt><dd>Modelled how cost per click and clicks per day change with the bid, for each keyword. Then optimised all five bids together within the budget, from eight different starting points.</dd></div>
               <div><dt>What it showed</dt><dd>Three keywords earn the budget. One is starved because the others pay back more. One loses money at any bid, so it should be paused. The budget itself is the limit: each extra dollar returns $2.91, so raising it to about $200 a day adds $188 of profit.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/keywords.html">See the full analysis</a>
           </div></div></div>
         </li>
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-lingoleap" aria-expanded="false" aria-controls="work-lingoleap"><span class="work-stat"><span class="work-num">−$10.4m</span><span class="work-label">lost by capping free lessons</span></span><span class="work-main"><span class="work-name">Should a language app limit its free plan?</span><span class="work-meta">Pricing strategy. Customer lifetime value.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-lingoleap" aria-expanded="false" aria-controls="work-lingoleap"><span class="work-field">Pricing strategy</span><span class="work-main"><span class="work-name">Should a language app limit its free plan?</span><span class="work-meta">Customer lifetime value.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-lingoleap" role="region" aria-labelledby="work-btn-lingoleap"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>Marketing wanted a daily lesson cap to push free users to pay. Would it add value or destroy it?</dd></div>
               <div><dt>What I did</dt><dd>Built customer lifetime value for paid and free users, treating a free user’s chance to convert as an option. Then found the break-even conversion rate and tested which forecasts drive the decision.</dd></div>
               <div><dt>What it showed</dt><dd>94.5% of a free user’s value is the chance they convert. The cap lifts conversion but pushes users out faster, losing $2.09 per user across five million users. It only breaks even at 1.42% monthly conversion, against a 1.3% forecast, so a pilot should come first.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/lingoleap.html">See the full analysis</a>
           </div></div></div>
         </li>
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-royal-grand" aria-expanded="false" aria-controls="work-royal-grand"><span class="work-stat"><span class="work-num">4.6 → 3.5</span><span class="work-label">average guest rating after a high-tech renovation</span></span><span class="work-main"><span class="work-name">Did a luxury hotel’s renovation damage its brand?</span><span class="work-meta">Brand strategy. Campaign planning.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-royal-grand" aria-expanded="false" aria-controls="work-royal-grand"><span class="work-field">Brand strategy</span><span class="work-main"><span class="work-name">Did a luxury hotel’s renovation damage its brand?</span><span class="work-meta">Campaign planning.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-royal-grand" role="region" aria-labelledby="work-btn-royal-grand"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>An Alpine spa hotel added robot concierges and high-tech features, and its ratings fell. What happened to the brand, and what campaign should follow?</dd></div>
               <div><dt>What I did</dt><dd>Read the reviews through Aaker’s brand personality dimensions and split guests by type. Then planned a campaign for two audiences, using segmentation, story-led messages and guest content, with ways to measure it.</dd></div>
               <div><dt>What it showed</dt><dd>Brand equity moved rather than simply fell. Loyal guests dropped to about 2.5, missing the warmth. New international guests rated it about 4.75, enjoying the excitement. The campaign: “Legacy Stories” for loyal guests and guest-made content for new ones, tracked by pass renewals and NPS for each group.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/royal-grand.html">See the full analysis</a>
           </div></div></div>
         </li>
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-detergent" aria-expanded="false" aria-controls="work-detergent"><span class="work-stat"><span class="work-num">−9.2%</span><span class="work-label">Tide sales after a 10% Persil price cut</span></span><span class="work-main"><span class="work-name">Who steals from whom on price in laundry detergent</span><span class="work-meta">Pricing strategy. Econometrics in Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-detergent" aria-expanded="false" aria-controls="work-detergent"><span class="work-field">Pricing strategy</span><span class="work-main"><span class="work-name">Who steals from whom on price in laundry detergent</span><span class="work-meta">Econometrics in Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-detergent" role="region" aria-labelledby="work-btn-detergent"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>Tide and Gain share an owner and compete with Persil. How do their prices affect each other’s sales? I had 104 weeks of store data.</dd></div>
               <div><dt>What I did</dt><dd>Fitted a log-log demand model for each brand to build a full price elasticity matrix, then scored each brand’s clout and vulnerability. Checked the models for stationarity, multicollinearity and stability over time.</dd></div>
               <div><dt>What it showed</dt><dd>It is not a three-way fight. Tide and Persil chase the same premium shopper, while Gain sits in its own value tier. A 10% Persil price cut would lift Persil’s revenue by 22% and cost Tide $16,466 a week. Gain would barely notice.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/detergent.html">See the full analysis</a>
           </div></div></div>
         </li>
         <li>
-          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-halo" aria-expanded="false" aria-controls="work-halo"><span class="work-stat"><span class="work-num">Year 7</span><span class="work-label">when sales of a screenless AI wearable peak</span></span><span class="work-main"><span class="work-name">Forecasting the launch of a screenless AI device</span><span class="work-meta">Marketing analytics. Bass diffusion model.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-halo" aria-expanded="false" aria-controls="work-halo"><span class="work-field">Marketing analytics</span><span class="work-main"><span class="work-name">Forecasting the launch of a screenless AI device</span><span class="work-meta">Bass diffusion model.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
           <div class="acc" id="work-halo" role="region" aria-labelledby="work-btn-halo"><div class="acc-inner"><div class="work-detail">
             <dl class="work-facts">
               <div><dt>The brief</dt><dd>A start-up needed a sense of how fast its AI wearable would sell, to plan stock, capacity and media spend.</dd></div>
               <div><dt>What I did</dt><dd>Sized the market at 3.75 million units from survey data. Built a Bass diffusion forecast with benchmarks from wearables and voice tech, and costed production year by year. Then set a launch price.</dd></div>
               <div><dt>What it showed</dt><dd>A slow start of 80,000 units in year one, a peak of 624,000 in year seven, and saturation by year thirteen. The main risk is weak word of mouth, and the gap between what people say and what they do. Either could stall demand early and leave capacity unused. Recommended a skimming price of £699.</dd></div>
             </dl>
+            <a class="btn work-more" href="/work/halo.html">See the full analysis</a>
           </div></div></div>
         </li>
       </ul>
