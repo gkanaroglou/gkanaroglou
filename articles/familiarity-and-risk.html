@@ -583,6 +583,106 @@
   .post-more li a:active { opacity: .7; }
   .post-more .post-back { margin-top: 1.25rem; }
   @media (hover: hover) and (pointer: fine) { .post-more li a:hover { color: var(--cobalt); } }
+  .post-body .post-formula { max-width: none; margin-top: 1.25rem; padding: .8rem 1rem; background: #fff; border-left: 6px solid var(--black); font-weight: 600; line-height: 1.45; }
+  .post-body ol { max-width: 62ch; margin: .75rem 0 0 1.35rem; line-height: 1.55; }
+  .post-body ol li { margin-top: .35rem; padding-left: .25rem; }
+  .post .table-wrap { overflow-x: auto; margin-top: 1.5rem; }
+  .post .table-wrap:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+  .post table { width: 100%; min-width: 34rem; border-collapse: collapse; font-size: .9rem; line-height: 1.4; }
+  .post caption { padding-bottom: .5rem; font-size: 1rem; font-weight: 800; text-align: left; }
+  .post th, .post td { padding: .6rem .75rem .6rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--concrete); }
+  .post th { color: var(--muted); font-weight: 700; border-bottom: 3px solid var(--black); }
+  .post td { font-variant-numeric: tabular-nums; }
+  .post figure a { display: block; }
+  .post figure a:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+
+  .post .chart { margin-top: 2rem; }
+  .chart { margin: 0; padding-top: .6rem; border-top: 3px solid var(--black); }
+  .chart-title { font-size: 1rem; font-weight: 800; line-height: 1.25; }
+  .chart figcaption { margin-top: .8rem; }
+  .hbars { display: grid; gap: .8rem; margin-top: 1rem; list-style: none; }
+  .hbars li { display: grid; grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr) 3.75rem; align-items: center; gap: .9rem; }
+  .hb-label { font-size: .9rem; font-weight: 700; line-height: 1.2; }
+  .hb-label small { display: block; margin-top: .1rem; color: var(--muted); font-size: .75rem; font-weight: 600; }
+  .hb-track { display: block; height: 1.6rem; }
+  .hb-fill { display: block; width: calc(var(--v) * 100%); height: 100%; background: var(--black); }
+  .hb-fill.is-hi { background: var(--orange); }
+  .hb-value { font-size: 1rem; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+  .cols { position: relative; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: .4rem; margin-top: 1rem; padding-top: 1.6rem; list-style: none; border-bottom: 2px solid var(--black); }
+  .cols li { position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; }
+  .col-value { margin-bottom: .3rem; font-size: clamp(.7rem, 1.5vw, .8125rem); font-weight: 800; text-align: center; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .col-bar { display: block; height: calc(var(--v) * 9rem); background: var(--black); }
+  .col-label { position: absolute; top: 100%; left: 0; right: 0; padding-top: .35rem; color: var(--muted); font-size: .75rem; font-weight: 700; text-align: center; }
+  .cols + .chart-notes { margin-top: 2rem; }
+  .chart-notes { display: grid; gap: .3rem; list-style: none; font-size: .8125rem; line-height: 1.35; }
+  .chart-notes strong { display: inline-block; min-width: 2rem; font-weight: 800; }
+  @media (max-width: 520px) {
+    .hbars li { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label label" "track value"; row-gap: .3rem; }
+    .hb-label { grid-area: label; } .hb-track { grid-area: track; } .hb-value { grid-area: value; }
+  }
+  /* ---------- Inner pages: masthead, summary strip and a sidebar of everything else ---------- */
+  .mast { color: var(--paper); background: var(--black); }
+  .mast .wrap { padding-block: clamp(1.25rem, 3vw, 2rem) clamp(2rem, 5vw, 3.25rem); }
+  .mast-back { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper); font-weight: 700; text-underline-offset: 3px; }
+  .mast-back:active { opacity: .7; }
+  .mast-type { margin-top: .6rem; color: var(--orange); font-size: .95rem; font-weight: 800; }
+  .mast h1 { max-width: 24ch; margin: .35rem 0 0 -0.02em; font-size: clamp(2.1rem, 5vw, 4rem); font-weight: 900; line-height: .97; letter-spacing: -.04em; }
+  .mast-stand { max-width: 54ch; margin-top: 1rem; color: var(--concrete); font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight: 600; line-height: 1.4; }
+  .mast-meta { max-width: 54ch; margin-top: 1.25rem; padding-top: .7rem; border-top: 1px solid var(--muted); color: var(--concrete); font-size: .875rem; font-weight: 600; }
+  .glance { border-bottom: 3px solid var(--black); }
+  .glance dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.25rem, 3vw, 2.5rem); padding-block: clamp(1.5rem, 3.5vw, 2.25rem); }
+  .glance dl div { padding-top: .6rem; border-top: 3px solid var(--orange); }
+  .glance dt { font-size: .875rem; font-weight: 800; }
+  .glance dd { max-width: 44ch; margin: .35rem 0 0; line-height: 1.5; }
+  .page-layout { display: grid; grid-template-columns: minmax(12rem, 15rem) minmax(0, 52rem); align-items: start; gap: clamp(2rem, 5vw, 4.5rem); padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 5rem); }
+  .page-layout .post { grid-column: 2; grid-row: 1; width: auto; margin: 0; padding: 0; }
+  .page-layout .side { grid-column: 1; grid-row: 1; }
+  .page-layout .post-body { margin-top: 0; }
+  .page-layout .post-body > h2:first-child { margin-top: 0; }
+  .side { position: sticky; top: 6rem; max-height: calc(100vh - 7rem); overflow-y: auto; padding-right: .25rem; }
+  .side-title { padding-bottom: .5rem; font-size: 1rem; font-weight: 800; border-bottom: 3px solid var(--black); }
+  .side-title a { color: inherit; text-decoration: none; }
+  .side-type { margin-top: 1.1rem; color: var(--muted); font-size: .8125rem; font-weight: 800; }
+  .side ul { list-style: none; margin-top: .25rem; }
+  .side li a { display: block; padding: .35rem 0 .35rem .65rem; color: var(--black); font-size: .95rem; font-weight: 600; line-height: 1.3; text-decoration: none; border-left: 3px solid var(--concrete); }
+  .side li a[aria-current="page"] { font-weight: 800; border-left-color: var(--orange); }
+  .side li a:active { opacity: .7; }
+  .side .side-title + .side-type { margin-top: .75rem; }
+  .side-block + .side-block { margin-top: 2rem; }
+  @media (hover: hover) and (pointer: fine) { .side li a:hover { border-left-color: var(--black); } }
+  @media (max-width: 900px) {
+    .page-layout { grid-template-columns: minmax(0, 1fr); }
+    .page-layout .post, .page-layout .side { grid-column: 1; grid-row: auto; }
+    .side { position: static; order: 2; max-height: none; overflow: visible; padding-top: 1.5rem; border-top: 3px solid var(--black); }
+    .glance dl { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  /* ---------- Site navigation: Work (with its types) and Articles, left of the logo ---------- */
+  .top .site-nav { grid-column: 1; justify-self: start; display: flex; align-items: center; column-gap: 1.1rem; }
+  .site-link { display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; padding: 0; color: var(--black); font: inherit; font-size: .95rem; font-weight: 700; text-decoration: none; background: none; border: 0; border-bottom: 3px solid transparent; cursor: pointer; -webkit-user-select: none; user-select: none; transition: border-color 150ms ease; }
+  .site-link:active { opacity: .7; }
+  .site-link[aria-expanded="true"] { border-color: var(--black); }
+  .site-caret { width: .45rem; height: .45rem; margin-top: -.2rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 150ms ease; }
+  .site-link[aria-expanded="true"] .site-caret { margin-top: .25rem; transform: rotate(225deg); }
+  .sn-narrow { display: none; }
+  @media (hover: hover) and (pointer: fine) { .site-link:hover { border-color: var(--black); } }
+  .site-menu { position: fixed; left: 0; right: 0; z-index: 6; color: var(--paper); background: var(--black); border-bottom: 3px solid var(--orange); }
+  .site-menu[hidden] { display: none; }
+  .site-menu .wrap { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem clamp(1.25rem, 3vw, 2.5rem); padding-block: 1rem 1.15rem; }
+  .site-menu a { display: inline-flex; align-items: baseline; gap: .4rem; min-height: 44px; padding-top: .55rem; color: var(--paper); font-size: 1.05rem; font-weight: 700; text-decoration: none; }
+  .site-menu a span { color: var(--concrete); font-size: .8125rem; font-weight: 600; }
+  .site-menu a:focus-visible { outline: 3px solid var(--paper); outline-offset: 3px; }
+  .site-menu .sm-all { color: var(--orange); }
+  .site-menu .sm-articles { display: none; }
+  @media (hover: hover) and (pointer: fine) { .site-menu a:hover { color: var(--orange); } }
+  @media (max-width: 640px) {
+    .sn-wide, .site-nav .sn-art { display: none; }
+    .sn-narrow { display: inline; }
+    .site-menu .wrap { flex-direction: column; gap: 0; }
+    .site-menu .sm-articles { display: inline-flex; margin-top: .4rem; padding-top: .8rem; border-top: 1px solid var(--muted); }
+  }
+  @media (prefers-reduced-motion: reduce) { .site-link, .site-caret { transition: none; } }
+
 </style>
 <script type="application/ld+json">
 {
@@ -625,6 +725,7 @@
 </div>
 <header class="top">
   <div class="wrap">
+    <nav class="site-nav" aria-label="Site"><button type="button" class="site-link site-work" aria-expanded="false" aria-controls="site-menu"><span class="sn-wide">Work</span><span class="sn-narrow">Menu</span><span class="site-caret" aria-hidden="true"></span></button><a class="site-link sn-art" href="/#articles">Articles</a></nav>
     <a class="mark" href="/" aria-label="George Kanaroglou, home">
       <span class="logo">
         <svg class="logo-gk" viewBox="10 16 340 168" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M97.4,131.0 L97.4,131.9 L97.7,132.7 L98.2,133.4 L99.0,133.8 L99.8,134.0 L105.6,134.0 L106.7,134.4 L107.7,135.0 L108.7,136.3 L109.0,137.9 L108.8,139.4 L108.0,140.7 L106.6,141.7 L100.9,143.8 L96.0,145.0 L91.3,145.7 L86.8,146.0 L82.6,145.9 L78.3,145.3 L74.3,144.3 L69.6,142.6 L65.2,140.3 L61.3,137.4 L57.9,134.1 L55.1,130.5 L52.6,126.2 L50.8,121.7 L49.6,116.8 L49.1,112.8 L49.0,108.4 L49.3,104.2 L50.0,100.0 L51.1,95.8 L52.6,91.6 L54.4,87.5 L56.8,83.2 L59.3,79.3 L62.2,75.6 L65.3,72.1 L68.7,68.9 L72.4,65.9 L76.4,63.1 L80.5,60.7 L84.6,58.7 L89.7,56.7 L94.9,55.2 L99.8,54.4 L104.9,54.0 L338.1,54.0 L339.4,53.3 L340.2,52.1 L346.4,23.0 L346.2,21.5 L345.3,20.4 L343.9,20.0 L111.0,20.0 L102.1,20.7 L93.6,22.3 L84.6,24.8 L76.2,28.1 L70.9,30.6 L65.7,33.5 L60.2,36.9 L55.3,40.4 L50.2,44.5 L45.7,48.5 L41.1,53.1 L37.2,57.6 L33.1,62.7 L29.8,67.6 L26.4,73.0 L23.7,78.2 L21.1,83.9 L19.0,89.2 L17.2,95.1 L15.9,100.5 L14.9,106.4 L14.4,111.7 L14.2,117.5 L14.5,122.7 L15.2,128.3 L16.2,133.3 L17.7,138.6 L19.5,143.2 L21.8,148.0 L24.3,152.2 L27.4,156.5 L30.6,160.3 L34.3,163.9 L38.1,167.1 L42.5,170.1 L46.8,172.5 L53.0,175.3 L59.6,177.5 L67.0,179.1 L74.1,179.8 L79.0,180.0 L157.0,180.0 L158.4,179.6 L159.0,178.9 L159.4,178.0 L179.6,83.0 L179.6,82.0 L179.3,81.3 L178.8,80.6 L178.1,80.2 L177.3,80.0 L144.8,80.0 L143.5,80.4 L142.7,81.2 L142.3,82.3 L142.9,86.6 L143.0,89.9 L142.9,93.5 L142.5,97.2 L141.6,101.5 L140.9,102.6 L140.0,103.4 L139.0,103.8 L138.0,104.0 L105.1,104.0 L104.1,104.2 L103.3,104.8 L102.7,106.0Z"/><path fill-rule="evenodd" d="M185.6,177.0 L185.6,178.0 L186.1,179.0 L186.9,179.7 L187.9,180.0 L219.0,180.0 L219.8,179.9 L220.7,179.3 L221.3,178.4 L223.1,170.2 L223.9,168.7 L234.7,160.0 L235.9,159.4 L237.1,159.2 L238.6,159.6 L239.9,160.4 L255.6,179.2 L256.8,179.9 L306.1,180.0 L307.5,179.6 L308.2,178.9 L308.6,177.9 L308.6,176.9 L308.2,176.0 L273.2,134.4 L272.4,132.8 L272.4,131.0 L272.9,129.8 L273.8,128.8 L329.5,84.4 L330.0,83.7 L330.3,82.8 L330.2,81.9 L329.9,81.1 L329.0,80.3 L327.9,80.0 L281.0,80.0 L280.2,80.1 L279.4,80.5 L243.2,109.4 L242.0,110.1 L240.7,110.3 L239.2,109.9 L237.9,109.1 L237.0,107.8 L236.8,106.2 L241.6,82.9 L241.5,81.7 L240.8,80.6 L240.1,80.2 L239.2,80.0 L208.2,80.0 L206.9,80.4 L206.2,81.1 L205.8,82.0Z"/></svg>
@@ -633,6 +734,23 @@
     </a>
   </div>
 </header>
+<div class="site-menu" id="site-menu" hidden><div class="wrap"><a class="sm-all" href="/#work">All work <span>11</span></a><a href="/#work-group-client">Client work <span>1</span></a><a href="/#work-group-pricing">Pricing <span>4</span></a><a href="/#work-group-brand">Brand <span>2</span></a><a href="/#work-group-digital">Digital marketing <span>2</span></a><a href="/#work-group-research">Customer research and forecasting <span>2</span></a><a class="sm-articles" href="/#articles">Articles <span>3</span></a></div></div>
+<script>
+/* Work menu: opens a band under the header with each type of work, closes on Escape, outside clicks and link clicks */
+(function () {
+  var b = document.querySelector(".site-work"), m = document.getElementById("site-menu"), top = document.querySelector(".top");
+  if (!b || !m || !top) return;
+  function place() { m.style.top = Math.max(0, top.getBoundingClientRect().bottom) + "px"; }
+  function open() { place(); m.hidden = false; b.setAttribute("aria-expanded", "true"); }
+  function close() { m.hidden = true; b.setAttribute("aria-expanded", "false"); }
+  b.addEventListener("click", function (e) { e.stopPropagation(); if (m.hidden) open(); else close(); });
+  document.addEventListener("click", function (e) { if (!m.hidden && !m.contains(e.target)) close(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !m.hidden) { close(); b.focus(); } });
+  m.addEventListener("click", function (e) { if (e.target.closest("a")) close(); });
+  window.addEventListener("resize", function () { if (!m.hidden) place(); });
+  window.addEventListener("scroll", function () { if (!m.hidden) place(); }, { passive: true });
+})();
+</script>
 <script>
 /* GK grows into the full Gkanaroglou wordmark: on every page load, including a refresh,
    and whenever a mouse rests on it. It only grows when the full name has room beside the links. */
@@ -647,7 +765,8 @@
     var m = logo.getBoundingClientRect(), w = mark.parentNode.getBoundingClientRect();
     var limit = nav && nav.offsetWidth ? nav.getBoundingClientRect().left : w.right;   // pages without a language link use the edge
     var centre = m.left + m.width / 2;
-    return centre + half + 16 <= limit && centre - half >= w.left;
+    var sn = document.querySelector(".site-nav"), lim = sn && sn.offsetWidth ? sn.getBoundingClientRect().right + 16 : w.left;   // room on the left too, now the site links sit there
+    return centre + half + 16 <= limit && centre - half >= lim;
   }
   function open() { if (room()) mark.classList.add("is-full"); }
   function close() { mark.classList.remove("is-full"); }
@@ -669,13 +788,17 @@
 })();
 </script>
 
-<main class="post" id="main">
-  <article>
-    <a class="post-back" href="/#articles">All articles</a>
+<main id="main">
+  <header class="mast"><div class="wrap">
+    <a class="mast-back" href="/#articles">All articles</a>
+    <p class="mast-type">Article</p>
     <h1>Does familiarity make us blind to risk?</h1>
-    <p class="post-standfirst">Repetition turns anxiety into comfort. In some settings that makes us safer. In others, it quietly hides real danger.</p>
-    <p class="post-meta">3 min read. Written for the Consumer Insights course on my MSc at LSE.</p>
-    <div class="post-body">
+    <p class="mast-stand">Repetition turns anxiety into comfort. In some settings that makes us safer. In others, it quietly hides real danger.</p>
+    <p class="mast-meta">3 min read. Written for the Consumer Insights course on my MSc at LSE.</p>
+  </div></header>
+  <div class="wrap page-layout">
+    <article class="post">
+      <div class="post-body">
 <p><a href="https://doi.org/10.1207/s15327957pspr0803_1">The first time we encounter a new situation, it often feels tense and uncertain. After a while, the same situation can feel almost relaxed. Repetition turns anxiety into comfort, and what once felt risky begins to feel routine.</a></p>
 <p>At the same time, many of the biggest risks in modern life remain objectively dangerous. Finance, health, social media, careers and even relationships are full of uncertainty and potential harm. <a href="https://doi.org/10.1037/h0022681">However, people often become more willing to ignore risks the more familiar a situation becomes.</a></p>
 <p class="post-question">If familiarity reduces emotional uncertainty and makes situations feel safe, can it also make us ignore real risks, especially when feedback is noisy and outcomes are ambiguous?</p>
@@ -715,39 +838,16 @@
 <h2>So, can familiarity make us blind to risk?</h2>
 <p>In stable environments, familiarity sharpens judgement, reduces effort and genuinely makes people safer. But in noisier systems, where feedback is delayed or misleading, the same sense of ease can become deceptive.</p>
 <p>Comfort starts to reflect familiarity rather than accuracy. The challenge is recognising when experience is guiding us, and when it is quietly drifting out of sync with the world we are in.</p>
-    </div>
-  </article>
-  <section class="post-refs" aria-labelledby="refs-title">
-    <h2 id="refs-title">References</h2>
-    <ol>
-      <li>Bornstein, R. F., &amp; D’Agostino, P. R. (1992). Stimulus recognition and the mere exposure effect. <em>Journal of Personality and Social Psychology</em>, <em>63</em>(4), 545–552. <a href="https://doi.org/10.1037/0022-3514.63.4.545">https://doi.org/10.1037/0022-3514.63.4.545</a></li>
-      <li>Brainerd, C. J., &amp; Reyna, V. F. (2002). Fuzzy-Trace theory and false memory. <em>Current Directions in Psychological Science</em>, <em>11</em>(5), 164–169. <a href="https://doi.org/10.1111/1467-8721.00192">https://doi.org/10.1111/1467-8721.00192</a></li>
-      <li>Cialdini, R. B. (2001). The science of persuasion. <em>Scientific American</em>, <em>284</em>(2), 76–81. <a href="https://www.jstor.org/stable/26059056">https://www.jstor.org/stable/26059056</a></li>
-      <li>Conlisk, J. (1996). Why bounded rationality? <em>Journal of Economic Literature</em>, <em>34</em>(2), 669–700. <a href="https://www.jstor.org/stable/2729218">https://www.jstor.org/stable/2729218</a></li>
-      <li>Folkes, V. S. (1988). The availability heuristic and perceived risk. <em>Journal of Consumer Research</em>, <em>15</em>(1), 13–23. <a href="https://doi.org/10.2307/2489168">https://doi.org/10.2307/2489168</a></li>
-      <li>Gilovich, T., Griffin, D. W., &amp; Kahneman, D. (2007). <em>Heuristics and biases: The psychology of intuitive judgment</em> (pp. 49–81). Cambridge University Press.</li>
-      <li>Grossman, Z., &amp; Owens, D. (2012). An unlucky feeling: Overconfidence and noisy feedback. <em>Journal of Economic Behavior &amp; Organization</em>, <em>84</em>(2), 510–524. <a href="https://doi.org/10.1016/j.jebo.2012.08.006">https://doi.org/10.1016/j.jebo.2012.08.006</a></li>
-      <li>He, K. (2022). Mislearning from censored data: The gambler’s fallacy and other correlational mistakes in optimal‐stopping problems. <em>Theoretical Economics</em>, <em>17</em>(3), 1269–1312. <a href="https://doi.org/10.3982/te4657">https://doi.org/10.3982/te4657</a></li>
-      <li>Korteweg, A., &amp; Sorensen, M. (2017). Skill and luck in private equity performance. <em>Journal of Financial Economics</em>, <em>124</em>(3), 535–562. <a href="https://doi.org/10.1016/j.jfineco.2017.03.006">https://doi.org/10.1016/j.jfineco.2017.03.006</a></li>
-      <li>Logan, G. D. (2018). Automatic control: How experts act without thinking. <em>Psychological Review</em>, <em>125</em>(4), 453–485. <a href="https://doi.org/10.1037/rev0000100">https://doi.org/10.1037/rev0000100</a></li>
-      <li>Rahmandad, H., Repenning, N., &amp; Sterman, J. (2009). Effects of feedback delay on learning. <em>System Dynamics Review</em>, <em>25</em>(4), 309–338. <a href="https://doi.org/10.1002/sdr.427">https://doi.org/10.1002/sdr.427</a></li>
-      <li>Reber, R., Schwarz, N., &amp; Winkielman, P. (2004). Processing fluency and aesthetic pleasure: Is beauty in the perceiver’s processing experience? <em>Personality and Social Psychology Review</em>, <em>8</em>(4), 364–382. <a href="https://doi.org/10.1207/s15327957pspr0804_3">https://doi.org/10.1207/s15327957pspr0804_3</a></li>
-      <li>Rodrigues, J. (2015, February 24). <em>Twenty years ago, rogue trader Nick Leeson brought down Barings Bank</em>. The Guardian. <a href="https://www.theguardian.com/business/from-the-archive-blog/2015/feb/24/nick-leeson-barings-bank-1995-20-archive">https://www.theguardian.com/business/from-the-archive-blog/2015/feb/24/nick-leeson-barings-bank-1995-20-archive</a></li>
-      <li>Slovic, P., Finucane, M. L., Peters, E., &amp; MacGregor, D. G. (2007). The Affect Heuristic. <em>European Journal of Operational Research</em>, <em>177</em>(3), 1333–1352. <a href="https://doi.org/10.1016/j.ejor.2005.04.006">https://doi.org/10.1016/j.ejor.2005.04.006</a></li>
-      <li>Strack, F., &amp; Deutsch, R. (2004). Reflective and impulsive determinants of social behavior. <em>Personality and Social Psychology Review</em>, <em>8</em>(3), 220–247. <a href="https://doi.org/10.1207/s15327957pspr0803_1">https://doi.org/10.1207/s15327957pspr0803_1</a></li>
-      <li>Sweller, J. (2011). Cognitive load theory. <em>Psychology of Learning and Motivation</em>, <em>55</em>(1), 37–76. <a href="https://doi.org/10.1016/B978-0-12-387691-1.00002-8">https://doi.org/10.1016/B978-0-12-387691-1.00002-8</a></li>
-      <li>Thompson, R. F., &amp; Spencer, W. A. (1966). Habituation: A model phenomenon for the study of neuronal substrates of behavior. <em>Psychological Review</em>, <em>73</em>(1), 16–43. <a href="https://doi.org/10.1037/h0022681">https://doi.org/10.1037/h0022681</a></li>
-      <li>Timperley, J. (2024, September 6). <em>The biggest oil spill in US history: What we’ve learned since Deepwater Horizon</em>. BBC. <a href="https://www.bbc.com/future/article/20240905-have-we-improved-oil-spill-clean-ups-since-bp-deepwater-horizon">https://www.bbc.com/future/article/20240905-have-we-improved-oil-spill-clean-ups-since-bp-deepwater-horizon</a></li>
-    </ol>
-  </section>
-  <nav class="post-more" aria-labelledby="more-title">
-    <h2 id="more-title">More articles</h2>
-    <ul>
-      <li><a href="/articles/analogue-comeback.html">The comeback of analogue technology.</a></li>
-      <li><a href="/articles/podcast-loyalty.html">Why we’re all listening.</a></li>
-    </ul>
-    <a class="post-back" href="/#work">See my selected work</a>
-  </nav>
+      </div>
+      <section class="post-refs" aria-labelledby="refs-title"><h2 id="refs-title">References</h2><ol><li>Bornstein, R. F., &amp; D’Agostino, P. R. (1992). Stimulus recognition and the mere exposure effect. <em>Journal of Personality and Social Psychology</em>, <em>63</em>(4), 545–552. <a href="https://doi.org/10.1037/0022-3514.63.4.545">https://doi.org/10.1037/0022-3514.63.4.545</a></li><li>Brainerd, C. J., &amp; Reyna, V. F. (2002). Fuzzy-Trace theory and false memory. <em>Current Directions in Psychological Science</em>, <em>11</em>(5), 164–169. <a href="https://doi.org/10.1111/1467-8721.00192">https://doi.org/10.1111/1467-8721.00192</a></li><li>Cialdini, R. B. (2001). The science of persuasion. <em>Scientific American</em>, <em>284</em>(2), 76–81. <a href="https://www.jstor.org/stable/26059056">https://www.jstor.org/stable/26059056</a></li><li>Conlisk, J. (1996). Why bounded rationality? <em>Journal of Economic Literature</em>, <em>34</em>(2), 669–700. <a href="https://www.jstor.org/stable/2729218">https://www.jstor.org/stable/2729218</a></li><li>Folkes, V. S. (1988). The availability heuristic and perceived risk. <em>Journal of Consumer Research</em>, <em>15</em>(1), 13–23. <a href="https://doi.org/10.2307/2489168">https://doi.org/10.2307/2489168</a></li><li>Gilovich, T., Griffin, D. W., &amp; Kahneman, D. (2007). <em>Heuristics and biases: The psychology of intuitive judgment</em> (pp. 49–81). Cambridge University Press.</li><li>Grossman, Z., &amp; Owens, D. (2012). An unlucky feeling: Overconfidence and noisy feedback. <em>Journal of Economic Behavior &amp; Organization</em>, <em>84</em>(2), 510–524. <a href="https://doi.org/10.1016/j.jebo.2012.08.006">https://doi.org/10.1016/j.jebo.2012.08.006</a></li><li>He, K. (2022). Mislearning from censored data: The gambler’s fallacy and other correlational mistakes in optimal‐stopping problems. <em>Theoretical Economics</em>, <em>17</em>(3), 1269–1312. <a href="https://doi.org/10.3982/te4657">https://doi.org/10.3982/te4657</a></li><li>Korteweg, A., &amp; Sorensen, M. (2017). Skill and luck in private equity performance. <em>Journal of Financial Economics</em>, <em>124</em>(3), 535–562. <a href="https://doi.org/10.1016/j.jfineco.2017.03.006">https://doi.org/10.1016/j.jfineco.2017.03.006</a></li><li>Logan, G. D. (2018). Automatic control: How experts act without thinking. <em>Psychological Review</em>, <em>125</em>(4), 453–485. <a href="https://doi.org/10.1037/rev0000100">https://doi.org/10.1037/rev0000100</a></li><li>Rahmandad, H., Repenning, N., &amp; Sterman, J. (2009). Effects of feedback delay on learning. <em>System Dynamics Review</em>, <em>25</em>(4), 309–338. <a href="https://doi.org/10.1002/sdr.427">https://doi.org/10.1002/sdr.427</a></li><li>Reber, R., Schwarz, N., &amp; Winkielman, P. (2004). Processing fluency and aesthetic pleasure: Is beauty in the perceiver’s processing experience? <em>Personality and Social Psychology Review</em>, <em>8</em>(4), 364–382. <a href="https://doi.org/10.1207/s15327957pspr0804_3">https://doi.org/10.1207/s15327957pspr0804_3</a></li><li>Rodrigues, J. (2015, February 24). <em>Twenty years ago, rogue trader Nick Leeson brought down Barings Bank</em>. The Guardian. <a href="https://www.theguardian.com/business/from-the-archive-blog/2015/feb/24/nick-leeson-barings-bank-1995-20-archive">https://www.theguardian.com/business/from-the-archive-blog/2015/feb/24/nick-leeson-barings-bank-1995-20-archive</a></li><li>Slovic, P., Finucane, M. L., Peters, E., &amp; MacGregor, D. G. (2007). The Affect Heuristic. <em>European Journal of Operational Research</em>, <em>177</em>(3), 1333–1352. <a href="https://doi.org/10.1016/j.ejor.2005.04.006">https://doi.org/10.1016/j.ejor.2005.04.006</a></li><li>Strack, F., &amp; Deutsch, R. (2004). Reflective and impulsive determinants of social behavior. <em>Personality and Social Psychology Review</em>, <em>8</em>(3), 220–247. <a href="https://doi.org/10.1207/s15327957pspr0803_1">https://doi.org/10.1207/s15327957pspr0803_1</a></li><li>Sweller, J. (2011). Cognitive load theory. <em>Psychology of Learning and Motivation</em>, <em>55</em>(1), 37–76. <a href="https://doi.org/10.1016/B978-0-12-387691-1.00002-8">https://doi.org/10.1016/B978-0-12-387691-1.00002-8</a></li><li>Thompson, R. F., &amp; Spencer, W. A. (1966). Habituation: A model phenomenon for the study of neuronal substrates of behavior. <em>Psychological Review</em>, <em>73</em>(1), 16–43. <a href="https://doi.org/10.1037/h0022681">https://doi.org/10.1037/h0022681</a></li><li>Timperley, J. (2024, September 6). <em>The biggest oil spill in US history: What we’ve learned since Deepwater Horizon</em>. BBC. <a href="https://www.bbc.com/future/article/20240905-have-we-improved-oil-spill-clean-ups-since-bp-deepwater-horizon">https://www.bbc.com/future/article/20240905-have-we-improved-oil-spill-clean-ups-since-bp-deepwater-horizon</a></li></ol></section>
+      <nav class="post-more" aria-labelledby="more-title">
+        <h2 id="more-title">More articles</h2>
+        <ul><li><a href="/articles/analogue-comeback.html">The comeback of analogue technology.</a></li><li><a href="/articles/podcast-loyalty.html">Why we’re all listening.</a></li></ul>
+        <a class="post-back" href="/#work">See my selected work</a>
+      </nav>
+    </article>
+    <aside class="side" aria-label="More articles and work"><div class="side-block"><p class="side-title"><a href="/#articles">Articles</a></p><ul><li><a href="/articles/analogue-comeback.html">The comeback of analogue technology</a></li><li><a href="/articles/podcast-loyalty.html">Why we’re all listening</a></li><li><a href="/articles/familiarity-and-risk.html" aria-current="page">Does familiarity make us blind to risk?</a></li></ul></div><div class="side-block"><p class="side-title"><a href="/#work">Selected work</a></p><p class="side-type">Client work</p><ul><li><a href="/work/social-pulse.html">Social Pulse</a></li></ul><p class="side-type">Pricing</p><ul><li><a href="/work/clickassist.html">AI chat tool pricing</a></li><li><a href="/work/blanket.html">Smart blanket line-up</a></li><li><a href="/work/lingoleap.html">Free plan limit</a></li><li><a href="/work/detergent.html">Detergent price war</a></li></ul><p class="side-type">Brand</p><ul><li><a href="/work/jaguar.html">Jaguar rebrand</a></li><li><a href="/work/royal-grand.html">Luxury hotel brand</a></li></ul><p class="side-type">Digital marketing</p><ul><li><a href="/work/google-ads.html">Google Ads growth</a></li><li><a href="/work/keywords.html">Search ad budget</a></li></ul><p class="side-type">Customer research and forecasting</p><ul><li><a href="/work/lumibank.html">Banking app launch</a></li><li><a href="/work/halo.html">AI gadget forecast</a></li></ul></div></aside>
+  </div>
 </main>
 
 <footer>
