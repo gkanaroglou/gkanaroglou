@@ -683,6 +683,24 @@
   }
   @media (prefers-reduced-motion: reduce) { .site-link, .site-caret { transition: none; } }
 
+  /* Reading progress: an orange line across the top, driven by the scroll itself (no script; browsers without support simply skip it) */
+  @supports (animation-timeline: scroll()) {
+    .read-progress { position: fixed; left: 0; right: 0; top: 0; z-index: 8; height: 4px; background: var(--orange); transform-origin: 0 50%; transform: scaleX(0); animation: read-grow linear both; animation-timeline: scroll(root); }
+    @keyframes read-grow { to { transform: scaleX(1); } }
+  }
+  @media (prefers-reduced-motion: reduce) { .read-progress { display: none; } }
+
+  /* ---------- Page turn between pages (browsers without view transitions just load the page) ---------- */
+  ::view-transition-old(root) { animation: 200ms cubic-bezier(0.3, 0, 1, 1) both turn-out; }
+  ::view-transition-new(root) { animation: 420ms cubic-bezier(0.05, 0.7, 0.1, 1) 60ms both turn-in; }
+  html:active-view-transition-type(back)::view-transition-old(root) { animation-name: turn-out-back; }
+  html:active-view-transition-type(back)::view-transition-new(root) { animation-name: turn-in-back; }
+  @keyframes turn-out { to { opacity: 0; transform: perspective(1600px) translateX(-3%) rotateY(6deg) scale(.97); } }
+  @keyframes turn-in { from { opacity: 0; transform: perspective(1600px) translateX(4%) rotateY(-8deg) scale(.97); } }
+  @keyframes turn-out-back { to { opacity: 0; transform: perspective(1600px) translateX(3%) rotateY(-6deg) scale(.97); } }
+  @keyframes turn-in-back { from { opacity: 0; transform: perspective(1600px) translateX(-4%) rotateY(8deg) scale(.97); } }
+  @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
+
 </style>
 <script type="application/ld+json">
 {
@@ -788,6 +806,7 @@
 })();
 </script>
 
+<div class="read-progress" aria-hidden="true"></div>
 <main id="main">
   <header class="mast"><div class="wrap">
     <a class="mast-back" href="/#articles">All articles</a>
@@ -1201,6 +1220,15 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     if (mark) mark.focus({ preventScroll: true });
   });
 })();
+</script>
+<script>
+/* Tell the page turn which way to go: back when arriving on a homepage from a deeper page */
+addEventListener("pagereveal", function (e) {
+  if (!e.viewTransition || !window.navigation || !navigation.activation || !navigation.activation.from) return;
+  function depth(p) { return /^\/(el|index\.html|el\.html)?$/.test(p) ? 0 : 1; }
+  var from = new URL(navigation.activation.from.url).pathname;
+  e.viewTransition.types.add(depth(location.pathname) < depth(from) ? "back" : "forward");
+});
 </script>
 </body>
 </html>
