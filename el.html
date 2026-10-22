@@ -531,24 +531,12 @@
   .glance dl div:nth-child(3), .pc-steps > .pc-step-3 { border-top-color: var(--step-3); }
   .glance dl div { border-top-width: 4px; }
 
-  /* ---------- Selected work as a question wall. Each project opens on its question, which is the problem (so an orange edge).
-     What I did and the result sit underneath, always visible, in their colours. ---------- */
-  .qw-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 1.5rem); padding-top: clamp(1rem, 2vw, 1.5rem); list-style: none; }
-  .qw-tile { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; padding: clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.1rem, 2.4vw, 1.5rem) calc(clamp(1.1rem, 2.4vw, 1.5rem) + 8px);
-    background: var(--paper); border: 3px solid var(--black); box-shadow: inset 8px 0 0 var(--step-1, var(--orange)); }
-  .work-group[data-type="client"] .qw-tile { grid-column: 1 / -1; }
-  .work-group[data-type="client"] .qw-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(1.25rem, 3vw, 2.5rem); }
-  .qw-q { max-width: 26ch; font-size: clamp(1.35rem, 2.5vw, 2rem); font-weight: 900; line-height: 1.05; letter-spacing: -.03em; }
-  .qw-title { color: var(--muted); font-size: .95rem; font-weight: 600; line-height: 1.4; }
-  .qw-steps { display: grid; gap: .9rem; width: 100%; margin-top: .25rem; }
-  .qw-steps > div { padding-top: .5rem; border-top: 4px solid var(--black); }
-  .qw-steps > .pc-step-2 { border-top-color: var(--step-2, var(--cobalt)); }
-  .qw-steps > .pc-step-3 { border-top-color: var(--step-3, var(--black)); }
-  .qw-steps dt { font-size: .8125rem; font-weight: 800; letter-spacing: .01em; }
-  .qw-steps dd { margin: .25rem 0 0; font-size: .95rem; line-height: 1.45; }
-  .qw-tile .work-more { margin-top: auto; }   /* buttons line up along the bottom of each row */
-  .qw-tile .qw-steps { margin-bottom: .5rem; }
-  @media (max-width: 760px) { .qw-grid, .work-group[data-type="client"] .qw-steps { grid-template-columns: minmax(0, 1fr); } }
+  /* ---------- Selected work: one row per project, titled by its question. Opening a row shows the three steps,
+     each with its own colour: problem orange, what I did cobalt, result black. ---------- */
+  .work-facts > .pc-step-1 { border-top: 4px solid var(--step-1, var(--orange)); }
+  .work-facts > .pc-step-2 { border-top: 4px solid var(--step-2, var(--cobalt)); }
+  .work-facts > .pc-step-3 { border-top: 4px solid var(--step-3, var(--black)); }
+  .work-group .work-name { max-width: 36ch; }
 
   /* ---------- Articles: a Black block, one row per article ---------- */
   .articles { padding-block: clamp(3rem, 7vw, 5.5rem); color: var(--paper); background: var(--black); }
@@ -1020,80 +1008,89 @@
       <ul class="work-groups">
         <li class="work-group" data-type="client">
           <h3 class="work-group-title" id="work-group-client">Έργο για πελάτη <span>1 εργασία</span></h3>
-          <ul class="qw-grid" aria-labelledby="work-group-client">
-          <li class="qw-tile" id="qw-social-pulse">
-            <h4 class="qw-q">Πώς αποφασίζει η ομάδα ενός αθλητή τι να ανεβάσει;</h4>
-            <p class="qw-title">Σύστημα αναφορών που δείχνει στην ομάδα της Sophia Flörsch τι να ανεβάζει</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Έστησα το σύστημα γύρω από πέντε ερωτήματα: τι ανεβάζουμε, πώς αντιδρά ο κόσμος, ποιους φτάνουμε, πού οδηγεί και αν ταιριάζει με το brand. Μια εβδομαδιαία αναφορά προτείνει τα επόμενα βήματα και μια μηνιαία τα δοκιμάζει σε πραγματικές αναρτήσεις. Όλο αυτό το έφτιαξα να τρέχει αυτόματα σε Python.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Η ομάδα μπορούσε να κρίνει κάθε ανάρτηση όχι μόνο από τις προβολές, και η εβδομαδιαία αναφορά ετοιμαζόταν σε μία μέρα αντί για τέσσερις.</dd></div></dl>
-            <a class="btn work-more" href="/work/social-pulse.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <ul class="work-list" aria-labelledby="work-group-client">
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-social-pulse" aria-expanded="false" aria-controls="work-social-pulse"><span class="work-main"><span class="work-name">Πώς αποφασίζει η ομάδα ενός αθλητή τι να ανεβάσει;</span><span class="work-meta">Σύστημα αναφορών που δείχνει στην ομάδα της Sophia Flörsch τι να ανεβάζει</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-social-pulse" role="region" aria-labelledby="work-btn-social-pulse"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Η Barracudaworks χρειαζόταν έναν τρόπο να μετρά τα social media της οδηγού αγώνων Sophia Flörsch: τι φτάνει στους σωστούς fans, τι ταιριάζει με το brand της και τι ωφελεί τους χορηγούς της.</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Έστησα το σύστημα γύρω από πέντε ερωτήματα: τι ανεβάζουμε, πώς αντιδρά ο κόσμος, ποιους φτάνουμε, πού οδηγεί και αν ταιριάζει με το brand. Μια εβδομαδιαία αναφορά προτείνει τα επόμενα βήματα και μια μηνιαία τα δοκιμάζει σε πραγματικές αναρτήσεις. Όλο αυτό το έφτιαξα να τρέχει αυτόματα σε Python.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Η ομάδα μπορούσε να κρίνει κάθε ανάρτηση όχι μόνο από τις προβολές, και η εβδομαδιαία αναφορά ετοιμαζόταν σε μία μέρα αντί για τέσσερις.</dd></div></dl>
+              <a class="btn work-more" href="/work/social-pulse.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="brand">
           <h3 class="work-group-title" id="work-group-brand">Brand <span>2 εργασίες</span></h3>
-          <ul class="qw-grid" aria-labelledby="work-group-brand">
-          <li class="qw-tile" id="qw-jaguar">
-            <h4 class="qw-q">Γιατί το rebrand της Jaguar το 2024 πήγε τόσο στραβά, και πώς ξανακερδίζει τους fans της;</h4>
-            <p class="qw-title">Γιατί το rebrand της Jaguar εξόργισε τους fans της και πώς μπορεί να τους ξανακερδίσει</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Ανέλυσα την αντίδραση βήμα βήμα: τι πρόσεξε πρώτα ο κόσμος, πώς ένιωσε, γιατί δεν έπιασαν οι εξηγήσεις και πώς απλώθηκε η κοροϊδία. Μετά έγραψα ένα σχέδιο για να ξανακερδίσει η Jaguar τον κόσμο, μαζί με τους κινδύνους του.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Ο κόσμος έκρινε τη νέα εικόνα με το συναίσθημα, πριν ακούσει οποιαδήποτε εξήγηση, και οι πιστοί ιδιοκτήτες ένιωσαν ότι η μάρκα δεν τους εκφράζει πια. Το σχέδιο φέρνει πίσω μερικές γνώριμες λεπτομέρειες, βάζει αξιόπιστους δημοσιογράφους και ιδιοκτήτες να οδηγήσουν τα νέα αυτοκίνητα, και προσκαλεί τον κόσμο να ακολουθήσει αντί να του επιβάλει την αλλαγή.</dd></div></dl>
-            <a class="btn work-more" href="/work/jaguar.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <ul class="work-list" aria-labelledby="work-group-brand">
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-jaguar" aria-expanded="false" aria-controls="work-jaguar"><span class="work-main"><span class="work-name">Γιατί το rebrand της Jaguar το 2024 πήγε τόσο στραβά, και πώς ξανακερδίζει τους fans της;</span><span class="work-meta">Γιατί το rebrand της Jaguar εξόργισε τους fans της και πώς μπορεί να τους ξανακερδίσει</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-jaguar" role="region" aria-labelledby="work-btn-jaguar"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Το 2024 η Jaguar εγκατέλειψε από τη μια μέρα στην άλλη τη γνώριμη εικόνα της. Fans και Τύπος τη γελοιοποίησαν. Γιατί πήγε τόσο στραβά και τι πρέπει να κάνει τώρα;</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Ανέλυσα την αντίδραση βήμα βήμα: τι πρόσεξε πρώτα ο κόσμος, πώς ένιωσε, γιατί δεν έπιασαν οι εξηγήσεις και πώς απλώθηκε η κοροϊδία. Μετά έγραψα ένα σχέδιο για να ξανακερδίσει η Jaguar τον κόσμο, μαζί με τους κινδύνους του.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Ο κόσμος έκρινε τη νέα εικόνα με το συναίσθημα, πριν ακούσει οποιαδήποτε εξήγηση, και οι πιστοί ιδιοκτήτες ένιωσαν ότι η μάρκα δεν τους εκφράζει πια. Το σχέδιο φέρνει πίσω μερικές γνώριμες λεπτομέρειες, βάζει αξιόπιστους δημοσιογράφους και ιδιοκτήτες να οδηγήσουν τα νέα αυτοκίνητα, και προσκαλεί τον κόσμο να ακολουθήσει αντί να του επιβάλει την αλλαγή.</dd></div></dl>
+              <a class="btn work-more" href="/work/jaguar.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
-          <li class="qw-tile" id="qw-royal-grand">
-            <h4 class="qw-q">Έβλαψε μια high-tech ανακαίνιση το brand ενός πολυτελούς ξενοδοχείου;</h4>
-            <p class="qw-title">Πώς να ξανακερδίσει ένα πολυτελές ξενοδοχείο τους πιστούς πελάτες του μετά από μια high-tech ανακαίνιση</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Χώρισα τις κριτικές ανά τύπο πελάτη και σύγκρινα τι επαινούσε και τι αναζητούσε η κάθε ομάδα. Μετά σχεδίασα μια καμπάνια με διαφορετικό μήνυμα για κάθε ομάδα και έναν τρόπο να μετρηθεί η απήχησή της.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πιστοί πελάτες το βαθμολόγησαν πολύ χαμηλότερα, γιατί τους έλειψαν η ζεστασιά και τα γνώριμα πρόσωπα. Οι νέοι πελάτες από το εξωτερικό το βαθμολόγησαν πάνω από τον παλιό μέσο όρο. Η καμπάνια λέει στους πιστούς πελάτες αληθινές ιστορίες προσωπικού και οικογενειών, και ενθαρρύνει τους νέους να μοιράζονται τη διαμονή τους.</dd></div></dl>
-            <a class="btn work-more" href="/work/royal-grand.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-royal-grand" aria-expanded="false" aria-controls="work-royal-grand"><span class="work-main"><span class="work-name">Έβλαψε μια high-tech ανακαίνιση το brand ενός πολυτελούς ξενοδοχείου;</span><span class="work-meta">Πώς να ξανακερδίσει ένα πολυτελές ξενοδοχείο τους πιστούς πελάτες του μετά από μια high-tech ανακαίνιση</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-royal-grand" role="region" aria-labelledby="work-btn-royal-grand"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Ένα ξενοδοχείο spa στις Άλπεις πρόσθεσε ρομπότ στην εξυπηρέτηση και έξυπνες λειτουργίες. Οι κριτικές χειροτέρεψαν. Έπαθε ζημιά η εικόνα του, και ποια καμπάνια πρέπει να ακολουθήσει;</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Χώρισα τις κριτικές ανά τύπο πελάτη και σύγκρινα τι επαινούσε και τι αναζητούσε η κάθε ομάδα. Μετά σχεδίασα μια καμπάνια με διαφορετικό μήνυμα για κάθε ομάδα και έναν τρόπο να μετρηθεί η απήχησή της.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πιστοί πελάτες το βαθμολόγησαν πολύ χαμηλότερα, γιατί τους έλειψαν η ζεστασιά και τα γνώριμα πρόσωπα. Οι νέοι πελάτες από το εξωτερικό το βαθμολόγησαν πάνω από τον παλιό μέσο όρο. Η καμπάνια λέει στους πιστούς πελάτες αληθινές ιστορίες προσωπικού και οικογενειών, και ενθαρρύνει τους νέους να μοιράζονται τη διαμονή τους.</dd></div></dl>
+              <a class="btn work-more" href="/work/royal-grand.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="digital">
           <h3 class="work-group-title" id="work-group-digital">Ψηφιακό marketing <span>2 εργασίες</span></h3>
-          <ul class="qw-grid" aria-labelledby="work-group-digital">
-          <li class="qw-tile" id="qw-google-ads">
-            <h4 class="qw-q">Πώς αυξάνεις τις πωλήσεις μιας εταιρείας τσαντών μέσω Google Ads;</h4>
-            <p class="qw-title">Περισσότερες πωλήσεις για μια εταιρεία τσαντών μέσω Google Ads</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Έγραψα διαφημίσεις και διάλεξα λέξεις-κλειδιά για έξι τύπους πελατών, με τα δικά τους λόγια. Μετά έκοψα όσες λέξεις-κλειδιά δεν έφερναν πωλήσεις, έδωσα περισσότερα χρήματα στις διαφημίσεις που πουλούσαν και πρόσθεσα display, retargeting και shopping ads.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πωλήσεις ανέβηκαν από περίπου $4.100 σε $61.700. Όταν το κείμενο των διαφημίσεων ταίριαξε με τις σελίδες των προϊόντων, οι πωλήσεις υπερδιπλασιάστηκαν μέσα σε έναν γύρο. Οι διαφημίσεις σε όσους είχαν αφήσει προϊόντα στο καλάθι απέφεραν $7,82 για κάθε $1.</dd></div></dl>
-            <a class="btn work-more" href="/work/google-ads.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <ul class="work-list" aria-labelledby="work-group-digital">
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-google-ads" aria-expanded="false" aria-controls="work-google-ads"><span class="work-main"><span class="work-name">Πώς αυξάνεις τις πωλήσεις μιας εταιρείας τσαντών μέσω Google Ads;</span><span class="work-meta">Περισσότερες πωλήσεις για μια εταιρεία τσαντών μέσω Google Ads</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-google-ads" role="region" aria-labelledby="work-btn-google-ads"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Διαχειρίστηκα τα Google Ads της Buhi, μιας εταιρείας τσαντών, για επτά γύρους. Σε κάθε γύρο μεγάλωναν ο προϋπολογισμός και η γκάμα.</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Έγραψα διαφημίσεις και διάλεξα λέξεις-κλειδιά για έξι τύπους πελατών, με τα δικά τους λόγια. Μετά έκοψα όσες λέξεις-κλειδιά δεν έφερναν πωλήσεις, έδωσα περισσότερα χρήματα στις διαφημίσεις που πουλούσαν και πρόσθεσα display, retargeting και shopping ads.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πωλήσεις ανέβηκαν από περίπου $4.100 σε $61.700. Όταν το κείμενο των διαφημίσεων ταίριαξε με τις σελίδες των προϊόντων, οι πωλήσεις υπερδιπλασιάστηκαν μέσα σε έναν γύρο. Οι διαφημίσεις σε όσους είχαν αφήσει προϊόντα στο καλάθι απέφεραν $7,82 για κάθε $1.</dd></div></dl>
+              <a class="btn work-more" href="/work/google-ads.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
-          <li class="qw-tile" id="qw-keywords">
-            <h4 class="qw-q">Πώς πρέπει να μοιραστούν $100 την ημέρα σε πέντε λέξεις-κλειδιά;</h4>
-            <p class="qw-title">Πώς να μοιραστεί ένας μικρός διαφημιστικός προϋπολογισμός σε λέξεις-κλειδιά</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Υπολόγισα πώς αλλάζουν το κόστος και τα κλικ όσο ανεβαίνει η προσφορά για κάθε λέξη. Μετά βρήκα τον συνδυασμό προσφορών που φέρνει το μεγαλύτερο κέρδος μέσα στον προϋπολογισμό.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Τρεις λέξεις-κλειδιά φέρνουν τα χρήματα. Μία βγάζει ζημιά σε οποιαδήποτε τιμή και πρέπει να σταματήσει. Και ο προϋπολογισμός είναι μικρός: κάθε επιπλέον δολάριο θα έφερνε πίσω σχεδόν τρία.</dd></div></dl>
-            <a class="btn work-more" href="/work/keywords.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-keywords" aria-expanded="false" aria-controls="work-keywords"><span class="work-main"><span class="work-name">Πώς πρέπει να μοιραστούν $100 την ημέρα σε πέντε λέξεις-κλειδιά;</span><span class="work-meta">Πώς να μοιραστεί ένας μικρός διαφημιστικός προϋπολογισμός σε λέξεις-κλειδιά</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-keywords" role="region" aria-labelledby="work-btn-keywords"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια συμβουλευτική εταιρεία είχε $100 την ημέρα για διαφημίσεις αναζήτησης σε πέντε λέξεις-κλειδιά. Πόσο να προσφέρει για την καθεμία;</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Υπολόγισα πώς αλλάζουν το κόστος και τα κλικ όσο ανεβαίνει η προσφορά για κάθε λέξη. Μετά βρήκα τον συνδυασμό προσφορών που φέρνει το μεγαλύτερο κέρδος μέσα στον προϋπολογισμό.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Τρεις λέξεις-κλειδιά φέρνουν τα χρήματα. Μία βγάζει ζημιά σε οποιαδήποτε τιμή και πρέπει να σταματήσει. Και ο προϋπολογισμός είναι μικρός: κάθε επιπλέον δολάριο θα έφερνε πίσω σχεδόν τρία.</dd></div></dl>
+              <a class="btn work-more" href="/work/keywords.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="research">
           <h3 class="work-group-title" id="work-group-research">Έρευνα αγοράς και προβλέψεις <span>2 εργασίες</span></h3>
-          <ul class="qw-grid" aria-labelledby="work-group-research">
-          <li class="qw-tile" id="qw-lumibank">
-            <h4 class="qw-q">Σε ποιους να στοχεύσει πρώτα μια νέα τραπεζική εφαρμογή;</h4>
-            <p class="qw-title">Σε ποιους πελάτες να στοχεύσει πρώτα μια νέα τραπεζική εφαρμογή</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Από τις συνεντεύξεις έβγαλα τα ερωτήματα που μετράνε. Με τις απαντήσεις 180 ατόμων τους χώρισα σε ομάδες με παρόμοιες ανάγκες. Μετά εξέτασα ποιες λειτουργίες εκτιμούν περισσότερο και τι κάνει κάποιον να ανοίξει λογαριασμό.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Δύο από τις τρεις ομάδες, περίπου τρεις στους τέσσερις, θέλουν τα ίδια: μια εφαρμογή εύκολη στη χρήση και μια τράπεζα που μπορούν να εμπιστευτούν. Σε αυτούς λοιπόν πρώτα, χωρίς μηνιαία συνδρομή, με 2% επιστροφή χρημάτων, εγγραφή σε πέντε λεπτά και ισχυρή ασφάλεια.</dd></div></dl>
-            <a class="btn work-more" href="/work/lumibank.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <ul class="work-list" aria-labelledby="work-group-research">
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-lumibank" aria-expanded="false" aria-controls="work-lumibank"><span class="work-main"><span class="work-name">Σε ποιους να στοχεύσει πρώτα μια νέα τραπεζική εφαρμογή;</span><span class="work-meta">Σε ποιους πελάτες να στοχεύσει πρώτα μια νέα τραπεζική εφαρμογή</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-lumibank" role="region" aria-labelledby="work-btn-lumibank"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια νέα τραπεζική εφαρμογή για νέους επαγγελματίες έπρεπε να αποφασίσει σε ποιους θα απευθυνθεί στο λανσάρισμα και με ποιες λειτουργίες.</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Από τις συνεντεύξεις έβγαλα τα ερωτήματα που μετράνε. Με τις απαντήσεις 180 ατόμων τους χώρισα σε ομάδες με παρόμοιες ανάγκες. Μετά εξέτασα ποιες λειτουργίες εκτιμούν περισσότερο και τι κάνει κάποιον να ανοίξει λογαριασμό.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Δύο από τις τρεις ομάδες, περίπου τρεις στους τέσσερις, θέλουν τα ίδια: μια εφαρμογή εύκολη στη χρήση και μια τράπεζα που μπορούν να εμπιστευτούν. Σε αυτούς λοιπόν πρώτα, χωρίς μηνιαία συνδρομή, με 2% επιστροφή χρημάτων, εγγραφή σε πέντε λεπτά και ισχυρή ασφάλεια.</dd></div></dl>
+              <a class="btn work-more" href="/work/lumibank.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
-          <li class="qw-tile" id="qw-halo">
-            <h4 class="qw-q">Πόσο γρήγορα θα πουλήσει μια συσκευή AI χωρίς οθόνη;</h4>
-            <p class="qw-title">Πόσο γρήγορα θα πουλούσε μια νέα συσκευή AI</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Από δεδομένα έρευνας υπολόγισα πόσοι θα μπορούσαν να την αγοράσουν. Μετά χρησιμοποίησα ένα καθιερωμένο μοντέλο για το πώς διαδίδονται τα νέα προϊόντα από στόμα σε στόμα και κοστολόγησα την παραγωγή για κάθε χρόνο.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πωλήσεις ξεκινούν αργά, κορυφώνονται τον έβδομο χρόνο και σταθεροποιούνται ως τον δέκατο τρίτο. Ο μεγαλύτερος κίνδυνος είναι να μη διαδοθεί αρκετά από στόμα σε στόμα. Πρότεινα τιμή λανσαρίσματος £699.</dd></div></dl>
-            <a class="btn work-more" href="/work/halo.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-halo" aria-expanded="false" aria-controls="work-halo"><span class="work-main"><span class="work-name">Πόσο γρήγορα θα πουλήσει μια συσκευή AI χωρίς οθόνη;</span><span class="work-meta">Πόσο γρήγορα θα πουλούσε μια νέα συσκευή AI</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-halo" role="region" aria-labelledby="work-btn-halo"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια start-up ετοιμαζόταν να λανσάρει μια φορητή συσκευή AI χωρίς οθόνη. Έπρεπε να ξέρει πώς θα εξελιχθούν οι πωλήσεις, για να σχεδιάσει αποθέματα, παραγωγή και διαφήμιση.</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Από δεδομένα έρευνας υπολόγισα πόσοι θα μπορούσαν να την αγοράσουν. Μετά χρησιμοποίησα ένα καθιερωμένο μοντέλο για το πώς διαδίδονται τα νέα προϊόντα από στόμα σε στόμα και κοστολόγησα την παραγωγή για κάθε χρόνο.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Οι πωλήσεις ξεκινούν αργά, κορυφώνονται τον έβδομο χρόνο και σταθεροποιούνται ως τον δέκατο τρίτο. Ο μεγαλύτερος κίνδυνος είναι να μη διαδοθεί αρκετά από στόμα σε στόμα. Πρότεινα τιμή λανσαρίσματος £699.</dd></div></dl>
+              <a class="btn work-more" href="/work/halo.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
           </ul>
         </li>
         <li class="work-group" data-type="pricing">
           <h3 class="work-group-title" id="work-group-pricing">Τιμολόγηση <span>2 εργασίες</span></h3>
-          <ul class="qw-grid" aria-labelledby="work-group-pricing">
-          <li class="qw-tile" id="qw-clickassist">
-            <h4 class="qw-q">Ήταν τα $399 τον μήνα η σωστή τιμή για ένα εργαλείο AI chat;</h4>
-            <p class="qw-title">Μια AI start-up που χρέωνε πολύ λιγότερα απ’ όσα άξιζε</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Υπολόγισα πόσο αξίζει το εργαλείο στον καθένα: επιπλέον πωλήσεις για το κατάστημα, λιγότερα αιτήματα υποστήριξης για την εταιρεία λογισμικού. Μετά έλεγξα πόσο αλλάζει το αποτέλεσμα αν οι παραδοχές μου δεν ισχύουν.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Για το κατάστημα, το εργαλείο άξιζε περίπου $218.000 τον μήνα, κυρίως από επιπλέον πωλήσεις. Για την εταιρεία λογισμικού, περίπου $4.600, από χαμηλότερο κόστος υποστήριξης. Άρα ο καθένας χρειάζεται διαφορετική τιμή, ανάλογα με την αξία που του δίνει το εργαλείο.</dd></div></dl>
-            <a class="btn work-more" href="/work/clickassist.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <ul class="work-list" aria-labelledby="work-group-pricing">
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-clickassist" aria-expanded="false" aria-controls="work-clickassist"><span class="work-main"><span class="work-name">Ήταν τα $399 τον μήνα η σωστή τιμή για ένα εργαλείο AI chat;</span><span class="work-meta">Μια AI start-up που χρέωνε πολύ λιγότερα απ’ όσα άξιζε</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-clickassist" role="region" aria-labelledby="work-btn-clickassist"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια start-up πουλούσε ένα εργαλείο AI chat για ιστοσελίδες με $399 τον μήνα. Ήταν σωστή η τιμή για ένα ηλεκτρονικό κατάστημα; Για μια εταιρεία λογισμικού;</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Υπολόγισα πόσο αξίζει το εργαλείο στον καθένα: επιπλέον πωλήσεις για το κατάστημα, λιγότερα αιτήματα υποστήριξης για την εταιρεία λογισμικού. Μετά έλεγξα πόσο αλλάζει το αποτέλεσμα αν οι παραδοχές μου δεν ισχύουν.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Για το κατάστημα, το εργαλείο άξιζε περίπου $218.000 τον μήνα, κυρίως από επιπλέον πωλήσεις. Για την εταιρεία λογισμικού, περίπου $4.600, από χαμηλότερο κόστος υποστήριξης. Άρα ο καθένας χρειάζεται διαφορετική τιμή, ανάλογα με την αξία που του δίνει το εργαλείο.</dd></div></dl>
+              <a class="btn work-more" href="/work/clickassist.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
-          <li class="qw-tile" id="qw-blanket">
-            <h4 class="qw-q">Ποιες εκδοχές μιας έξυπνης κουβέρτας να βγουν στην αγορά, και σε ποια τιμή;</h4>
-            <p class="qw-title">Ποιες εκδοχές μιας έξυπνης κουβέρτας να βγουν στην αγορά και σε ποια τιμή</p>
-            <dl class="qw-steps"><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Με βάση τις βαθμολογίες 150 ατόμων για διάφορες εκδοχές σε διάφορες τιμές, υπολόγισα πόσο αξίζει για αυτούς κάθε χαρακτηριστικό. Μετά τους χώρισα σε ομάδες με παρόμοιες προτιμήσεις και δοκίμασα κάθε πιθανό ζευγάρι προϊόντων.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Κάποιοι θέλουν κυρίως χαμηλή τιμή. Άλλοι πληρώνουν πολύ περισσότερα για ψύξη ή για δύο ζώνες. Ένα βασικό μοντέλο στις £70 μαζί με ένα premium στις £190 έφερε 5% περισσότερα έσοδα από οποιοδήποτε μεμονωμένο προϊόν, και όσοι δεν θα αγόραζαν τίποτα έπεσαν από ένα στους τρεις σε λιγότερους από ένα στους πέντε.</dd></div></dl>
-            <a class="btn work-more" href="/work/blanket.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+          <li>
+            <h4 class="work-h"><button type="button" class="work-item" id="work-btn-blanket" aria-expanded="false" aria-controls="work-blanket"><span class="work-main"><span class="work-name">Ποιες εκδοχές μιας έξυπνης κουβέρτας να βγουν στην αγορά, και σε ποια τιμή;</span><span class="work-meta">Ποιες εκδοχές μιας έξυπνης κουβέρτας να βγουν στην αγορά και σε ποια τιμή</span></span><span class="index-plus" aria-hidden="true"></span></button></h4>
+            <div class="acc" id="work-blanket" role="region" aria-labelledby="work-btn-blanket"><div class="acc-inner"><div class="work-detail">
+              <dl class="work-facts"><div class="pc-step-1"><dt>Το πρόβλημα</dt><dd>Μια θερμαινόμενη κουβέρτα μπορούσε να έχει επίσης ψύξη, δύο ζώνες με ξεχωριστή ρύθμιση, αυτόματο έλεγχο και λειτουργία εξοικονόμησης ενέργειας. Ποιες εκδοχές να κυκλοφορήσουν και σε ποια τιμή;</dd></div><div class="pc-step-2"><dt>Τι έκανα</dt><dd>Με βάση τις βαθμολογίες 150 ατόμων για διάφορες εκδοχές σε διάφορες τιμές, υπολόγισα πόσο αξίζει για αυτούς κάθε χαρακτηριστικό. Μετά τους χώρισα σε ομάδες με παρόμοιες προτιμήσεις και δοκίμασα κάθε πιθανό ζευγάρι προϊόντων.</dd></div><div class="pc-step-3"><dt>Το αποτέλεσμα</dt><dd>Κάποιοι θέλουν κυρίως χαμηλή τιμή. Άλλοι πληρώνουν πολύ περισσότερα για ψύξη ή για δύο ζώνες. Ένα βασικό μοντέλο στις £70 μαζί με ένα premium στις £190 έφερε 5% περισσότερα έσοδα από οποιοδήποτε μεμονωμένο προϊόν, και όσοι δεν θα αγόραζαν τίποτα έπεσαν από ένα στους τρεις σε λιγότερους από ένα στους πέντε.</dd></div></dl>
+              <a class="btn work-more" href="/work/blanket.html" hreflang="en">Πλήρης ανάλυση (στα αγγλικά)</a>
+            </div></div></div>
           </li>
           </ul>
         </li>
@@ -1612,7 +1609,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 <script>
 /* Selected work: click a project to see the question, what I did and the result. One open at a time. */
 (function () {
-  var items = [].slice.call(document.querySelectorAll(".qw-tile"));
+  var items = [].slice.call(document.querySelectorAll(".work-item"));
   function set(b, on) {
     b.setAttribute("aria-expanded", on ? "true" : "false");
     var panel = document.getElementById(b.getAttribute("aria-controls"));
@@ -1656,7 +1653,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   if (!bar || !list) return;
   var groups = [].slice.call(list.querySelectorAll(".work-group[data-type]"));
   var links = [].slice.call(bar.querySelectorAll("[data-filter]"));
-  var count = document.querySelector("#work .work-count"), total = groups.reduce(function (n, g) { return n + g.querySelectorAll(".qw-tile").length; }, 0);
+  var count = document.querySelector("#work .work-count"), total = groups.reduce(function (n, g) { return n + g.querySelectorAll(".work-item").length; }, 0);
   var el = /^el/.test(document.documentElement.lang), totalText = count ? count.textContent : "";
   var mq = window.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
   var current = "all", busy = [], run = 0;
@@ -1679,7 +1676,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var show = groups.filter(function (g) { return type === "all" || g.dataset.type === type; });
     var leave = groups.filter(function (g) { return show.indexOf(g) < 0 && !g.hidden; });
     var arrive = show.filter(function (g) { return g.hidden; });
-    var n = show.reduce(function (k, g) { return k + g.querySelectorAll(".qw-tile").length; }, 0);
+    var n = show.reduce(function (k, g) { return k + g.querySelectorAll(".work-item").length; }, 0);
     if (count) count.textContent = label(n);
     var move = animate && !mq.matches;
     if (move) show.forEach(function (g) {   // a group caught halfway out comes straight back from where it is
