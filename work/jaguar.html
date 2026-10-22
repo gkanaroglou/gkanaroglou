@@ -124,7 +124,7 @@
   .nav-link { border-bottom: 3px solid transparent; }
   .top-link { padding: .5rem 1rem; color: var(--paper); background: var(--black); }
   .mark:active, .lang:active, .nav-link:active, .top-link:active { opacity: .7; }
-  @media (hover: hover) and (pointer: fine) {
+  @media (any-hover: hover) and (any-pointer: fine) {
     .lang:hover { color: var(--black); }
     .nav-link:hover { border-color: var(--black); }
     .top-link:hover { color: #000; background: var(--orange); }
@@ -218,12 +218,12 @@
   .index-name { display: inline-block; transform-origin: left center; transition: transform 200ms var(--ease-out); }
   .index-base .index-name { transform-origin: left top; }
   .index-item:focus-visible .index-name { transform: scale(1.06); }
-  @media (hover: hover) and (pointer: fine) { .index-item:hover .index-name { transform: scale(1.06); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .index-item:hover .index-name { transform: scale(1.06); } }
   .index-item-base { display: grid; align-content: start; gap: .3rem; height: 100%; padding: .75rem 2.25rem .5rem 0; }
   .index-base li + li .index-item-base { padding-left: 1rem; }
   .index-desc { color: var(--concrete); font-size: .8125rem; font-weight: 600; letter-spacing: 0; }
   .index-item-base[aria-expanded="true"] .index-desc { color: var(--orange); }
-  @media (hover: hover) and (pointer: fine) {
+  @media (any-hover: hover) and (any-pointer: fine) {
     .index-item:hover, .index-item:hover .index-desc { color: var(--orange); }
   }
 
@@ -236,7 +236,7 @@
   .acc.is-open .acc-content { opacity: 1; }
   .acc-base .acc-content { padding-top: 1rem; }
   .acc-body { max-width: 44ch; font-size: 1rem; font-weight: 500; line-height: 1.45; letter-spacing: 0; }
-  @media (hover: hover) and (pointer: fine) { .index .btn-primary:hover { color: #000; background: var(--paper); border-color: var(--paper); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .index .btn-primary:hover { color: #000; background: var(--paper); border-color: var(--paper); } }
   /* The two foundations sit beneath the disciplines, side by side, like a base */
   .index-head-base { padding: 1.5rem 0 .9rem; }
   .index-base { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); list-style: none; border-top: 3px solid var(--paper); }
@@ -301,7 +301,7 @@
   .contact .more { margin: 2.25rem 0 0; }
   .contact .more a { color: var(--paper); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--paper); transition: border-color 150ms ease; }
   .email:active, .contact .more a:active { opacity: .7; }
-  @media (hover: hover) and (pointer: fine) {
+  @media (any-hover: hover) and (any-pointer: fine) {
     .email:hover { border-color: var(--paper); }
     .copy-btn:hover { color: #000; background: var(--paper); }
     .contact .more a:hover { border-color: var(--orange); }
@@ -340,7 +340,7 @@
     transition: color 150ms ease, background-color 150ms ease;
   }
   .card-hint-icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: square; transition: transform 350ms var(--ease-out); }
-  @media (hover: hover) and (pointer: fine) {
+  @media (any-hover: hover) and (any-pointer: fine) {
     .card-scene:hover .card:not(.is-flipped) .card-hint { color: var(--paper); background: transparent; }
     .card-scene:hover .card:not(.is-flipped) .card-hint-icon { transform: rotate(180deg); }
   }
@@ -354,7 +354,7 @@
     background: linear-gradient(135deg, var(--paper) 0 calc(50% - 1.5px), var(--black) calc(50% - 1.5px) calc(50% + 1.5px), var(--behind) calc(50% + 1.5px));
     transition: width 250ms var(--ease-out);
   }
-  @media (hover: hover) and (pointer: fine) { .card-scene:hover .card:not(.is-flipped) .card-front::after { width: clamp(2.5rem, 13cqw, 4rem); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .card-scene:hover .card:not(.is-flipped) .card-front::after { width: clamp(2.5rem, 13cqw, 4rem); } }
   @media (prefers-reduced-motion: reduce) { .card-front::after { transition: none; } }
 
 
@@ -381,7 +381,7 @@
   }
   .card-link:active, .foot-linkedin:active { opacity: .7; }
   .ext-icon { width: .8rem; height: .8rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: square; }
-  @media (hover: hover) and (pointer: fine) { .card-link:hover, .foot-linkedin:hover { color: var(--paper); background: var(--black); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .card-link:hover, .foot-linkedin:hover { color: var(--paper); background: var(--black); } }
   /* Small cards: a little less space around the details, so the bigger text always fits */
   @container (max-width: 20rem) { .card-back { padding: .85rem; row-gap: .3rem; } .card-name { font-size: clamp(1.05rem, 7cqw, 1.2rem); } .card-details { gap: .25rem; } .card-back .copy-btn, .card-link { min-height: 36px; padding: .3rem .6rem; font-size: .8125rem; } .card-actions { gap: .4rem; } }
   .card-back .email { color: var(--black); font-size: clamp(1rem, 5.4cqw, 1.7rem); font-weight: 800; letter-spacing: -.02em; border-bottom-width: 3px; border-bottom-color: var(--cobalt); }
@@ -389,7 +389,7 @@
   .card-back .copy-row { margin: 0; }
   .card-back .copy-btn { min-width: 0; min-height: 44px; padding: .45rem .95rem; font-size: .95rem; color: var(--black); border-color: var(--black); }
   .card-back a:focus-visible, .card-back button:focus-visible { outline-color: var(--black); }
-  @media (hover: hover) and (pointer: fine) { .card-back .copy-btn:hover { color: var(--paper); background: var(--black); } .card-back .email:hover { border-color: var(--black); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .card-back .copy-btn:hover { color: var(--paper); background: var(--black); } .card-back .email:hover { border-color: var(--black); } }
 
   @media (max-width: 760px) {
     .contact-grid { grid-template-columns: minmax(0, 1fr); row-gap: 2.5rem; }
@@ -431,7 +431,7 @@
   .work-name { font-size: clamp(1.15rem, 2vw, 1.6rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
   .work-item[aria-expanded="true"] { color: var(--cobalt); }
   .work-item[aria-expanded="true"] .index-plus { transform: rotate(45deg); }
-  @media (hover: hover) and (pointer: fine) { .work-item:hover { color: var(--cobalt); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .work-item:hover { color: var(--cobalt); } }
   .work-detail { padding: 0 0 clamp(1.25rem, 2.5vw, 2rem); }
   .work-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem clamp(1.5rem, 3vw, 2.5rem); }
   .work-facts div { padding-top: .6rem; border-top: 3px solid var(--cobalt); }
@@ -479,7 +479,7 @@
   .to-top svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: square; }
   .to-top:active { transform: scale(.94); }
   .to-top:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
-  @media (hover: hover) and (pointer: fine) { .to-top:hover { color: #000; background: var(--orange); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .to-top:hover { color: #000; background: var(--orange); } }
   /* Out of the way while the cookie banner is open */
   .consent.is-open ~ .to-top { opacity: 0; visibility: hidden; }
 
@@ -510,7 +510,7 @@
   /* Accept and Decline are styled identically: declining is exactly as easy and as prominent as accepting */
   .consent .btn-primary { color: var(--paper); background: transparent; border-color: var(--paper); }
   .consent .btn:focus-visible, .consent a:focus-visible { outline-color: var(--paper); }
-  @media (hover: hover) and (pointer: fine) {
+  @media (any-hover: hover) and (any-pointer: fine) {
     .consent .btn:hover { color: #000; background: var(--paper); border-color: var(--paper); }
   }
 
@@ -563,7 +563,7 @@
   .post-body h3 + p { margin-top: .35rem; }
   .post-body a, .post-refs a, .post figcaption a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: rgba(0, 0, 0, .38); text-underline-offset: 3px; transition: text-decoration-color 150ms ease; }
   .post-body a:active, .post-refs a:active { opacity: .7; }
-  @media (hover: hover) and (pointer: fine) {
+  @media (any-hover: hover) and (any-pointer: fine) {
     .post-body a:hover, .post-refs a:hover, .post figcaption a:hover { text-decoration-color: var(--orange); text-decoration-thickness: 3px; }
   }
   /* The question each article sets out to answer: the page's one orange mark */
@@ -582,7 +582,7 @@
   .post-more li a { display: flex; align-items: center; min-height: 3.25rem; padding-block: .5rem; color: var(--black); font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight: 800; letter-spacing: -.02em; text-decoration: none; transition: color 150ms ease; }
   .post-more li a:active { opacity: .7; }
   .post-more .post-back { margin-top: 1.25rem; }
-  @media (hover: hover) and (pointer: fine) { .post-more li a:hover { color: var(--cobalt); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .post-more li a:hover { color: var(--cobalt); } }
   .post-body .post-formula { max-width: none; margin-top: 1.25rem; padding: .8rem 1rem; background: #fff; border-left: 6px solid var(--black); font-weight: 600; line-height: 1.45; }
   .post-body ol { max-width: 62ch; margin: .75rem 0 0 1.35rem; line-height: 1.55; }
   .post-body ol li { margin-top: .35rem; padding-left: .25rem; }
@@ -649,7 +649,7 @@
   .side li a:active { opacity: .7; }
   .side .side-title + .side-type { margin-top: .75rem; }
   .side-block + .side-block { margin-top: 2rem; }
-  @media (hover: hover) and (pointer: fine) { .side li a:hover { border-left-color: var(--black); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .side li a:hover { border-left-color: var(--black); } }
   @media (max-width: 900px) {
     .page-layout { grid-template-columns: minmax(0, 1fr); }
     .page-layout .post, .page-layout .side { grid-column: 1; grid-row: auto; }
@@ -665,7 +665,7 @@
   .site-caret { width: .45rem; height: .45rem; margin-top: -.2rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 150ms ease; }
   .site-link[aria-expanded="true"] .site-caret { margin-top: .25rem; transform: rotate(225deg); }
   .sn-narrow { display: none; }
-  @media (hover: hover) and (pointer: fine) { .site-link:hover { border-color: var(--black); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .site-link:hover { border-color: var(--black); } }
   .site-menu { position: fixed; left: 0; right: 0; z-index: 6; color: var(--paper); background: var(--black); border-bottom: 3px solid var(--orange); }
   .site-menu[hidden] { display: none; }
   .site-menu .wrap { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem clamp(1.25rem, 3vw, 2.5rem); padding-block: 1rem 1.15rem; }
@@ -674,7 +674,7 @@
   .site-menu a:focus-visible { outline: 3px solid var(--paper); outline-offset: 3px; }
   .site-menu .sm-all { color: var(--orange); }
   .site-menu .sm-articles { display: none; }
-  @media (hover: hover) and (pointer: fine) { .site-menu a:hover { color: var(--orange); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .site-menu a:hover { color: var(--orange); } }
   @media (max-width: 640px) {
     .site-menu .wrap { flex-direction: column; gap: 0; }
     .site-menu .sm-articles { display: inline-flex; margin-top: .4rem; padding-top: .8rem; border-top: 1px solid var(--muted); }
@@ -769,7 +769,7 @@
   .site-back { display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; color: var(--black); font-size: .95rem; font-weight: 800; text-decoration: none; border-bottom: 3px solid transparent; transition: border-color 150ms ease; }
   .site-back::before { content: ""; width: .5rem; height: .5rem; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
   .site-back:active { opacity: .7; }
-  @media (hover: hover) and (pointer: fine) { .site-back:hover { border-color: var(--black); } }
+  @media (any-hover: hover) and (any-pointer: fine) { .site-back:hover { border-color: var(--black); } }
   @media (max-width: 640px) {
     .top .site-nav { column-gap: .75rem; }
     .site-link { font-size: .875rem; }
@@ -825,10 +825,11 @@
   }
   function open() { if (room()) mark.classList.add("is-full"); }
   function close() { mark.classList.remove("is-full"); }
-  if (window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    mark.addEventListener("mouseenter", open);
-    mark.addEventListener("mouseleave", close);
-  }
+  // Pointer events, checked per event: some Windows laptops with touchscreens report "no hover" for the whole device,
+  // which used to switch this off even for a mouse. Now any mouse or pen opens it; a finger never does.
+  function byMouse(e) { return e.pointerType === "mouse" || e.pointerType === "pen"; }
+  mark.addEventListener("pointerenter", function (e) { if (byMouse(e)) open(); });
+  mark.addEventListener("pointerleave", function (e) { if (byMouse(e)) close(); });
   mark.addEventListener("focus", function () { if (mark.matches(":focus-visible")) open(); });
   mark.addEventListener("blur", close);
 
@@ -1148,7 +1149,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 /* The Nu-Brutalism cursor. It follows the pointer exactly, with no lag, so it never feels slippery.
    Over the card it says what will happen: "Turn over", or "Spin" while you drag. */
 (function () {
-  if (!window.matchMedia || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (!window.matchMedia || !matchMedia("(any-hover: hover) and (any-pointer: fine)").matches) return;
   var c = document.createElement("div");
   c.className = "cursor is-out"; c.setAttribute("aria-hidden", "true");
   var TURN = "Turn over", BACK = "Turn back", SPIN = "Spin";
