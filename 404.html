@@ -467,30 +467,6 @@
   .foot-address .foot-linkedin { min-height: 40px; padding: .35rem .8rem; font-size: .875rem; text-decoration: none; cursor: pointer; font-family: inherit; }
   .foot-base { padding-top: .25rem; font-size: .8125rem; }
 
-  /* ---------- Email list pop-up: a Paper card in the middle of the screen, over a dimmed page ---------- */
-  .signup {
-    position: fixed; inset: 0; margin: auto; width: min(28rem, 100% - 2rem); max-height: calc(100% - 2rem); padding: 0; overflow: auto;
-    color: var(--black); background: var(--paper); border: 3px solid var(--black);
-    opacity: 0; transform: translateY(1rem) scale(.98); transition: opacity 220ms var(--ease-out), transform 300ms var(--ease-out);
-  }
-  .signup.is-open { opacity: 1; transform: none; }
-  .signup::backdrop { background: rgb(0 0 0 / .55); }
-  .signup-inner { position: relative; padding: 1.5rem 1.5rem 1.25rem; }
-  .signup-close { position: absolute; top: .5rem; right: .5rem; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; cursor: pointer; color: var(--black); background: none; border: 0; }
-  .signup-close svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: square; }
-  .signup-title { padding-right: 2.5rem; font-size: clamp(1.5rem, 4vw, 1.9rem); font-weight: 900; line-height: 1; letter-spacing: -.04em; }
-  .signup-text { margin-top: .6rem; color: var(--muted); font-size: .95rem; line-height: 1.4; }
-  .signup-form { display: grid; gap: .75rem; margin-top: 1rem; }
-  .signup-email { width: 100%; min-height: 48px; padding: .6rem .8rem; font: inherit; font-size: 16px; color: var(--black); background: #fff; border: 2px solid var(--black); border-radius: 0; }
-  .signup-email:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
-  .signup-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-  .signup-consent { display: flex; align-items: flex-start; gap: .6rem; font-size: .875rem; line-height: 1.4; cursor: pointer; }
-  .signup-consent input { flex-shrink: 0; width: 1.15rem; height: 1.15rem; margin-top: .1rem; accent-color: var(--black); cursor: pointer; }
-  .signup-consent a { text-underline-offset: 2px; }
-  .signup-submit { justify-self: start; }
-  .signup-submit:disabled { opacity: .6; cursor: default; }
-  .signup-status { min-height: 1.2em; font-size: .9rem; font-weight: 700; }
-
   /* ---------- Back to top: a black square, bottom right, once you've scrolled ---------- */
   .to-top {
     position: fixed; z-index: 8; right: max(var(--gutter), env(safe-area-inset-right, 0px)); bottom: calc(clamp(2.5rem, 8vh, 4rem) + env(safe-area-inset-bottom, 0px));
@@ -504,8 +480,8 @@
   .to-top:active { transform: scale(.94); }
   .to-top:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
   @media (hover: hover) and (pointer: fine) { .to-top:hover { color: #000; background: var(--orange); } }
-  /* Out of the way while the cookie banner or the pop-up is open */
-  .consent.is-open ~ .to-top, .signup.is-open ~ .to-top { opacity: 0; visibility: hidden; }
+  /* Out of the way while the cookie banner is open */
+  .consent.is-open ~ .to-top { opacity: 0; visibility: hidden; }
 
   /* ---------- Cookie banner: a black block rising from the bottom edge ---------- */
   .consent {
@@ -542,8 +518,6 @@
      Over links and buttons it becomes an orange block; over the card, a "Turn over" label.
      Mouse and trackpad only, and only once the script has started, so touch and keyboard are untouched. */
   html.has-cursor, html.has-cursor * { cursor: none !important; }
-  html.has-cursor:has(.signup[open]), html.has-cursor:has(.signup[open]) * { cursor: auto !important; }
-  html:has(.signup[open]) .cursor { opacity: 0; }
   .cursor {
     position: fixed; left: 0; top: 0; z-index: 100; pointer-events: none;
     display: flex; align-items: center; justify-content: center; gap: .35rem;
@@ -571,7 +545,7 @@
     .logo, .logo-gk, .logo-word, .acc, .acc.is-open, .acc-content, .index-plus, .index-name, .work-item { transition: none; }
     .index-item:hover .index-name, .index-item:focus-visible .index-name { transform: none; }   /* colour change only */
     .btn:active, .copy-btn:active { transform: none; }
-    .consent, .consent.is-open, .signup, .signup.is-open, .to-top, .to-top.is-shown { transform: none; transition: opacity 200ms ease; }
+    .consent, .consent.is-open, .to-top, .to-top.is-shown { transform: none; transition: opacity 200ms ease; }
   }
 
   /* ================= 404 ================= */

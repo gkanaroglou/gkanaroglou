@@ -471,30 +471,6 @@
   .foot-address .foot-linkedin { min-height: 40px; padding: .35rem .8rem; font-size: .875rem; text-decoration: none; cursor: pointer; font-family: inherit; }
   .foot-base { padding-top: .25rem; font-size: .8125rem; }
 
-  /* ---------- Email list pop-up: a Paper card in the middle of the screen, over a dimmed page ---------- */
-  .signup {
-    position: fixed; inset: 0; margin: auto; width: min(28rem, 100% - 2rem); max-height: calc(100% - 2rem); padding: 0; overflow: auto;
-    color: var(--black); background: var(--paper); border: 3px solid var(--black);
-    opacity: 0; transform: translateY(1rem) scale(.98); transition: opacity 220ms var(--ease-out), transform 300ms var(--ease-out);
-  }
-  .signup.is-open { opacity: 1; transform: none; }
-  .signup::backdrop { background: rgb(0 0 0 / .55); }
-  .signup-inner { position: relative; padding: 1.5rem 1.5rem 1.25rem; }
-  .signup-close { position: absolute; top: .5rem; right: .5rem; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; cursor: pointer; color: var(--black); background: none; border: 0; }
-  .signup-close svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: square; }
-  .signup-title { padding-right: 2.5rem; font-size: clamp(1.5rem, 4vw, 1.9rem); font-weight: 900; line-height: 1; letter-spacing: -.04em; }
-  .signup-text { margin-top: .6rem; color: var(--muted); font-size: .95rem; line-height: 1.4; }
-  .signup-form { display: grid; gap: .75rem; margin-top: 1rem; }
-  .signup-email { width: 100%; min-height: 48px; padding: .6rem .8rem; font: inherit; font-size: 16px; color: var(--black); background: #fff; border: 2px solid var(--black); border-radius: 0; }
-  .signup-email:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
-  .signup-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-  .signup-consent { display: flex; align-items: flex-start; gap: .6rem; font-size: .875rem; line-height: 1.4; cursor: pointer; }
-  .signup-consent input { flex-shrink: 0; width: 1.15rem; height: 1.15rem; margin-top: .1rem; accent-color: var(--black); cursor: pointer; }
-  .signup-consent a { text-underline-offset: 2px; }
-  .signup-submit { justify-self: start; }
-  .signup-submit:disabled { opacity: .6; cursor: default; }
-  .signup-status { min-height: 1.2em; font-size: .9rem; font-weight: 700; }
-
   /* ---------- Back to top: a black square, bottom right, once you've scrolled ---------- */
   .to-top {
     position: fixed; z-index: 8; right: max(var(--gutter), env(safe-area-inset-right, 0px)); bottom: calc(clamp(2.5rem, 8vh, 4rem) + env(safe-area-inset-bottom, 0px));
@@ -508,8 +484,8 @@
   .to-top:active { transform: scale(.94); }
   .to-top:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
   @media (hover: hover) and (pointer: fine) { .to-top:hover { color: #000; background: var(--orange); } }
-  /* Out of the way while the cookie banner or the pop-up is open */
-  .consent.is-open ~ .to-top, .signup.is-open ~ .to-top { opacity: 0; visibility: hidden; }
+  /* Out of the way while the cookie banner is open */
+  .consent.is-open ~ .to-top { opacity: 0; visibility: hidden; }
 
   /* ---------- Cookie banner: a black block rising from the bottom edge ---------- */
   .consent {
@@ -546,8 +522,6 @@
      Over links and buttons it becomes an orange block; over the card, a "Turn over" label.
      Mouse and trackpad only, and only once the script has started, so touch and keyboard are untouched. */
   html.has-cursor, html.has-cursor * { cursor: none !important; }
-  html.has-cursor:has(.signup[open]), html.has-cursor:has(.signup[open]) * { cursor: auto !important; }
-  html:has(.signup[open]) .cursor { opacity: 0; }
   .cursor {
     position: fixed; left: 0; top: 0; z-index: 100; pointer-events: none;
     display: flex; align-items: center; justify-content: center; gap: .35rem;
@@ -575,7 +549,7 @@
     .logo, .logo-gk, .logo-word, .acc, .acc.is-open, .acc-content, .index-plus, .index-name, .work-item { transition: none; }
     .index-item:hover .index-name, .index-item:focus-visible .index-name { transform: none; }   /* colour change only */
     .btn:active, .copy-btn:active { transform: none; }
-    .consent, .consent.is-open, .signup, .signup.is-open, .to-top, .to-top.is-shown { transform: none; transition: opacity 200ms ease; }
+    .consent, .consent.is-open, .to-top, .to-top.is-shown { transform: none; transition: opacity 200ms ease; }
   }
 
   /* Greek: "Επικοινωνία." is one long word, so the heading sizes to fit its column */
@@ -609,7 +583,6 @@
   <div class="consent-prefs" id="consent-prefs" hidden>
     <label class="consent-opt"><input type="checkbox" checked disabled><span><strong>Απαραίτητα</strong> Θυμάται την επιλογή σας για τα cookies. Πάντα ενεργά.</span></label>
     <label class="consent-opt"><input type="checkbox" id="consent-analytics"><span><strong>Ανάλυσης</strong> Μετράει τις επισκέψεις και τι λειτουργεί στον ιστότοπο, μόνο με τυχαία αναγνωριστικά.</span></label>
-    <label class="consent-opt"><input type="checkbox" id="consent-preferences"><span><strong>Προτιμήσεων</strong> Θυμάται ότι κλείσατε ή εγγραφήκατε στη λίστα email, ώστε να μη σας ξαναρωτήσει.</span></label>
   </div>
   <div class="consent-actions">
     <button type="button" class="btn btn-primary" data-consent="yes">Αποδοχή</button>
@@ -707,7 +680,6 @@
   <div class="wrap foot">
     <address class="foot-address">
       <a data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello στο georgekanaroglou.com</a>
-      <button type="button" class="foot-linkedin foot-signup" data-signup-open>Λίστα email</button>
       <a class="foot-linkedin" href="https://www.linkedin.com/in/georgekanaroglou/" target="_blank" rel="noopener" aria-label="LinkedIn (ανοίγει σε νέα καρτέλα)">LinkedIn <svg class="ext-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M5 3h8v8M13 3 3 13"/></svg></a>
     </address>
     <span class="foot-links">
@@ -719,22 +691,6 @@
   </div>
   <div class="wrap foot-base">© 2026 Γιώργος Κανάρογλου</div>
 </footer>
-
-<dialog class="signup" id="signup" aria-labelledby="signup-title">
-  <div class="signup-inner">
-  <button type="button" class="signup-close" aria-label="Κλείσιμο"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
-  <h2 class="signup-title" id="signup-title">Γραφτείτε στη λίστα email μου.</h2>
-  <p class="signup-text">Περιστασιακά σημειώματα για τιμολόγηση, brand και ψηφιακό marketing. Χωρίς spam. Διαγραφή οποιαδήποτε στιγμή.</p>
-  <form class="signup-form" novalidate>
-    <label class="sr-only" for="signup-email">Διεύθυνση email</label>
-    <input class="signup-email" id="signup-email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
-    <input class="signup-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <label class="signup-consent"><input type="checkbox" name="consent" required><span>Συμφωνώ να λαμβάνω email από τον Γιώργο. Δείτε την <a href="/privacy-el.html#email-list">πολιτική απορρήτου</a>.</span></label>
-    <button type="submit" class="btn btn-primary signup-submit">Εγγραφή</button>
-    <p class="signup-status" role="status" aria-live="polite"></p>
-  </form>
-  </div>
-</dialog>
 
 <button type="button" class="to-top" id="to-top" aria-label="Επιστροφή στην κορυφή"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 13V3M3 8l5-5 5 5"/></svg></button>
 
@@ -831,7 +787,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 
   var visitorType = null;
 
-  // What the visitor has allowed. Choices made before Customise existed keep their meaning: "yes" was analytics only.
+  // What the visitor has allowed. Older choices keep their meaning: "yes" and anything with "a1" allowed analytics.
   function consent() {
     var c = getCookie("gk_consent");
     if (!c) return null;
@@ -840,7 +796,6 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     return { analytics: c.indexOf("a1") > -1, preferences: c.indexOf("p1") > -1 };
   }
   window.gkConsent = function () { return consent() || { analytics: false, preferences: false }; };
-  window.GK_ENDPOINT = ENDPOINT; window.GK_SITE = SITE;   // the email list uses the same Google Sheet
 
   function send(event, extra) {
     var c = consent();
@@ -875,20 +830,19 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   function closeBanner() {
     var hadFocus = banner.contains(document.activeElement);
     banner.classList.remove("is-open");
-    document.dispatchEvent(new CustomEvent("gk:banner-closed"));
     bannerTimer = setTimeout(function () { banner.hidden = true; }, 400);
     // Keyboard users keep their place instead of being dropped at the top of the page
     if (hadFocus && !settings.hidden) settings.focus({ preventScroll: true });
   }
 
-  var prefs = document.getElementById("consent-prefs"), boxA = document.getElementById("consent-analytics"), boxP = document.getElementById("consent-preferences");
+  var prefs = document.getElementById("consent-prefs"), boxA = document.getElementById("consent-analytics");
   var btnCustom = banner.querySelector('[data-consent="custom"]'), btnSave = banner.querySelector('[data-consent="save"]');
   function showCustomise(on) {
     prefs.hidden = !on; btnSave.hidden = !on; btnCustom.hidden = on;
     btnCustom.setAttribute("aria-expanded", on ? "true" : "false");
   }
-  function decide(analytics, preferences) {
-    setCookie("gk_consent", "a" + (analytics ? 1 : 0) + "p" + (preferences ? 1 : 0), 60 * 60 * 24 * 182);
+  function decide(analytics) {
+    setCookie("gk_consent", analytics ? "a1" : "a0", 60 * 60 * 24 * 182);
     closeBanner();
     if (analytics) {
       sendView();
@@ -896,22 +850,21 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
       deleteCookie("gk_vid");
       deleteCookie("gk_sid");
     }
-    if (!preferences) { try { localStorage.removeItem("gk-signup"); } catch (e) {} }
   }
 
   banner.addEventListener("click", function (e) {
     var b = e.target.closest("[data-consent]");
     if (!b) return;
     var what = b.getAttribute("data-consent");
-    if (what === "yes") decide(true, true);
-    else if (what === "no") decide(false, false);
+    if (what === "yes") decide(true);
+    else if (what === "no") decide(false);
     else if (what === "custom") { showCustomise(true); boxA.focus({ preventScroll: true }); }
-    else if (what === "save") decide(boxA.checked, boxP.checked);
+    else if (what === "save") decide(boxA.checked);
   });
   settings.hidden = false;
   settings.addEventListener("click", function () {
     var c = consent() || { analytics: false, preferences: false };
-    boxA.checked = c.analytics; boxP.checked = c.preferences;
+    boxA.checked = c.analytics;
     showCustomise(false);
     openBanner();
     banner.querySelector("button").focus({ preventScroll: true });
@@ -937,7 +890,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     deleteCookie("gk_vid");
     deleteCookie("gk_sid");
   }
-  if (!choice || !choice.preferences) { try { localStorage.removeItem("gk-signup"); } catch (e) {} }
+  try { localStorage.removeItem("gk-signup"); } catch (e) {}   // tidies away the old email list note, if a browser still has one
   if (!choice) openBanner();
   else if (choice.analytics) sendView();
 })();
@@ -1048,75 +1001,6 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var mark = document.querySelector(".mark");   // keyboard users carry on from the top too
     if (mark) mark.focus({ preventScroll: true });
   });
-})();
-</script>
-<script>
-/* The email list. On the homepage it pops up once, 5 seconds in, and never over the cookie banner.
-   Close it with the X, by clicking the dimmed page, or with Escape.
-   "Email list" in the footer opens it any time. Sign-ups go to the Subscribers tab of the Google Sheet.
-   Closing or joining is remembered for this visit, and for 6 months if the visitor allows preferences. */
-(function () {
-  var box = document.getElementById("signup");
-  if (!box) return;
-  var form = box.querySelector("form"), email = form.querySelector("[name=email]"), agree = form.querySelector("[name=consent]");
-  var trap = form.querySelector("[name=company]"), status = form.querySelector(".signup-status"), submit = form.querySelector("[type=submit]");
-  var KEY = "gk-signup", KEEP = 182 * 864e5, WAIT = 5000;
-  var T = { thanks: "Ευχαριστώ. Είστε στη λίστα.", invalid: "Εισαγάγετε μια έγκυρη διεύθυνση email.", agree: "Τσεκάρετε το κουτάκι για να συμφωνήσετε να λαμβάνετε email.", error: "Κάτι πήγε στραβά. Στείλτε μου email απευθείας." };
-
-  function remembered() {
-    try {
-      if (sessionStorage.getItem(KEY)) return true;
-      var v = JSON.parse(localStorage.getItem(KEY) || "null");
-      if (v && Date.now() - v.t < KEEP) return true;
-      if (v) localStorage.removeItem(KEY);
-    } catch (e) {}
-    return false;
-  }
-  function remember(state, lasting) {
-    try { sessionStorage.setItem(KEY, state); } catch (e) {}
-    var c = window.gkConsent ? window.gkConsent() : {};
-    if (lasting && c.preferences) { try { localStorage.setItem(KEY, JSON.stringify({ s: state, t: Date.now() })); } catch (e) {} }
-  }
-  function open(byUser) {
-    status.textContent = "";
-    if (!box.open) { if (box.showModal) box.showModal(); else box.setAttribute("open", ""); }
-    requestAnimationFrame(function () { box.classList.add("is-open"); });
-    if (byUser) email.focus({ preventScroll: true });   // opened from the footer: straight to the email field
-  }
-  function close() {
-    box.classList.remove("is-open");
-    setTimeout(function () { if (!box.classList.contains("is-open") && box.open) { if (box.close) box.close(); else box.removeAttribute("open"); } }, 250);
-  }
-  function dismiss() { remember("closed", true); close(); }
-  box.querySelector(".signup-close").addEventListener("click", dismiss);
-  box.addEventListener("cancel", function (e) { e.preventDefault(); dismiss(); });          // Escape
-  box.addEventListener("click", function (e) { if (e.target === box) dismiss(); });          // the dimmed page around it
-  [].forEach.call(document.querySelectorAll("[data-signup-open]"), function (b) { b.addEventListener("click", function () { open(true); }); });
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var v = email.value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { status.textContent = T.invalid; email.focus(); return; }
-    if (!agree.checked) { status.textContent = T.agree; agree.focus(); return; }
-    if (trap.value) { status.textContent = T.thanks; return; }   // a bot filled the hidden field: say thanks, send nothing
-    if (!window.GK_ENDPOINT) { status.textContent = T.error; return; }
-    submit.disabled = true;
-    fetch(window.GK_ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true,
-      body: JSON.stringify({ site: window.GK_SITE, type: "subscribe", email: v, language: document.documentElement.lang, page: location.pathname, consent: agree.parentNode.textContent.trim() })
-    }).then(function () {
-      status.textContent = T.thanks; form.reset(); remember("joined", true); setTimeout(close, 2600);
-    }, function () { status.textContent = T.error; }).then(function () { submit.disabled = false; });
-  });
-
-  if (document.querySelector(".opening") && !remembered()) {
-    setTimeout(function ask() {
-      if (remembered() || box.open) return;
-      var banner = document.getElementById("consent");
-      if (banner && !banner.hidden) { document.addEventListener("gk:banner-closed", function () { setTimeout(ask, 1500); }, { once: true }); return; }
-      if (document.hidden) { setTimeout(ask, 2000); return; }
-      open(false); remember("shown", false);   // asked once this visit
-    }, WAIT);
-  }
 })();
 </script>
 </body>
