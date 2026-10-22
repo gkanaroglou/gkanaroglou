@@ -770,6 +770,21 @@
     .site-nav.has-back .site-link { display: none; }
   }
 
+  /* What I do panel: one type scale. Labels readable, the three disciplines largest, the two foundations a clear step down,
+     names allowed their natural width instead of being forced onto two lines. */
+  .index .index-head, .index .index-head-base { font-size: .95rem; font-weight: 700; letter-spacing: .01em; }
+  .index .index-list li { font-size: clamp(1.4rem, 2.1vw, 1.85rem); }
+  .index .index-base strong { width: auto; font-size: clamp(1.15rem, 1.6vw, 1.4rem); line-height: 1.15; }
+  .index .index-desc { font-size: .875rem; letter-spacing: .01em; }
+  .index .acc-body { font-size: 1rem; line-height: 1.5; }
+  .index .index-item-base { padding-right: 2.25rem; }
+  @media (max-width: 640px) {   /* phones: the two foundations stack, so their names never run under the plus */
+    .index .index-base { grid-template-columns: minmax(0, 1fr); }
+    .index .index-base li + li { border-left: 0; border-top: 1px solid var(--concrete); }
+    .index .index-base li + li .index-item-base { padding-left: 0; }
+    .index .index-item-base .index-plus { right: 0; }
+  }
+
 </style>
 <script type="application/ld+json">
 {
