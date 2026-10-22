@@ -449,6 +449,30 @@
     .work-facts { grid-template-columns: minmax(0, 1fr); }
   }
 
+  /* Each project opens under its row, with the same short accordion as the index */
+  .work-intro { max-width: 52ch; margin-bottom: clamp(1.25rem, 2.5vw, 2rem); color: var(--muted); font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+  .work-detail { opacity: 0; transition: opacity 200ms var(--ease-out); }
+  .acc.is-open .work-detail { opacity: 1; }
+  .work-facts dd { max-width: 42ch; }
+
+  /* ---------- Articles: a Black block, one row per article ---------- */
+  .articles { padding-block: clamp(3rem, 7vw, 5.5rem); color: var(--paper); background: var(--black); }
+  .articles .work-count { color: var(--concrete); }
+  .post-list { list-style: none; border-top: 3px solid var(--paper); }
+  .post-list > li { border-bottom: 1px solid var(--concrete); }
+  .post-link {
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) auto; align-items: baseline; gap: .4rem clamp(1rem, 3vw, 2.5rem);
+    padding: clamp(1rem, 2vw, 1.5rem) 0; color: var(--paper); text-decoration: none;
+  }
+  .post-link:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; }
+  .post-link:active { opacity: .7; }
+  .post-link-title { font: inherit; font-size: clamp(1.15rem, 2vw, 1.6rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; transition: color 150ms ease; }
+  .post-link-desc { max-width: 46ch; color: var(--concrete); font-size: 1rem; line-height: 1.45; }
+  .post-link-meta { color: var(--concrete); font-size: .875rem; font-weight: 600; white-space: nowrap; }
+  @media (hover: hover) and (pointer: fine) { .post-link:hover .post-link-title { color: var(--orange); } }
+  @media (max-width: 760px) { .post-link { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .work-detail, .post-link-title { transition: none; } }
+
   /* ---------- Footer ---------- */
   footer {
     padding-block: 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
@@ -586,7 +610,7 @@
       "mainEntity": {
         "@id": "https://georgekanaroglou.com/#person"
       },
-      "dateModified": "2026-10-21"
+      "dateModified": "2026-10-22"
     },
     {
       "@type": "Person",
@@ -776,8 +800,111 @@
 
   <section class="work" id="work" aria-labelledby="work-title">
     <div class="wrap">
-      <div class="work-head"><h2 class="work-title" id="work-title">Επιλεγμένες εργασίες.</h2></div>
-      <p class="work-soon">Έρχονται σύντομα.</p>
+      <div class="work-head"><h2 class="work-title" id="work-title">Επιλεγμένες εργασίες.</h2><span class="work-count">9 εργασίες</span></div>
+      <p class="work-intro">Από το MSc μου στο LSE. Οι μελέτες περίπτωσης και τα δεδομένα δόθηκαν από το μάθημα. Η ανάλυση και οι προτάσεις είναι δικές μου.</p>
+      <ul class="work-list">
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-clickassist" aria-expanded="false" aria-controls="work-clickassist"><span class="work-stat"><span class="work-num">$218k</span><span class="work-label">μηνιαία αξία για έναν πελάτη, απέναντι σε τιμή $399</span></span><span class="work-main"><span class="work-name">Τιμολόγηση ενός εργαλείου AI chat με βάση την αξία που δημιουργεί</span><span class="work-meta">Στρατηγική τιμολόγησης. Ανάλυση οικονομικής αξίας.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-clickassist" role="region" aria-labelledby="work-btn-clickassist"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Μια start-up τιμολογούσε το AI widget εξυπηρέτησης σαν λογισμικό help desk, στα $399 τον μήνα. Ήταν σωστό για ένα ηλεκτρονικό κατάστημα και για μια εταιρεία λογισμικού;</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Υπολόγισα την οικονομική αξία για κάθε πελάτη από τα δεδομένα της μελέτης: επιπλέον πωλήσεις, μικτό περιθώριο και λιγότερα αιτήματα υποστήριξης. Μετά έλεγξα κάθε υπόθεση, από το χειρότερο ως το καλύτερο σενάριο.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Η αξία διαφέρει στο είδος, όχι μόνο στο μέγεθος. Για το κατάστημα, το 98% είναι επιπλέον πωλήσεις. Για την εταιρεία λογισμικού, είναι εξοικονόμηση κόστους. Γι’ αυτό πρότεινα να τιμολογείται κάθε τύπος πελάτη με βάση τον δικό του δείκτη αξίας. Ένα πακέτο για καταστήματα με υψηλό τζίρο, στα $2.000 με $5.000 τον μήνα, θα ήταν ακόμη μόνο το 1% με 2,5% της αξίας.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-jaguar" aria-expanded="false" aria-controls="work-jaguar"><span class="work-stat"><span class="work-num">4 αιτίες</span><span class="work-label">πίσω από την αντίδραση, και τρεις δρόμοι επιστροφής</span></span><span class="work-main"><span class="work-name">Γιατί το rebrand της Jaguar γύρισε μπούμερανγκ, και πώς μπορεί να ανακάμψει</span><span class="work-meta">Στρατηγική brand. Ψυχολογία καταναλωτή.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-jaguar" role="region" aria-labelledby="work-btn-jaguar"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Το rebrand της Jaguar το 2024 αφαίρεσε μονομιάς τη γνώριμη εικόνα της. Η αντίδραση ήταν χλευασμός. Έγραψα ένα υπόμνημα προς τον Chief Creative Officer της, για το γιατί συνέβη και τι πρέπει να γίνει μετά.</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Συμπεριφορική διάγνωση της αντίδρασης, μέσα από την προσοχή, το συναίσθημα, τη μνήμη, την ταυτότητα και την κοινωνική απόδειξη. Μετά ένα σχέδιο ανάκαμψης, τα σημεία όπου θα μπορούσε να αποτύχει, και η ηθική του διάσταση.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Ο κόσμος έκρινε τη νέα εικόνα με το συναίσθημα, πριν από κάθε εξήγηση, και τα επόμενα μηνύματα διαβάστηκαν μέσα από αυτή την πρώτη αίσθηση. Οι πιστοί ιδιοκτήτες ένιωσαν ότι το brand δεν τους εκφράζει πια, και η κοινωνική απόδειξη εξάπλωσε την απόρριψη. Η λύση: να επιστρέψουν λίγα γνώριμα στοιχεία, να οδηγήσουν τα αυτοκίνητα αξιόπιστοι κριτικοί και ιδιοκτήτες, και να προσκληθεί ο κόσμος να ακολουθήσει, αντί να του ζητηθεί αποδοχή.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-lumibank" aria-expanded="false" aria-controls="work-lumibank"><span class="work-stat"><span class="work-num">73%</span><span class="work-label">της αγοράς στα δύο τμήματα του λανσαρίσματος</span></span><span class="work-main"><span class="work-name">Ποιους πρέπει να κερδίσει πρώτα μια νέα ψηφιακή τράπεζα</span><span class="work-meta">Ανάλυση μάρκετινγκ. Σε R.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-lumibank" role="region" aria-labelledby="work-btn-lumibank"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Μια νέα εφαρμογή τράπεζας για νέους επαγγελματίες ήθελε να ξέρει σε ποιους να στοχεύσει και με τι να βγει στην αγορά. Είχα συνεντεύξεις, ανοιχτές απαντήσεις και δεδομένα έρευνας από 180 άτομα.</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Κωδικοποίησα τις συνεντεύξεις σε θέματα και τα έκανα μετρήσιμες κλίμακες (Cronbach’s alpha 0,66 έως 0,79). Μετά τμηματοποίηση με k-means, μελέτη conjoint σε επτά χαρακτηριστικά, ελέγχους ANOVA και chi-square ανά τμήμα, και παλινδρόμηση στην πρόθεση υιοθέτησης.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Τρία τμήματα: όσοι εμπιστεύονται εύκολα, όσοι θέλουν ευκολία με ηθική, και οι δύσπιστοι πραγματιστές. Η ευκολία οδηγεί περισσότερο την υιοθέτηση, μετά η εμπιστοσύνη, ενώ η ευαισθησία στις χρεώσεις τη φρενάρει. Το προφίλ λανσαρίσματος: χωρίς μηνιαία χρέωση, 2% cashback, εγγραφή σε πέντε λεπτά, προηγμένη ασφάλεια και τηλεφωνική υποστήριξη 24/7.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-blanket" aria-expanded="false" aria-controls="work-blanket"><span class="work-stat"><span class="work-num">£70 + £190</span><span class="work-label">η σειρά δύο προϊόντων, από 28.680 ζεύγη</span></span><span class="work-main"><span class="work-name">Σχεδιασμός και τιμολόγηση μιας σειράς έξυπνων κουβερτών</span><span class="work-meta">Στρατηγική τιμολόγησης. Ανάλυση conjoint σε Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-blanket" role="region" aria-labelledby="work-btn-blanket"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Ποιες εκδοχές μιας κουβέρτας θέρμανσης και ψύξης πρέπει να λανσαριστούν, και σε ποιες τιμές; Τα δεδομένα ήταν 1.800 βαθμολογίες από 150 άτομα.</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Υπολόγισα την αξία κάθε χαρακτηριστικού με παλινδρόμηση conjoint. Ομαδοποίησα τους ανθρώπους με βάση τις δικές τους προτιμήσεις, με k-means. Μετά έφτιαξα έναν προσομοιωτή επιλογής και δοκίμασα κάθε πιθανό ζεύγος προϊόντων.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Τρεις καθαρές ομάδες: όσοι κοιτούν την τιμή και τη λειτουργία eco, όσοι ζεσταίνονται στον ύπνο και θέλουν ψύξη, και τα ζευγάρια που θέλουν κάθε πλευρά ρυθμισμένη ξεχωριστά. Ένα βασικό μοντέλο στις £70 μαζί με ένα premium στις £190 έφερε 5,2% περισσότερα έσοδα από το καλύτερο μεμονωμένο προϊόν, και μείωσε όσους δεν αγοράζουν τίποτα από 32,7% σε 18,7%.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-keywords" aria-expanded="false" aria-controls="work-keywords"><span class="work-stat"><span class="work-num">$670</span><span class="work-label">ημερήσιο κέρδος από ημερήσιο budget διαφήμισης $100</span></span><span class="work-main"><span class="work-name">Κατανομή budget διαφήμισης αναζήτησης ανά λέξη-κλειδί</span><span class="work-meta">Ψηφιακό μάρκετινγκ. Βελτιστοποίηση σε Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-keywords" role="region" aria-labelledby="work-btn-keywords"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Πώς πρέπει να μοιραστούν $100 την ημέρα σε πέντε λέξεις-κλειδιά αναζήτησης, και πόση προσφορά να κάνει η καθεμία;</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Μοντελοποίησα πώς αλλάζουν το κόστος ανά κλικ και τα κλικ ανά ημέρα ανάλογα με την προσφορά, για κάθε λέξη-κλειδί. Μετά βελτιστοποίησα και τις πέντε προσφορές μαζί, εντός budget, από οκτώ διαφορετικά σημεία εκκίνησης.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Τρεις λέξεις-κλειδιά κερδίζουν το budget. Μία μένει σχεδόν χωρίς, γιατί οι άλλες αποδίδουν περισσότερο. Μία χάνει χρήματα σε κάθε προσφορά, άρα πρέπει να σταματήσει. Το ίδιο το budget είναι το όριο: κάθε επιπλέον δολάριο αποδίδει $2,91, οπότε μια αύξηση στα $200 περίπου την ημέρα προσθέτει $188 κέρδους.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-lingoleap" aria-expanded="false" aria-controls="work-lingoleap"><span class="work-stat"><span class="work-num">−$10,4 εκ.</span><span class="work-label">χαμένα με όριο στα δωρεάν μαθήματα</span></span><span class="work-main"><span class="work-name">Πρέπει μια εφαρμογή γλωσσών να περιορίσει το δωρεάν πρόγραμμα;</span><span class="work-meta">Στρατηγική τιμολόγησης. Αξία πελάτη (CLV).</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-lingoleap" role="region" aria-labelledby="work-btn-lingoleap"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Το μάρκετινγκ ήθελε ημερήσιο όριο μαθημάτων, ώστε οι δωρεάν χρήστες να περάσουν σε συνδρομή. Θα πρόσθετε αξία ή θα την κατέστρεφε;</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Υπολόγισα την αξία πελάτη (CLV) για συνδρομητές και δωρεάν χρήστες, αντιμετωπίζοντας την πιθανότητα μετατροπής ως δικαίωμα επιλογής. Μετά βρήκα το νεκρό σημείο της μετατροπής και έλεγξα ποιες προβλέψεις καθορίζουν την απόφαση.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Το 94,5% της αξίας ενός δωρεάν χρήστη είναι η πιθανότητα να γίνει συνδρομητής. Το όριο ανεβάζει τη μετατροπή, αλλά διώχνει χρήστες πιο γρήγορα, με απώλεια $2,09 ανά χρήστη σε πέντε εκατομμύρια χρήστες. Βγαίνει μόνο με μηνιαία μετατροπή 1,42%, απέναντι σε πρόβλεψη 1,3%, άρα πρώτα χρειάζεται πιλοτική δοκιμή.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-royal-grand" aria-expanded="false" aria-controls="work-royal-grand"><span class="work-stat"><span class="work-num">4,6 → 3,5</span><span class="work-label">μέση βαθμολογία επισκεπτών μετά από μια high-tech ανακαίνιση</span></span><span class="work-main"><span class="work-name">Έβλαψε η ανακαίνιση το brand ενός πολυτελούς ξενοδοχείου;</span><span class="work-meta">Στρατηγική brand. Σχεδιασμός καμπάνιας.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-royal-grand" role="region" aria-labelledby="work-btn-royal-grand"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Ένα ξενοδοχείο spa στις Άλπεις πρόσθεσε ρομπότ στην υποδοχή και high-tech λειτουργίες, και οι βαθμολογίες του έπεσαν. Τι έπαθε το brand, και ποια καμπάνια πρέπει να ακολουθήσει;</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Διάβασα τις κριτικές μέσα από τις διαστάσεις προσωπικότητας brand του Aaker και χώρισα τους επισκέπτες ανά τύπο. Μετά σχεδίασα καμπάνια για δύο κοινά, με τμηματοποίηση, μηνύματα βασισμένα σε ιστορίες και περιεχόμενο από επισκέπτες, μαζί με τρόπους μέτρησης.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Η αξία του brand μετακινήθηκε, δεν έπεσε απλώς. Οι πιστοί επισκέπτες έπεσαν περίπου στο 2,5, γιατί τους έλειψε η ζεστασιά. Οι νέοι διεθνείς επισκέπτες έδωσαν περίπου 4,75, γιατί τους άρεσε ο ενθουσιασμός. Η καμπάνια: «Legacy Stories» για τους πιστούς και περιεχόμενο από επισκέπτες για τους νέους, με μέτρηση των ανανεώσεων και του NPS για κάθε ομάδα.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-detergent" aria-expanded="false" aria-controls="work-detergent"><span class="work-stat"><span class="work-num">−9,2%</span><span class="work-label">πωλήσεις Tide μετά από μείωση 10% στην τιμή του Persil</span></span><span class="work-main"><span class="work-name">Ποιος κλέβει πωλήσεις από ποιον με την τιμή, στα απορρυπαντικά</span><span class="work-meta">Στρατηγική τιμολόγησης. Οικονομετρία σε Python.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-detergent" role="region" aria-labelledby="work-btn-detergent"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Τα Tide και Gain έχουν τον ίδιο ιδιοκτήτη και ανταγωνίζονται το Persil. Πώς επηρεάζουν οι τιμές τους τις πωλήσεις των άλλων; Είχα δεδομένα 104 εβδομάδων από καταστήματα.</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Εκτίμησα ένα log-log μοντέλο ζήτησης για κάθε brand, έφτιαξα πλήρη πίνακα ελαστικοτήτων τιμής και βαθμολόγησα την επιρροή και την ευαλωτότητα κάθε brand. Έλεγξα τα μοντέλα για στασιμότητα, πολυσυγγραμμικότητα και σταθερότητα στον χρόνο.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Δεν είναι μάχη τριών. Τα Tide και Persil κυνηγούν τον ίδιο premium αγοραστή, ενώ το Gain μένει στη δική του οικονομική κατηγορία. Μια μείωση 10% στην τιμή του Persil θα ανέβαζε τα έσοδά του κατά 22% και θα κόστιζε στο Tide $16.466 την εβδομάδα. Το Gain μόλις που θα το καταλάβαινε.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+        <li>
+          <h3 class="work-h"><button type="button" class="work-item" id="work-btn-halo" aria-expanded="false" aria-controls="work-halo"><span class="work-stat"><span class="work-num">7ο έτος</span><span class="work-label">όταν κορυφώνονται οι πωλήσεις μιας AI συσκευής χωρίς οθόνη</span></span><span class="work-main"><span class="work-name">Πρόβλεψη λανσαρίσματος μιας AI συσκευής χωρίς οθόνη</span><span class="work-meta">Ανάλυση μάρκετινγκ. Μοντέλο διάχυσης Bass.</span></span><span class="index-plus" aria-hidden="true"></span></button></h3>
+          <div class="acc" id="work-halo" role="region" aria-labelledby="work-btn-halo"><div class="acc-inner"><div class="work-detail">
+            <dl class="work-facts">
+              <div><dt>Το ζητούμενο</dt><dd>Μια start-up ήθελε να καταλάβει πόσο γρήγορα θα πουλήσει η φορητή AI συσκευή της, για να σχεδιάσει απόθεμα, παραγωγική ικανότητα και διαφημιστικά έξοδα.</dd></div>
+              <div><dt>Τι έκανα</dt><dd>Υπολόγισα το μέγεθος της αγοράς στα 3,75 εκατομμύρια τεμάχια από δεδομένα έρευνας. Έφτιαξα πρόβλεψη διάχυσης Bass με δείκτες από wearables και φωνητική τεχνολογία, και κοστολόγησα την παραγωγή ανά έτος. Μετά όρισα τιμή λανσαρίσματος.</dd></div>
+              <div><dt>Τι έδειξε</dt><dd>Αργό ξεκίνημα με 80.000 τεμάχια το πρώτο έτος, κορύφωση στα 624.000 το έβδομο, και κορεσμός ως το δέκατο τρίτο. Ο βασικός κίνδυνος είναι το αδύναμο word of mouth και το χάσμα ανάμεσα σε όσα λέει και όσα κάνει ο κόσμος. Και τα δύο μπορούν να σταματήσουν νωρίς τη ζήτηση και να αφήσουν αχρησιμοποίητη παραγωγική ικανότητα. Πρότεινα τιμή skimming στις £699.</dd></div>
+            </dl>
+          </div></div></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="articles" id="articles" aria-labelledby="articles-title">
+    <div class="wrap">
+      <div class="work-head"><h2 class="work-title" id="articles-title">Άρθρα.</h2><span class="work-count">3 άρθρα</span></div>
+      <ul class="post-list">
+        <li><a class="post-link" href="/articles/analogue-comeback.html" lang="en"><h3 class="post-link-title">The comeback of analogue technology.</h3><span class="post-link-desc" lang="el">Γιατί ο κόσμος διαλέγει φωτογραφικές μηχανές με φιλμ και flip phones αντί για την εύκολη λύση, και τι μπορούν να μάθουν τα brands.</span><span class="post-link-meta" lang="el">3 λεπτά ανάγνωσης, στα αγγλικά</span></a></li>
+        <li><a class="post-link" href="/articles/podcast-loyalty.html" lang="en"><h3 class="post-link-title">Why we’re all listening.</h3><span class="post-link-desc" lang="el">Η προσοχή είναι περιορισμένη, κι όμως τα μεγάλα podcasts συνεχίζουν να μεγαλώνουν. Πώς τους κάνει χώρο το μυαλό, και γιατί οι ακροατές μένουν πιστοί.</span><span class="post-link-meta" lang="el">3 λεπτά ανάγνωσης, στα αγγλικά</span></a></li>
+        <li><a class="post-link" href="/articles/familiarity-and-risk.html" lang="en"><h3 class="post-link-title">Does familiarity make us blind to risk?</h3><span class="post-link-desc" lang="el">Η επανάληψη μετατρέπει το άγχος σε άνεση. Σε κάποια περιβάλλοντα αυτό μας κάνει πιο ασφαλείς. Σε άλλα, κρύβει αθόρυβα πραγματικό κίνδυνο.</span><span class="post-link-meta" lang="el">3 λεπτά ανάγνωσης, στα αγγλικά</span></a></li>
+      </ul>
     </div>
   </section>
 </main>
