@@ -487,17 +487,39 @@
   @media (prefers-reduced-motion: reduce) { .work-jump a { transition: none; } }
 
   /* ---------- 3D motion, paper-like: panels unfold from the row that opens them, filtered groups fold away and back ---------- */
+  /* Motion tokens. Personality: Corporate. Signature easing for most motion, an entrance and an exit curve,
+     and three durations. Mobile runs at 0.8x with less 3D. */
+  :root { --m-std: cubic-bezier(0.2, 0, 0, 1); --m-in: cubic-bezier(0.05, 0.7, 0.1, 1); --m-out: cubic-bezier(0.3, 0, 1, 1);
+          --d-quick: 200ms; --d-std: 300ms; --d-slow: 450ms; }
+  @media (max-width: 640px) { :root { --d-quick: 160ms; --d-std: 240ms; --d-slow: 360ms; } }
   .acc-inner { perspective: 900px; }
-  .acc .acc-content, .acc .work-detail { transform-origin: 50% 0; transform: rotateX(-16deg) translateY(-6px); transition: opacity 180ms cubic-bezier(0.3, 0, 1, 1), transform 180ms cubic-bezier(0.3, 0, 1, 1); }
-  .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; transition: opacity 260ms cubic-bezier(0.2, 0, 0, 1) 40ms, transform 320ms cubic-bezier(0.05, 0.7, 0.1, 1); }
+  /* Primary: the panel unfolds from its row. Secondary: its three columns follow 40ms apart. The plus already turns into a cross. */
+  .acc .acc-content, .acc .work-detail { transform-origin: 50% 0; transform: rotateX(-14deg) translateY(-6px); opacity: 0; transition: opacity var(--d-quick) var(--m-out), transform var(--d-quick) var(--m-out); }
+  .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; opacity: 1; transition: opacity var(--d-std) var(--m-std), transform var(--d-std) var(--m-in); }
+  .acc .work-facts > div { opacity: 0; transform: translateY(6px); transition: opacity var(--d-quick) var(--m-out), transform var(--d-quick) var(--m-out); }
+  .acc.is-open .work-facts > div { opacity: 1; transform: none; transition: opacity var(--d-std) var(--m-std), transform var(--d-std) var(--m-in); }
+  .acc.is-open .work-facts > div:nth-child(1) { transition-delay: 60ms; }
+  .acc.is-open .work-facts > div:nth-child(2) { transition-delay: 100ms; }
+  .acc.is-open .work-facts > div:nth-child(3) { transition-delay: 140ms; }
   .work-groups { display: grid; gap: clamp(2rem, 4vw, 3rem); perspective: 1800px; }
   .work-group + .work-group { margin-top: 0; }
   .work-group { transform-origin: 50% 0; }
+  .work-jump a { transition: background-color var(--d-quick) var(--m-std), color var(--d-quick) var(--m-std), transform 120ms var(--m-std); }
+  .work-jump a:active { opacity: 1; transform: scale(.97); }
   .work-jump a[aria-pressed="true"] { color: var(--paper); background: var(--black); }
   .work-jump a[aria-pressed="true"] span { color: var(--concrete); }
+  /* Reduced motion: no movement, just a short fade */
   @media (prefers-reduced-motion: reduce) {
-    .acc .acc-content, .acc .work-detail, .acc.is-open .acc-content, .acc.is-open .work-detail { transform: none; transition: none; }
+    .acc .acc-content, .acc .work-detail, .acc .work-facts > div { transform: none; transition: opacity 120ms linear; }
+    .acc.is-open .acc-content, .acc.is-open .work-detail, .acc.is-open .work-facts > div { transform: none; transition: opacity 120ms linear; transition-delay: 0ms; }
+    .work-jump a, .work-jump a:active { transform: none; }
   }
+
+  /* Accordion timing from the motion system: the plus turns in 150ms, the row opens in 250ms and closes faster, on an ease-in */
+  .index-plus { transition-duration: 150ms; transition-timing-function: var(--m-std); }
+  .acc.is-open { transition: grid-template-rows 250ms var(--m-std), visibility 0s; }
+  .acc { transition: grid-template-rows 200ms var(--m-out), visibility 0s linear 200ms; }
+  @media (prefers-reduced-motion: reduce) { .acc, .acc.is-open { transition: none; } }
 
   /* ---------- Articles: a Black block, one row per article ---------- */
   .articles { padding-block: clamp(3rem, 7vw, 5.5rem); color: var(--paper); background: var(--black); }
@@ -649,16 +671,79 @@
   }
   @media (prefers-reduced-motion: reduce) { .site-link, .site-caret { transition: none; } }
 
-  /* ---------- Page turn between pages (browsers without view transitions just load the page) ---------- */
-  ::view-transition-old(root) { animation: 200ms cubic-bezier(0.3, 0, 1, 1) both turn-out; }
-  ::view-transition-new(root) { animation: 420ms cubic-bezier(0.05, 0.7, 0.1, 1) 60ms both turn-in; }
+  /* ---------- Page turn between pages (browsers without view transitions just load the page) ----------
+     Primary: the page turns a few degrees, like a sheet. The header is shared, so it stays still and anchors you.
+     Secondary: on project and article pages the black masthead unfolds from the header just after the page lands.
+     Phones get a flat slide (no 3D); reduced motion gets a short crossfade, because full-screen movement can trigger vestibular discomfort. */
+  :root { --m-std: cubic-bezier(0.2, 0, 0, 1); --m-in: cubic-bezier(0.05, 0.7, 0.1, 1); --m-out: cubic-bezier(0.3, 0, 1, 1); }
+  .mast { view-transition-name: mast; }
+  ::view-transition-old(root) { animation: 280ms var(--m-out) both turn-out; }
+  ::view-transition-new(root) { animation: 400ms var(--m-in) 100ms both turn-in; }
   html:active-view-transition-type(back)::view-transition-old(root) { animation-name: turn-out-back; }
   html:active-view-transition-type(back)::view-transition-new(root) { animation-name: turn-in-back; }
-  @keyframes turn-out { to { opacity: 0; transform: perspective(1600px) translateX(-3%) rotateY(6deg) scale(.97); } }
-  @keyframes turn-in { from { opacity: 0; transform: perspective(1600px) translateX(4%) rotateY(-8deg) scale(.97); } }
-  @keyframes turn-out-back { to { opacity: 0; transform: perspective(1600px) translateX(3%) rotateY(-6deg) scale(.97); } }
-  @keyframes turn-in-back { from { opacity: 0; transform: perspective(1600px) translateX(-4%) rotateY(8deg) scale(.97); } }
-  @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
+  ::view-transition-new(mast):only-child { transform-origin: 50% 0; animation: 300ms var(--m-in) 200ms both mast-in; }
+  ::view-transition-old(mast):only-child { animation: 160ms var(--m-out) both fade-out; }
+  ::view-transition-group(mast) { animation-duration: 300ms; animation-timing-function: var(--m-std); }
+  @keyframes turn-out { to { opacity: 0; transform: perspective(1600px) translateX(-2%) rotateY(4deg) scale(.98); } }
+  @keyframes turn-in { from { opacity: 0; transform: perspective(1600px) translateX(3%) rotateY(-5deg) scale(.98); } }
+  @keyframes turn-out-back { to { opacity: 0; transform: perspective(1600px) translateX(2%) rotateY(-4deg) scale(.98); } }
+  @keyframes turn-in-back { from { opacity: 0; transform: perspective(1600px) translateX(-3%) rotateY(5deg) scale(.98); } }
+  @keyframes mast-in { from { opacity: 0; transform: perspective(1200px) rotateX(-10deg) translateY(-8px); } }
+  @keyframes fade-out { to { opacity: 0; } }
+  @keyframes slide-out { to { opacity: 0; transform: translateX(-2%); } }
+  @keyframes slide-in { from { opacity: 0; transform: translateX(3%); } }
+  @keyframes slide-out-back { to { opacity: 0; transform: translateX(2%); } }
+  @keyframes slide-in-back { from { opacity: 0; transform: translateX(-3%); } }
+  @media (max-width: 640px) {
+    ::view-transition-old(root) { animation: 160ms var(--m-out) both slide-out; }
+    ::view-transition-new(root) { animation: 360ms var(--m-in) 30ms both slide-in; }
+    html:active-view-transition-type(back)::view-transition-old(root) { animation-name: slide-out-back; }
+    html:active-view-transition-type(back)::view-transition-new(root) { animation-name: slide-in-back; }
+    ::view-transition-new(mast):only-child { animation: 240ms var(--m-std) 120ms both fade-in-only; }
+  }
+  @keyframes fade-in-only { from { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root), ::view-transition-old(mast) { animation: 120ms linear both fade-out; }
+    ::view-transition-new(root), ::view-transition-new(mast) { animation: 150ms linear both fade-in-only; }
+    ::view-transition-group(mast) { animation: none; }
+  }
+
+  /* ---------- Interaction states, from the motion system (Corporate) ----------
+     Hover: in under 100ms, out at 180ms. Press: 0.97 for 60ms, back in 100ms. Focus ring settles in 150ms.
+     The Work menu drops from the header like the other panels: band first, then its links 30ms apart. */
+  :root { --m-std: cubic-bezier(0.2, 0, 0, 1); --m-in: cubic-bezier(0.05, 0.7, 0.1, 1); --m-out: cubic-bezier(0.3, 0, 1, 1); }
+  .site-link, .work-item .work-name, .post-link-title, .side li a, .post-more li a, .work-jump a, .btn { transition-duration: 180ms; transition-timing-function: var(--m-std); }
+  @media (hover: hover) and (pointer: fine) {
+    .site-link:hover, .work-item:hover .work-name, .post-link:hover .post-link-title, .side li a:hover, .post-more li a:hover, .work-jump a:hover, .btn:hover { transition-duration: 90ms; }
+  }
+  .btn:active, .site-work:active, .work-jump a:active { opacity: 1; transform: scale(.97); transition: transform 60ms var(--m-std); }
+  .site-link:focus-visible, .work-item:focus-visible, .work-jump a:focus-visible, .btn:focus-visible, .post-link:focus-visible, .side li a:focus-visible, .post-more li a:focus-visible, .mast-back:focus-visible, .post-back:focus-visible { animation: focus-in 150ms var(--m-std); }
+  @keyframes focus-in { from { outline-offset: 0; outline-color: transparent; } }
+  .copy-btn[data-copied] { animation: copied 300ms var(--m-std); }
+  @keyframes copied { 0% { transform: scale(.97); } 60% { transform: scale(1.04); } 100% { transform: none; } }
+  .site-menu { transform-origin: 50% 0; }
+  .site-menu.is-open { animation: menu-in 200ms var(--m-in) both; }
+  .site-menu.is-closing { animation: menu-out 150ms var(--m-out) both; }
+  .site-menu.is-open .wrap > a { animation: menu-item 200ms var(--m-in) both; }
+  .site-menu.is-open .wrap > a:nth-child(2) { animation-delay: 30ms; }
+  .site-menu.is-open .wrap > a:nth-child(3) { animation-delay: 60ms; }
+  .site-menu.is-open .wrap > a:nth-child(4) { animation-delay: 90ms; }
+  .site-menu.is-open .wrap > a:nth-child(5) { animation-delay: 120ms; }
+  .site-menu.is-open .wrap > a:nth-child(6) { animation-delay: 150ms; }
+  .site-menu.is-open .wrap > a:nth-child(7) { animation-delay: 180ms; }
+  @keyframes menu-in { from { opacity: 0; transform: perspective(1200px) rotateX(-12deg) translateY(-6px); } }
+  @keyframes menu-out { to { opacity: 0; transform: perspective(1200px) rotateX(-8deg) translateY(-4px); } }
+  @keyframes menu-item { from { opacity: 0; transform: translateY(-6px); } }
+  .site-caret { transition-duration: 150ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .btn:active, .site-work:active, .work-jump a:active { transform: none; }
+    .site-link:focus-visible, .work-item:focus-visible, .work-jump a:focus-visible, .btn:focus-visible, .post-link:focus-visible, .side li a:focus-visible, .post-more li a:focus-visible, .mast-back:focus-visible, .post-back:focus-visible, .copy-btn[data-copied] { animation: none; }
+    .site-menu.is-open, .site-menu.is-closing { animation: fade-in-only 120ms linear both; }
+    .site-menu.is-closing { animation-name: fade-out; }
+    .site-menu.is-open .wrap > a { animation: none; }
+  }
+  @keyframes fade-in-only { from { opacity: 0; } }
+  @keyframes fade-out { to { opacity: 0; } }
 
 </style>
 <script type="application/ld+json">
@@ -793,8 +878,13 @@
   var b = document.querySelector(".site-work"), m = document.getElementById("site-menu"), top = document.querySelector(".top");
   if (!b || !m || !top) return;
   function place() { m.style.top = Math.max(0, top.getBoundingClientRect().bottom) + "px"; }
-  function open() { place(); m.hidden = false; b.setAttribute("aria-expanded", "true"); }
-  function close() { m.hidden = true; b.setAttribute("aria-expanded", "false"); }
+  var shut;
+  function open() { clearTimeout(shut); m.classList.remove("is-closing"); place(); m.hidden = false; m.classList.add("is-open"); b.setAttribute("aria-expanded", "true"); }
+  function close() {   // the band folds back up (150ms) before it is hidden
+    if (m.hidden) return;
+    b.setAttribute("aria-expanded", "false"); m.classList.remove("is-open"); m.classList.add("is-closing");
+    clearTimeout(shut); shut = setTimeout(function () { m.hidden = true; m.classList.remove("is-closing"); }, 150);
+  }
   b.addEventListener("click", function (e) { e.stopPropagation(); if (m.hidden) open(); else close(); });
   document.addEventListener("click", function (e) { if (!m.hidden && !m.contains(e.target)) close(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !m.hidden) { close(); b.focus(); } });
@@ -1579,41 +1669,61 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
 })();
 </script>
 <script>
-/* Filter Selected work by type. Groups that leave fold back on their top edge, groups that arrive unfold.
-   Works from the buttons and from links such as /#work-group-pricing in the header menu. */
+/* Filter Selected work by type.
+   1. Groups that leave fold back on their top edge (exit, ease-in, quick).
+   2. The list then changes height smoothly, so the articles below glide instead of jumping.
+   3. Groups that arrive unfold in reading order, 50ms apart (entrance, ease-out).
+   The count updates to say what is showing. Header links such as /#work-group-pricing apply the same filter. */
 (function () {
-  var bar = document.querySelector(".work-jump");
-  if (!bar) return;
-  var groups = [].slice.call(document.querySelectorAll(".work-group[data-type]"));
+  var bar = document.querySelector(".work-jump"), list = document.querySelector(".work-groups");
+  if (!bar || !list) return;
+  var groups = [].slice.call(list.querySelectorAll(".work-group[data-type]"));
   var links = [].slice.call(bar.querySelectorAll("[data-filter]"));
-  var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var current = "all", busy = [];
+  var count = document.querySelector("#work .work-count"), total = groups.reduce(function (n, g) { return n + g.querySelectorAll(".work-item").length; }, 0);
+  var el = /^el/.test(document.documentElement.lang), totalText = count ? count.textContent : "";
+  var mq = window.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
+  var current = "all", busy = [], run = 0;
   links.forEach(function (a) { a.setAttribute("role", "button"); a.setAttribute("aria-pressed", a.dataset.filter === "all" ? "true" : "false"); });
+  if (count) count.setAttribute("aria-live", "polite");
+  function d(ms) { return innerWidth <= 640 ? Math.round(ms * .8) : ms; }
+  function label(n) { return n === total ? totalText : el ? n + " από " + total + " εργασίες" : n + " of " + total + " projects"; }
   function apply(type, animate) {
     if (type === current) return;
     if (type !== "all" && !groups.some(function (g) { return g.dataset.type === type; })) return;
-    current = type;
+    current = type; var mine = ++run;
     busy.forEach(function (an) { an.cancel(); }); busy = [];
     links.forEach(function (a) { a.setAttribute("aria-pressed", String(a.dataset.filter === type)); });
     var show = groups.filter(function (g) { return type === "all" || g.dataset.type === type; });
     var leave = groups.filter(function (g) { return show.indexOf(g) < 0 && !g.hidden; });
     var arrive = show.filter(function (g) { return g.hidden; });
-    var move = animate && !still;
-    function reveal() {
+    var n = show.reduce(function (k, g) { return k + g.querySelectorAll(".work-item").length; }, 0);
+    if (count) count.textContent = label(n);
+    var move = animate && !mq.matches, small = innerWidth <= 640, tilt = small ? 0 : 35;
+    function swap() {
+      if (mine !== run) return;
+      var h0 = list.offsetHeight;
+      leave.forEach(function (g) { g.hidden = true; });
+      arrive.forEach(function (g) { g.hidden = false; });
+      if (!move) return;
+      var h1 = list.offsetHeight;
+      list.style.overflow = "hidden";
+      var grow = list.animate([{ height: h0 + "px" }, { height: h1 + "px" }], { duration: d(300), easing: "cubic-bezier(0.2, 0, 0, 1)" });
+      grow.onfinish = grow.oncancel = function () { list.style.overflow = ""; };
+      busy.push(grow);
       arrive.forEach(function (g, i) {
-        g.hidden = false;
-        if (move) busy.push(g.animate([{ opacity: 0, transform: "rotateX(-60deg) translateY(-12px)" }, { opacity: 1, transform: "none" }],
-          { duration: 320, delay: i * 50, easing: "cubic-bezier(0.05, 0.7, 0.1, 1)", fill: "backwards" }));
+        busy.push(g.animate([{ opacity: 0, transform: "rotateX(" + (-tilt) + "deg) translateY(-10px)" }, { opacity: 1, transform: "none" }],
+          { duration: d(300), delay: 60 + i * d(50), easing: "cubic-bezier(0.05, 0.7, 0.1, 1)", fill: "backwards" }));
       });
     }
     if (move && leave.length) {
-      var left = leave.length;
+      var left = leave.length, gone = [];
       leave.forEach(function (g) {
-        var an = g.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "rotateX(60deg) translateY(-12px)" }], { duration: 180, easing: "cubic-bezier(0.3, 0, 1, 1)" });
-        busy.push(an);
-        an.onfinish = function () { g.hidden = true; if (--left === 0) reveal(); };
+        var an = g.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "rotateX(" + tilt + "deg) translateY(-10px)" }],
+          { duration: d(200), easing: "cubic-bezier(0.3, 0, 1, 1)", fill: "forwards" });
+        busy.push(an); gone.push(an);
+        an.onfinish = function () { if (--left === 0) { swap(); gone.forEach(function (x) { x.cancel(); }); } };   // groups are hidden now, so drop the held end state
       });
-    } else { leave.forEach(function (g) { g.hidden = true; }); reveal(); }
+    } else swap();
   }
   bar.addEventListener("click", function (e) {
     var a = e.target.closest("[data-filter]"); if (!a) return;
@@ -1624,7 +1734,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   function fromHash(animate) {
     var m = location.hash.match(/^#work-group-([a-z-]+)$/), w = document.getElementById("work");
     if (m) apply(m[1], animate); else if (location.hash === "#work") apply("all", animate); else return;
-    if (w) w.scrollIntoView({ behavior: animate && !still ? "smooth" : "auto" });
+    if (w) w.scrollIntoView({ behavior: animate && !mq.matches ? "smooth" : "auto" });
   }
   fromHash(false);
   addEventListener("hashchange", function () { fromHash(true); });
