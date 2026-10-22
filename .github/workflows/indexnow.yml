@@ -1,0 +1,34 @@
+name: Tell Bing about changed pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Wait for the site to finish updating
+        run: sleep 90
+
+      - name: Send the changed pages to IndexNow
+        run: |
+          changed=$(git diff --name-only HEAD~1 HEAD -- '*.html' | grep -v '^404.html$' || true)
+          if [ -z "$changed" ]; then echo "No pages changed"; exit 0; fi
+          urls=$(echo "$changed" | python3 -c '
+          import sys, json
+          base = "https://georgekanaroglou.com/"
+          out = []
+          for line in sys.stdin:
+              p = line.strip()
+              if not p: continue
+              out.append(base if p == "index.html" else base + "el" if p == "el.html" else base + p)
+          print(json.dumps(out))')
+          echo "Sending: $urls"
+          curl -s -o /dev/null -w "IndexNow replied %{http_code}\n" -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "{\"host\":\"georgekanaroglou.com\",\"key\":\"22a56a06e0a64bee253d84a55f9602a9\",\"keyLocation\":\"https://georgekanaroglou.com/22a56a06e0a64bee253d84a55f9602a9.txt\",\"urlList\":$urls}"
