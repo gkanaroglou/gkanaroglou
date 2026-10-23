@@ -1410,7 +1410,7 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
   if (!scene || !card || !front || !back) return;
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia && matchMedia("(any-hover: hover) and (any-pointer: fine)").matches;
-  var spin = null;   // the running spring, if any
+  var SETTLE = "transform 650ms cubic-bezier(0.32, 0.72, 0, 1)", turnEnd = 0;
   var rot = 0, tiltX = 0, tiltY = 0, tracked = false, suppressClick = false, everTurned = false, inView = false, autoDue = false;
 
   function isFlipped(deg) { return Math.abs(Math.round(deg / 180)) % 2 === 1; }
@@ -1427,25 +1427,24 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     if (on && !auto && !tracked && typeof window.gkTrack === "function") { tracked = true; window.gkTrack("cta_click", { label: "Get in touch" }); }   // automatic turns aren't counted
     if (moveFocus) setTimeout(function () { (on ? back.querySelector(".email") : front).focus({ preventScroll: true }); }, reduce ? 0 : 340);
   }
-  // Settling is a spring, not a fixed-length animation, so it starts from where the card is right now and carries
-  // the speed of the flick that let go of it. Apple's values: a turn from a click is critically damped (1.0, response
-  // 0.45s, no overshoot); a throw has momentum, so it gets 0.8 (response 0.4s), a slight overshoot that reads as weight.
-  function stopSpin() { if (spin) { cancelAnimationFrame(spin); spin = null; } }
-  function settle(target, moveFocus, auto, velocity, damping) {
-    setState(isFlipped(target), moveFocus, auto);
-    stopSpin();
-    if (reduce) { rot = target; return; }
-    tiltX = 0; tiltY = 0;
-    var v = velocity || 0, ratio = damping || 1, response = ratio < 1 ? 0.4 : 0.45;
-    var k = Math.pow(2 * Math.PI / response, 2), c = 4 * Math.PI * ratio / response, last = performance.now();
-    function step(now) {
-      var dt = Math.min(0.064, Math.max(0, (now - last) / 1000)); last = now;
-      for (var n = 0, h = dt / 4; n < 4; n++) { v += (-k * (rot - target) - c * v) * h; rot += v * h; }
-      if (Math.abs(rot - target) < 0.05 && Math.abs(v) < 0.5) { rot = target; spin = null; apply("none"); return; }
-      apply("none");
-      spin = requestAnimationFrame(step);
+  // The turn is a CSS transition, so the browser animates it off the main thread and it stays smooth.
+  function settle(target, moveFocus, auto) {
+    rot = target; tiltX = 0; tiltY = 0;
+    apply(SETTLE);
+    turnEnd = performance.now() + 650;
+    setState(isFlipped(rot), moveFocus, auto);
+  }
+  // Grabbing the card mid-turn catches it where it is on screen, instead of jumping to where it was heading
+  function catchCard() {
+    if (performance.now() >= turnEnd) return;
+    var m = getComputedStyle(card).transform;
+    var v = m && m.indexOf("matrix3d(") === 0 ? m.slice(9, -1).split(",").map(Number) : null;   // the live 3D matrix
+    if (v && v.length === 16) {
+      var a = Math.atan2(-v[2], v[0]) * 180 / Math.PI;
+      rot = a + 360 * Math.round((rot - a) / 360);
     }
-    spin = requestAnimationFrame(step);
+    tiltX = 0; tiltY = 0; turnEnd = 0;
+    apply("none");
   }
   function turnTo(on, moveFocus, auto) {
     var k = Math.round(rot / 180);
@@ -1460,19 +1459,19 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     // Hover tilt: the card leans a little towards the cursor
     if (fine) {
       scene.addEventListener("pointermove", function (e) {
-        if (drag || spin || e.pointerType !== "mouse") return;   // never fight a running spring
+        if (drag || e.pointerType !== "mouse") return;
         var r = scene.getBoundingClientRect();
         var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
         tiltY = x * 14 * (isFlipped(rot) ? -1 : 1); tiltX = -y * 9;
         apply("transform 200ms cubic-bezier(0.23, 1, 0.32, 1)");
       });
-      scene.addEventListener("pointerleave", function () { if (drag || spin) return; tiltX = 0; tiltY = 0; apply("transform 450ms cubic-bezier(0.23, 1, 0.32, 1)"); });
+      scene.addEventListener("pointerleave", function () { if (drag) return; tiltX = 0; tiltY = 0; apply("transform 450ms cubic-bezier(0.23, 1, 0.32, 1)"); });
     }
     // Drag to spin
     var drag = null;
     scene.addEventListener("pointerdown", function (e) {
       if (e.button !== 0 || e.target.closest(".card-back a, .card-back button")) return;
-      stopSpin();   // grabbing a moving card catches it exactly where it is
+      catchCard();
       drag = { x: e.clientX, y: e.clientY, rot: rot, lastX: e.clientX, lastT: performance.now(), vel: 0, moved: false, id: e.pointerId };
     });
     scene.addEventListener("pointermove", function (e) {
@@ -1494,9 +1493,9 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
       var d = drag; drag = null; scene.classList.remove("is-dragging");
       if (!d.moved) return;   // a plain tap: the click handler turns the card
       suppressClick = true; setTimeout(function () { suppressClick = false; }, 0);
-      var vel = performance.now() - d.lastT > 90 ? 0 : d.vel * 1000;   // degrees per second; a pause before letting go cancels the flick
-      var projected = rot + (vel / 1000) * 0.99 / (1 - 0.99);   // Apple's momentum projection: where the flick would come to rest
-      settle(Math.round(projected / 180) * 180, false, false, vel, vel ? 0.8 : 1);   // hand the flick's speed to the spring
+      var vel = performance.now() - d.lastT > 90 ? 0 : d.vel;   // a pause before letting go cancels the flick
+      var projected = rot + vel * 160;   // a quick flick carries the card further round
+      settle(Math.round(projected / 180) * 180, false);
     }
     scene.addEventListener("pointerup", end);
     scene.addEventListener("pointercancel", end);
