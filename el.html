@@ -790,6 +790,14 @@
     .index .index-item-base .index-plus { right: 0; }
   }
 
+  /* Phones: each foundation's explanation opens straight under it, like the disciplines above */
+  @media (max-width: 640px) {
+    .index { display: flex; flex-direction: column; }
+    .index .index-base { display: contents; }
+    .index .index-base > li:first-child { border-top: 3px solid var(--paper); }
+    .index .index-base > li:nth-child(2) { order: 2; }
+    .index #acc-consumer-psychology { order: 3; }
+  }
 </style>
 <script type="application/ld+json">
 {
