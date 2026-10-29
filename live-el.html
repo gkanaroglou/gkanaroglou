@@ -684,10 +684,12 @@
   .site-link[aria-current="page"] { border-color: var(--black); }
   .live-form { margin-top: .9rem; }
   .live-form label { display: block; font-weight: 700; }
-  .live-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .5rem; }
-  .live-row input { flex: 1 1 15rem; max-width: 24rem; min-height: 48px; padding: .6rem .9rem; font: inherit; color: var(--black); background: var(--paper); border: 3px solid var(--black); border-radius: 0; -webkit-appearance: none; appearance: none; }
+  .live-row { display: flex; gap: .75rem; margin-top: .5rem; width: 100%; max-width: none; }
+  .live-row input { flex: 1 1 auto; min-width: 0; min-height: 48px; padding: .6rem .9rem; font: inherit; color: var(--black); background: var(--paper); border: 3px solid var(--black); border-radius: 0; -webkit-appearance: none; appearance: none; }
   .live-row input:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+  .live-row .btn { flex: 0 0 auto; }
   .live-row .btn[disabled] { opacity: .6; cursor: progress; }
+  @media (max-width: 520px) { .live-row { flex-direction: column; } .live-row .btn { width: 100%; } }
   .live-error { min-height: 1.45em; margin-top: .6rem; font-weight: 700; }
 </style>
 </head>
@@ -1118,26 +1120,43 @@ addEventListener("pagereveal", function (e) {
 </script>
 <script>
 /* Live: the access code is turned into a private file name, so no list of codes or demos is in this page.
-   The code is passed on once, so the demo opens without asking again. */
+   The demo opens in a new tab, which gets the code once, so it opens without asking again. */
 (function () {
   var form = document.getElementById("live-form"); if (!form) return;
   var input = document.getElementById("live-code"), err = document.getElementById("live-error"), btn = form.querySelector("button");
+  // coming back with the Back button: make sure the button works again
+  addEventListener("pageshow", function () { btn.disabled = false; });
+  async function demoUrl(code) {
+    var h = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("gk-live:" + code));
+    var id = Array.from(new Uint8Array(h)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("").slice(0, 16);
+    var url = "/live/" + id + ".html";
+    var r = await fetch(url, { method: "HEAD", cache: "no-store" });
+    return r.ok ? url : null;
+  }
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     var code = input.value.trim().toLowerCase();
     if (!code) { err.textContent = "Γράψτε τον κωδικό πρόσβασης."; input.focus(); return; }
     err.textContent = ""; btn.disabled = true;
+    // open the tab now, while the click still counts, so browsers don't block it
+    try { sessionStorage.setItem("gk-live-code", code); } catch (x) {}
+    var tab = window.open("", "_blank");
+    try { sessionStorage.removeItem("gk-live-code"); } catch (x) {}
     try {
-      var h = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("gk-live:" + code));
-      var id = Array.from(new Uint8Array(h)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("").slice(0, 16);
-      var url = "/live/" + id + ".html";
-      var r = await fetch(url, { method: "HEAD", cache: "no-store" });
-      if (!r.ok) throw new Error("no demo");
-      try { sessionStorage.setItem("gk-live-code", code); } catch (x) {}
-      location.href = url;
+      var url = await demoUrl(code);
+      if (!url) throw new Error("no demo");
+      if (tab && !tab.closed) {
+        try { tab.sessionStorage.setItem("gk-live-code", code); } catch (x) {}
+        tab.location.replace(url);
+      } else {
+        try { sessionStorage.setItem("gk-live-code", code); } catch (x) {}
+        location.href = url;   // new tabs blocked: open it here instead
+      }
     } catch (x) {
-      err.textContent = "Ο κωδικός δεν αντιστοιχεί σε κάποιο demo. Ελέγξτε τον και δοκιμάστε ξανά."; btn.disabled = false; input.select();
+      if (tab && !tab.closed) tab.close();
+      err.textContent = "Ο κωδικός δεν αντιστοιχεί σε κάποιο demo. Ελέγξτε τον και δοκιμάστε ξανά."; input.select();
     }
+    btn.disabled = false;
   });
 })();
 </script>
