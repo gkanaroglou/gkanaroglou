@@ -685,12 +685,22 @@
   .live-form { margin-top: .9rem; }
   .live-form label { display: block; font-weight: 700; }
   .live-row { display: flex; gap: .75rem; margin-top: .5rem; width: 100%; max-width: none; }
-  .live-row input { flex: 1 1 auto; min-width: 0; min-height: 48px; padding: .6rem .9rem; font: inherit; color: var(--black); background: var(--paper); border: 3px solid var(--black); border-radius: 0; -webkit-appearance: none; appearance: none; }
+  .live-field { position: relative; display: flex; flex: 1 1 auto; min-width: 0; }
+  .live-row input { flex: 1 1 auto; padding-right: 3.25rem !important; min-width: 0; min-height: 48px; padding: .6rem .9rem; font: inherit; color: var(--black); background: var(--paper); border: 3px solid var(--black); border-radius: 0; -webkit-appearance: none; appearance: none; }
   .live-row input:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
   .live-row .btn { flex: 0 0 auto; }
   .live-row .btn[disabled] { opacity: .6; cursor: progress; }
   @media (max-width: 520px) { .live-row { flex-direction: column; } .live-row .btn { width: 100%; } }
-  .live-error { min-height: 1.45em; margin-top: .6rem; font-weight: 700; }
+  .live-error { margin-top: .6rem; font-weight: 700; }
+  .live-error:empty { display: none; }
+  .live-form + h2 { margin-top: 1.75rem; }
+  .live-eye { position: absolute; top: 50%; right: .3rem; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; color: var(--black); background: none; border: 0; cursor: pointer; transform: translateY(-50%); }
+  .live-eye svg { width: 1.35rem; height: 1.35rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: square; stroke-linejoin: miter; }
+  .live-eye .eye-shut { display: none; }
+  .live-eye[aria-pressed="true"] .eye-open { display: none; }
+  .live-eye[aria-pressed="true"] .eye-shut { display: block; }
+  .live-eye:active { opacity: .7; }
+  .live-eye:focus-visible { outline: 3px solid var(--black); outline-offset: 0; }
 </style>
 </head>
 <body>
@@ -772,7 +782,13 @@
   <form class="live-form" id="live-form" novalidate>
     <label for="live-code">Κωδικός πρόσβασης</label>
     <div class="live-row">
-      <input id="live-code" name="code" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+      <span class="live-field">
+        <input id="live-code" type="text" inputmode="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" data-lpignore="true" required>
+        <button type="button" class="live-eye" id="live-eye" aria-pressed="false" aria-label="Εμφάνιση κωδικού" title="Εμφάνιση κωδικού">
+          <svg class="eye-open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <svg class="eye-shut" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path d="M4 20 20 4"/></svg>
+        </button>
+      </span>
       <button class="btn btn-primary" type="submit">Άνοιγμα demo</button>
     </div>
     <p class="live-error" id="live-error" role="alert"></p>
@@ -1119,11 +1135,49 @@ addEventListener("pagereveal", function (e) {
 </script>
 <script>
 /* Live: the access code is turned into a private file name, so no list of codes or demos is in this page.
-   The demo opens in a new tab, which gets the code once, so it opens without asking again. */
+   The demo opens in a new tab, which gets the code once, so it opens without asking again.
+   The box shows dots, with the last character typed visible for two seconds, like on a phone. */
 (function () {
   var form = document.getElementById("live-form"); if (!form) return;
-  var input = document.getElementById("live-code"), err = document.getElementById("live-error"), btn = form.querySelector("button");
-  // coming back with the Back button: make sure the button works again
+  var input = document.getElementById("live-code"), eye = document.getElementById("live-eye");
+  var err = document.getElementById("live-error"), btn = form.querySelector("button[type=submit]");
+  var DOT = "\u2022", real = "", shown = "", showAll = false, timer = null;
+  function masked(reveal) {
+    var out = "";
+    for (var k = 0; k < real.length; k++) out += k === reveal ? real[k] : DOT;
+    return out;
+  }
+  function paint(reveal, caret) {
+    shown = showAll ? real : masked(reveal);
+    input.value = shown;
+    if (caret != null && document.activeElement === input) input.setSelectionRange(caret, caret);
+    clearTimeout(timer);
+    if (!showAll && reveal >= 0) timer = setTimeout(function () {
+      var c = input.selectionStart; paint(-1, c);
+    }, 2000);
+  }
+  // work out what changed from the old box text, the new box text and where the cursor ended up
+  input.addEventListener("input", function (e) {
+    var now = input.value;
+    if (showAll) { real = now; shown = now; return; }
+    var caret = input.selectionStart == null ? now.length : input.selectionStart;
+    var after = now.length - caret;                      // characters after the cursor did not change
+    var oldEnd = Math.max(0, shown.length - after);
+    var p = 0, lim = Math.min(oldEnd, caret);
+    while (p < lim && shown[p] === now[p]) p++;
+    var added = now.slice(p, caret);
+    real = real.slice(0, p) + added + real.slice(oldEnd);
+    if (e.isComposing) { shown = now; return; }          // a phone keyboard is still composing: wait for it
+    paint(added.length === 1 ? p : -1, caret);
+  });
+  input.addEventListener("compositionend", function () { var c = input.selectionStart; paint(c - 1, c); });
+  eye.addEventListener("click", function () {
+    showAll = !showAll;
+    eye.setAttribute("aria-pressed", String(showAll));
+    var label = showAll ? "Απόκρυψη κωδικού" : "Εμφάνιση κωδικού";
+    eye.setAttribute("aria-label", label); eye.title = label;
+    var c = input.selectionStart; input.focus(); paint(-1, c == null ? real.length : c);
+  });
   addEventListener("pageshow", function () { btn.disabled = false; });
   async function demoUrl(code) {
     var h = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("gk-live:" + code));
@@ -1134,7 +1188,7 @@ addEventListener("pagereveal", function (e) {
   }
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
-    var code = input.value.trim().toLowerCase();
+    var code = real.trim().toLowerCase();
     if (!code) { err.textContent = "Γράψτε τον κωδικό πρόσβασης."; input.focus(); return; }
     err.textContent = ""; btn.disabled = true;
     // open the tab now, while the click still counts, so browsers don't block it
