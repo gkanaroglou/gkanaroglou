@@ -1155,7 +1155,7 @@ addEventListener("pagereveal", function (e) {
   // work out what changed from the old box text, the new box text and where the cursor ended up
   input.addEventListener("input", function (e) {
     var now = input.value;
-    if (showAll) { real = now; shown = now; return; }
+    if (showAll) { real = now; shown = now; schedule(); return; }
     var caret = input.selectionStart == null ? now.length : input.selectionStart;
     var after = now.length - caret;                      // characters after the cursor did not change
     var oldEnd = Math.max(0, shown.length - after);
@@ -1165,8 +1165,9 @@ addEventListener("pagereveal", function (e) {
     real = real.slice(0, p) + added + real.slice(oldEnd);
     if (e.isComposing) { shown = now; return; }          // a phone keyboard is still composing: wait for it
     paint(added.length === 1 ? p : -1, caret);
+    schedule();
   });
-  input.addEventListener("compositionend", function () { var c = input.selectionStart; paint(c - 1, c); });
+  input.addEventListener("compositionend", function () { var c = input.selectionStart; paint(c - 1, c); schedule(); });
   eye.addEventListener("click", function () {
     showAll = !showAll;
     eye.setAttribute("aria-pressed", String(showAll));
@@ -1182,30 +1183,48 @@ addEventListener("pagereveal", function (e) {
     var r = await fetch(url, { method: "HEAD", cache: "no-store" });
     return r.ok ? url : null;
   }
-  form.addEventListener("submit", async function (e) {
+  // check the code in the background once typing pauses, so the click can open the tab straight away
+  var known = { code: null, url: null }, pending = null, checkTimer = null;
+  function check(code) {
+    if (known.code === code) return Promise.resolve(known.url);
+    if (pending && pending.code === code) return pending.p;
+    var p = demoUrl(code).then(function (url) { known = { code: code, url: url }; return url; })
+                         .catch(function () { return null; });
+    pending = { code: code, p: p };
+    return p;
+  }
+  function schedule() {
+    clearTimeout(checkTimer);
+    var code = real.trim().toLowerCase();
+    if (code) checkTimer = setTimeout(function () { check(code); }, 250);
+  }
+  function clearField() {
+    real = ""; shown = ""; input.value = ""; clearTimeout(timer); clearTimeout(checkTimer);
+    known = { code: null, url: null }; pending = null; err.textContent = "";
+  }
+  function open(url, code) {
+    try { sessionStorage.setItem("gk-live-code", code); } catch (x) {}
+    var tab = window.open(url, "_blank");
+    if (tab) {
+      try { sessionStorage.removeItem("gk-live-code"); } catch (x) {}
+      clearField(); input.blur();
+    } else {
+      location.href = url;   // this browser blocked the new tab: open the demo here instead
+    }
+  }
+  function wrong() { err.textContent = "That code doesn’t match a demo. Check it and try again."; input.focus(); input.select(); }
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
     var code = real.trim().toLowerCase();
     if (!code) { err.textContent = "Enter your access code."; input.focus(); return; }
-    err.textContent = ""; btn.disabled = true;
-    // open the tab now, while the click still counts, so browsers don't block it
-    try { sessionStorage.setItem("gk-live-code", code); } catch (x) {}
-    var tab = window.open("", "_blank");
-    try { sessionStorage.removeItem("gk-live-code"); } catch (x) {}
-    try {
-      var url = await demoUrl(code);
-      if (!url) throw new Error("no demo");
-      if (tab && !tab.closed) {
-        try { tab.sessionStorage.setItem("gk-live-code", code); } catch (x) {}
-        tab.location.replace(url);
-      } else {
-        try { sessionStorage.setItem("gk-live-code", code); } catch (x) {}
-        location.href = url;   // new tabs blocked: open it here instead
-      }
-    } catch (x) {
-      if (tab && !tab.closed) tab.close();
-      err.textContent = "That code doesn’t match a demo. Check it and try again."; input.select();
-    }
-    btn.disabled = false;
+    err.textContent = "";
+    if (known.code === code) { if (known.url) open(known.url, code); else wrong(); return; }   // already checked: no waiting
+    btn.disabled = true;
+    check(code).then(function (url) {
+      btn.disabled = false;
+      if (real.trim().toLowerCase() !== code) return;   // the code changed while checking
+      if (url) open(url, code); else wrong();
+    });
   });
 })();
 </script>
