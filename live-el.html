@@ -1199,7 +1199,7 @@ addEventListener("pagereveal", function (e) {
   }
   function schedule() {
     clearTimeout(checkTimer);
-    var code = real.trim().toLowerCase();
+    var code = real.trim();
     if (code) checkTimer = setTimeout(function () { check(code); }, 250);
   }
   function clearField() {
@@ -1219,14 +1219,14 @@ addEventListener("pagereveal", function (e) {
   function wrong() { err.textContent = "Ο κωδικός δεν αντιστοιχεί σε κάποιο demo. Ελέγξτε τον και δοκιμάστε ξανά."; input.focus(); input.select(); }
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var code = real.trim().toLowerCase();
+    var code = real.trim();
     if (!code) { err.textContent = "Γράψτε τον κωδικό πρόσβασης."; input.focus(); return; }
     err.textContent = "";
     if (known.code === code) { if (known.url) open(known.url, code); else wrong(); return; }   // already checked: no waiting
     btn.disabled = true;
     check(code).then(function (url) {
       btn.disabled = false;
-      if (real.trim().toLowerCase() !== code) return;   // the code changed while checking
+      if (real.trim() !== code) return;   // the code changed while checking
       if (url) open(url, code); else wrong();
     });
   });

@@ -1195,7 +1195,7 @@ addEventListener("pagereveal", function (e) {
   }
   function schedule() {
     clearTimeout(checkTimer);
-    var code = real.trim().toLowerCase();
+    var code = real.trim();
     if (code) checkTimer = setTimeout(function () { check(code); }, 250);
   }
   function clearField() {
@@ -1215,14 +1215,14 @@ addEventListener("pagereveal", function (e) {
   function wrong() { err.textContent = "That code doesn’t match a demo. Check it and try again."; input.focus(); input.select(); }
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var code = real.trim().toLowerCase();
+    var code = real.trim();
     if (!code) { err.textContent = "Enter your access code."; input.focus(); return; }
     err.textContent = "";
     if (known.code === code) { if (known.url) open(known.url, code); else wrong(); return; }   // already checked: no waiting
     btn.disabled = true;
     check(code).then(function (url) {
       btn.disabled = false;
-      if (real.trim().toLowerCase() !== code) return;   // the code changed while checking
+      if (real.trim() !== code) return;   // the code changed while checking
       if (url) open(url, code); else wrong();
     });
   });
