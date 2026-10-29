@@ -1142,6 +1142,30 @@ addEventListener("pagereveal", function (e) {
   var input = document.getElementById("live-code"), eye = document.getElementById("live-eye");
   var err = document.getElementById("live-error"), btn = form.querySelector("button[type=submit]");
   var DOT = "\u2022", real = "", shown = "", showAll = false, timer = null, tries = 0;
+  // Lockout: 10 wrong codes within 15 minutes locks the form for 15 minutes, doubling each time, up to 2 hours.
+  // Kept in this browser, so a refresh does not reset it. A correct code clears it.
+  var LIMIT = 10, WINDOW = 15 * 60000, BASE = 15 * 60000, MAX = 120 * 60000, KEY = "gk-live-guard", lockTimer = null;
+  function guard() { try { return JSON.parse(localStorage.getItem(KEY)) || { fails: [], locks: 0, until: 0 }; } catch (x) { return { fails: [], locks: 0, until: 0 }; } }
+  function keep(g) { try { localStorage.setItem(KEY, JSON.stringify(g)); } catch (x) {} }
+  function lockedFor() { var g = guard(); return Math.max(0, (g.until || 0) - Date.now()); }
+  function showLock() {
+    var left = lockedFor();
+    clearTimeout(lockTimer);
+    if (!left) { input.disabled = false; btn.disabled = false; if (err.dataset.lock) { err.textContent = ""; delete err.dataset.lock; } return false; }
+    var mins = Math.ceil(left / 60000);
+    err.textContent = mins === 1 ? "Πάρα πολλές προσπάθειες. Δοκιμάστε ξανά σε 1 λεπτό." : "Πάρα πολλές προσπάθειες. Δοκιμάστε ξανά σε {n} λεπτά.".replace("{n}", mins); err.dataset.lock = "1";
+    input.disabled = true; btn.disabled = true;
+    lockTimer = setTimeout(showLock, Math.min(left, 15000));
+    return true;
+  }
+  function failed() {
+    var g = guard(), now = Date.now();
+    g.fails = (g.fails || []).filter(function (t) { return now - t < WINDOW; }); g.fails.push(now);
+    var locked = false;
+    if (g.fails.length >= LIMIT) { g.until = now + Math.min(MAX, BASE * Math.pow(2, g.locks || 0)); g.locks = (g.locks || 0) + 1; g.fails = []; locked = true; }
+    keep(g); return locked;
+  }
+  function passed() { try { localStorage.removeItem(KEY); } catch (x) {} }
   // counts go to the site's own analytics, only with consent; the code itself is never sent
   function count(event, label) { if (window.gkTrack) window.gkTrack(event, { label: label }); }
   function masked(reveal) {
@@ -1182,7 +1206,8 @@ addEventListener("pagereveal", function (e) {
     eye.setAttribute("aria-label", label); eye.title = label;
     var c = input.selectionStart; input.focus(); paint(-1, c == null ? real.length : c);
   });
-  addEventListener("pageshow", function () { btn.disabled = false; });
+  addEventListener("pageshow", function () { btn.disabled = false; showLock(); });
+  showLock();
   async function demoUrl(code) {
     var h = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("gk-live:" + code));
     var id = Array.from(new Uint8Array(h)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("").slice(0, 16);
@@ -1203,7 +1228,7 @@ addEventListener("pagereveal", function (e) {
   function schedule() {
     clearTimeout(checkTimer);
     var code = real.trim();
-    if (code) checkTimer = setTimeout(function () { check(code); }, 250);
+    if (code && !lockedFor()) checkTimer = setTimeout(function () { check(code); }, 250);
   }
   function clearField() {
     real = ""; shown = ""; input.value = ""; clearTimeout(timer); clearTimeout(checkTimer);
@@ -1212,6 +1237,7 @@ addEventListener("pagereveal", function (e) {
   function open(url, code) {
     tries++;
     count("live_code", "match, try " + tries);
+    passed();
     count("live_demo_open", url.replace(/^\/live\//, "").replace(/\.html$/, ""));
     try { sessionStorage.setItem("gk-live-code", code); } catch (x) {}
     var tab = window.open(url, "_blank");
@@ -1222,10 +1248,16 @@ addEventListener("pagereveal", function (e) {
       location.href = url;   // this browser blocked the new tab: open the demo here instead
     }
   }
-  function wrong() { tries++; count("live_code", "no match, try " + tries); err.textContent = "Ο κωδικός δεν αντιστοιχεί σε κάποιο demo. Ελέγξτε τον και δοκιμάστε ξανά."; input.focus(); input.select(); }
+  function wrong() {
+    tries++;
+    var locked = failed();
+    count("live_code", "no match, try " + tries + (locked ? ", locked" : ""));
+    if (locked) { known = { code: null, url: null }; showLock(); return; }
+    err.textContent = "Ο κωδικός δεν αντιστοιχεί σε κάποιο demo. Ελέγξτε τον και δοκιμάστε ξανά."; input.focus(); input.select(); }
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var code = real.trim();
+    if (showLock()) return;
     if (!code) { err.textContent = "Γράψτε τον κωδικό πρόσβασης."; input.focus(); return; }
     err.textContent = "";
     if (known.code === code) { if (known.url) open(known.url, code); else wrong(); return; }   // already checked: no waiting
