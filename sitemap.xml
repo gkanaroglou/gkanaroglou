@@ -57,6 +57,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://georgekanaroglou.com/terms.html"/>
   </url>
   <url>
+    <loc>https://georgekanaroglou.com/live.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://georgekanaroglou.com/live.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://georgekanaroglou.com/live-el.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://georgekanaroglou.com/live.html"/>
+  </url>
+  <url>
+    <loc>https://georgekanaroglou.com/live-el.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://georgekanaroglou.com/live.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://georgekanaroglou.com/live-el.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://georgekanaroglou.com/live.html"/>
+  </url>
+  <url>
     <loc>https://georgekanaroglou.com/articles/analogue-comeback.html</loc>
     <lastmod>2026-10-22</lastmod>
   </url>
