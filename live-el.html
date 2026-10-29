@@ -1141,7 +1141,9 @@ addEventListener("pagereveal", function (e) {
   var form = document.getElementById("live-form"); if (!form) return;
   var input = document.getElementById("live-code"), eye = document.getElementById("live-eye");
   var err = document.getElementById("live-error"), btn = form.querySelector("button[type=submit]");
-  var DOT = "\u2022", real = "", shown = "", showAll = false, timer = null;
+  var DOT = "\u2022", real = "", shown = "", showAll = false, timer = null, tries = 0;
+  // counts go to the site's own analytics, only with consent; the code itself is never sent
+  function count(event, label) { if (window.gkTrack) window.gkTrack(event, { label: label }); }
   function masked(reveal) {
     var out = "";
     for (var k = 0; k < real.length; k++) out += k === reveal ? real[k] : DOT;
@@ -1175,6 +1177,7 @@ addEventListener("pagereveal", function (e) {
   eye.addEventListener("click", function () {
     showAll = !showAll;
     eye.setAttribute("aria-pressed", String(showAll));
+    if (showAll) count("live_show_code", "");
     var label = showAll ? "Απόκρυψη κωδικού" : "Εμφάνιση κωδικού";
     eye.setAttribute("aria-label", label); eye.title = label;
     var c = input.selectionStart; input.focus(); paint(-1, c == null ? real.length : c);
@@ -1207,6 +1210,9 @@ addEventListener("pagereveal", function (e) {
     known = { code: null, url: null }; pending = null; err.textContent = "";
   }
   function open(url, code) {
+    tries++;
+    count("live_code", "match, try " + tries);
+    count("live_demo_open", url.replace(/^\/live\//, "").replace(/\.html$/, ""));
     try { sessionStorage.setItem("gk-live-code", code); } catch (x) {}
     var tab = window.open(url, "_blank");
     if (tab) {
@@ -1216,7 +1222,7 @@ addEventListener("pagereveal", function (e) {
       location.href = url;   // this browser blocked the new tab: open the demo here instead
     }
   }
-  function wrong() { err.textContent = "Ο κωδικός δεν αντιστοιχεί σε κάποιο demo. Ελέγξτε τον και δοκιμάστε ξανά."; input.focus(); input.select(); }
+  function wrong() { tries++; count("live_code", "no match, try " + tries); err.textContent = "Ο κωδικός δεν αντιστοιχεί σε κάποιο demo. Ελέγξτε τον και δοκιμάστε ξανά."; input.focus(); input.select(); }
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var code = real.trim();
