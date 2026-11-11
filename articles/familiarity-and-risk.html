@@ -1024,7 +1024,8 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     referrer: ref,
     utm_source: q.get("utm_source") || "",
     utm_medium: q.get("utm_medium") || "",
-    utm_campaign: q.get("utm_campaign") || "",
+    // A short tag like ?ref=mindshare counts as the campaign, so CV links stay short and plain
+    utm_campaign: q.get("utm_campaign") || (function () { var r = (q.get("ref") || "").toLowerCase(); return r && !REF_NAMES[r] ? r.slice(0, 60) : ""; })(),
     device: w < 768 ? "Mobile" : w < 1024 ? "Tablet" : "Desktop",
     language: navigator.language || "",
     timezone: tz
@@ -1131,10 +1132,10 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     btnCustom.setAttribute("aria-expanded", on ? "true" : "false");
   }
   // Counts which cookie banner button was pressed. Sent once, with no cookie, ID or other detail,
-  // so a decline is counted without tracking the person who declined.
+  // so a decline is counted without tracking the person who declined. A tagged link's tag (for example ?ref=1) is kept with it.
   function sendChoice(label) {
     if (notrack || isBot) return;
-    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true, body: JSON.stringify({ site: SITE, event: "consent_choice", label: label, page: location.pathname }) }); } catch (e) {}
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true, body: JSON.stringify({ site: SITE, event: "consent_choice", label: label, page: location.pathname, utm_campaign: base.utm_campaign }) }); } catch (e) {}
   }
   function decide(analytics, label) {
     setCookie("gk_consent", analytics ? "a1" : "a0", 60 * 60 * 24 * 182);
