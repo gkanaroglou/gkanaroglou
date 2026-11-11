@@ -892,7 +892,8 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     referrer: ref,
     utm_source: q.get("utm_source") || "",
     utm_medium: q.get("utm_medium") || "",
-    utm_campaign: q.get("utm_campaign") || "",
+    // A short tag like ?ref=mindshare counts as the campaign, so CV links stay short and plain
+    utm_campaign: q.get("utm_campaign") || (function () { var r = (q.get("ref") || "").toLowerCase(); return r && !REF_NAMES[r] ? r.slice(0, 60) : ""; })(),
     device: w < 768 ? "Mobile" : w < 1024 ? "Tablet" : "Desktop",
     language: navigator.language || "",
     timezone: tz
