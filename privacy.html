@@ -770,7 +770,7 @@
     <li>your device type (phone, tablet or computer), browser language and time zone</li>
     <li>clicks on my email address, my LinkedIn link and “Get in touch”, including turning over the business card</li>
   </ul>
-  <p>I don’t record your name, email address or IP address. If you decline, I only count that the Decline button was pressed, with the date and the page. No cookie, ID or other detail is kept with it.</p>
+  <p>I don’t record your name, email address or IP address. If you decline, I only count that the Decline button was pressed, with the date, the page and, if you followed a link I shared, that link’s tag. No cookie, ID or other detail is kept with it.</p>
 
   <h2>Cookies</h2>
   <p>This site uses three cookies of its own. Analytics cookies are set only if you allow them. The <a href="/cookies.html">cookies policy</a> lists each one and how long it lasts.</p>
@@ -1000,10 +1000,10 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     btnCustom.setAttribute("aria-expanded", on ? "true" : "false");
   }
   // Counts which cookie banner button was pressed. Sent once, with no cookie, ID or other detail,
-  // so a decline is counted without tracking the person who declined.
+  // so a decline is counted without tracking the person who declined. A tagged link's tag (for example ?ref=1) is kept with it.
   function sendChoice(label) {
     if (notrack || isBot) return;
-    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true, body: JSON.stringify({ site: SITE, event: "consent_choice", label: label, page: location.pathname }) }); } catch (e) {}
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true, body: JSON.stringify({ site: SITE, event: "consent_choice", label: label, page: location.pathname, utm_campaign: base.utm_campaign }) }); } catch (e) {}
   }
   function decide(analytics, label) {
     setCookie("gk_consent", analytics ? "a1" : "a0", 60 * 60 * 24 * 182);

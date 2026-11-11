@@ -774,7 +774,7 @@
     <li>τον τύπο της συσκευής σας (κινητό, tablet ή υπολογιστής), τη γλώσσα του προγράμματος περιήγησης και τη ζώνη ώρας</li>
     <li>τα κλικ στη διεύθυνση email μου, στο LinkedIn μου και στην «Επικοινωνία», μαζί με το γύρισμα της επαγγελματικής κάρτας</li>
   </ul>
-  <p>Δεν καταγράφω το όνομά σας, τη διεύθυνση email σας ή τη διεύθυνση IP σας. Αν απορρίψετε, μετράω μόνο ότι πατήθηκε το κουμπί, με την ημερομηνία και τη σελίδα. Δεν κρατάω κανένα cookie, αναγνωριστικό ή άλλο στοιχείο μαζί του.</p>
+  <p>Δεν καταγράφω το όνομά σας, τη διεύθυνση email σας ή τη διεύθυνση IP σας. Αν απορρίψετε, μετράω μόνο ότι πατήθηκε το κουμπί, με την ημερομηνία, τη σελίδα και, αν ακολουθήσατε έναν σύνδεσμο που μοιράστηκα, την ετικέτα του συνδέσμου. Δεν κρατάω κανένα cookie, αναγνωριστικό ή άλλο στοιχείο μαζί του.</p>
 
   <h2>Cookies</h2>
   <p>Ο ιστότοπος χρησιμοποιεί τρία δικά του cookies. Τα cookies ανάλυσης ορίζονται μόνο αν τα επιτρέψετε. Η <a href="/cookies-el.html">πολιτική cookies</a> αναφέρει το καθένα και πόσο διαρκεί.</p>
@@ -1004,10 +1004,10 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     btnCustom.setAttribute("aria-expanded", on ? "true" : "false");
   }
   // Counts which cookie banner button was pressed. Sent once, with no cookie, ID or other detail,
-  // so a decline is counted without tracking the person who declined.
+  // so a decline is counted without tracking the person who declined. A tagged link's tag (for example ?ref=1) is kept with it.
   function sendChoice(label) {
     if (notrack || isBot) return;
-    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true, body: JSON.stringify({ site: SITE, event: "consent_choice", label: label, page: location.pathname }) }); } catch (e) {}
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true, body: JSON.stringify({ site: SITE, event: "consent_choice", label: label, page: location.pathname, utm_campaign: base.utm_campaign }) }); } catch (e) {}
   }
   function decide(analytics, label) {
     setCookie("gk_consent", analytics ? "a1" : "a0", 60 * 60 * 24 * 182);
