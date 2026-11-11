@@ -499,6 +499,12 @@
   }
   .consent.is-open { opacity: 1; transform: translateY(0); }
   .consent[hidden] { display: none; }
+  /* Until a first choice is made, the rest of the page is dimmed and can't be used. Decline is as easy as Accept. */
+  .consent-wall { position: fixed; inset: 0; z-index: 9; background: rgba(0, 0, 0, .6); opacity: 0; transition: opacity 400ms ease; }
+  .consent-wall.is-open { opacity: 1; }
+  .consent-wall[hidden] { display: none; }
+  html.is-consent-locked { overflow: hidden; }
+  @media (prefers-reduced-motion: reduce) { .consent-wall { transition: none; } }
   .consent p { font-size: .95rem; }
   .consent a { color: var(--paper); }
   .consent-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
@@ -751,7 +757,7 @@
 
 <main class="legal" id="main">
   <h1>Privacy policy.</h1>
-  <p class="updated">Last updated 22 October 2026</p>
+  <p class="updated">Last updated 11 November 2026</p>
 
   <h2>Who runs this site</h2>
   <p>This site is run by George Kanaroglou. For any question or request, email <a data-mail-user="hello" data-mail-domain="georgekanaroglou.com">hello at georgekanaroglou.com</a>.</p>
@@ -764,7 +770,7 @@
     <li>your device type (phone, tablet or computer), browser language and time zone</li>
     <li>clicks on my email address, my LinkedIn link and “Get in touch”, including turning over the business card</li>
   </ul>
-  <p>I don’t record your name, email address or IP address. If you decline, nothing is recorded.</p>
+  <p>I don’t record your name, email address or IP address. If you decline, I only count that the Decline button was pressed, with the date and the page. No cookie, ID or other detail is kept with it.</p>
 
   <h2>Cookies</h2>
   <p>This site uses three cookies of its own. Analytics cookies are set only if you allow them. The <a href="/cookies.html">cookies policy</a> lists each one and how long it lasts.</p>
@@ -943,7 +949,42 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     void banner.offsetWidth; // set the start position before it animates in
     banner.classList.add("is-open");
   }
+
+  // On a first visit the rest of the page is dimmed and locked until a choice is made.
+  // The privacy and cookies pages stay readable, so people can read them before choosing.
+  var wall = null, locked = [], FREE_PAGES = /^\/(privacy|cookies)(-el)?\.html$/;
+  function lockPage() {
+    if (locked.length || isBot || FREE_PAGES.test(location.pathname)) return;
+    if (!wall) {
+      wall = document.createElement("div");
+      wall.className = "consent-wall";
+      wall.setAttribute("aria-hidden", "true");
+      wall.hidden = true;
+      banner.parentNode.insertBefore(wall, banner.nextSibling);
+    }
+    [].forEach.call(document.body.children, function (el) {
+      if (el !== banner && el !== wall && el.tagName !== "SCRIPT" && !el.inert) { el.inert = true; locked.push(el); }
+    });
+    wall.hidden = false;
+    void wall.offsetWidth;
+    wall.classList.add("is-open");
+    document.documentElement.classList.add("is-consent-locked");
+    banner.setAttribute("role", "dialog");
+    banner.setAttribute("aria-modal", "true");
+  }
+  function unlockPage() {
+    if (!locked.length) return;
+    locked.forEach(function (el) { el.inert = false; });
+    locked = [];
+    wall.classList.remove("is-open");
+    setTimeout(function () { wall.hidden = true; }, 400);
+    document.documentElement.classList.remove("is-consent-locked");
+    banner.setAttribute("role", "region");
+    banner.removeAttribute("aria-modal");
+  }
+
   function closeBanner() {
+    unlockPage();
     var hadFocus = banner.contains(document.activeElement);
     banner.classList.remove("is-open");
     bannerTimer = setTimeout(function () { banner.hidden = true; }, 400);
@@ -957,9 +998,16 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     prefs.hidden = !on; btnSave.hidden = !on; btnCustom.hidden = on;
     btnCustom.setAttribute("aria-expanded", on ? "true" : "false");
   }
-  function decide(analytics) {
+  // Counts which cookie banner button was pressed. Sent once, with no cookie, ID or other detail,
+  // so a decline is counted without tracking the person who declined.
+  function sendChoice(label) {
+    if (notrack || isBot) return;
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", credentials: "omit", keepalive: true, body: JSON.stringify({ site: SITE, event: "consent_choice", label: label, page: location.pathname }) }); } catch (e) {}
+  }
+  function decide(analytics, label) {
     setCookie("gk_consent", analytics ? "a1" : "a0", 60 * 60 * 24 * 182);
     closeBanner();
+    if (label) sendChoice(label);
     if (analytics) {
       sendView();
     } else {
@@ -972,10 +1020,10 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     var b = e.target.closest("[data-consent]");
     if (!b) return;
     var what = b.getAttribute("data-consent");
-    if (what === "yes") decide(true);
-    else if (what === "no") decide(false);
+    if (what === "yes") decide(true, "Accept");
+    else if (what === "no") decide(false, "Decline");
     else if (what === "custom") { showCustomise(true); boxA.focus({ preventScroll: true }); }
-    else if (what === "save") decide(boxA.checked);
+    else if (what === "save") decide(boxA.checked, boxA.checked ? "Customise: analytics on" : "Customise: analytics off");
   });
   settings.hidden = false;
   settings.addEventListener("click", function () {
@@ -1007,7 +1055,15 @@ document.querySelectorAll("[data-mail-user]").forEach(function (a) {
     deleteCookie("gk_sid");
   }
   try { localStorage.removeItem("gk-signup"); } catch (e) {}   // tidies away the old email list note, if a browser still has one
-  if (!choice) openBanner();
+  if (!choice) {
+    // Wait a second so the page is seen first, then dim it and ask
+    setTimeout(function () {
+      if (consent()) return;   // a choice was made in the meantime, for example in another tab
+      lockPage();
+      openBanner();
+      if (locked.length) banner.querySelector("button").focus({ preventScroll: true });
+    }, 1000);
+  }
   else if (choice.analytics) sendView();
 })();
 </script>
