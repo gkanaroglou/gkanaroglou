@@ -544,7 +544,8 @@
     var b = e.target.closest("[data-say]"); if (!b) return;
     var h = decodeURIComponent(location.hash.slice(1)).match(/^([a-z0-9-]+)/), c = h && byCourse[h[1]];
     if (!c) return;
-    c.sections.forEach(function (s) { var g = s.gmap[b.dataset.say]; if (g && g.intro) speak(g.intro, g.title.replace(/^Lecture recording:\s*/, "")); });
+    var sec = c.sections.filter(function (s) { return s.id === b.dataset.say; })[0], g = sec && sec.gmap[b.dataset.sayG];
+    if (g && g.intro) speak(g.intro, g.title.replace(/^Lecture recording:\s*/, ""));
   });
   signOut.addEventListener("click", function () {
     stopSpeaking();
@@ -700,15 +701,17 @@
     if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-GB";
     u.rate = tts.rate;
     u.onend = function () { if (!tts.stopped) { tts.i++; speakNext(); } };
-    tts.stopped = false; speechSynthesis.speak(u);
+    u.onerror = function (e) { if (e.error !== "interrupted" && e.error !== "canceled") { $("player-label").textContent = "Your browser couldn’t read this aloud (" + e.error + ")."; } };
+    tts.stopped = false; speechSynthesis.resume(); speechSynthesis.speak(u);
     $("player-label").textContent = tts.label + " (" + Math.min(tts.i + 1, tts.parts.length) + " of " + tts.parts.length + ")";
   }
   function speak(text, label) {
     if (!canSpeak) return;
-    tts.stopped = true; speechSynthesis.cancel();
+    clearTimeout(tts.timer);
+    tts.stopped = true; speechSynthesis.cancel(); speechSynthesis.resume();     // Chrome can stay paused after a cancel
     tts.parts = splitForSpeech(text); tts.i = 0; tts.paused = false; tts.label = label || "Listening";
     var p = player(); p.hidden = false; $("player-pause").textContent = "Pause";
-    setTimeout(speakNext, 60);
+    tts.timer = setTimeout(speakNext, 80);
   }
   function stopSpeaking() {
     tts.stopped = true; if (canSpeak) speechSynthesis.cancel();
@@ -1062,7 +1065,7 @@
         var long = g.intro.length > 320;
         html += '<li class="intro extra' + (long ? " is-long" : "") + '" data-g="' + k + '"><div class="intro-text">' + prose(g.intro) + "</div>" +
           '<span class="intro-tools">' + (long ? '<button type="button" class="linkish more-toggle" aria-expanded="false">Show more</button>' : "") +
-          (canSpeak ? '<button type="button" class="linkish" data-say="' + k + '">Listen</button>' : "") + "</span></li>";
+          (canSpeak ? '<button type="button" class="linkish" data-say="' + esc(s.id) + '" data-say-g="' + k + '">Listen</button>' : "") + "</span></li>";
       }
       if (g.qa && g.qa.length) {
         html += '<li class="qa-block extra" data-g="' + k + '"><details><summary>Questions and answers <span>' + g.qa.length + "</span></summary><ol>" +
@@ -1156,7 +1159,7 @@
 
     app.querySelectorAll(".more-toggle").forEach(function (b) {
       b.addEventListener("click", function () {
-        var li = b.parentNode, open = li.classList.toggle("is-open");
+        var li = b.closest(".intro"), open = li.classList.toggle("is-open");
         b.setAttribute("aria-expanded", String(open));
         b.textContent = open ? "Show less" : "Show more";
       });
