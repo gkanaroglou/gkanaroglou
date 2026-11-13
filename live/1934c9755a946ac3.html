@@ -47,7 +47,7 @@
   main:focus { outline: none; }
   a { color: inherit; text-underline-offset: 3px; }
   a, button { touch-action: manipulation; }
-  button, input { font: inherit; color: inherit; }
+  button, input, textarea, select { font: inherit; color: inherit; }
   button { -webkit-user-select: none; user-select: none; cursor: pointer; }
   a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
   ::selection { color: #000; background: var(--orange); }
@@ -223,6 +223,51 @@
   .intro.is-long .intro-text { max-height: 6.6em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
   .intro.is-long.is-open .intro-text { max-height: none; -webkit-mask-image: none; mask-image: none; }
   .intro .more-toggle { min-height: 40px; font-size: .9rem; color: var(--black); }
+  .intro-tools { display: flex; gap: 1.25rem; }
+  .qa-block { padding: .5rem 0 .2rem; border-bottom: 1px solid var(--concrete); }
+  .qa-block > details > summary { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; font-weight: 800; cursor: pointer; }
+  .qa-block > details > summary span { min-width: 1.6rem; padding: 0 .35rem; text-align: center; color: var(--paper); background: var(--black); font-size: .8rem; }
+  .qa-block ol { margin: .2rem 0 .6rem 1.4rem; max-width: 70ch; }
+  .qa-block li { margin-top: .75rem; }
+  .q { font-weight: 700; line-height: 1.35; }
+  .qa-a summary { display: inline-flex; min-height: 36px; align-items: center; font-size: .9rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .qa-a p { margin-top: .35rem; color: var(--muted); }
+  .dash-tools, .hero-tools { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: .6rem; font-weight: 700; }
+  .dash-tools a, .hero-tools a { display: inline-flex; align-items: center; min-height: 40px; }
+  .hero-tools a { color: #000; }
+  .ask h1, .quiz h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 900; line-height: .9; letter-spacing: -.045em; }
+  .lede { margin-top: .9rem; max-width: 60ch; color: var(--muted); }
+  .ask-form { margin-top: 1.5rem; max-width: 52rem; }
+  .ask-form textarea { resize: vertical; min-height: 4.2rem; line-height: 1.4; }
+  .ask-row { display: flex; gap: .75rem; margin-top: .75rem; }
+  .ask-row select { flex: 1; min-width: 0; min-height: 48px; }
+  .answer { max-width: 70ch; padding: .9rem 0 .9rem 1.1rem; border-left: 3px solid var(--black); }
+  .answer p + p { margin-top: .7rem; }
+  .cite { font-weight: 800; text-decoration: none; }
+  .sources .src-n { flex: none; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; color: var(--paper); background: var(--black); font-size: .85rem; font-weight: 800; }
+  .sources .row-main { align-items: flex-start; }
+  .qa-hits { list-style: none; max-width: 70ch; }
+  .qa-hits li { padding: .8rem 0; border-bottom: 1px solid var(--concrete); }
+  .qa-hits .a { margin-top: .35rem; }
+  .quiz-count { margin-top: 1.25rem; font-weight: 700; color: var(--muted); }
+  .quiz-q { margin-top: .6rem; max-width: 40ch; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; line-height: 1.2; letter-spacing: -.015em; }
+  .quiz-a { margin-top: 1.25rem; max-width: 65ch; padding-left: 1rem; border-left: 3px solid var(--black); }
+  mark.passage { background: var(--concrete); }
+  .player { position: fixed; z-index: 8; left: 50%; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+            display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; width: min(44rem, calc(100% - 2 * var(--gutter)));
+            padding: .7rem .8rem; color: var(--paper); background: var(--black); }
+  .player .btn { min-height: 40px; color: var(--paper); border-color: var(--paper); }
+  .player .btn-primary { color: #000; }
+  .player-label { flex: 1 1 12rem; min-width: 0; font-weight: 700; font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .player-rate { min-height: 40px; padding: 0 .5rem; color: var(--paper); background: var(--black); border: 2px solid var(--paper); border-radius: 0; font-weight: 700; }
+  @media (max-width: 520px) { .ask-row { flex-direction: column; } }
+  .intro .intro-h { margin-top: .9rem; color: var(--black); font-size: .85rem; font-weight: 800; }
+  .plist { margin: .4rem 0 0 1.1rem; }
+  .plist li { margin-top: .35rem; }
+  .plist li::marker { color: var(--black); }
+  mark { color: #000; background: var(--orange); padding: 0 .1em; }
+  .deep .row-main { align-items: flex-start; }
+  .snip { display: block; margin-top: .35rem; max-width: 75ch; font-size: .9rem; color: var(--muted); line-height: 1.45; }
   .sub { padding: .9rem 0 .3rem; font-size: .85rem; font-weight: 800; color: var(--muted); border-bottom: 1px solid var(--concrete); }
   .fb { padding: .75rem 0; border-bottom: 1px solid var(--concrete); }
   .fb blockquote { max-width: 68ch; padding: .1rem 0 .1rem 1rem; border-left: 3px solid var(--black); font-size: .95rem; }
@@ -361,11 +406,21 @@
   var ROLE = { submission: "Your submission", feedback: "Feedback" };
   function safeName(s) { return String(s).replace(/[\\/:*?"<>|]+/g, " ").replace(/\s+/g, " ").trim(); }
   // Moodle descriptions and feedback arrive as plain text: paragraphs, line breaks and bare links
+  function inline(p) {
+    return esc(p).replace(/\n/g, "<br>").replace(/(https?:\/\/[^\s<()]+[^\s<().,;:!?'"])/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  }
   function prose(t) {
-    return String(t).split(/\n{2,}/).map(function (p) {
-      var h = esc(p).replace(/\n/g, "<br>").replace(/(https?:\/\/[^\s<()]+[^\s<().,;:!?'"])/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-      return "<p>" + h + "</p>";
-    }).join("");
+    var out = "", list = [];
+    function flush() { if (list.length) { out += '<ul class="plist">' + list.map(function (x) { return "<li>" + inline(x) + "</li>"; }).join("") + "</ul>"; list = []; } }
+    String(t).split(/\n{2,}|\n(?=- )/).forEach(function (p) {
+      p = p.trim(); if (!p) return;
+      if (/^- /.test(p)) { list.push(p.slice(2)); return; }
+      flush();
+      // a short line with no full stop reads as a small heading, like "Key points"
+      out += p.length < 40 && !/[.!?:;,]$/.test(p) && p.indexOf("\n") < 0 ? '<p class="intro-h">' + inline(p) + "</p>" : "<p>" + inline(p) + "</p>";
+    });
+    flush();
+    return out;
   }
   function renamed(it) {
     var base = it.name.replace(/\.[^.]+$/, "").replace(/^\d+_/, "").replace(/___/g, "…").replace(/amp;/g, "&").replace(/_/g, " ");
@@ -396,7 +451,7 @@
     var key = await aesKey(raw);
     var buf = await fetchBuf("manifest.enc", true);
     var plain = await openSealed(key, buf, "manifest");   // throws if the key is wrong
-    aes = key;
+    aes = key; rawKey = new Uint8Array(raw);
     data = JSON.parse(new TextDecoder().decode(plain));
     index();
     return true;
@@ -462,7 +517,14 @@
     }
     btn.disabled = false; btn.textContent = "Open files";
   });
+  app.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-say]"); if (!b) return;
+    var h = decodeURIComponent(location.hash.slice(1)).match(/^([a-z0-9-]+)/), c = h && byCourse[h[1]];
+    if (!c) return;
+    c.sections.forEach(function (s) { var g = s.gmap[b.dataset.say]; if (g && g.intro) speak(g.intro, g.title.replace(/^Lecture recording:\s*/, "")); });
+  });
   signOut.addEventListener("click", function () {
+    stopSpeaking();
     forget();
     cache.forEach(function (c) { URL.revokeObjectURL(c.url); });
     cache.clear(); cacheSize = 0; aes = null; data = null;
@@ -512,7 +574,11 @@
   function route() {
     viewToken++;
     if (spy) { spy.disconnect(); spy = null; }
-    var h = decodeURIComponent(location.hash.slice(1)), m = h.match(/^([a-z0-9-]+)(?:\/(s|f)(\d+))?$/);
+    var h = decodeURIComponent(location.hash.slice(1));
+    if (h === "ask") { askPage(); return; }
+    var qz = h.match(/^quiz(?:\/([a-z0-9-]+))?$/);
+    if (qz) { quizPage(qz[1] || ""); return; }
+    var m = h.match(/^([a-z0-9-]+)(?:\/(s|f)(\d+))?$/);
     var c = m && byCourse[m[1]];
     if (!c) { document.title = "LSE files | George Kanaroglou"; dashboard(); return; }
     if (m[2] === "f") {
@@ -534,8 +600,9 @@
       '<div class="dash-head"><div><h1>LSE files.</h1><p>' + plural(data.courses.length, "course", "courses") + ", " +
       plural(flat.length, "file", "files") + ", " + size(total) + ".</p></div>" +
       '<div><label class="label" for="search">Search all files</label>' +
-      '<input class="field" id="search" type="search" placeholder="Try ‘conjoint’ or ‘week 4’" autocomplete="off" spellcheck="false"></div></div>' +
-      '<div id="results" hidden></div>' +
+      '<input class="field" id="search" type="search" placeholder="Try ‘conjoint’ or ‘week 4’" autocomplete="off" spellcheck="false">' +
+      '<p class="dash-tools"><a href="#ask">Ask a question</a>' + (allQA("").length ? '<a href="#quiz">Quiz me</a>' : "") + "</p></div></div>" +
+      '<div id="results" hidden></div><div id="deep" hidden></div>' +
       '<div id="home">' +
       terms().map(function (t, i) {
         return '<h2 class="block-title plain' + (i ? " later" : "") + '">' + esc(t.name) + '</h2><ul class="courses">' +
@@ -551,18 +618,374 @@
     var input = $("search"), res = $("results"), home = $("home"), t = null;
     var q0 = getItem("session", "gk-uni-q"); if (q0) { input.value = q0; run(); }
     input.addEventListener("input", function () { clearTimeout(t); t = setTimeout(run, 120); });
+    var deep = $("deep"), runId = 0;
     function run() {
-      var q = fold(input.value.trim());
+      var q = fold(input.value.trim()), mine = ++runId;
       setItem("session", "gk-uni-q", input.value);
-      if (!q) { res.hidden = true; home.hidden = false; return; }
+      if (!q) { res.hidden = true; deep.hidden = true; home.hidden = false; return; }
+      deepSearch(input.value.trim(), deep, function () { return mine === runId; });
       var hits = flat.filter(matcher(q));
-      home.hidden = true; res.hidden = false;
+      home.hidden = true; res.hidden = !hits.length;
       res.innerHTML = '<h2 class="block-title">Results <small>' + plural(hits.length, "file", "files") + "</small></h2>" +
         (hits.length ? '<ul class="rows">' + hits.slice(0, SEARCH_LIMIT).map(row).join("") + "</ul>" +
           (hits.length > SEARCH_LIMIT ? '<p class="more muted">Showing the first ' + SEARCH_LIMIT + ". Add another word to narrow it down.</p>" : "")
         : '<p class="empty">No files match that. Try fewer words, or a course code like MG403.</p>');
     }
   }
+  // ======================================================================
+  // Listening: reads summaries and transcripts aloud with the browser's own voices
+  // ======================================================================
+  var canSpeak = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+  var tts = { parts: [], i: 0, rate: 1, paused: false, label: "" };
+  function pickVoice() {
+    var vs = speechSynthesis.getVoices(), pick = function (f) { return vs.filter(f)[0]; };
+    return pick(function (v) { return /en-GB/i.test(v.lang) && /natural|online/i.test(v.name); }) ||
+      pick(function (v) { return /en-GB/i.test(v.lang); }) || pick(function (v) { return /^en/i.test(v.lang); }) || null;
+  }
+  if (canSpeak) { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = function () {}; }
+  function splitForSpeech(text) {
+    var out = [], buf = "";
+    text.replace(/\s+/g, " ").split(/(?<=[.!?])\s+/).forEach(function (s) {
+      while (s.length > 220) { var cut = s.lastIndexOf(" ", 220); cut = cut > 80 ? cut : 220; out.push((buf + " " + s.slice(0, cut)).trim()); buf = ""; s = s.slice(cut); }
+      if ((buf + " " + s).length > 220) { if (buf) out.push(buf.trim()); buf = s; } else buf += " " + s;
+    });
+    if (buf.trim()) out.push(buf.trim());
+    return out;
+  }
+  function player() {
+    var p = $("player");
+    if (p) return p;
+    p = document.createElement("div"); p.id = "player"; p.className = "player"; p.hidden = true;
+    p.innerHTML = '<span class="player-label" id="player-label"></span>' +
+      '<button type="button" class="btn" id="player-pause">Pause</button>' +
+      '<label class="sr-only" for="player-rate">Speed</label><select id="player-rate" class="player-rate">' +
+      ["0.9", "1", "1.25", "1.5", "1.75"].map(function (r) { return '<option value="' + r + '"' + (r === "1" ? " selected" : "") + ">" + r + "×</option>"; }).join("") + "</select>" +
+      '<button type="button" class="btn btn-primary" id="player-stop">Stop</button>';
+    document.body.appendChild(p);
+    $("player-pause").addEventListener("click", function () {
+      if (tts.paused) { tts.paused = false; speechSynthesis.resume(); this.textContent = "Pause"; }
+      else { tts.paused = true; speechSynthesis.pause(); this.textContent = "Resume"; }
+    });
+    $("player-stop").addEventListener("click", stopSpeaking);
+    $("player-rate").addEventListener("change", function () { tts.rate = +this.value; speechSynthesis.cancel(); speakNext(); });
+    return p;
+  }
+  function speakNext() {
+    if (tts.i >= tts.parts.length) { stopSpeaking(); return; }
+    var u = new SpeechSynthesisUtterance(tts.parts[tts.i]), v = pickVoice();
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-GB";
+    u.rate = tts.rate;
+    u.onend = function () { if (!tts.stopped) { tts.i++; speakNext(); } };
+    tts.stopped = false; speechSynthesis.speak(u);
+    $("player-label").textContent = tts.label + " (" + Math.min(tts.i + 1, tts.parts.length) + " of " + tts.parts.length + ")";
+  }
+  function speak(text, label) {
+    if (!canSpeak) return;
+    tts.stopped = true; speechSynthesis.cancel();
+    tts.parts = splitForSpeech(text); tts.i = 0; tts.paused = false; tts.label = label || "Listening";
+    var p = player(); p.hidden = false; $("player-pause").textContent = "Pause";
+    setTimeout(speakNext, 60);
+  }
+  function stopSpeaking() {
+    tts.stopped = true; if (canSpeak) speechSynthesis.cancel();
+    var p = $("player"); if (p) p.hidden = true;
+  }
+  // transcripts: drop the header and the speaker numbers, which are noise when read aloud
+  function speakable(t) {
+    var i = t.search(/\n(Speaker \d+:)/); if (i > 0) t = t.slice(i);
+    return t.replace(/(^|\n)Speaker \d+:\s*/g, "$1");
+  }
+
+  // ======================================================================
+  // Passage finder: ranks short passages of every transcript, summary, note and question by relevance (BM25)
+  // ======================================================================
+  var STOP = {}; ("a about above after again against all am an and any are as at be because been before being below between both but by can could did do does doing down during each few for from further had has have having he her here hers him his how i if in into is it its itself just me more most my no nor not now of off on once only or other our out over own same she should so some such than that the their them then there these they this those through to too under until up very was we were what when where which while who whom why will with would you your yours really like um uh yeah okay ok gonna wanna kind sort thing things get got also one two lot much many way going know think mean actually basically right well").split(" ").forEach(function (w) { STOP[w] = 1; });
+  function stem(w) {
+    if (w.length > 4 && /ies$/.test(w)) return w.slice(0, -3) + "y";
+    if (w.length > 5 && /ing$/.test(w)) return w.slice(0, -3);
+    if (w.length > 4 && /ed$/.test(w)) return w.slice(0, -2);
+    if (w.length > 4 && /ly$/.test(w)) return w.slice(0, -2);
+    if (w.length > 3 && /s$/.test(w) && !/ss$/.test(w)) return w.slice(0, -1);
+    return w;
+  }
+  function words(t) { return (t.toLowerCase().match(/[a-z0-9]+/g) || []).filter(function (w) { return !STOP[w] && w.length > 1; }).map(stem); }
+  var finder = null;
+  function buildFinder(entries) {
+    var P = [], post = {}, totalLen = 0;
+    entries.forEach(function (e, ei) {
+      var spans = [];
+      if (e.k === "qa") spans.push([0, e.t.length]);
+      else {
+        var re = /\S+/g, m, starts = [];
+        while ((m = re.exec(e.t))) starts.push(m.index);
+        for (var i = 0; i < starts.length; i += 60) {
+          var end = i + 85 < starts.length ? starts[i + 85] : e.t.length;
+          spans.push([starts[i], end]);
+          if (i + 85 >= starts.length) break;
+        }
+      }
+      spans.forEach(function (sp) {
+        var ws = words(e.t.slice(sp[0], sp[1])), tf = {};
+        ws.forEach(function (w) { tf[w] = (tf[w] || 0) + 1; });
+        var pi = P.length; P.push({ e: ei, a: sp[0], b: sp[1], len: ws.length || 1 }); totalLen += ws.length;
+        for (var w in tf) (post[w] = post[w] || []).push(pi, tf[w]);
+      });
+    });
+    return { P: P, post: post, avg: totalLen / Math.max(1, P.length), entries: entries };
+  }
+  function findPassages(q, filter, limit) {
+    var F = finder, qs = words(q), scores = {}, N = F.P.length, k1 = 1.2, b = 0.75;
+    qs.filter(function (w, i) { return qs.indexOf(w) === i; }).forEach(function (w) {
+      var pl = F.post[w]; if (!pl) return;
+      var df = pl.length / 2, idf = Math.log(1 + (N - df + 0.5) / (df + 0.5));
+      for (var i = 0; i < pl.length; i += 2) {
+        var p = F.P[pl[i]], tf = pl[i + 1];
+        scores[pl[i]] = (scores[pl[i]] || 0) + idf * tf * (k1 + 1) / (tf + k1 * (1 - b + b * p.len / F.avg));
+      }
+    });
+    var ranked = Object.keys(scores).map(Number).filter(function (pi) { return filter(F.entries[F.P[pi].e]); })
+      .sort(function (x, y) { return scores[y] - scores[x]; });
+    var out = [];
+    for (var i = 0; i < ranked.length && out.length < limit; i++) {
+      var p = F.P[ranked[i]];
+      if (out.some(function (o) { return o.e === p.e && o.a < p.b && p.a < o.b; })) continue;   // skip overlapping passages
+      out.push({ e: p.e, a: p.a, b: p.b, score: scores[ranked[i]] });
+    }
+    return out;
+  }
+  function describe(e) {
+    var c = byCourse[e.c]; if (!c) return null;
+    if (e.k === "file") {
+      var it = find(e.c, e.u); if (!it) return null;
+      var lec = /^lecture recording/i.test(it.group);
+      return { title: lec ? it.group.replace(/^Lecture recording:\s*/, "") : it.title, where: label(c) + ", " + it.section.title,
+               kind: lec ? it.title : "File", href: link(it), file: true };
+    }
+    var sec = c.sections.filter(function (s) { return s.id === e.s; })[0]; if (!sec) return null;
+    var g = sec.gmap[e.g]; if (!g) return null;
+    var lecture = /^lecture recording/i.test(g.title);
+    return { title: g.title.replace(/^Lecture recording:\s*/, ""), where: label(c) + ", " + sec.title,
+             kind: e.k === "qa" ? "Question bank" : e.k === "feedback" ? "Feedback comments" : e.k === "note" ? "Your note" : lecture ? "Lecture summary" : "Description",
+             href: "#" + c.id + "/" + sec.id, file: false };
+  }
+  function highlightTerms(text, q) {
+    var qs = (q.toLowerCase().match(/[a-z0-9]+/g) || []).filter(function (w) { return !STOP[w] && w.length > 2; });
+    if (!qs.length) return esc(text);
+    var re = new RegExp("\\b(" + qs.map(function (w) { return reEsc(stem(w)); }).join("|") + ")[a-z]*", "gi");
+    return text.split(re).map(function (part, i) { return i % 2 ? "<mark>" + esc(part) + "</mark>" : esc(part); }).join("")
+      .replace(/<\/mark>([a-z]+)/gi, "$1</mark>");
+  }
+
+  // ======================================================================
+  // Ask page: question bank answers, an AI answer when the assistant is set up, and the best passages
+  // ======================================================================
+  var AI_URL = "";
+  var rawKey = null;
+  async function aiToken() {
+    var k = await crypto.subtle.importKey("raw", rawKey, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+    var sig = new Uint8Array(await crypto.subtle.sign("HMAC", k, enc.encode("gk-uni-ai")));
+    return Array.prototype.map.call(sig, function (x) { return ("0" + x.toString(16)).slice(-2); }).join("");
+  }
+  function askPage() {
+    document.title = "Ask | LSE files";
+    var last = getItem("session", "gk-uni-ask") || "";
+    paint('<div class="page ask">' +
+      '<nav class="crumbs" aria-label="Breadcrumb"><a href="#">Dashboard</a><span aria-hidden="true">/</span><span aria-current="page">Ask</span></nav>' +
+      "<h1>Ask your lectures.</h1>" +
+      '<p class="lede">' + (AI_URL ? "Ask anything in your own words. You get a written answer from your lectures, with the passages it came from."
+        : "Ask anything in your own words. You get the most relevant passages from your lectures, summaries and question bank.") + "</p>" +
+      '<form class="ask-form" id="ask-form" novalidate><label class="sr-only" for="ask-q">Your question</label>' +
+      '<textarea class="field" id="ask-q" rows="2" placeholder="For example: why do customers won with discounts churn more?">' + esc(last) + "</textarea>" +
+      '<div class="ask-row"><label class="sr-only" for="ask-c">Course</label><select class="field" id="ask-c"><option value="">All courses</option>' +
+      data.courses.map(function (c) { return '<option value="' + c.id + '">' + esc(label(c) + " " + c.title) + "</option>"; }).join("") +
+      '</select><button class="btn btn-primary" type="submit" id="ask-go">Ask</button></div></form>' +
+      '<div id="ask-out" aria-live="polite"></div></div>');
+    var form = $("ask-form"), qEl = $("ask-q");
+    qEl.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
+    form.addEventListener("submit", function (e) { e.preventDefault(); ask(qEl.value.trim(), $("ask-c").value); });
+    if (last) ask(last, "");
+  }
+  var askRun = 0;
+  async function ask(q, cid) {
+    var out = $("ask-out"), mine = ++askRun;
+    if (!q) { out.innerHTML = '<p class="empty">Type a question first.</p>'; return; }
+    setItem("session", "gk-uni-ask", q);
+    out.innerHTML = '<p class="empty">' + (finder ? "Searching…" : "Getting your lectures ready. This takes a few seconds the first time.") + "</p>";
+    try {
+      var entries = await loadDeep();
+      if (!finder) finder = buildFinder(entries);
+    } catch (x) { out.innerHTML = '<p class="empty">Your lectures couldn’t be loaded. Check your connection, then try again.</p>'; return; }
+    if (mine !== askRun) return;
+    var inCourse = function (e) { return !cid || e.c === cid; };
+    var qa = findPassages(q, function (e) { return e.k === "qa" && inCourse(e); }, 3);
+    qa = qa.filter(function (h) { return h.score >= qa[0].score * 0.6; });     // only questions close to the best match
+    var hits = findPassages(q, function (e) { return e.k !== "qa" && inCourse(e); }, 8);
+    var srcs = hits.map(function (h, i) {
+      var e = finder.entries[h.e], d = describe(e); if (!d) return null;
+      var text = e.t.slice(h.a, h.b).replace(/(^|\n)Speaker \d+:\s*/g, " ").replace(/\s+/g, " ").trim();
+      return { n: i + 1, d: d, text: text, hl: e.t.slice(h.a, h.a + 60) };
+    }).filter(Boolean);
+    var html = "";
+    if (qa.length) {
+      html += '<h2 class="block-title">From your question bank</h2><ul class="qa-hits">' + qa.map(function (h) {
+        var e = finder.entries[h.e], d = describe(e); if (!d) return "";
+        return '<li><p class="q">' + esc(e.q) + '</p><p class="a">' + inline(e.t.slice(e.q.length + 1)) + '</p><p class="row-sub"><a href="' + d.href + '">' + esc(d.where + ". " + d.title) + "</a></p></li>";
+      }).join("") + "</ul>";
+    }
+    if (AI_URL) html += '<h2 class="block-title">Answer</h2><div class="answer" id="answer"><p class="empty">Writing an answer from your lectures…</p></div>';
+    html += '<h2 class="block-title">' + (AI_URL ? "Sources" : "Best matching passages") + " <small>" + plural(srcs.length, "passage", "passages") + "</small></h2>" +
+      (srcs.length ? '<ol class="rows sources">' + srcs.map(function (s) {
+        return '<li class="row" id="src-' + s.n + '"><a class="row-main" href="' + s.d.href + '"' + (s.d.file ? ' data-hl="' + esc(s.hl) + '"' : "") + '>' +
+          '<span class="src-n">' + s.n + '</span><span class="row-text"><span class="row-title">' + esc(s.d.title) + '</span><span class="row-sub">' + esc(s.d.where + ". " + s.d.kind) + "</span>" +
+          '<span class="snip">' + highlightTerms(s.text, q) + "</span></span></a></li>";
+      }).join("") + "</ol>" : '<p class="empty">Nothing in your lectures matches that. Try other words, or pick a different course.</p>');
+    out.innerHTML = html;
+    if (!AI_URL || !srcs.length) { if (AI_URL) $("answer").innerHTML = '<p class="empty">No passages to answer from.</p>'; return; }
+    try {
+      var passages = qa.map(function (h) { var e = finder.entries[h.e], d = describe(e) || {}; return { source: "Question bank: " + (d.where || "") + ". " + (d.title || ""), text: e.t }; })
+        .concat(srcs.map(function (s) { return { source: s.d.where + ". " + s.d.title + ". " + s.d.kind, text: s.text }; }));
+      var offset = qa.length;
+      var r = await fetch(AI_URL, { method: "POST", headers: { "Content-Type": "application/json", "X-Portal-Token": await aiToken() },
+        body: JSON.stringify({ question: q, passages: passages }) });
+      var d = await r.json();
+      if (mine !== askRun) return;
+      if (!r.ok) throw new Error(d.error || "error");
+      // the assistant numbers question bank answers first, so map its numbers onto the source list
+      $("answer").innerHTML = prose(d.answer).replace(/\[(\d+)\]/g, function (m, n) {
+        n = +n - offset;
+        return n > 0 && n <= srcs.length ? '<a class="cite" href="#src-' + n + '" data-src="' + n + '">[' + n + "]</a>" : n <= 0 ? '<span class="cite">[bank]</span>' : m;
+      }) + (canSpeak ? '<button type="button" class="linkish" id="answer-listen">Listen to the answer</button>' : "");
+      $("answer").querySelectorAll("[data-src]").forEach(function (a) {
+        a.addEventListener("click", function (e) { e.preventDefault(); $("src-" + a.dataset.src).scrollIntoView({ block: "center" }); });
+      });
+      if ($("answer-listen")) $("answer-listen").addEventListener("click", function () { speak(d.answer.replace(/\[\d+\]/g, ""), "Answer"); });
+    } catch (x) {
+      if (mine === askRun) $("answer").innerHTML = '<p class="empty">The assistant couldn’t answer just now (' + esc(x.message) + "). The passages below are still the best matches.</p>";
+    }
+  }
+
+  // ======================================================================
+  // Quiz: questions from the question bank, one at a time
+  // ======================================================================
+  function allQA(cid) {
+    var out = [];
+    data.courses.forEach(function (c) {
+      if (cid && c.id !== cid) return;
+      c.sections.forEach(function (s) { (s.groups || []).forEach(function (g) {
+        (g.qa || []).forEach(function (x) { out.push({ q: x.q, a: x.a, c: c, s: s, g: g }); });
+      }); });
+    });
+    return out;
+  }
+  function quizPage(cid) {
+    var pool = allQA(cid), c = cid && byCourse[cid];
+    document.title = "Quiz | LSE files";
+    for (var i = pool.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = pool[i]; pool[i] = pool[j]; pool[j] = t; }
+    var at = 0, known = 0;
+    paint('<div class="page quiz">' +
+      '<nav class="crumbs" aria-label="Breadcrumb"><a href="#">Dashboard</a><span aria-hidden="true">/</span>' + (c ? '<a href="#' + c.id + '">' + esc(label(c)) + '</a><span aria-hidden="true">/</span>' : "") + '<span aria-current="page">Quiz</span></nav>' +
+      "<h1>" + (c ? "Quiz: " + esc(label(c)) + "." : "Quiz.") + '</h1><div id="quiz-card"></div></div>');
+    function show() {
+      var box = $("quiz-card");
+      if (!pool.length) { box.innerHTML = '<p class="empty">There are no questions here yet.</p>'; return; }
+      if (at >= pool.length) {
+        box.innerHTML = '<p class="lede">That’s all ' + pool.length + " questions. You knew " + known + ".</p>" +
+          '<button type="button" class="btn btn-primary" id="quiz-again">Start again</button>';
+        $("quiz-again").addEventListener("click", function () { quizPage(cid); });
+        return;
+      }
+      var x = pool[at];
+      box.innerHTML = '<p class="quiz-count">Question ' + (at + 1) + " of " + pool.length + '</p><div class="quiz-q">' + esc(x.q) + "</div>" +
+        '<p class="row-sub">' + esc(label(x.c) + ", " + x.s.title) + "</p>" +
+        '<div class="quiz-a" id="quiz-a" hidden>' + prose(x.a) + '<p class="row-sub"><a href="#' + x.c.id + "/" + x.s.id + '">Open this lecture</a></p></div>' +
+        '<div class="bar"><button type="button" class="btn btn-primary" id="quiz-show">Show answer</button>' +
+        '<button type="button" class="btn" id="quiz-knew" hidden>I knew it</button><button type="button" class="btn" id="quiz-next" hidden>Next question</button>' +
+        (canSpeak ? '<button type="button" class="btn" id="quiz-say">Listen</button>' : "") + "</div>";
+      $("quiz-show").addEventListener("click", function () { $("quiz-a").hidden = false; this.hidden = true; $("quiz-knew").hidden = false; $("quiz-next").hidden = false; $("quiz-next").focus(); });
+      $("quiz-knew").addEventListener("click", function () { known++; at++; show(); });
+      $("quiz-next").addEventListener("click", function () { at++; show(); });
+      if ($("quiz-say")) $("quiz-say").addEventListener("click", function () { speak($("quiz-a").hidden ? x.q : x.q + ". " + x.a, "Question"); });
+    }
+    show();
+  }
+
+  // ---------- searching inside transcripts, summaries, descriptions and feedback
+  // The index is a separate encrypted file, fetched once, the first time you search.
+  var deepIndex = null;
+  function loadDeep() {
+    if (!deepIndex) {
+      deepIndex = fetch(STORE + "search.enc", { cache: "no-cache", credentials: "omit" })
+        .then(function (r) { if (!r.ok) throw new Error("http " + r.status); return r.arrayBuffer(); })
+        .then(function (buf) { return openSealed(aes, buf, "search"); })
+        .then(function (plain) {
+          var d = JSON.parse(new TextDecoder().decode(plain));
+          return d.entries.map(function (e) { e.low = e.t.toLowerCase(); return e; });
+        });
+      deepIndex.catch(function () { deepIndex = null; });
+    }
+    return deepIndex;
+  }
+  function reEsc(w) { return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  function termRes(terms) {
+    return terms.map(function (w) { return new RegExp(/^\d+$/.test(w) ? "(?<![0-9])" + w + "(?![0-9])" : reEsc(w), "g"); });
+  }
+  function snippet(e, res) {
+    var m = res[0].exec(e.low); res[0].lastIndex = 0;
+    var at = m ? m.index : 0, from = Math.max(0, at - 90), to = Math.min(e.t.length, at + 170);
+    var text = e.t.slice(from, to).replace(/(^|\n)- /g, "$1").replace(/\s+/g, " ");
+    if (from > 0) text = "…" + text.replace(/^\S*\s/, "");
+    if (to < e.t.length) text = text.replace(/\s\S*$/, "") + "…";
+    var all = new RegExp("(" + res.map(function (r) { return r.source; }).join("|") + ")", "gi");
+    return text.split(all).map(function (part, i) { return i % 2 ? "<mark>" + esc(part) + "</mark>" : esc(part); }).join("");
+  }
+  function deepSearch(raw, box, current) {
+    var terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+    box.hidden = false;
+    box.innerHTML = '<h2 class="block-title">Inside lectures and notes</h2><p class="empty">Searching…</p>';
+    loadDeep().then(function (entries) {
+      if (!current()) return;
+      var res = termRes(terms), hits = [];
+      var phrase = terms.length > 1 ? new RegExp(terms.map(reEsc).join("\\W+"), "g") : null;
+      entries.forEach(function (e) {
+        var score = 0;
+        for (var i = 0; i < res.length; i++) {
+          var n = (e.low.match(res[i]) || []).length;
+          if (!n) return;
+          score += Math.min(n, 50);
+        }
+        var exact = phrase ? (e.low.match(phrase) || []).length : 0;
+        score += exact * 100;     // the words together, as typed, rank first
+        var c = byCourse[e.c]; if (!c) return;
+        var it = null, sec = null, g = null, href, title, kind;
+        if (e.k === "file") {
+          it = find(e.c, e.u); if (!it) return;
+          href = link(it); title = it.group ? it.group.replace(/^Lecture recording:\s*/, "") : it.title;
+          kind = /^lecture recording/i.test(it.group) ? "Transcript" : it.title;
+          sec = it.section;
+        } else {
+          sec = c.sections.filter(function (s) { return s.id === e.s; })[0]; if (!sec) return;
+          g = sec.gmap[e.g]; if (!g) return;
+          href = "#" + c.id + "/" + sec.id; title = g.title.replace(/^Lecture recording:\s*/, "");
+          kind = e.k === "qa" ? "Question bank" : e.k === "feedback" ? "Feedback comments" : e.k === "note" ? "Your note" : /^lecture recording/i.test(g.title) ? "Lecture summary" : "Description";
+        }
+        hits.push({ score: score, href: href, title: title, sub: label(c) + ", " + sec.title + ". " + kind, snip: snippet(e, exact ? [phrase].concat(res) : res), file: !!it });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      box.innerHTML = '<h2 class="block-title">Inside lectures and notes <small>' + plural(hits.length, "match", "matches") + "</small></h2>" +
+        (hits.length ? '<ul class="rows deep">' + hits.slice(0, 30).map(function (h) {
+          return '<li class="row"><a class="row-main" href="' + h.href + '"' + (h.file ? ' data-hl="' + esc(raw) + '"' : "") + '>' +
+            '<span class="row-text"><span class="row-title">' + esc(h.title) + '</span><span class="row-sub">' + esc(h.sub) + "</span>" +
+            '<span class="snip">' + h.snip + "</span></span></a></li>";
+        }).join("") + "</ul>" + (hits.length > 30 ? '<p class="more muted">Showing the best 30. Add another word to narrow it down.</p>' : "")
+        : '<p class="empty">Nothing in the transcripts, summaries or feedback matches that.</p>');
+    }, function () {
+      if (current()) box.innerHTML = '<h2 class="block-title">Inside lectures and notes</h2><p class="empty">The search index couldn’t be loaded. Check your connection, then try again.</p>';
+    });
+  }
+  app.addEventListener("click", function (e) {
+    var a = e.target.closest("[data-hl]"); if (a) setItem("session", "gk-uni-hl", a.dataset.hl);
+  });
+
   // Courses grouped by term, in the order the terms first appear
   function terms() {
     var out = [], seen = {};
@@ -601,7 +1024,13 @@
       if (g.intro) {
         var long = g.intro.length > 320;
         html += '<li class="intro extra' + (long ? " is-long" : "") + '" data-g="' + k + '"><div class="intro-text">' + prose(g.intro) + "</div>" +
-          (long ? '<button type="button" class="linkish more-toggle" aria-expanded="false">Show the full description</button>' : "") + "</li>";
+          '<span class="intro-tools">' + (long ? '<button type="button" class="linkish more-toggle" aria-expanded="false">Show more</button>' : "") +
+          (canSpeak ? '<button type="button" class="linkish" data-say="' + k + '">Listen</button>' : "") + "</span></li>";
+      }
+      if (g.qa && g.qa.length) {
+        html += '<li class="qa-block extra" data-g="' + k + '"><details><summary>Questions and answers <span>' + g.qa.length + "</span></summary><ol>" +
+          g.qa.map(function (x) { return '<li><p class="q">' + esc(x.q) + '</p><details class="qa-a"><summary>Show answer</summary>' + prose(x.a) + "</details></li>"; }).join("") +
+          "</ol></details></li>";
       }
       html += byRole("").map(function (it) { return fileRow(c, it); }).join("");
       var sub = byRole("submission"), fb = byRole("feedback");
@@ -621,6 +1050,7 @@
       '<nav class="crumbs" aria-label="Breadcrumb"><a href="#">Dashboard</a><span aria-hidden="true">/</span><span aria-current="page">' + esc(label(c)) + "</span></nav>" +
       '<h1><span class="hero-code">' + esc(label(c)) + "</span>" + (c.code ? '<span class="hero-title">' + esc(c.title) + "</span>" : "") + "</h1>" +
       '<p class="hero-meta">' + esc(c.term ? c.term + ". " : "") + plural(c.count, "file", "files") + ", " + size(c.bytes) + ".</p>" +
+      (allQA(c.id).length ? '<p class="hero-tools"><a href="#quiz/' + c.id + '">Quiz me on this course</a><a href="#ask">Ask a question</a></p>' : "") +
       (c.note ? '<p class="hero-note">' + esc(c.note) + "</p>" : "") + "</div></div>" +
       '<div class="page course-body">' +
       '<details class="index" id="index"><summary>Course index <i class="caret" aria-hidden="true"></i></summary>' +
@@ -691,7 +1121,7 @@
       b.addEventListener("click", function () {
         var li = b.parentNode, open = li.classList.toggle("is-open");
         b.setAttribute("aria-expanded", String(open));
-        b.textContent = open ? "Show less" : "Show the full description";
+        b.textContent = open ? "Show less" : "Show more";
       });
     });
     // the course index follows the section you're reading
@@ -758,7 +1188,25 @@
       } else if (k === "audio") {
         stage.innerHTML = '<div style="padding:1rem"><audio src="' + entry.url + '" controls></audio></div>';
       } else if (k === "text" && it.size < 3 * 1024 * 1024) {
-        entry.blob.text().then(function (t) { if (token === viewToken) { stage.innerHTML = "<pre></pre>"; stage.firstChild.textContent = t; } });
+        entry.blob.text().then(function (t) {
+          if (token !== viewToken) return;
+          stage.innerHTML = "<pre></pre>";
+          var pre = stage.firstChild, hl = getItem("session", "gk-uni-hl");
+          delItem("session", "gk-uni-hl");
+          var low = t.toLowerCase(), first = hl ? hl.toLowerCase().split(/\s+/).filter(Boolean)[0] : "";
+          var at = hl && hl.length > 30 ? low.indexOf(hl.toLowerCase()) : -1;
+          if (at >= 0) first = hl; else at = first ? low.indexOf(first) : -1;
+          if (canSpeak) {
+            var lb = document.createElement("button"); lb.type = "button"; lb.className = "btn"; lb.textContent = "Listen";
+            lb.addEventListener("click", function () { var m = pre.querySelector("mark"), from = m ? t.indexOf(m.textContent, Math.max(0, at - 5)) : 0; speak(speakable(from > 0 ? t.slice(from) : t), it.group ? it.group.replace(/^Lecture recording:\s*/, "") : it.title); });
+            var bar = app.querySelector(".viewer .bar"); bar.insertBefore(lb, bar.querySelector(".spacer"));
+          }
+          if (at < 0) { pre.textContent = t; return; }
+          var mark = document.createElement("mark"); mark.textContent = t.slice(at, at + first.length); mark.className = first.length > 30 ? "passage" : "";
+          pre.appendChild(document.createTextNode(t.slice(0, at))); pre.appendChild(mark);
+          pre.appendChild(document.createTextNode(t.slice(at + first.length)));
+          requestAnimationFrame(function () { mark.scrollIntoView({ block: "center" }); });
+        });
       } else {
         stage.innerHTML = '<div class="stage-msg"><p>' + esc(it.ext ? "." + it.ext + " files" : "This file") + " can’t be shown in the browser. Download it to open it.</p>" +
           '<button type="button" class="btn btn-primary" id="v-dl2">Download</button></div>';
