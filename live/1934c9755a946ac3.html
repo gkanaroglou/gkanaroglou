@@ -143,6 +143,29 @@
   .block-title small { font-size: .9rem; font-weight: 600; color: var(--muted); letter-spacing: 0; }
 
   /* Courses: a ruled timetable of course codes. Hovering one turns it into the screen's orange field. */
+  /* Courses by topic: the topic on the left, its courses as ruled rows on the right.
+     Hovering a row turns it into the screen's one orange field. */
+  .topic { display: grid; grid-template-columns: minmax(12rem, 17rem) 1fr; gap: 0 clamp(1.5rem, 4vw, 3.5rem);
+           margin-top: clamp(2rem, 4vw, 3rem); padding-top: .8rem; border-top: 3px solid var(--black); }
+  .topic-head h2 { font-size: 1.35rem; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+  .topic-head p { margin-top: .5rem; max-width: 30ch; font-size: .95rem; color: var(--muted); }
+  .course-rows { list-style: none; }
+  .course-rows li + li { border-top: 1px solid var(--concrete); }
+  .course-row { display: grid; grid-template-columns: 8.5rem 1fr auto; align-items: start; gap: .25rem 1.5rem;
+                padding: .9rem .75rem 1rem; margin: 0 -.75rem; text-decoration: none; transition: background-color 150ms ease; }
+  .cr-code { font-size: clamp(1.9rem, 3.4vw, 2.6rem); font-weight: 900; line-height: .9; letter-spacing: -.05em; }
+  .cr-title { display: block; font-size: 1.1rem; font-weight: 800; line-height: 1.25; }
+  .cr-skills { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .55rem; }
+  .cr-skills span { padding: .15rem .5rem; font-size: .8rem; font-weight: 700; line-height: 1.4; border: 1.5px solid var(--black); }
+  .cr-meta { padding-top: .2rem; font-size: .9rem; font-weight: 600; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .course-row:active { opacity: .8; }
+  .course-row:focus-visible { outline-offset: -3px; }
+  @media (any-hover: hover) and (any-pointer: fine) {
+    .course-row:hover { background: var(--orange); }
+    .course-row:hover .cr-meta { color: #000; }
+  }
+  @media (max-width: 860px) { .topic { grid-template-columns: 1fr; } .topic-head { margin-bottom: .5rem; } .topic-head p { max-width: 60ch; } }
+  @media (max-width: 560px) { .course-row { grid-template-columns: 1fr auto; } .cr-main { grid-column: 1 / -1; } .cr-code { grid-row: 1; } }
   /* Rules between cards: each card draws its own left rule over its neighbour's edge; the first column's is clipped */
   .courses { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
              overflow: hidden; border-bottom: 3px solid var(--black); }
@@ -604,13 +627,14 @@
       '<p class="dash-tools"><a href="#ask">Ask a question</a>' + (allQA("").length ? '<a href="#quiz">Quiz me</a>' : "") + "</p></div></div>" +
       '<div id="results" hidden></div><div id="deep" hidden></div>' +
       '<div id="home">' +
-      terms().map(function (t, i) {
-        return '<h2 class="block-title plain' + (i ? " later" : "") + '">' + esc(t.name) + '</h2><ul class="courses">' +
-          t.courses.map(function (c) {
-            return '<li><a class="course-link" href="#' + c.id + '"><span class="course-code">' + esc(label(c)) + "</span>" +
-              (c.code ? '<span class="course-title">' + esc(c.title) + "</span>" : "") +
-              '<span class="course-meta">' + plural(c.sections.length, "section", "sections") + ", " + plural(c.count, "file", "files") + "</span></a></li>";
-          }).join("") + "</ul>";
+      terms().map(function (t) {
+        return '<section class="topic"><div class="topic-head"><h2>' + esc(t.name) + "</h2>" + (t.blurb ? "<p>" + esc(t.blurb) + "</p>" : "") + "</div>" +
+          '<ul class="course-rows">' + t.courses.map(function (c) {
+            return '<li><a class="course-row" href="#' + c.id + '"><span class="cr-code">' + esc(label(c)) + "</span>" +
+              '<span class="cr-main"><span class="cr-title">' + esc(c.code ? c.title : "") + "</span>" +
+              ((c.skills || []).length ? '<span class="cr-skills">' + c.skills.map(function (k) { return "<span>" + esc(k) + "</span>"; }).join("") + "</span>" : "") +
+              '</span><span class="cr-meta">' + plural(c.count, "file", "files") + "</span></a></li>";
+          }).join("") + "</ul></section>";
       }).join("") +
       (recent.length ? '<h2 class="block-title">Recently opened</h2><ul class="rows">' + recent.map(row).join("") + "</ul>" : "") +
       "</div></div>";
@@ -987,8 +1011,18 @@
   });
 
   // Courses grouped by term, in the order the terms first appear
+  // Courses grouped by topic, in the order set in lse_structure.json (one grid: the term no longer matters for an archive)
   function terms() {
-    return [{ name: "Courses", courses: data.courses }];     // one grid: the term no longer matters for an archive
+    if (!data.courses.some(function (c) { return c.topic; })) return [{ name: "Courses", blurb: "", courses: data.courses }];
+    var order = (data.topics || []).map(function (t) { return t.name; }), out = [], seen = {};
+    (data.topics || []).forEach(function (t) { seen[t.name] = { name: t.name, blurb: t.blurb || "", courses: [] }; });
+    data.courses.forEach(function (c) {
+      var n = c.topic || "Other courses";
+      if (!seen[n]) { seen[n] = { name: n, blurb: "", courses: [] }; order.push(n); }
+      seen[n].courses.push(c);
+    });
+    order.forEach(function (n) { if (seen[n].courses.length) out.push(seen[n]); });
+    return out;
   }
   function termsByTerm() {
     var out = [], seen = {};
