@@ -662,11 +662,17 @@
   // ======================================================================
   var canSpeak = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
   var tts = { parts: [], i: 0, rate: 1, paused: false, label: "" };
-  function pickVoice() {
-    var vs = speechSynthesis.getVoices(), pick = function (f) { return vs.filter(f)[0]; };
-    return pick(function (v) { return /en-GB/i.test(v.lang) && /natural|online/i.test(v.name); }) ||
-      pick(function (v) { return /en-GB/i.test(v.lang); }) || pick(function (v) { return /^en/i.test(v.lang); }) || null;
+  // Voices to try in order. If one fails (Chrome's online voices sometimes do), the next is used.
+  function voiceList() {
+    var vs = speechSynthesis.getVoices(), out = [], add = function (f) { vs.filter(f).forEach(function (v) { if (out.indexOf(v) < 0) out.push(v); }); };
+    add(function (v) { return /en-GB/i.test(v.lang) && /natural/i.test(v.name); });      // Edge's natural voices
+    add(function (v) { return /en-GB/i.test(v.lang) && v.localService; });                // British voices on this computer
+    add(function (v) { return /^en/i.test(v.lang) && v.localService; });                  // other English voices on this computer
+    add(function (v) { return /en-GB/i.test(v.lang); });
+    out.push(null);                                                                        // finally, the browser's default
+    return out;
   }
+  function pickVoice() { var l = voiceList(); return l[Math.min(tts.voice || 0, l.length - 1)]; }
   if (canSpeak) { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = function () {}; }
   function splitForSpeech(text) {
     var out = [], buf = "";
@@ -701,7 +707,12 @@
     if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-GB";
     u.rate = tts.rate;
     u.onend = function () { if (!tts.stopped) { tts.i++; speakNext(); } };
-    u.onerror = function (e) { if (e.error !== "interrupted" && e.error !== "canceled") { $("player-label").textContent = "Your browser couldn’t read this aloud (" + e.error + ")."; } };
+    u.onerror = function (e) {
+      if (e.error === "interrupted" || e.error === "canceled" || tts.stopped) return;
+      tts.stopped = true;
+      if ((tts.voice || 0) < voiceList().length - 1) { tts.voice = (tts.voice || 0) + 1; setTimeout(speakNext, 50); return; }   // try the next voice
+      $("player-label").textContent = "Your browser couldn’t read this aloud. Try Microsoft Edge, which has the best voices on Windows.";
+    };
     tts.stopped = false; speechSynthesis.resume(); speechSynthesis.speak(u);
     $("player-label").textContent = tts.label + " (" + Math.min(tts.i + 1, tts.parts.length) + " of " + tts.parts.length + ")";
   }
