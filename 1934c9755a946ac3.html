@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="cache-control" content="no-cache">
+<title>LSE files | George Kanaroglou</title>
+<meta name="theme-color" content="#F5F5F2">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  /* Inter Tight, served from this site. SIL Open Font License: see /assets/fonts/OFL.txt */
+  @font-face {
+    font-family: "Inter Tight";
+    src: url("/assets/fonts/inter-tight.woff2") format("woff2");
+    font-weight: 500 900; font-style: normal; font-display: swap;
+  }
+
+  /* Gkanaroglou brand, Nu-Brutalism. Paper, Black, Signal Orange. One loud field per screen.
+     Structure is the decoration: 3px black rules, no boxes, shadows or rounded corners. */
+  :root {
+    --paper: #F5F5F2;
+    --black: #000000;
+    --orange: #FF4F12;   /* black text on it, never Paper */
+    --concrete: #D9D9D4;
+    --muted: #4D4D49;
+    --font: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+    --gutter: max(clamp(1.25rem, 4vw, 3rem), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+    --content: min(1200px, 100% - 2 * var(--gutter));
+    --head: 4.75rem;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+         scroll-padding-top: calc(var(--head) + env(safe-area-inset-top, 0px) + 1rem); }
+  body {
+    display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh;
+    background: var(--paper); color: var(--black);
+    font-family: var(--font); font-size: 1.0625rem; font-weight: 500; line-height: 1.45;
+  }
+  main { flex: 1; }
+  main:focus { outline: none; }
+  a { color: inherit; text-underline-offset: 3px; }
+  a, button { touch-action: manipulation; }
+  button, input, textarea, select { font: inherit; color: inherit; }
+  button { -webkit-user-select: none; user-select: none; cursor: pointer; }
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+  ::selection { color: #000; background: var(--orange); }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  [hidden] { display: none !important; }
+  .wrap { width: var(--content); margin-inline: auto; }
+  .skip-link { position: absolute; z-index: 20; left: var(--gutter); top: -4rem; padding: .6rem 1rem; color: var(--paper); background: var(--black); font-weight: 700; text-decoration: none; }
+  .skip-link:focus { top: .75rem; outline: 3px solid var(--orange); outline-offset: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* ---------- Header: the site's own, with Sign out on the right ---------- */
+  .top { position: sticky; top: 0; z-index: 5; padding-top: env(safe-area-inset-top, 0px);
+         background: var(--paper); border-bottom: 3px solid var(--black); }
+  .top .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 1rem; padding-block: 1rem; }
+  .site-nav { grid-column: 1; justify-self: start; display: flex; align-items: center; column-gap: 1.1rem; }
+  .mark { grid-column: 2; justify-self: center; display: inline-flex; align-items: center; min-height: 44px; }
+  .mark svg { display: block; height: 30px; width: auto; fill: currentColor; }
+  .top-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; }
+  .site-link { display: inline-flex; align-items: center; min-height: 44px; font-size: .95rem; font-weight: 700; text-decoration: none;
+               border-bottom: 3px solid transparent; transition: border-color 150ms ease; }
+  .site-link[aria-current="page"] { border-color: var(--black); }
+  .top-link { display: inline-flex; align-items: center; min-height: 44px; padding: .5rem 1rem; border: 0; font-weight: 700;
+              color: var(--paper); background: var(--black); transition: color 150ms ease, background-color 150ms ease; }
+  .site-link:active, .top-link:active, .mark:active { opacity: .7; }
+  @media (any-hover: hover) and (any-pointer: fine) {
+    .site-link:hover { border-color: var(--black); }
+    .top-link:hover { color: #000; background: var(--orange); }
+  }
+  @media (max-width: 640px) { .site-nav .sn-wide { display: none; } }
+  @media (max-width: 420px) { .mark svg { height: 26px; } .top-link { padding-inline: .7rem; font-size: .95rem; } }
+
+  /* ---------- Shared pieces ---------- */
+  .page { width: var(--content); margin-inline: auto; padding-block: clamp(1.75rem, 4vw, 3rem) clamp(3rem, 7vw, 5rem); }
+  .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: .1rem .5rem; margin-bottom: 1.25rem; font-size: .9rem; font-weight: 600; color: var(--muted); }
+  .crumbs a { display: inline-flex; align-items: center; min-height: 32px; color: var(--black); }
+  .crumbs span[aria-hidden] { color: var(--concrete); font-weight: 800; }
+  .crumbs [aria-current] { color: var(--muted); }
+  .muted { color: var(--muted); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    min-height: 44px; padding: .55rem 1.2rem; font-weight: 700; text-decoration: none;
+    color: var(--black); background: transparent; border: 2px solid var(--black);
+    transition: transform 160ms var(--ease-out), background-color 150ms ease, border-color 150ms ease;
+  }
+  .btn:active { transform: scale(0.97); transition-duration: 100ms; }
+  .btn:disabled { opacity: .35; cursor: default; transform: none; }
+  .btn-primary { background: var(--orange); border-color: var(--orange); }
+  @media (any-hover: hover) and (any-pointer: fine) {
+    .btn:not(:disabled):hover { background: var(--black); color: var(--paper); border-color: var(--black); }
+    .btn-primary:not(:disabled):hover { color: #000; background: var(--paper); border-color: var(--black); }
+  }
+  .linkish { display: inline-flex; align-items: center; min-height: 44px; padding: 0; border: 0; background: none;
+             font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .linkish:active { opacity: .7; }
+  .field { display: block; width: 100%; min-height: 52px; padding: .7rem .9rem; border: 2px solid var(--black); border-radius: 0;
+           background: var(--paper); font-weight: 600; -webkit-appearance: none; appearance: none; }
+  .field::placeholder { color: var(--muted); font-weight: 500; }
+  .field:focus { outline: 3px solid var(--orange); outline-offset: 0; }
+  .label { display: block; margin-bottom: .45rem; font-size: .95rem; font-weight: 700; }
+  .tag { flex: none; display: inline-grid; place-items: center; min-width: 3.1rem; height: 1.6rem; padding: 0 .4rem;
+         color: var(--paper); background: var(--black); font-size: .78rem; font-weight: 800; letter-spacing: .01em; }
+  .tag.t-pdf { color: #000; background: var(--concrete); }
+
+  /* ---------- Starting and locked ---------- */
+  .starting { min-height: 50vh; display: grid; place-items: center; }
+  .starting i { width: 14px; height: 14px; background: var(--black); animation: blink 900ms steps(2, start) infinite; }
+  @keyframes blink { to { visibility: hidden; } }
+  .lock { width: min(40rem, 100% - 2 * var(--gutter)); margin-inline: auto; padding-block: clamp(3rem, 10vh, 6rem) 4rem; }
+  .lock h1 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; line-height: .88; letter-spacing: -.045em; }
+  .lock > p { margin-top: 1.1rem; max-width: 40ch; color: var(--muted); }
+  .lock form { margin-top: 2.25rem; padding-top: 1.25rem; border-top: 3px solid var(--black); }
+  .lock-row { display: flex; gap: .75rem; }
+  .lock-row .field { flex: 1; min-width: 0; }
+  .lock-row .btn { min-height: 52px; }
+  .check { display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; margin-top: .75rem; font-size: .95rem; font-weight: 600; cursor: pointer; }
+  .check input { width: 1.15rem; height: 1.15rem; accent-color: var(--black); }
+  .error { min-height: 1.5rem; margin-top: .5rem; font-weight: 700; }
+  .lock .back { margin-top: 2rem; font-size: .95rem; }
+  @media (max-width: 480px) { .lock-row { flex-direction: column; } }
+
+  /* ---------- Dashboard ---------- */
+  .dash-head { display: grid; grid-template-columns: 1fr minmax(16rem, 26rem); align-items: end; gap: 1.5rem 3rem; }
+  .dash-head h1 { font-size: clamp(3rem, 9vw, 6.5rem); font-weight: 900; line-height: .86; letter-spacing: -.05em; }
+  .dash-head p { margin-top: .9rem; color: var(--muted); }
+  @media (max-width: 760px) { .dash-head { grid-template-columns: 1fr; } }
+
+  .block-title { margin-top: clamp(2.25rem, 5vw, 3.5rem); padding-top: .7rem; border-top: 3px solid var(--black);
+                 display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+                 font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; }
+  .block-title.plain { padding-top: 0; border-top: 0; margin-bottom: .7rem; }
+  .block-title.later { margin-top: clamp(2rem, 4vw, 3rem); }
+  .block-title small { font-size: .9rem; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+
+  /* Courses: a ruled timetable of course codes. Hovering one turns it into the screen's orange field. */
+  /* Courses by topic: the topic on the left, its courses as ruled rows on the right.
+     Hovering a row turns it into the screen's one orange field. */
+  .topic { display: grid; grid-template-columns: minmax(12rem, 17rem) 1fr; gap: 0 clamp(1.5rem, 4vw, 3.5rem);
+           margin-top: clamp(2rem, 4vw, 3rem); padding-top: .8rem; border-top: 3px solid var(--black); }
+  .topic-head h2 { font-size: 1.35rem; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+  .topic-head p { margin-top: .5rem; max-width: 30ch; font-size: .95rem; color: var(--muted); }
+  .course-rows { list-style: none; }
+  .course-rows li + li { border-top: 1px solid var(--concrete); }
+  .course-row { display: grid; grid-template-columns: 8.5rem 1fr auto; align-items: start; gap: .25rem 1.5rem;
+                padding: .9rem .75rem 1rem; margin: 0 -.75rem; text-decoration: none; transition: background-color 150ms ease; }
+  .cr-code { font-size: clamp(1.9rem, 3.4vw, 2.6rem); font-weight: 900; line-height: .9; letter-spacing: -.05em; }
+  .cr-title { display: block; font-size: 1.1rem; font-weight: 800; line-height: 1.25; }
+  .cr-skills { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .55rem; }
+  .cr-skills span { padding: .15rem .5rem; font-size: .8rem; font-weight: 700; line-height: 1.4; border: 1.5px solid var(--black); }
+  .cr-meta { padding-top: .2rem; font-size: .9rem; font-weight: 600; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .course-row:active { opacity: .8; }
+  .course-row:focus-visible { outline-offset: -3px; }
+  @media (any-hover: hover) and (any-pointer: fine) {
+    .course-row:hover { background: var(--orange); }
+    .course-row:hover .cr-meta { color: #000; }
+  }
+  @media (max-width: 860px) { .topic { grid-template-columns: 1fr; } .topic-head { margin-bottom: .5rem; } .topic-head p { max-width: 60ch; } }
+  @media (max-width: 560px) { .course-row { grid-template-columns: 1fr auto; } .cr-main { grid-column: 1 / -1; } .cr-code { grid-row: 1; } }
+  /* Rules between cards: each card draws its own left rule over its neighbour's edge; the first column's is clipped */
+  .courses { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+             overflow: hidden; border-bottom: 3px solid var(--black); }
+  .courses li { display: flex; margin-left: -3px; border-left: 3px solid var(--black); }
+  .course-link { flex: 1; display: flex; flex-direction: column; gap: .35rem; min-height: 12.5rem; padding: 1.1rem 1.1rem 1.25rem;
+                 text-decoration: none; border-top: 3px solid var(--black); transition: background-color 150ms ease; }
+  .course-code { font-size: clamp(2.6rem, 5vw, 3.6rem); font-weight: 900; line-height: .9; letter-spacing: -.05em; }
+  .course-title { font-size: 1.1rem; font-weight: 700; line-height: 1.25; }
+  .course-meta { margin-top: auto; font-size: .9rem; font-weight: 600; color: var(--muted); }
+  .course-link:active { opacity: .8; }
+  @media (max-width: 520px) { .course-link { min-height: 8.5rem; } }
+  .course-link:focus-visible { outline-offset: -6px; }
+  @media (any-hover: hover) and (any-pointer: fine) {
+    .course-link:hover { background: var(--orange); }
+    .course-link:hover .course-meta { color: #000; }
+  }
+
+  /* File rows, used for recent files, search results and course sections */
+  .rows { list-style: none; }
+  .row { display: flex; align-items: center; gap: .9rem; min-height: 3.5rem; padding-block: .45rem; border-bottom: 1px solid var(--concrete); }
+  .row-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: .9rem; min-height: 44px; padding: 0; border: 0; background: none; text-align: left; text-decoration: none; }
+  .row-text { min-width: 0; }
+  .row-title { display: block; font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; }
+  .row-sub { display: block; margin-top: .1rem; font-size: .85rem; font-weight: 600; color: var(--muted); }
+  .row-size { flex: none; font-size: .85rem; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .row-dl { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border: 0; background: none; }
+  .row-dl svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.25; stroke-linecap: square; }
+  .row-main:active, .row-dl:active { opacity: .7; }
+  @media (any-hover: hover) and (any-pointer: fine) {
+    .row-main:hover .row-title { text-decoration: underline; text-underline-offset: 3px; }
+    .row-dl:hover { color: var(--paper); background: var(--black); }
+  }
+  @media (max-width: 520px) { .row-size { display: none; } }
+  .empty { padding-block: 1.5rem; color: var(--muted); font-weight: 600; }
+  .more { margin-top: .75rem; }
+
+  /* ---------- Course page ---------- */
+  .course-hero { background: var(--orange); border-bottom: 3px solid var(--black); }
+  .course-hero .page { padding-block: clamp(1.25rem, 3vw, 2rem) clamp(1.75rem, 4vw, 2.75rem); }
+  .course-hero .crumbs, .course-hero .crumbs [aria-current] { color: #000; }
+  .course-hero .crumbs span[aria-hidden] { color: #000; opacity: .45; }
+  .hero-code { display: block; font-size: clamp(4rem, 15vw, 10.5rem); font-weight: 900; line-height: .8; letter-spacing: -.06em; }
+  .hero-title { display: block; margin-top: .9rem; max-width: 30ch; font-size: clamp(1.35rem, 3vw, 2rem); font-weight: 800; line-height: 1.1; letter-spacing: -.02em; }
+  .hero-meta { margin-top: .6rem; font-weight: 600; }
+  .hero-note { margin-top: .6rem; max-width: 60ch; }
+
+  .course-body { display: grid; grid-template-columns: 15.5rem minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+  .index { position: sticky; top: calc(var(--head) + env(safe-area-inset-top, 0px) + 1.25rem);
+           max-height: calc(100svh - var(--head) - 2.5rem); overflow: auto; overscroll-behavior: contain; padding: 3px 3px 1rem 0; }
+  .index summary { list-style: none; display: none; }
+  .index summary::-webkit-details-marker { display: none; }
+  .index-title { padding-top: .7rem; border-top: 3px solid var(--black); font-size: 1rem; font-weight: 800; }
+  .index ol { list-style: none; margin-top: .4rem; }
+  .index a { display: flex; justify-content: space-between; gap: .75rem; min-height: 40px; align-items: center; padding: .25rem 0 .25rem .75rem;
+             border-left: 3px solid transparent; font-size: .95rem; font-weight: 600; text-decoration: none; line-height: 1.25; }
+  .index a span { color: var(--muted); font-size: .85rem; font-variant-numeric: tabular-nums; }
+  .index a.is-here { border-color: var(--black); font-weight: 800; }
+  @media (any-hover: hover) and (any-pointer: fine) { .index a:hover { border-color: var(--concrete); } .index a.is-here:hover { border-color: var(--black); } }
+  .filter { margin-top: .75rem; }
+  .filter .field { min-height: 44px; padding-block: .5rem; font-size: .95rem; }
+
+  .tools { display: flex; justify-content: flex-end; margin-top: -.5rem; }
+  .section { margin-top: 1.25rem; }
+  .section:first-of-type { margin-top: 0; }
+  .sec-head { display: flex; align-items: center; gap: 1rem; width: 100%; min-height: 3.5rem; padding: .7rem 0 .6rem; border: 0;
+              border-top: 3px solid var(--black); background: none; text-align: left; }
+  .sec-head h2 { flex: 1; font-size: 1.35rem; font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
+  .sec-count { flex: none; font-size: .9rem; font-weight: 600; color: var(--muted); }
+  .caret { flex: none; width: .6rem; height: .6rem; margin: -.25rem .35rem 0 0; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor;
+           transform: rotate(45deg); transition: transform 160ms var(--ease-out); }
+  .sec-head[aria-expanded="false"] .caret { transform: rotate(-45deg); margin-top: 0; }
+  .sec-note { margin: -.1rem 0 .4rem; max-width: 65ch; color: var(--muted); }
+  .group { padding: 1.4rem 0 .45rem; font-size: 1.05rem; font-weight: 800; line-height: 1.3; letter-spacing: -.01em; border-bottom: 2px solid var(--black); }
+  .rows > .group:first-child { padding-top: .6rem; }
+  .intro { padding: .7rem 0 .2rem; max-width: 68ch; color: var(--muted); font-size: .95rem; }
+  .intro p + p, .fb p + p { margin-top: .6rem; }
+  .intro a, .fb a { color: var(--black); overflow-wrap: anywhere; }
+  .intro.is-long .intro-text { max-height: 6.6em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+  .intro.is-long.is-open .intro-text { max-height: none; -webkit-mask-image: none; mask-image: none; }
+  .intro .more-toggle { min-height: 40px; font-size: .9rem; color: var(--black); }
+  .intro-tools { display: flex; gap: 1.25rem; }
+  .qa-block { padding: .5rem 0 .2rem; border-bottom: 1px solid var(--concrete); }
+  .qa-block > details > summary { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; font-weight: 800; cursor: pointer; }
+  .qa-block > details > summary span { min-width: 1.6rem; padding: 0 .35rem; text-align: center; color: var(--paper); background: var(--black); font-size: .8rem; }
+  .qa-block ol { margin: .2rem 0 .6rem 1.4rem; max-width: 70ch; }
+  .qa-block li { margin-top: .75rem; }
+  .q { font-weight: 700; line-height: 1.35; }
+  .qa-a summary { display: inline-flex; min-height: 36px; align-items: center; font-size: .9rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .qa-a p { margin-top: .35rem; color: var(--muted); }
+  .dash-tools, .hero-tools { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: .6rem; font-weight: 700; }
+  .dash-tools a, .hero-tools a { display: inline-flex; align-items: center; min-height: 40px; }
+  .hero-tools a { color: #000; }
+  .ask h1, .quiz h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 900; line-height: .9; letter-spacing: -.045em; }
+  .lede { margin-top: .9rem; max-width: 60ch; color: var(--muted); }
+  .ask-form { margin-top: 1.5rem; max-width: 52rem; }
+  .ask-form textarea { resize: vertical; min-height: 4.2rem; line-height: 1.4; }
+  .ask-row { display: flex; gap: .75rem; margin-top: .75rem; }
+  .ask-row select { flex: 1; min-width: 0; min-height: 48px; }
+  .answer { max-width: 70ch; padding: .9rem 0 .9rem 1.1rem; border-left: 3px solid var(--black); }
+  .answer p + p { margin-top: .7rem; }
+  .cite { font-weight: 800; text-decoration: none; }
+  .sources .src-n { flex: none; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; color: var(--paper); background: var(--black); font-size: .85rem; font-weight: 800; }
+  .sources .row-main { align-items: flex-start; }
+  .qa-hits { list-style: none; max-width: 70ch; }
+  .qa-hits li { padding: .8rem 0; border-bottom: 1px solid var(--concrete); }
+  .qa-hits .a { margin-top: .35rem; }
+  .quiz-count { margin-top: 1.25rem; font-weight: 700; color: var(--muted); }
+  .quiz-q { margin-top: .6rem; max-width: 40ch; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; line-height: 1.2; letter-spacing: -.015em; }
+  .quiz-a { margin-top: 1.25rem; max-width: 65ch; padding-left: 1rem; border-left: 3px solid var(--black); }
+  mark.passage { background: var(--concrete); }
+  .player { position: fixed; z-index: 8; left: 50%; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+            display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; width: min(44rem, calc(100% - 2 * var(--gutter)));
+            padding: .7rem .8rem; color: var(--paper); background: var(--black); }
+  .player .btn { min-height: 40px; color: var(--paper); border-color: var(--paper); }
+  .player .btn-primary { color: #000; }
+  .player-label { flex: 1 1 12rem; min-width: 0; font-weight: 700; font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .player-rate { min-height: 40px; padding: 0 .5rem; color: var(--paper); background: var(--black); border: 2px solid var(--paper); border-radius: 0; font-weight: 700; }
+  @media (max-width: 520px) { .ask-row { flex-direction: column; } }
+  .intro .intro-h { margin-top: .9rem; color: var(--black); font-size: .85rem; font-weight: 800; }
+  .plist { margin: .4rem 0 0 1.1rem; }
+  .plist li { margin-top: .35rem; }
+  .plist li::marker { color: var(--black); }
+  mark { color: #000; background: var(--orange); padding: 0 .1em; }
+  .deep .row-main { align-items: flex-start; }
+  .snip { display: block; margin-top: .35rem; max-width: 75ch; font-size: .9rem; color: var(--muted); line-height: 1.45; }
+  .sub { padding: .9rem 0 .3rem; font-size: .85rem; font-weight: 800; color: var(--muted); border-bottom: 1px solid var(--concrete); }
+  .fb { padding: .75rem 0; border-bottom: 1px solid var(--concrete); }
+  .fb blockquote { max-width: 68ch; padding: .1rem 0 .1rem 1rem; border-left: 3px solid var(--black); font-size: .95rem; }
+
+  @media (max-width: 900px) {
+    .course-body { grid-template-columns: 1fr; }
+    .index { position: static; max-height: none; overflow: visible; padding: 0; border-top: 3px solid var(--black); border-bottom: 3px solid var(--black); }
+    .index summary { display: flex; justify-content: space-between; align-items: center; min-height: 52px; font-weight: 800; cursor: pointer; }
+    .index[open] summary .caret { transform: rotate(225deg); margin-top: .3rem; }
+    .index:not([open]) summary .caret { transform: rotate(45deg); }
+    .index .index-title { display: none; }
+    .index ol { margin: 0 0 .75rem; }
+    .filter { margin: 0 0 .5rem; }
+  }
+
+  /* ---------- Viewer ---------- */
+  .viewer h1 { font-size: clamp(1.7rem, 4vw, 2.75rem); font-weight: 900; line-height: 1; letter-spacing: -.035em; overflow-wrap: anywhere; }
+  .viewer .file-group { margin-top: .7rem; max-width: 70ch; font-weight: 700; }
+  .viewer .file-group + .file-meta { margin-top: .2rem; }
+  .viewer .file-meta { margin-top: .6rem; font-weight: 600; color: var(--muted); overflow-wrap: anywhere; }
+  .bar { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.25rem; }
+  .bar .spacer { flex: 1; }
+  .stage { position: relative; margin-top: 1.25rem; border: 3px solid var(--black); background: #fff;
+           height: calc(100svh - var(--head) - 9rem); min-height: 26rem; }
+  .stage iframe, .stage video { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+  .stage.fit { height: auto; min-height: 0; }
+  .stage img { display: block; max-width: 100%; margin-inline: auto; }
+  .stage pre { max-height: 75svh; overflow: auto; padding: 1rem; font: 500 .9rem/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .stage audio { display: block; width: 100%; }
+  .stage-msg { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 1rem; padding: 1.5rem; text-align: center; background: var(--paper); }
+  .stage.fit .stage-msg { position: static; min-height: 16rem; }
+  .stage-msg p { max-width: 34ch; font-weight: 700; }
+  .progress { width: min(18rem, 70vw); height: 8px; background: var(--concrete); }
+  .progress i { display: block; height: 100%; width: 0; background: var(--black); transition: width 200ms ease; }
+  @media (max-width: 600px) { .bar .btn { flex: 1 1 calc(50% - .3rem); } .bar .spacer { display: none; } }
+
+  /* ---------- Footer ---------- */
+  footer { padding-block: 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px)); border-top: 3px solid var(--black); font-size: .875rem; color: var(--muted); }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem 1.5rem; }
+  .foot a { color: var(--black); font-weight: 600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <nav class="site-nav" aria-label="Site">
+      <a class="site-link sn-wide" href="/#work">Work</a>
+      <a class="site-link sn-wide" href="/#articles">Articles</a>
+      <a class="site-link" href="/live.html" aria-current="page">Live</a>
+    </nav>
+    <a class="mark" href="/" aria-label="George Kanaroglou, home"><svg viewBox="10 16 340 168" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M97.4,131.0 L97.4,131.9 L97.7,132.7 L98.2,133.4 L99.0,133.8 L99.8,134.0 L105.6,134.0 L106.7,134.4 L107.7,135.0 L108.7,136.3 L109.0,137.9 L108.8,139.4 L108.0,140.7 L106.6,141.7 L100.9,143.8 L96.0,145.0 L91.3,145.7 L86.8,146.0 L82.6,145.9 L78.3,145.3 L74.3,144.3 L69.6,142.6 L65.2,140.3 L61.3,137.4 L57.9,134.1 L55.1,130.5 L52.6,126.2 L50.8,121.7 L49.6,116.8 L49.1,112.8 L49.0,108.4 L49.3,104.2 L50.0,100.0 L51.1,95.8 L52.6,91.6 L54.4,87.5 L56.8,83.2 L59.3,79.3 L62.2,75.6 L65.3,72.1 L68.7,68.9 L72.4,65.9 L76.4,63.1 L80.5,60.7 L84.6,58.7 L89.7,56.7 L94.9,55.2 L99.8,54.4 L104.9,54.0 L338.1,54.0 L339.4,53.3 L340.2,52.1 L346.4,23.0 L346.2,21.5 L345.3,20.4 L343.9,20.0 L111.0,20.0 L102.1,20.7 L93.6,22.3 L84.6,24.8 L76.2,28.1 L70.9,30.6 L65.7,33.5 L60.2,36.9 L55.3,40.4 L50.2,44.5 L45.7,48.5 L41.1,53.1 L37.2,57.6 L33.1,62.7 L29.8,67.6 L26.4,73.0 L23.7,78.2 L21.1,83.9 L19.0,89.2 L17.2,95.1 L15.9,100.5 L14.9,106.4 L14.4,111.7 L14.2,117.5 L14.5,122.7 L15.2,128.3 L16.2,133.3 L17.7,138.6 L19.5,143.2 L21.8,148.0 L24.3,152.2 L27.4,156.5 L30.6,160.3 L34.3,163.9 L38.1,167.1 L42.5,170.1 L46.8,172.5 L53.0,175.3 L59.6,177.5 L67.0,179.1 L74.1,179.8 L79.0,180.0 L157.0,180.0 L158.4,179.6 L159.0,178.9 L159.4,178.0 L179.6,83.0 L179.6,82.0 L179.3,81.3 L178.8,80.6 L178.1,80.2 L177.3,80.0 L144.8,80.0 L143.5,80.4 L142.7,81.2 L142.3,82.3 L142.9,86.6 L143.0,89.9 L142.9,93.5 L142.5,97.2 L141.6,101.5 L140.9,102.6 L140.0,103.4 L139.0,103.8 L138.0,104.0 L105.1,104.0 L104.1,104.2 L103.3,104.8 L102.7,106.0Z"/><path fill-rule="evenodd" d="M185.6,177.0 L185.6,178.0 L186.1,179.0 L186.9,179.7 L187.9,180.0 L219.0,180.0 L219.8,179.9 L220.7,179.3 L221.3,178.4 L223.1,170.2 L223.9,168.7 L234.7,160.0 L235.9,159.4 L237.1,159.2 L238.6,159.6 L239.9,160.4 L255.6,179.2 L256.8,179.9 L306.1,180.0 L307.5,179.6 L308.2,178.9 L308.6,177.9 L308.6,176.9 L308.2,176.0 L273.2,134.4 L272.4,132.8 L272.4,131.0 L272.9,129.8 L273.8,128.8 L329.5,84.4 L330.0,83.7 L330.3,82.8 L330.2,81.9 L329.9,81.1 L329.0,80.3 L327.9,80.0 L281.0,80.0 L280.2,80.1 L279.4,80.5 L243.2,109.4 L242.0,110.1 L240.7,110.3 L239.2,109.9 L237.9,109.1 L237.0,107.8 L236.8,106.2 L241.6,82.9 L241.5,81.7 L240.8,80.6 L240.1,80.2 L239.2,80.0 L208.2,80.0 L206.9,80.4 L206.2,81.1 L205.8,82.0Z"/></svg></a>
+    <div class="top-nav">
+      <button type="button" class="top-link" id="sign-out" hidden>Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="starting" id="starting" aria-live="polite"><i></i><span class="sr-only">Opening your files</span></div>
+
+  <section class="lock" id="lock" hidden aria-labelledby="lock-title">
+    <h1 id="lock-title">LSE files.</h1>
+    <p>Enter your access code to open them.</p>
+    <form id="lock-form" novalidate>
+      <label class="label" for="code">Access code</label>
+      <div class="lock-row">
+        <input class="field" id="code" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false" required>
+        <button class="btn btn-primary" type="submit" id="lock-btn">Open files</button>
+      </div>
+      <label class="check"><input type="checkbox" id="remember"> Keep me signed in on this device for 30 days</label>
+      <p class="error" id="lock-error" role="alert"></p>
+    </form>
+    <p class="back"><a href="/live.html">Back to Live</a></p>
+  </section>
+
+  <div id="app" hidden></div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 George Kanaroglou. Private files, encrypted on this device.</span>
+    <a href="/live.html">Live</a>
+  </div>
+</footer>
+
+<script>
+/* LSE files. Every file and the list of courses are encrypted (AES-GCM). The access code turns into the key
+   in this browser, so the code and the files only ever exist here, decrypted.
+   The Live page hands over the code once through sessionStorage, the same way as the other demos. */
+(function () {
+  "use strict";
+  var STORE = "https://pub-0afc843f1892431893708fea72e9183e.r2.dev/uni/";
+  var KEEP_DAYS = 30, CACHE_LIMIT = 400 * 1024 * 1024, SEARCH_LIMIT = 80;
+  var enc = new TextEncoder();
+  var $ = function (id) { return document.getElementById(id); };
+  var app = $("app"), lock = $("lock"), starting = $("starting"), signOut = $("sign-out");
+
+  var meta = null, aes = null, data = null, byCourse = {}, flat = [];
+  var cache = new Map(), cacheSize = 0, viewToken = 0, collapsed = {}, spy = null;
+
+  // ---------- small helpers
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function b64d(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  function b64e(buf) { var u = new Uint8Array(buf), s = ""; for (var i = 0; i < u.length; i++) s += String.fromCharCode(u[i]); return btoa(s); }
+  function size(n) { var u = ["B", "KB", "MB", "GB"], i = 0; while (n >= 1024 && i < 3) { n /= 1024; i++; } return (i ? n.toFixed(n < 10 ? 1 : 0) : n) + " " + u[i]; }
+  function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
+  function fold(s) { return String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+  function store(kind) { try { return kind === "local" ? localStorage : sessionStorage; } catch (e) { return null; } }
+  function getItem(kind, k) { var s = store(kind); try { return s ? s.getItem(k) : null; } catch (e) { return null; } }
+  function setItem(kind, k, v) { var s = store(kind); try { if (s) s.setItem(k, v); } catch (e) {} }
+  function delItem(kind, k) { var s = store(kind); try { if (s) s.removeItem(k); } catch (e) {} }
+  var ICON_DL = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v12M6 10l6 6 6-6M4 21h16"/></svg>';
+
+  var MIME = { pdf: "application/pdf", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", jpe: "image/jpeg", html: "text/html", htm: "text/html", gif: "image/gif", webp: "image/webp", svg: "image/svg+xml",
+               txt: "text/plain", csv: "text/csv", md: "text/plain", json: "application/json", mp4: "video/mp4", m4v: "video/mp4", webm: "video/webm",
+               mov: "video/quicktime", mp3: "audio/mpeg", m4a: "audio/mp4", wav: "audio/wav",
+               docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+               pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+               xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" };
+  var TEXT = ["txt", "csv", "md", "json", "r", "py", "sql", "tex", "log", "do", "rmd", "bib"];
+  function kind(ext) {
+    if (ext === "pdf") return "pdf";
+    if (["png", "jpg", "jpeg", "jpe", "gif", "webp", "svg"].indexOf(ext) > -1) return "image";
+    if (ext === "html" || ext === "htm") return "html";
+    if (["mp4", "m4v", "webm", "mov"].indexOf(ext) > -1) return "video";
+    if (["mp3", "m4a", "wav"].indexOf(ext) > -1) return "audio";
+    if (TEXT.indexOf(ext) > -1) return "text";
+    return "other";
+  }
+  var ROLE = { submission: "Your submission", feedback: "Feedback" };
+  function safeName(s) { return String(s).replace(/[\\/:*?"<>|]+/g, " ").replace(/\s+/g, " ").trim(); }
+  // Moodle descriptions and feedback arrive as plain text: paragraphs, line breaks and bare links
+  function inline(p) {
+    return esc(p).replace(/\n/g, "<br>").replace(/(https?:\/\/[^\s<()]+[^\s<().,;:!?'"])/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  }
+  function prose(t) {
+    var out = "", list = [];
+    function flush() { if (list.length) { out += '<ul class="plist">' + list.map(function (x) { return "<li>" + inline(x) + "</li>"; }).join("") + "</ul>"; list = []; } }
+    String(t).split(/\n{2,}|\n(?=- )/).forEach(function (p) {
+      p = p.trim(); if (!p) return;
+      if (/^- /.test(p)) { list.push(p.slice(2)); return; }
+      flush();
+      // a short line with no full stop reads as a small heading, like "Key points"
+      out += p.length < 40 && !/[.!?:;,]$/.test(p) && p.indexOf("\n") < 0 ? '<p class="intro-h">' + inline(p) + "</p>" : "<p>" + inline(p) + "</p>";
+    });
+    flush();
+    return out;
+  }
+  function renamed(it) {
+    var base = it.name.replace(/\.[^.]+$/, "").replace(/^\d+_/, "").replace(/___/g, "…").replace(/amp;/g, "&").replace(/_/g, " ");
+    return fold(base.replace(/[^a-z0-9…&]+/gi, "")) !== fold(it.title.replace(/[^a-z0-9…&]+/gi, ""));
+  }
+  function tag(ext) { return '<span class="tag t-' + esc(ext) + '">' + esc((ext || "file").slice(0, 4)) + "</span>"; }
+
+  // ---------- crypto
+  async function keyFromCode(code) {
+    var base = await crypto.subtle.importKey("raw", enc.encode(code), "PBKDF2", false, ["deriveBits"]);
+    var bits = await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: b64d(meta.salt), iterations: meta.iter }, base, 256);
+    var mac = await crypto.subtle.importKey("raw", bits, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+    return crypto.subtle.sign("HMAC", mac, enc.encode("gk-uni-enc"));
+  }
+  function aesKey(raw) { return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]); }
+  function openSealed(key, buf, label) {
+    var u = new Uint8Array(buf);
+    return crypto.subtle.decrypt({ name: "AES-GCM", iv: u.subarray(0, 12), additionalData: enc.encode(label) }, key, u.subarray(12));
+  }
+  async function fetchBuf(path, fresh) {
+    var r = await fetch(STORE + path, { cache: fresh ? "no-store" : "force-cache", credentials: "omit" });
+    if (!r.ok) throw new Error("http " + r.status);
+    return r.arrayBuffer();
+  }
+
+  // ---------- opening the files
+  async function tryKey(raw) {
+    var key = await aesKey(raw);
+    var buf = await fetchBuf("manifest.enc", true);
+    var plain = await openSealed(key, buf, "manifest");   // throws if the key is wrong
+    aes = key; rawKey = new Uint8Array(raw);
+    data = JSON.parse(new TextDecoder().decode(plain));
+    index();
+    return true;
+  }
+  function remember(raw, keep) {
+    var v = JSON.stringify({ k: b64e(raw), salt: meta.salt, until: Date.now() + KEEP_DAYS * 864e5 });
+    setItem("session", "gk-uni-key", v);
+    if (keep) setItem("local", "gk-uni-key", v);
+  }
+  function saved(kindName) {
+    try {
+      var v = JSON.parse(getItem(kindName, "gk-uni-key"));
+      if (v && v.salt === meta.salt && (kindName === "session" || v.until > Date.now())) return b64d(v.k);
+    } catch (e) {}
+    delItem(kindName, "gk-uni-key");
+    return null;
+  }
+  function wrongCode(e) { return e && e.name === "OperationError"; }
+  function forget() { delItem("session", "gk-uni-key"); delItem("local", "gk-uni-key"); }
+
+  async function start() {
+    var handed = getItem("session", "gk-live-code");
+    delItem("session", "gk-live-code");
+    try {
+      meta = JSON.parse(new TextDecoder().decode(await fetchBuf("meta.json", true)));
+    } catch (e) {
+      showLock("The files couldn’t be reached. Check your connection, then reload the page.");
+      return;
+    }
+    if (handed) {
+      try { var raw = await keyFromCode(handed.trim()); await tryKey(raw); remember(raw, false); return ready(); } catch (e) {}
+    }
+    var keys = [saved("session"), saved("local")];
+    for (var i = 0; i < keys.length; i++) {
+      if (!keys[i]) continue;
+      try { await tryKey(keys[i]); setItem("session", "gk-uni-key", JSON.stringify({ k: b64e(keys[i]), salt: meta.salt, until: 0 })); return ready(); }
+      catch (e) { if (!wrongCode(e)) { showLock("The files couldn’t be reached. Check your connection, then reload the page."); return; } }
+    }
+    forget();
+    showLock(handed ? "That code doesn’t open these files." : "");
+  }
+
+  function showLock(msg) {
+    starting.hidden = true; app.hidden = true; lock.hidden = false; signOut.hidden = true;
+    $("lock-error").textContent = msg || "";
+    $("code").focus();
+  }
+  $("lock-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var code = $("code").value.trim(), btn = $("lock-btn"), err = $("lock-error");
+    if (!code) { err.textContent = "Enter your access code."; return; }
+    if (!meta) { location.reload(); return; }
+    btn.disabled = true; err.textContent = ""; btn.textContent = "Opening";
+    try {
+      var raw = await keyFromCode(code);
+      await tryKey(raw);
+      remember(raw, $("remember").checked);
+      $("code").value = "";
+      ready();
+    } catch (x) {
+      err.textContent = wrongCode(x) ? "That code doesn’t open these files." : "The files couldn’t be reached. Check your connection.";
+      $("code").select();
+    }
+    btn.disabled = false; btn.textContent = "Open files";
+  });
+  app.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-say]"); if (!b) return;
+    var h = decodeURIComponent(location.hash.slice(1)).match(/^([a-z0-9-]+)/), c = h && byCourse[h[1]];
+    if (!c) return;
+    var sec = c.sections.filter(function (s) { return s.id === b.dataset.say; })[0], g = sec && sec.gmap[b.dataset.sayG];
+    if (g && g.intro) speak(g.intro, g.title.replace(/^Lecture recording:\s*/, ""));
+  });
+  signOut.addEventListener("click", function () {
+    stopSpeaking();
+    forget();
+    cache.forEach(function (c) { URL.revokeObjectURL(c.url); });
+    cache.clear(); cacheSize = 0; aes = null; data = null;
+    history.replaceState(null, "", location.pathname);
+    showLock("Signed out.");
+  });
+
+  function ready() {
+    starting.hidden = true; lock.hidden = true; app.hidden = false; signOut.hidden = false;
+    route();
+  }
+
+  // ---------- the course list, flattened once for search and previous/next
+  function index() {
+    byCourse = {}; flat = [];
+    data.courses.forEach(function (c) {
+      byCourse[c.id] = c; c.list = []; c.count = 0; c.bytes = 0;
+      c.sections.forEach(function (s) {
+        s.gmap = {}; (s.groups || []).forEach(function (g) { s.gmap[g.k] = g; });
+        s.items.forEach(function (it) {
+          it.course = c; it.section = s;
+          it.grp = s.gmap[it.g] || null; it.group = it.grp ? it.grp.title : "";
+          it.dlname = it.name.toLowerCase() === "combined.pdf" ? safeName(label(c) + " feedback, " + it.group).slice(0, 90) + ".pdf" : it.name;
+          it.hay = fold([it.title, it.name, it.group, ROLE[it.r] || "", s.title, c.code, c.title].join(" "));
+          c.list.push(it); flat.push(it); c.count++; c.bytes += it.size;
+        });
+      });
+    });
+  }
+  // Words match anywhere; a number only matches a whole number, so "week 4" doesn't catch every MG4 course
+  function matcher(q) {
+    var terms = q.split(/\s+/).filter(Boolean);
+    return function (it) {
+      var tokens = null;
+      return terms.every(function (w) {
+        if (/^\d+$/.test(w)) { tokens = tokens || it.hay.split(/[^a-z0-9]+/); return tokens.indexOf(w) > -1; }
+        return it.hay.indexOf(w) > -1;
+      });
+    };
+  }
+  function find(cid, u) { var c = byCourse[cid]; if (!c) return null; for (var i = 0; i < c.list.length; i++) if (c.list[i].u === u) return c.list[i]; return null; }
+  function link(it) { return "#" + it.course.id + "/f" + it.u; }
+  function label(c) { return c.code || c.title; }
+
+  // ---------- routes: #  |  #course  |  #course/s3  |  #course/f12
+  addEventListener("hashchange", function () { if (data) route(); });
+  function route() {
+    viewToken++;
+    if (spy) { spy.disconnect(); spy = null; }
+    var h = decodeURIComponent(location.hash.slice(1));
+    if (h === "ask") { askPage(); return; }
+    var qz = h.match(/^quiz(?:\/([a-z0-9-]+))?$/);
+    if (qz) { quizPage(qz[1] || ""); return; }
+    var m = h.match(/^([a-z0-9-]+)(?:\/(s|f)(\d+))?$/);
+    var c = m && byCourse[m[1]];
+    if (!c) { document.title = "LSE files | George Kanaroglou"; dashboard(); return; }
+    if (m[2] === "f") {
+      var it = find(c.id, +m[3]);
+      if (it) { viewer(it); return; }
+    }
+    course(c, m[2] === "s" ? "s" + m[3] : null);
+  }
+  function paint(html, focusTop) {
+    app.innerHTML = html;
+    if (focusTop !== false) { scrollTo(0, 0); $("main").focus({ preventScroll: true }); }
+  }
+
+  // ---------- dashboard
+  function dashboard() {
+    var total = flat.reduce(function (a, it) { return a + it.size; }, 0);
+    var recent = recentList();
+    var html = '<div class="page">' +
+      '<div class="dash-head"><div><h1>LSE files.</h1><p>' + plural(data.courses.length, "course", "courses") + ", " +
+      plural(flat.length, "file", "files") + ", " + size(total) + ".</p></div>" +
+      '<div><label class="label" for="search">Search all files</label>' +
+      '<input class="field" id="search" type="search" placeholder="Try ‘conjoint’ or ‘week 4’" autocomplete="off" spellcheck="false">' +
+      '<p class="dash-tools"><a href="#ask">Ask a question</a>' + (allQA("").length ? '<a href="#quiz">Quiz me</a>' : "") + "</p></div></div>" +
+      '<div id="results" hidden></div><div id="deep" hidden></div>' +
+      '<div id="home">' +
+      terms().map(function (t) {
+        return '<section class="topic"><div class="topic-head"><h2>' + esc(t.name) + "</h2>" + (t.blurb ? "<p>" + esc(t.blurb) + "</p>" : "") + "</div>" +
+          '<ul class="course-rows">' + t.courses.map(function (c) {
+            return '<li><a class="course-row" href="#' + c.id + '"><span class="cr-code">' + esc(label(c)) + "</span>" +
+              '<span class="cr-main"><span class="cr-title">' + esc(c.code ? c.title : "") + "</span>" +
+              ((c.skills || []).length ? '<span class="cr-skills">' + c.skills.map(function (k) { return "<span>" + esc(k) + "</span>"; }).join("") + "</span>" : "") +
+              '</span><span class="cr-meta">' + plural(c.count, "file", "files") + "</span></a></li>";
+          }).join("") + "</ul></section>";
+      }).join("") +
+      (recent.length ? '<h2 class="block-title">Recently opened</h2><ul class="rows">' + recent.map(row).join("") + "</ul>" : "") +
+      "</div></div>";
+    paint(html);
+    var input = $("search"), res = $("results"), home = $("home"), t = null;
+    var q0 = getItem("session", "gk-uni-q"); if (q0) { input.value = q0; run(); }
+    input.addEventListener("input", function () { clearTimeout(t); t = setTimeout(run, 120); });
+    var deep = $("deep"), runId = 0;
+    function run() {
+      var q = fold(input.value.trim()), mine = ++runId;
+      setItem("session", "gk-uni-q", input.value);
+      if (!q) { res.hidden = true; deep.hidden = true; home.hidden = false; return; }
+      deepSearch(input.value.trim(), deep, function () { return mine === runId; });
+      var hits = flat.filter(matcher(q));
+      home.hidden = true; res.hidden = !hits.length;
+      res.innerHTML = '<h2 class="block-title">Results <small>' + plural(hits.length, "file", "files") + "</small></h2>" +
+        (hits.length ? '<ul class="rows">' + hits.slice(0, SEARCH_LIMIT).map(row).join("") + "</ul>" +
+          (hits.length > SEARCH_LIMIT ? '<p class="more muted">Showing the first ' + SEARCH_LIMIT + ". Add another word to narrow it down.</p>" : "")
+        : '<p class="empty">No files match that. Try fewer words, or a course code like MG403.</p>');
+    }
+  }
+  // ======================================================================
+  // Listening: reads summaries and transcripts aloud with the browser's own voices
+  // ======================================================================
+  var canSpeak = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+  var tts = { parts: [], i: 0, rate: 1, paused: false, label: "" };
+  function pickVoice() {
+    var vs = speechSynthesis.getVoices(), pick = function (f) { return vs.filter(f)[0]; };
+    return pick(function (v) { return /en-GB/i.test(v.lang) && /natural|online/i.test(v.name); }) ||
+      pick(function (v) { return /en-GB/i.test(v.lang); }) || pick(function (v) { return /^en/i.test(v.lang); }) || null;
+  }
+  if (canSpeak) { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = function () {}; }
+  function splitForSpeech(text) {
+    var out = [], buf = "";
+    text.replace(/\s+/g, " ").split(/(?<=[.!?])\s+/).forEach(function (s) {
+      while (s.length > 220) { var cut = s.lastIndexOf(" ", 220); cut = cut > 80 ? cut : 220; out.push((buf + " " + s.slice(0, cut)).trim()); buf = ""; s = s.slice(cut); }
+      if ((buf + " " + s).length > 220) { if (buf) out.push(buf.trim()); buf = s; } else buf += " " + s;
+    });
+    if (buf.trim()) out.push(buf.trim());
+    return out;
+  }
+  function player() {
+    var p = $("player");
+    if (p) return p;
+    p = document.createElement("div"); p.id = "player"; p.className = "player"; p.hidden = true;
+    p.innerHTML = '<span class="player-label" id="player-label"></span>' +
+      '<button type="button" class="btn" id="player-pause">Pause</button>' +
+      '<label class="sr-only" for="player-rate">Speed</label><select id="player-rate" class="player-rate">' +
+      ["0.9", "1", "1.25", "1.5", "1.75"].map(function (r) { return '<option value="' + r + '"' + (r === "1" ? " selected" : "") + ">" + r + "×</option>"; }).join("") + "</select>" +
+      '<button type="button" class="btn btn-primary" id="player-stop">Stop</button>';
+    document.body.appendChild(p);
+    $("player-pause").addEventListener("click", function () {
+      if (tts.paused) { tts.paused = false; speechSynthesis.resume(); this.textContent = "Pause"; }
+      else { tts.paused = true; speechSynthesis.pause(); this.textContent = "Resume"; }
+    });
+    $("player-stop").addEventListener("click", stopSpeaking);
+    $("player-rate").addEventListener("change", function () { tts.rate = +this.value; speechSynthesis.cancel(); speakNext(); });
+    return p;
+  }
+  function speakNext() {
+    if (tts.i >= tts.parts.length) { stopSpeaking(); return; }
+    var u = new SpeechSynthesisUtterance(tts.parts[tts.i]), v = pickVoice();
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-GB";
+    u.rate = tts.rate;
+    u.onend = function () { if (!tts.stopped) { tts.i++; speakNext(); } };
+    u.onerror = function (e) { if (e.error !== "interrupted" && e.error !== "canceled") { $("player-label").textContent = "Your browser couldn’t read this aloud (" + e.error + ")."; } };
+    tts.stopped = false; speechSynthesis.resume(); speechSynthesis.speak(u);
+    $("player-label").textContent = tts.label + " (" + Math.min(tts.i + 1, tts.parts.length) + " of " + tts.parts.length + ")";
+  }
+  function speak(text, label) {
+    if (!canSpeak) return;
+    clearTimeout(tts.timer);
+    tts.stopped = true; speechSynthesis.cancel(); speechSynthesis.resume();     // Chrome can stay paused after a cancel
+    tts.parts = splitForSpeech(text); tts.i = 0; tts.paused = false; tts.label = label || "Listening";
+    var p = player(); p.hidden = false; $("player-pause").textContent = "Pause";
+    tts.timer = setTimeout(speakNext, 80);
+  }
+  function stopSpeaking() {
+    tts.stopped = true; if (canSpeak) speechSynthesis.cancel();
+    var p = $("player"); if (p) p.hidden = true;
+  }
+  // transcripts: drop the header and the speaker numbers, which are noise when read aloud
+  function speakable(t) {
+    var i = t.search(/\n(Speaker \d+:)/); if (i > 0) t = t.slice(i);
+    return t.replace(/(^|\n)Speaker \d+:\s*/g, "$1");
+  }
+
+  // ======================================================================
+  // Passage finder: ranks short passages of every transcript, summary, note and question by relevance (BM25)
+  // ======================================================================
+  var STOP = {}; ("a about above after again against all am an and any are as at be because been before being below between both but by can could did do does doing down during each few for from further had has have having he her here hers him his how i if in into is it its itself just me more most my no nor not now of off on once only or other our out over own same she should so some such than that the their them then there these they this those through to too under until up very was we were what when where which while who whom why will with would you your yours really like um uh yeah okay ok gonna wanna kind sort thing things get got also one two lot much many way going know think mean actually basically right well").split(" ").forEach(function (w) { STOP[w] = 1; });
+  function stem(w) {
+    if (w.length > 4 && /ies$/.test(w)) return w.slice(0, -3) + "y";
+    if (w.length > 5 && /ing$/.test(w)) return w.slice(0, -3);
+    if (w.length > 4 && /ed$/.test(w)) return w.slice(0, -2);
+    if (w.length > 4 && /ly$/.test(w)) return w.slice(0, -2);
+    if (w.length > 3 && /s$/.test(w) && !/ss$/.test(w)) return w.slice(0, -1);
+    return w;
+  }
+  function words(t) { return (t.toLowerCase().match(/[a-z0-9]+/g) || []).filter(function (w) { return !STOP[w] && w.length > 1; }).map(stem); }
+  var finder = null;
+  function buildFinder(entries) {
+    var P = [], post = {}, totalLen = 0;
+    entries.forEach(function (e, ei) {
+      var spans = [];
+      if (e.k === "qa") spans.push([0, e.t.length]);
+      else {
+        var re = /\S+/g, m, starts = [];
+        while ((m = re.exec(e.t))) starts.push(m.index);
+        for (var i = 0; i < starts.length; i += 60) {
+          var end = i + 85 < starts.length ? starts[i + 85] : e.t.length;
+          spans.push([starts[i], end]);
+          if (i + 85 >= starts.length) break;
+        }
+      }
+      spans.forEach(function (sp) {
+        var ws = words(e.t.slice(sp[0], sp[1])), tf = {};
+        ws.forEach(function (w) { tf[w] = (tf[w] || 0) + 1; });
+        var pi = P.length; P.push({ e: ei, a: sp[0], b: sp[1], len: ws.length || 1 }); totalLen += ws.length;
+        for (var w in tf) (post[w] = post[w] || []).push(pi, tf[w]);
+      });
+    });
+    return { P: P, post: post, avg: totalLen / Math.max(1, P.length), entries: entries };
+  }
+  function findPassages(q, filter, limit) {
+    var F = finder, qs = words(q), scores = {}, N = F.P.length, k1 = 1.2, b = 0.75;
+    qs.filter(function (w, i) { return qs.indexOf(w) === i; }).forEach(function (w) {
+      var pl = F.post[w]; if (!pl) return;
+      var df = pl.length / 2, idf = Math.log(1 + (N - df + 0.5) / (df + 0.5));
+      for (var i = 0; i < pl.length; i += 2) {
+        var p = F.P[pl[i]], tf = pl[i + 1];
+        scores[pl[i]] = (scores[pl[i]] || 0) + idf * tf * (k1 + 1) / (tf + k1 * (1 - b + b * p.len / F.avg));
+      }
+    });
+    var ranked = Object.keys(scores).map(Number).filter(function (pi) { return filter(F.entries[F.P[pi].e]); })
+      .sort(function (x, y) { return scores[y] - scores[x]; });
+    var out = [];
+    for (var i = 0; i < ranked.length && out.length < limit; i++) {
+      var p = F.P[ranked[i]];
+      if (out.some(function (o) { return o.e === p.e && o.a < p.b && p.a < o.b; })) continue;   // skip overlapping passages
+      out.push({ e: p.e, a: p.a, b: p.b, score: scores[ranked[i]] });
+    }
+    return out;
+  }
+  function describe(e) {
+    var c = byCourse[e.c]; if (!c) return null;
+    if (e.k === "file") {
+      var it = find(e.c, e.u); if (!it) return null;
+      var lec = /^lecture recording/i.test(it.group);
+      return { title: lec ? it.group.replace(/^Lecture recording:\s*/, "") : it.title, where: label(c) + ", " + it.section.title,
+               kind: lec ? it.title : "File", href: link(it), file: true };
+    }
+    var sec = c.sections.filter(function (s) { return s.id === e.s; })[0]; if (!sec) return null;
+    var g = sec.gmap[e.g]; if (!g) return null;
+    var lecture = /^lecture recording/i.test(g.title);
+    return { title: g.title.replace(/^Lecture recording:\s*/, ""), where: label(c) + ", " + sec.title,
+             kind: e.k === "qa" ? "Question bank" : e.k === "feedback" ? "Feedback comments" : e.k === "note" ? "Your note" : lecture ? "Lecture summary" : "Description",
+             href: "#" + c.id + "/" + sec.id, file: false };
+  }
+  function highlightTerms(text, q) {
+    var qs = (q.toLowerCase().match(/[a-z0-9]+/g) || []).filter(function (w) { return !STOP[w] && w.length > 2; });
+    if (!qs.length) return esc(text);
+    var re = new RegExp("\\b(" + qs.map(function (w) { return reEsc(stem(w)); }).join("|") + ")[a-z]*", "gi");
+    return text.split(re).map(function (part, i) { return i % 2 ? "<mark>" + esc(part) + "</mark>" : esc(part); }).join("")
+      .replace(/<\/mark>([a-z]+)/gi, "$1</mark>");
+  }
+
+  // ======================================================================
+  // Ask page: question bank answers, an AI answer when the assistant is set up, and the best passages
+  // ======================================================================
+  var AI_URL = "";
+  var rawKey = null;
+  async function aiToken() {
+    var k = await crypto.subtle.importKey("raw", rawKey, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+    var sig = new Uint8Array(await crypto.subtle.sign("HMAC", k, enc.encode("gk-uni-ai")));
+    return Array.prototype.map.call(sig, function (x) { return ("0" + x.toString(16)).slice(-2); }).join("");
+  }
+  function askPage() {
+    document.title = "Ask | LSE files";
+    var last = getItem("session", "gk-uni-ask") || "";
+    paint('<div class="page ask">' +
+      '<nav class="crumbs" aria-label="Breadcrumb"><a href="#">Dashboard</a><span aria-hidden="true">/</span><span aria-current="page">Ask</span></nav>' +
+      "<h1>Ask your lectures.</h1>" +
+      '<p class="lede">' + (AI_URL ? "Ask anything in your own words. You get a written answer from your lectures, with the passages it came from."
+        : "Ask anything in your own words. You get the most relevant passages from your lectures, summaries and question bank.") + "</p>" +
+      '<form class="ask-form" id="ask-form" novalidate><label class="sr-only" for="ask-q">Your question</label>' +
+      '<textarea class="field" id="ask-q" rows="2" placeholder="For example: why do customers won with discounts churn more?">' + esc(last) + "</textarea>" +
+      '<div class="ask-row"><label class="sr-only" for="ask-c">Course</label><select class="field" id="ask-c"><option value="">All courses</option>' +
+      data.courses.map(function (c) { return '<option value="' + c.id + '">' + esc(label(c) + " " + c.title) + "</option>"; }).join("") +
+      '</select><button class="btn btn-primary" type="submit" id="ask-go">Ask</button></div></form>' +
+      '<div id="ask-out" aria-live="polite"></div></div>');
+    var form = $("ask-form"), qEl = $("ask-q");
+    qEl.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
+    form.addEventListener("submit", function (e) { e.preventDefault(); ask(qEl.value.trim(), $("ask-c").value); });
+    if (last) ask(last, "");
+  }
+  var askRun = 0;
+  async function ask(q, cid) {
+    var out = $("ask-out"), mine = ++askRun;
+    if (!q) { out.innerHTML = '<p class="empty">Type a question first.</p>'; return; }
+    setItem("session", "gk-uni-ask", q);
+    out.innerHTML = '<p class="empty">' + (finder ? "Searching…" : "Getting your lectures ready. This takes a few seconds the first time.") + "</p>";
+    try {
+      var entries = await loadDeep();
+      if (!finder) finder = buildFinder(entries);
+    } catch (x) { out.innerHTML = '<p class="empty">Your lectures couldn’t be loaded. Check your connection, then try again.</p>'; return; }
+    if (mine !== askRun) return;
+    var inCourse = function (e) { return !cid || e.c === cid; };
+    var qa = findPassages(q, function (e) { return e.k === "qa" && inCourse(e); }, 3);
+    qa = qa.filter(function (h) { return h.score >= qa[0].score * 0.6; });     // only questions close to the best match
+    var hits = findPassages(q, function (e) { return e.k !== "qa" && inCourse(e); }, 8);
+    var srcs = hits.map(function (h, i) {
+      var e = finder.entries[h.e], d = describe(e); if (!d) return null;
+      var text = e.t.slice(h.a, h.b).replace(/(^|\n)Speaker \d+:\s*/g, " ").replace(/\s+/g, " ").trim();
+      return { n: i + 1, d: d, text: text, hl: e.t.slice(h.a, h.a + 60) };
+    }).filter(Boolean);
+    var html = "";
+    if (qa.length) {
+      html += '<h2 class="block-title">From your question bank</h2><ul class="qa-hits">' + qa.map(function (h) {
+        var e = finder.entries[h.e], d = describe(e); if (!d) return "";
+        return '<li><p class="q">' + esc(e.q) + '</p><p class="a">' + inline(e.t.slice(e.q.length + 1)) + '</p><p class="row-sub"><a href="' + d.href + '">' + esc(d.where + ". " + d.title) + "</a></p></li>";
+      }).join("") + "</ul>";
+    }
+    if (AI_URL) html += '<h2 class="block-title">Answer</h2><div class="answer" id="answer"><p class="empty">Writing an answer from your lectures…</p></div>';
+    html += '<h2 class="block-title">' + (AI_URL ? "Sources" : "Best matching passages") + " <small>" + plural(srcs.length, "passage", "passages") + "</small></h2>" +
+      (srcs.length ? '<ol class="rows sources">' + srcs.map(function (s) {
+        return '<li class="row" id="src-' + s.n + '"><a class="row-main" href="' + s.d.href + '"' + (s.d.file ? ' data-hl="' + esc(s.hl) + '"' : "") + '>' +
+          '<span class="src-n">' + s.n + '</span><span class="row-text"><span class="row-title">' + esc(s.d.title) + '</span><span class="row-sub">' + esc(s.d.where + ". " + s.d.kind) + "</span>" +
+          '<span class="snip">' + highlightTerms(s.text, q) + "</span></span></a></li>";
+      }).join("") + "</ol>" : '<p class="empty">Nothing in your lectures matches that. Try other words, or pick a different course.</p>');
+    out.innerHTML = html;
+    if (!AI_URL || !srcs.length) { if (AI_URL) $("answer").innerHTML = '<p class="empty">No passages to answer from.</p>'; return; }
+    try {
+      var passages = qa.map(function (h) { var e = finder.entries[h.e], d = describe(e) || {}; return { source: "Question bank: " + (d.where || "") + ". " + (d.title || ""), text: e.t }; })
+        .concat(srcs.map(function (s) { return { source: s.d.where + ". " + s.d.title + ". " + s.d.kind, text: s.text }; }));
+      var offset = qa.length;
+      var r = await fetch(AI_URL, { method: "POST", headers: { "Content-Type": "application/json", "X-Portal-Token": await aiToken() },
+        body: JSON.stringify({ question: q, passages: passages }) });
+      var d = await r.json();
+      if (mine !== askRun) return;
+      if (!r.ok) throw new Error(d.error || "error");
+      // the assistant numbers question bank answers first, so map its numbers onto the source list
+      $("answer").innerHTML = prose(d.answer).replace(/\[(\d+)\]/g, function (m, n) {
+        n = +n - offset;
+        return n > 0 && n <= srcs.length ? '<a class="cite" href="#src-' + n + '" data-src="' + n + '">[' + n + "]</a>" : n <= 0 ? '<span class="cite">[bank]</span>' : m;
+      }) + (canSpeak ? '<button type="button" class="linkish" id="answer-listen">Listen to the answer</button>' : "");
+      $("answer").querySelectorAll("[data-src]").forEach(function (a) {
+        a.addEventListener("click", function (e) { e.preventDefault(); $("src-" + a.dataset.src).scrollIntoView({ block: "center" }); });
+      });
+      if ($("answer-listen")) $("answer-listen").addEventListener("click", function () { speak(d.answer.replace(/\[\d+\]/g, ""), "Answer"); });
+    } catch (x) {
+      if (mine === askRun) $("answer").innerHTML = '<p class="empty">The assistant couldn’t answer just now (' + esc(x.message) + "). The passages below are still the best matches.</p>";
+    }
+  }
+
+  // ======================================================================
+  // Quiz: questions from the question bank, one at a time
+  // ======================================================================
+  function allQA(cid) {
+    var out = [];
+    data.courses.forEach(function (c) {
+      if (cid && c.id !== cid) return;
+      c.sections.forEach(function (s) { (s.groups || []).forEach(function (g) {
+        (g.qa || []).forEach(function (x) { out.push({ q: x.q, a: x.a, c: c, s: s, g: g }); });
+      }); });
+    });
+    return out;
+  }
+  function quizPage(cid) {
+    var pool = allQA(cid), c = cid && byCourse[cid];
+    document.title = "Quiz | LSE files";
+    for (var i = pool.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = pool[i]; pool[i] = pool[j]; pool[j] = t; }
+    var at = 0, known = 0;
+    paint('<div class="page quiz">' +
+      '<nav class="crumbs" aria-label="Breadcrumb"><a href="#">Dashboard</a><span aria-hidden="true">/</span>' + (c ? '<a href="#' + c.id + '">' + esc(label(c)) + '</a><span aria-hidden="true">/</span>' : "") + '<span aria-current="page">Quiz</span></nav>' +
+      "<h1>" + (c ? "Quiz: " + esc(label(c)) + "." : "Quiz.") + '</h1><div id="quiz-card"></div></div>');
+    function show() {
+      var box = $("quiz-card");
+      if (!pool.length) { box.innerHTML = '<p class="empty">There are no questions here yet.</p>'; return; }
+      if (at >= pool.length) {
+        box.innerHTML = '<p class="lede">That’s all ' + pool.length + " questions. You knew " + known + ".</p>" +
+          '<button type="button" class="btn btn-primary" id="quiz-again">Start again</button>';
+        $("quiz-again").addEventListener("click", function () { quizPage(cid); });
+        return;
+      }
+      var x = pool[at];
+      box.innerHTML = '<p class="quiz-count">Question ' + (at + 1) + " of " + pool.length + '</p><div class="quiz-q">' + esc(x.q) + "</div>" +
+        '<p class="row-sub">' + esc(label(x.c) + ", " + x.s.title) + "</p>" +
+        '<div class="quiz-a" id="quiz-a" hidden>' + prose(x.a) + '<p class="row-sub"><a href="#' + x.c.id + "/" + x.s.id + '">Open this lecture</a></p></div>' +
+        '<div class="bar"><button type="button" class="btn btn-primary" id="quiz-show">Show answer</button>' +
+        '<button type="button" class="btn" id="quiz-knew" hidden>I knew it</button><button type="button" class="btn" id="quiz-next" hidden>Next question</button>' +
+        (canSpeak ? '<button type="button" class="btn" id="quiz-say">Listen</button>' : "") + "</div>";
+      $("quiz-show").addEventListener("click", function () { $("quiz-a").hidden = false; this.hidden = true; $("quiz-knew").hidden = false; $("quiz-next").hidden = false; $("quiz-next").focus(); });
+      $("quiz-knew").addEventListener("click", function () { known++; at++; show(); });
+      $("quiz-next").addEventListener("click", function () { at++; show(); });
+      if ($("quiz-say")) $("quiz-say").addEventListener("click", function () { speak($("quiz-a").hidden ? x.q : x.q + ". " + x.a, "Question"); });
+    }
+    show();
+  }
+
+  // ---------- searching inside transcripts, summaries, descriptions and feedback
+  // The index is a separate encrypted file, fetched once, the first time you search.
+  var deepIndex = null;
+  function loadDeep() {
+    if (!deepIndex) {
+      deepIndex = fetch(STORE + "search.enc", { cache: "no-cache", credentials: "omit" })
+        .then(function (r) { if (!r.ok) throw new Error("http " + r.status); return r.arrayBuffer(); })
+        .then(function (buf) { return openSealed(aes, buf, "search"); })
+        .then(function (plain) {
+          var d = JSON.parse(new TextDecoder().decode(plain));
+          return d.entries.map(function (e) { e.low = e.t.toLowerCase(); return e; });
+        });
+      deepIndex.catch(function () { deepIndex = null; });
+    }
+    return deepIndex;
+  }
+  function reEsc(w) { return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  function termRes(terms) {
+    return terms.map(function (w) { return new RegExp(/^\d+$/.test(w) ? "(?<![0-9])" + w + "(?![0-9])" : reEsc(w), "g"); });
+  }
+  function snippet(e, res) {
+    var m = res[0].exec(e.low); res[0].lastIndex = 0;
+    var at = m ? m.index : 0, from = Math.max(0, at - 90), to = Math.min(e.t.length, at + 170);
+    var text = e.t.slice(from, to).replace(/(^|\n)- /g, "$1").replace(/\s+/g, " ");
+    if (from > 0) text = "…" + text.replace(/^\S*\s/, "");
+    if (to < e.t.length) text = text.replace(/\s\S*$/, "") + "…";
+    var all = new RegExp("(" + res.map(function (r) { return r.source; }).join("|") + ")", "gi");
+    return text.split(all).map(function (part, i) { return i % 2 ? "<mark>" + esc(part) + "</mark>" : esc(part); }).join("");
+  }
+  function deepSearch(raw, box, current) {
+    var terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+    box.hidden = false;
+    box.innerHTML = '<h2 class="block-title">Inside lectures and notes</h2><p class="empty">Searching…</p>';
+    loadDeep().then(function (entries) {
+      if (!current()) return;
+      var res = termRes(terms), hits = [];
+      var phrase = terms.length > 1 ? new RegExp(terms.map(reEsc).join("\\W+"), "g") : null;
+      entries.forEach(function (e) {
+        var score = 0;
+        for (var i = 0; i < res.length; i++) {
+          var n = (e.low.match(res[i]) || []).length;
+          if (!n) return;
+          score += Math.min(n, 50);
+        }
+        var exact = phrase ? (e.low.match(phrase) || []).length : 0;
+        score += exact * 100;     // the words together, as typed, rank first
+        var c = byCourse[e.c]; if (!c) return;
+        var it = null, sec = null, g = null, href, title, kind;
+        if (e.k === "file") {
+          it = find(e.c, e.u); if (!it) return;
+          href = link(it); title = it.group ? it.group.replace(/^Lecture recording:\s*/, "") : it.title;
+          kind = /^lecture recording/i.test(it.group) ? "Transcript" : it.title;
+          sec = it.section;
+        } else {
+          sec = c.sections.filter(function (s) { return s.id === e.s; })[0]; if (!sec) return;
+          g = sec.gmap[e.g]; if (!g) return;
+          href = "#" + c.id + "/" + sec.id; title = g.title.replace(/^Lecture recording:\s*/, "");
+          kind = e.k === "qa" ? "Question bank" : e.k === "feedback" ? "Feedback comments" : e.k === "note" ? "Your note" : /^lecture recording/i.test(g.title) ? "Lecture summary" : "Description";
+        }
+        hits.push({ score: score, href: href, title: title, sub: label(c) + ", " + sec.title + ". " + kind, snip: snippet(e, exact ? [phrase].concat(res) : res), file: !!it });
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      box.innerHTML = '<h2 class="block-title">Inside lectures and notes <small>' + plural(hits.length, "match", "matches") + "</small></h2>" +
+        (hits.length ? '<ul class="rows deep">' + hits.slice(0, 30).map(function (h) {
+          return '<li class="row"><a class="row-main" href="' + h.href + '"' + (h.file ? ' data-hl="' + esc(raw) + '"' : "") + '>' +
+            '<span class="row-text"><span class="row-title">' + esc(h.title) + '</span><span class="row-sub">' + esc(h.sub) + "</span>" +
+            '<span class="snip">' + h.snip + "</span></span></a></li>";
+        }).join("") + "</ul>" + (hits.length > 30 ? '<p class="more muted">Showing the best 30. Add another word to narrow it down.</p>' : "")
+        : '<p class="empty">Nothing in the transcripts, summaries or feedback matches that.</p>');
+    }, function () {
+      if (current()) box.innerHTML = '<h2 class="block-title">Inside lectures and notes</h2><p class="empty">The search index couldn’t be loaded. Check your connection, then try again.</p>';
+    });
+  }
+  app.addEventListener("click", function (e) {
+    var a = e.target.closest("[data-hl]"); if (a) setItem("session", "gk-uni-hl", a.dataset.hl);
+  });
+
+  // Courses grouped by term, in the order the terms first appear
+  // Courses grouped by topic, in the order set in lse_structure.json (one grid: the term no longer matters for an archive)
+  function terms() {
+    if (!data.courses.some(function (c) { return c.topic; })) return [{ name: "Courses", blurb: "", courses: data.courses }];
+    var order = (data.topics || []).map(function (t) { return t.name; }), out = [], seen = {};
+    (data.topics || []).forEach(function (t) { seen[t.name] = { name: t.name, blurb: t.blurb || "", courses: [] }; });
+    data.courses.forEach(function (c) {
+      var n = c.topic || "Other courses";
+      if (!seen[n]) { seen[n] = { name: n, blurb: "", courses: [] }; order.push(n); }
+      seen[n].courses.push(c);
+    });
+    order.forEach(function (n) { if (seen[n].courses.length) out.push(seen[n]); });
+    return out;
+  }
+  function termsByTerm() {
+    var out = [], seen = {};
+    data.courses.forEach(function (c) {
+      var name = c.term || (data.courses.some(function (x) { return x.term; }) ? "Other courses" : "Courses");
+      if (!seen[name]) { seen[name] = { name: name, courses: [] }; out.push(seen[name]); }
+      seen[name].courses.push(c);
+    });
+    return out;
+  }
+  function row(it) {
+    return '<li class="row"><a class="row-main" href="' + link(it) + '">' + tag(it.ext) +
+      '<span class="row-text"><span class="row-title">' + esc(it.title) + '</span><span class="row-sub">' +
+      esc(label(it.course) + ", " + it.section.title + (it.group ? ", " + it.group : "") + (ROLE[it.r] ? ", " + ROLE[it.r].toLowerCase() : "")) + "</span></span></a>" +
+      '<span class="row-size">' + size(it.size) + "</span>" +
+      '<button type="button" class="row-dl" data-dl="' + esc(it.course.id + "/" + it.u) + '" aria-label="Download ' + esc(it.dlname) + '" title="Download">' + ICON_DL + "</button></li>";
+  }
+
+  // ---------- course page
+  function fileRow(c, it) {
+    return '<li class="row" data-g="' + esc(it.g) + '" data-hay="' + esc(it.hay) + '"><a class="row-main" href="' + link(it) + '">' + tag(it.ext) +
+      '<span class="row-text"><span class="row-title">' + esc(it.title) + "</span>" +
+      (renamed(it) && it.name.toLowerCase() !== "combined.pdf" ? '<span class="row-sub">' + esc(it.name) + "</span>" : "") + "</span></a>" +
+      '<span class="row-size">' + size(it.size) + "</span>" +
+      '<button type="button" class="row-dl" data-dl="' + esc(c.id + "/" + it.u) + '" aria-label="Download ' + esc(it.dlname) + '" title="Download">' + ICON_DL + "</button></li>";
+  }
+  // A section, Moodle style: loose files first, then each activity or folder with its description,
+  // its own files, your submission, and the feedback you got back
+  function sectionRows(c, s) {
+    var html = s.items.filter(function (it) { return !it.grp; }).map(function (it) { return fileRow(c, it); }).join("");
+    (s.groups || []).forEach(function (g) {
+      var mine = s.items.filter(function (it) { return it.g === g.k; });
+      var k = esc(g.k), byRole = function (r) { return mine.filter(function (it) { return (it.r || "") === r; }); };
+      html += '<li class="group" data-g="' + k + '">' + esc(g.title) + "</li>";
+      if (g.note) html += '<li class="intro extra" data-g="' + k + '">' + prose(g.note) + "</li>";
+      if (g.intro) {
+        var long = g.intro.length > 320;
+        html += '<li class="intro extra' + (long ? " is-long" : "") + '" data-g="' + k + '"><div class="intro-text">' + prose(g.intro) + "</div>" +
+          '<span class="intro-tools">' + (long ? '<button type="button" class="linkish more-toggle" aria-expanded="false">Show more</button>' : "") +
+          (canSpeak ? '<button type="button" class="linkish" data-say="' + esc(s.id) + '" data-say-g="' + k + '">Listen</button>' : "") + "</span></li>";
+      }
+      if (g.qa && g.qa.length) {
+        html += '<li class="qa-block extra" data-g="' + k + '"><details><summary>Questions and answers <span>' + g.qa.length + "</span></summary><ol>" +
+          g.qa.map(function (x) { return '<li><p class="q">' + esc(x.q) + '</p><details class="qa-a"><summary>Show answer</summary>' + prose(x.a) + "</details></li>"; }).join("") +
+          "</ol></details></li>";
+      }
+      html += byRole("").map(function (it) { return fileRow(c, it); }).join("");
+      var sub = byRole("submission"), fb = byRole("feedback");
+      if (sub.length) html += '<li class="sub extra" data-g="' + k + '">Your submission</li>' + sub.map(function (it) { return fileRow(c, it); }).join("");
+      if (fb.length || g.feedback) {
+        html += '<li class="sub extra" data-g="' + k + '">Feedback</li>';
+        if (g.feedback) html += '<li class="fb extra" data-g="' + k + '"><blockquote>' + prose(g.feedback) + "</blockquote></li>";
+        html += fb.map(function (it) { return fileRow(c, it); }).join("");
+      }
+    });
+    return html;
+  }
+  function course(c, jump) {
+    document.title = label(c) + " | LSE files";
+    var state = collapsed[c.id] || (collapsed[c.id] = {});
+    var html = '<div class="course-hero"><div class="page">' +
+      '<nav class="crumbs" aria-label="Breadcrumb"><a href="#">Dashboard</a><span aria-hidden="true">/</span><span aria-current="page">' + esc(label(c)) + "</span></nav>" +
+      '<h1><span class="hero-code">' + esc(label(c)) + "</span>" + (c.code ? '<span class="hero-title">' + esc(c.title) + "</span>" : "") + "</h1>" +
+      '<p class="hero-meta">' + esc(c.term ? c.term + ". " : "") + plural(c.count, "file", "files") + ", " + size(c.bytes) + ".</p>" +
+      (allQA(c.id).length ? '<p class="hero-tools"><a href="#quiz/' + c.id + '">Quiz me on this course</a><a href="#ask">Ask a question</a></p>' : "") +
+      (c.note ? '<p class="hero-note">' + esc(c.note) + "</p>" : "") + "</div></div>" +
+      '<div class="page course-body">' +
+      '<details class="index" id="index"><summary>Course index <i class="caret" aria-hidden="true"></i></summary>' +
+      '<p class="index-title">Course index</p>' +
+      '<div class="filter"><label class="sr-only" for="filter">Filter this course</label><input class="field" id="filter" type="search" placeholder="Filter this course" autocomplete="off" spellcheck="false"></div><ol>' +
+      c.sections.map(function (s) { return '<li><a href="#' + c.id + "/" + s.id + '" data-sec="' + s.id + '">' + esc(s.title) + "<span>" + s.items.length + "</span></a></li>"; }).join("") +
+      "</ol></details><div>" +
+      '<div class="tools"><button type="button" class="linkish" id="toggle-all"></button></div>' +
+      c.sections.map(function (s) {
+        var open = !state[s.id], lastGroup = "";
+        return '<section class="section" id="' + s.id + '" aria-labelledby="h-' + s.id + '">' +
+          '<button type="button" class="sec-head" aria-expanded="' + open + '" aria-controls="b-' + s.id + '" data-toggle="' + s.id + '">' +
+          '<h2 id="h-' + s.id + '">' + esc(s.title) + '</h2><span class="sec-count">' + plural(s.items.length, "file", "files") + '</span><i class="caret" aria-hidden="true"></i></button>' +
+          '<div id="b-' + s.id + '"' + (open ? "" : " hidden") + ">" + (s.note ? '<p class="sec-note">' + esc(s.note) + "</p>" : "") +
+          '<ul class="rows">' + sectionRows(c, s) + "</ul></div></section>";
+      }).join("") + "</div></div>";
+    paint(html, !jump);
+
+    var idx = $("index");
+    if (matchMedia("(min-width: 901px)").matches) idx.open = true;
+    idx.querySelector("summary").addEventListener("click", function (e) { if (matchMedia("(min-width: 901px)").matches) e.preventDefault(); });
+
+    function setAll() {
+      var anyOpen = c.sections.some(function (s) { return !state[s.id]; });
+      $("toggle-all").textContent = anyOpen ? "Collapse all" : "Expand all";
+    }
+    function setSec(id, open) {
+      state[id] = !open;
+      var b = app.querySelector('[data-toggle="' + id + '"]');
+      b.setAttribute("aria-expanded", String(open)); $("b-" + id).hidden = !open;
+    }
+    setAll();
+    $("toggle-all").addEventListener("click", function () {
+      var open = !c.sections.some(function (s) { return !state[s.id]; });
+      c.sections.forEach(function (s) { setSec(s.id, open); }); setAll();
+    });
+    app.querySelectorAll("[data-toggle]").forEach(function (b) {
+      b.addEventListener("click", function () { setSec(b.dataset.toggle, b.getAttribute("aria-expanded") !== "true"); setAll(); });
+    });
+    app.querySelectorAll(".index a").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault(); setSec(a.dataset.sec, true); setAll();
+        history.replaceState(null, "", a.getAttribute("href"));
+        $(a.dataset.sec).scrollIntoView({ block: "start" });
+        if (!matchMedia("(min-width: 901px)").matches) idx.open = false;
+        $("h-" + a.dataset.sec).parentNode.focus({ preventScroll: true });
+      });
+    });
+    $("filter").addEventListener("input", function () {
+      var q = fold(this.value.trim()), terms = q ? q.split(/\s+/) : [], test = matcher(q);
+      c.sections.forEach(function (s) {
+        var shown = 0, sec = $(s.id);
+        sec.querySelectorAll(".row").forEach(function (r) {
+          var ok = test({ hay: r.dataset.hay });
+          r.hidden = !ok; if (ok) shown++;
+        });
+        var live = {};
+        sec.querySelectorAll(".row").forEach(function (r) { if (!r.hidden) live[r.dataset.g] = true; });
+        sec.querySelectorAll(".group").forEach(function (g) { g.hidden = terms.length > 0 && !live[g.dataset.g]; });
+        sec.querySelectorAll(".extra").forEach(function (x) { x.hidden = terms.length > 0; });
+        sec.hidden = terms.length > 0 && shown === 0;
+        if (terms.length && shown) setSec(s.id, true);
+      });
+      setAll();
+    });
+
+    app.querySelectorAll(".more-toggle").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var li = b.closest(".intro"), open = li.classList.toggle("is-open");
+        b.setAttribute("aria-expanded", String(open));
+        b.textContent = open ? "Show less" : "Show more";
+      });
+    });
+    // the course index follows the section you're reading
+    var links = {}; app.querySelectorAll(".index a").forEach(function (a) { links[a.dataset.sec] = a; });
+    if ("IntersectionObserver" in window) {
+      spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) {
+            Object.keys(links).forEach(function (k) { links[k].classList.toggle("is-here", k === en.target.id); });
+          }
+        });
+      }, { rootMargin: "-20% 0px -70% 0px" });
+      c.sections.forEach(function (s) { spy.observe($(s.id)); });
+    }
+    if (jump && $(jump)) { setSec(jump, true); setAll(); requestAnimationFrame(function () { $(jump).scrollIntoView({ block: "start" }); }); }
+  }
+
+  // ---------- viewer
+  function viewer(it) {
+    var c = it.course, i = c.list.indexOf(it), prev = c.list[i - 1], next = c.list[i + 1], k = kind(it.ext);
+    var phone = matchMedia("(pointer: coarse)").matches && innerWidth < 900;
+    document.title = it.title + " | LSE files";
+    pushRecent(it);
+    paint('<div class="page viewer">' +
+      '<nav class="crumbs" aria-label="Breadcrumb"><a href="#">Dashboard</a><span aria-hidden="true">/</span><a href="#' + c.id + '">' + esc(label(c)) + '</a><span aria-hidden="true">/</span>' +
+      '<a href="#' + c.id + "/" + it.section.id + '">' + esc(it.section.title) + "</a></nav>" +
+      "<h1>" + esc(it.title) + '</h1>' + (it.group ? '<p class="file-group">' + esc(it.group + (ROLE[it.r] ? ". " + ROLE[it.r] + "." : "")) + "</p>" : "") +
+      '<p class="file-meta">' + esc(it.name) + ", " + size(it.size) + "</p>" +
+      '<div class="bar">' +
+      '<a class="btn" ' + (prev ? 'href="' + link(prev) + '" title="' + esc(prev.title) + '"' : 'aria-disabled="true" style="opacity:.35;pointer-events:none"') + ">Previous</a>" +
+      '<a class="btn" ' + (next ? 'href="' + link(next) + '" title="' + esc(next.title) + '"' : 'aria-disabled="true" style="opacity:.35;pointer-events:none"') + ">Next</a>" +
+      '<span class="spacer"></span>' +
+      (k === "pdf" || k === "image" || k === "text" ? '<button type="button" class="btn" id="v-tab" disabled>Open full screen</button>' : "") +
+      '<button type="button" class="btn btn-primary" id="v-dl" disabled>Download</button></div>' +
+      '<div class="stage' + (k === "pdf" && !phone || k === "video" || k === "html" ? "" : " fit") + '" id="stage"><div class="stage-msg" id="stage-msg"><div class="progress"><i id="bar"></i></div><p id="stage-text">Opening</p></div></div></div>');
+
+    var token = viewToken;
+    load(it, function (done, total) {
+      if (token !== viewToken) return;
+      $("bar").style.width = Math.round(done / total * 100) + "%";
+      if (total > 1) $("stage-text").textContent = "Opening part " + Math.min(done + 1, total) + " of " + total;
+    }).then(function (entry) {
+      if (token !== viewToken) return;
+      var stage = $("stage"), dl = $("v-dl"), tab = $("v-tab");
+      dl.disabled = false; dl.addEventListener("click", function () { save(entry.url, it.dlname); });
+      if (tab) { tab.disabled = false; tab.addEventListener("click", function () { window.open(entry.url, "_blank"); }); }
+      if (k === "pdf" && !phone) {
+        stage.innerHTML = '<iframe src="' + entry.url + '" title="' + esc(it.title) + '"></iframe>';
+      } else if (k === "pdf") {
+        stage.innerHTML = '<div class="stage-msg"><p>Phones show PDFs best on their own. Open it full screen.</p><button type="button" class="btn btn-primary" id="v-open">Open full screen</button></div>';
+        $("v-open").addEventListener("click", function () { window.open(entry.url, "_blank"); });
+      } else if (k === "html") {
+        entry.blob.text().then(function (t) {
+          if (token !== viewToken) return;
+          var f = document.createElement("iframe");
+          f.setAttribute("sandbox", "allow-popups allow-popups-to-escape-sandbox");   // no scripts, no access to this page
+          f.title = it.title; f.srcdoc = '<base target="_blank"><style>body{font:16px/1.5 Arial,sans-serif;margin:1.25rem;max-width:70ch}</style>' + t;
+          stage.innerHTML = ""; stage.appendChild(f);
+        });
+      } else if (k === "image") {
+        stage.innerHTML = '<img src="' + entry.url + '" alt="' + esc(it.title) + '">';
+      } else if (k === "video") {
+        stage.innerHTML = '<video src="' + entry.url + '" controls playsinline></video>';
+      } else if (k === "audio") {
+        stage.innerHTML = '<div style="padding:1rem"><audio src="' + entry.url + '" controls></audio></div>';
+      } else if (k === "text" && it.size < 3 * 1024 * 1024) {
+        entry.blob.text().then(function (t) {
+          if (token !== viewToken) return;
+          stage.innerHTML = "<pre></pre>";
+          var pre = stage.firstChild, hl = getItem("session", "gk-uni-hl");
+          delItem("session", "gk-uni-hl");
+          var low = t.toLowerCase(), first = hl ? hl.toLowerCase().split(/\s+/).filter(Boolean)[0] : "";
+          var at = hl && hl.length > 30 ? low.indexOf(hl.toLowerCase()) : -1;
+          if (at >= 0) first = hl; else at = first ? low.indexOf(first) : -1;
+          if (canSpeak) {
+            var lb = document.createElement("button"); lb.type = "button"; lb.className = "btn"; lb.textContent = "Listen";
+            lb.addEventListener("click", function () { var m = pre.querySelector("mark"), from = m ? t.indexOf(m.textContent, Math.max(0, at - 5)) : 0; speak(speakable(from > 0 ? t.slice(from) : t), it.group ? it.group.replace(/^Lecture recording:\s*/, "") : it.title); });
+            var bar = app.querySelector(".viewer .bar"); bar.insertBefore(lb, bar.querySelector(".spacer"));
+          }
+          if (at < 0) { pre.textContent = t; return; }
+          var mark = document.createElement("mark"); mark.textContent = t.slice(at, at + first.length); mark.className = first.length > 30 ? "passage" : "";
+          pre.appendChild(document.createTextNode(t.slice(0, at))); pre.appendChild(mark);
+          pre.appendChild(document.createTextNode(t.slice(at + first.length)));
+          requestAnimationFrame(function () { mark.scrollIntoView({ block: "center" }); });
+        });
+      } else {
+        stage.innerHTML = '<div class="stage-msg"><p>' + esc(it.ext ? "." + it.ext + " files" : "This file") + " can’t be shown in the browser. Download it to open it.</p>" +
+          '<button type="button" class="btn btn-primary" id="v-dl2">Download</button></div>';
+        $("v-dl2").addEventListener("click", function () { save(entry.url, it.dlname); });
+      }
+    }, function () {
+      if (token !== viewToken) return;
+      $("stage-msg").innerHTML = "<p>This file couldn’t be opened. Check your connection, then try again.</p>" +
+        '<button type="button" class="btn" id="v-retry">Try again</button>';
+      $("v-retry").addEventListener("click", route);
+    });
+  }
+  addEventListener("keydown", function (e) {
+    if (!data || e.altKey || e.ctrlKey || e.metaKey || /input|textarea/i.test(e.target.tagName)) return;
+    var m = location.hash.match(/^#([a-z0-9-]+)\/f(\d+)$/); if (!m) return;
+    var it = find(m[1], +m[2]); if (!it) return;
+    var list = it.course.list, i = list.indexOf(it);
+    if (e.key === "ArrowLeft" && list[i - 1]) location.hash = link(list[i - 1]).slice(1);
+    if (e.key === "ArrowRight" && list[i + 1]) location.hash = link(list[i + 1]).slice(1);
+    if (e.key === "Escape") location.hash = it.course.id + "/" + it.section.id;
+  });
+
+  // ---------- fetching and decrypting, with a small in-memory cache
+  async function load(it, progress) {
+    var hit = cache.get(it.f);
+    if (hit) { cache.delete(it.f); cache.set(it.f, hit); progress(1, 1); return hit; }
+    var parts = new Array(it.p), done = 0, nextPart = 0;
+    progress(0, it.p);
+    async function worker() {
+      while (nextPart < it.p) {
+        var n = nextPart++, lab = it.f + "." + n;
+        parts[n] = await openSealed(aes, await fetchBuf(lab + ".enc", false), lab);
+        progress(++done, it.p);
+      }
+    }
+    await Promise.all([worker(), worker(), worker()].slice(0, Math.min(3, it.p)));
+    var blob = new Blob(parts, { type: MIME[it.ext] || "application/octet-stream" });
+    var entry = { blob: blob, url: URL.createObjectURL(blob), size: blob.size };
+    cache.set(it.f, entry); cacheSize += entry.size;
+    while (cacheSize > CACHE_LIMIT && cache.size > 1) {
+      var oldest = cache.keys().next().value, o = cache.get(oldest);
+      URL.revokeObjectURL(o.url); cacheSize -= o.size; cache.delete(oldest);
+    }
+    return entry;
+  }
+  function save(url, name) {
+    var a = document.createElement("a"); a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  app.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-dl]"); if (!b) return;
+    var p = b.dataset.dl.split("/"), it = find(p[0], +p[1]); if (!it) return;
+    b.disabled = true; b.setAttribute("aria-busy", "true");
+    load(it, function () {}).then(function (entry) { save(entry.url, it.dlname); }, function () { alert("That file couldn’t be downloaded. Check your connection, then try again."); })
+      .then(function () { b.disabled = false; b.removeAttribute("aria-busy"); });
+  });
+
+  // ---------- recently opened, kept on this device as course and file numbers only (no names)
+  function recentList() {
+    var out = [];
+    try { (JSON.parse(getItem("local", "gk-uni-recent")) || []).forEach(function (r) { var p = r.split("/"), it = find(p[0], +p[1]); if (it) out.push(it); }); } catch (e) {}
+    return out.slice(0, 6);
+  }
+  function pushRecent(it) {
+    var id = it.course.id + "/" + it.u, list = [];
+    try { list = JSON.parse(getItem("local", "gk-uni-recent")) || []; } catch (e) {}
+    list = [id].concat(list.filter(function (x) { return x !== id; })).slice(0, 12);
+    setItem("local", "gk-uni-recent", JSON.stringify(list));
+  }
+
+  if (!window.crypto || !crypto.subtle) { showLock("This browser can’t open encrypted files. Try an up-to-date Chrome, Safari, Edge or Firefox."); return; }
+  start();
+})();
+</script>
+</body>
+</html>
